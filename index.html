@@ -4,23 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROCK.SCOT | Scotland's Rock Station | Live from the West</title>
-    <meta name="description" content="Rocking Inverclyde, Ayrshire, and Lanarkshire. Regional advertising from £199. Multi-regional from £349.">
+    <meta name="description" content="Rocking Inverclyde, Ayrshire, and Lanarkshire. Regional advertising £199. Multi-regional £349.">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff3e00">
+    
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="master-player" style="background: #050505; border-bottom: 1px solid #111; padding: 10px 0; position: sticky; top: 0; z-index: 1000;">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+    <div id="master-player">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
             <div id="now-playing" style="display: flex; align-items: center; gap: 15px;">
                 <div class="eq-container"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
                 <div>
                     <span style="display: block; font-size: 0.6rem; color: #ff3e00; text-transform: uppercase; letter-spacing: 2px;">Live Now</span>
-                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Connecting to Stream...</span>
+                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Connecting...</span>
                 </div>
             </div>
-            <button id="play-btn" style="background: transparent; border: 1px solid #ff3e00; color: #ff3e00; padding: 5px 15px; font-family: 'Oswald'; cursor: pointer; text-transform: uppercase; font-weight: 700;">Listen Live</button>
+            <button id="play-btn">Listen Live</button>
         </div>
     </div>
 
@@ -38,7 +42,47 @@
 
     <main>
         <div class="container">
-            <section class="section-tight" style="border-top: none; text-align: center;">
+            <section class="section-tight" style="text-align: center; border-top:none;">
                 <h1 class="hero-title">SCOTLAND'S<br>ROCK STATION</h1>
-                <span class="
-                    
+                <span class="sub-glow">Inverclyde • Ayrshire • Lanarkshire</span>
+            </section>
+
+            <div id="weather-display">
+                <div id="weather-icon">☁️</div>
+                <div style="text-align: left;">
+                    <span id="weather-location">Local Conditions</span>
+                    <span id="weather-temp">Loading Weather...</span>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin: 20px 0;">
+                <a href="shortcuts://run-shortcut?name=Play%20Rock%20Scot" class="btn-outline">Add to Siri</a>
+            </div>
+
+            <section class="grid-layout">
+                <div class="card-dark">
+                    <h3>Station Update</h3>
+                    <p>Broadcasting 24/7 across the West. Regional airtime from £199.</p>
+                </div>
+                <div class="card-dark">
+                    <h3>Creative Studio</h3>
+                    <p>Professional production for only £195 per commercial.</p>
+                </div>
+            </section>
+
+            <section class="price-strip">
+                <div class="container" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                    <div><label>Regional</label><strong>£199</strong></div>
+                    <div><label>Multi-Regional</label><strong>£349</strong></div>
+                    <div><label>Creative</label><strong>£195</strong></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>&copy; 2026 ROCK.SCOT | THE WEST'S ROCK STATION</footer>
+
+    <script src="player.js"></script>
+    <script src="router.js"></script>
+</body>
+</html>
