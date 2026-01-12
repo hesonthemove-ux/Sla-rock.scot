@@ -3,22 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sponsors | ROCK.SCOT | Our Partners</title>
+    <title>Sponsors | ROCK.SCOT | Partnering with the West</title>
+    <meta name="description" content="Meet the partners and sponsors of ROCK.SCOT. Supporting local business across the West of Scotland.">
+    
+    <meta property="og:title" content="Sponsors | ROCK.SCOT">
+    <meta property="og:description" content="Supporting local business across Inverclyde, Ayrshire, and Lanarkshire.">
+    <meta property="og:image" content="logo.png">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff3e00">
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="master-player" style="background: #050505; border-bottom: 1px solid #111; padding: 10px 0; position: sticky; top: 0; z-index: 1000;">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+    <div id="master-player">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
             <div id="now-playing" style="display: flex; align-items: center; gap: 15px;">
                 <div class="eq-container"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
-                <div><span style="display: block; font-size: 0.6rem; color: #ff3e00; text-transform: uppercase;">Live Now</span><span style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Scotland's Rock Station</span></div>
+                <div>
+                    <span style="display: block; font-size: 0.6rem; color: #ff3e00; text-transform: uppercase; letter-spacing: 2px;">Live Now</span>
+                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Connecting...</span>
+                </div>
             </div>
-            <button id="play-btn" style="background: transparent; border: 1px solid #ff3e00; color: #ff3e00; padding: 5px 15px; font-family: 'Oswald'; cursor: pointer; text-transform: uppercase; font-weight: 700;">Listen Live</button>
+            <button id="play-btn">Listen Live</button>
         </div>
     </div>
+
+    <div style="background: #080808; border-bottom: 1px solid #111; overflow: hidden; white-space: nowrap; padding: 8px 0;">
+        <div class="traffic-scroll">
+            ⚡ TRAFFIC: M8 THROUGH PAISLEY CLEAR • A77 AYRSHIRE FLOWING WELL • NO DELAYS REPORTED IN INVERCLYDE • M74 LANARKSHIRE TRAFFIC MOVING NORMALLY • ⚡
+        </div>
+    </div>
+
     <header>
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
@@ -30,17 +48,55 @@
             </nav>
         </div>
     </header>
-    <main>
-        <div class="container">
-            <h1 class="hero-title" style="text-align: center; margin-top: 30px;">OUR PARTNERS</h1>
-            <span class="sub-glow">Inverclyde • Ayrshire • Lanarkshire</span>
-            <div class="grid-layout">
-                <div class="card-dark" style="height: 150px; display: flex; align-items: center; justify-content: center;"><span style="color: #222;">PARTNER LOGO SLOT</span></div>
-                <div class="card-dark" style="height: 150px; display: flex; align-items: center; justify-content: center;"><span style="color: #222;">PARTNER LOGO SLOT</span></div>
+
+    <main class="container">
+        <section style="text-align: center; padding: 40px 0;">
+            <h1 class="hero-title">OUR<br>PARTNERS</h1>
+            <span class="sub-glow">Supporting Local Industry</span>
+        </section>
+
+        <section class="grid-layout">
+            <div class="card-dark" style="text-align: center;">
+                <div style="height: 100px; background: #111; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: #333; font-weight: 700;">LOGO SPACE</div>
+                <h3>Headline Sponsor</h3>
+                <p>Supporting Rock.Scot across the entire West of Scotland footprint.</p>
             </div>
-        </div>
+            <div class="card-dark" style="text-align: center;">
+                <div style="height: 100px; background: #111; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: #333; font-weight: 700;">LOGO SPACE</div>
+                <h3>Regional Partner</h3>
+                <p>Focused on Inverclyde & the Clyde Coast business community.</p>
+            </div>
+            <div class="card-dark" style="text-align: center;">
+                <div style="height: 100px; background: #111; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: #333; font-weight: 700;">LOGO SPACE</div>
+                <h3>Ayrshire Partner</h3>
+                <p>Connecting with the heart of Ayrshire rock listeners.</p>
+            </div>
+        </section>
+
+        <section class="card-dark" style="margin-top: 40px; border: 1px solid var(--magma); text-align: center;">
+            <h3>BECOME A SPONSOR</h3>
+            <p style="margin-bottom: 20px;">Align your brand with Scotland's fastest-growing rock platform.</p>
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <div style="text-align: left;"><label style="display:block; font-size: 0.6rem; color: #666;">REGIONAL</label><strong style="font-size: 1.5rem;">£199</strong></div>
+                <div style="text-align: left;"><label style="display:block; font-size: 0.6rem; color: #666;">MULTI-REGIONAL</label><strong style="font-size: 1.5rem;">£349</strong></div>
+            </div>
+            <br>
+            <a href="advertise.html" class="btn-outline" style="text-decoration: none; display: inline-block;">View Advertising Packages</a>
+        </section>
     </main>
-    <footer><div class="container">&copy; 2026 ROCK.SCOT | THE WEST'S ROCK STATION</div></footer>
+
+    <footer>
+        <div class="container">
+            &copy; 2026 ROCK.SCOT | <a href="privacy.html" style="color:#444;">Privacy</a> | <a href="terms.html" style="color:#444;">Terms</a>
+        </div>
+    </footer>
+
+    <div id="cookie-banner">
+        <p style="font-size: 0.8rem; margin-bottom: 15px;">We use cookies for the best experience.</p>
+        <button onclick="acceptCookies()" class="btn-cookie-acc">Accept All</button>
+        <button onclick="rejectCookies()" class="btn-cookie-rej">Reject</button>
+    </div>
+
     <script src="player.js"></script>
     <script src="router.js"></script>
 </body>
