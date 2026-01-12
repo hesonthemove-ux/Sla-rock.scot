@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ROCK.SCOT | Scotland's Rock Station | Listen Live</title>
+    <meta name="description" content="The home of guitar-based music in the West. Broadcasting across Inverclyde, Ayrshire, and Lanarkshire. Listen live to Scotland's premier rock station.">
+    <meta name="keywords" content="Rock Radio Scotland, DAB Radio West Scotland, Rock Scot, Inverclyde Radio, Ayrshire Radio, Lanarkshire Radio">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RadioStation",
+      "name": "ROCK.SCOT",
+      "url": "https://rock.scot",
+      "logo": "https://rock.scot/logo.png",
+      "description": "Scotland's Rock Station broadcasting across Inverclyde, Ayrshire, and Lanarkshire.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "West Scotland",
+        "addressCountry": "GB"
+      },
+      "areaServed": ["Inverclyde", "Ayrshire", "Lanarkshire"],
+      "priceRange": "£199 - £349"
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* Smooth Fade Transition for the Router */
+        main { transition: opacity 0.2s ease-in-out; opacity: 1; }
+        
+        /* EQ Animation Styling */
+        .eq-container { display: flex; align-items: flex-end; gap: 2px; height: 20px; }
+        .eq-bar { width: 3px; background: #ff3e00; height: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="master-player" style="background: #050505; border-bottom: 1px solid #111; padding: 10px 0; position: sticky; top: 0; z-index: 1000;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div id="now-playing" style="display: flex; align-items: center; gap: 15px;">
+                <div class="eq-container">
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                </div>
+                <div>
+                    <span style="display: block; font-size: 0.6rem; color: #ff3e00; text-transform: uppercase; letter-spacing: 2px;">Live Now</span>
+                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Scotland's Rock Station</span>
+                </div>
+            </div>
+            <button id="play-btn" style="background: transparent; border: 1px solid #ff3e00; color: #ff3e00; padding: 5px 15px; font-family: 'Oswald'; cursor: pointer; text-transform: uppercase; font-weight: 700;">Listen Live</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
+            <nav class="nav-menu">
+                <a href="index.html" class="active">Listen</a>
+                <a href="sponsors.html">Sponsors</a>
+                <a href="advertise.html">Advertise</a>
+                <a href="mailto:studio@rock.scot">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="section-tight" style="border-top: none;">
+                <h1 class="hero-title">SCOTLAND'S<br>ROCK STATION</h1>
+                <span class="sub-glow">Inverclyde • Ayrshire • Lanarkshire</span>
+            </section>
+
+            <section class="section-tight">
+                <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    <p style="font-size: 1.3rem; line-height: 1.3; color: #eee;">The home of guitar-based music in the West. We provide a high-quality soundtrack for listeners and a professional DAB+ platform for local businesses to grow.</p>
+                </div>
+            </section>
+
+            <section class="section-tight">
+                <div class="grid-layout">
+                    <article class="card-dark">
+                        <h4 style="color: #ff3e00; text-transform: uppercase; margin-bottom: 5px;">Broadcasting</h4>
+                        <p style="color: #888; font-size: 0.85rem;">High-fidelity digital audio focused on the West's rock audience.</p>
+                    </article>
+                    <article class="card-dark">
+                        <h4 style="color: #ff3e00; text-transform: uppercase; margin-bottom: 5px;">Live Music</h4>
+                        <p style="color: #888; font-size: 0.85rem;">Championing the pulse of the Scottish rock and club scene.</p>
+                    </article>
+                    <article class="card-dark">
+                        <h4 style="color: #ff3e00; text-transform: uppercase; margin-bottom: 5px;">Regional Growth</h4>
+                        <p style="color: #888; font-size: 0.85rem;">Helping regional brands scale with market-leading visibility.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="price-strip">
+                <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 15px;">
+                    <div style="border-left: 2px solid #ff3e00; padding-left: 15px; text-align: left;">
+                        <label style="display: block; text-transform: uppercase; font-size: 0.65rem; color: #666;">Regional</label>
+                        <span style="font-size: 1.6rem; font-weight: 700;">£199</span>
+                    </div>
+                    <div style="border-left: 2px solid #ff3e00; padding-left: 15px; text-align: left;">
+                        <label style="display: block; text-transform: uppercase; font-size: 0.65rem; color: #666;">Multi-Regional</label>
+                        <span style="font-size: 1.6rem; font-weight: 700;">£349</span>
+                    </div>
+                    <div style="border-left: 2px solid #ff3e00; padding-left: 15px; text-align: left;">
+                        <label style="display: block; text-transform: uppercase; font-size: 0.65rem; color: #666;">Creative</label>
+                        <span style="font-size: 1.6rem; font-weight: 700;">£195</span>
+                    </div>
+                </div>
+                <a href="advertise.html" class="cta-btn" style="color: #fff; text-transform: uppercase; font-size: 0.8rem; text-decoration: none; border: 1px solid #333; padding: 5px 15px;">Full Advertising Info</a>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            &copy; 2026 ROCK.SCOT | THE WEST'S ROCK STATION
+        </div>
+    </footer>
+
+    <script src="player.js"></script>
+    <script src="router.js"></script>
+</body>
+</html>
