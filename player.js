@@ -1,32 +1,77 @@
-const streamUrl = 'https://uk1.fastcast4u.com/proxy/rockscot?mp=/stream';
-const audio = new Audio(streamUrl);
+// ROCK.SCOT Master Player Logic
 const playBtn = document.getElementById('play-btn');
 const trackTitle = document.getElementById('track-title');
+const eqBars = document.querySelectorAll('.eq-bar');
+
+// Placeholder for the actual stream URL
+const streamUrl = "https://your-stream-url.com/live"; 
+const audio = new Audio(streamUrl);
 
 let isPlaying = false;
 
-async function updateTrack() {
-    try {
-        const res = await fetch('https://uk1.fastcast4u.com/proxy/rockscot?mp=/stats.json');
-        const data = await res.json();
-        if (data.songtitle) trackTitle.innerText = data.songtitle.toUpperCase();
-    } catch (e) { trackTitle.innerText = "SCOTLAND'S ROCK STATION"; }
-}
-
-playBtn.addEventListener('click', () => {
-    if (isPlaying) { audio.pause(); playBtn.innerText = 'Listen Live'; }
-    else { audio.play(); playBtn.innerText = 'Stop'; updateTrack(); setInterval(updateTrack, 20000); }
+function togglePlay() {
+    if (isPlaying) {
+        audio.pause();
+        playBtn.innerText = "Listen Live";
+        playBtn.style.background = "#ff3e00";
+        trackTitle.innerText = "Paused";
+        stopEQ();
+    } else {
+        // In a real scenario, we reload to catch the live edge
+        audio.load(); 
+        audio.play().catch(error => {
+            console.log("Playback failed: ", error);
+        });
+        playBtn.innerText = "Stop";
+        playBtn.style.background = "#fff";
+        trackTitle.innerText = "Rock.Scot - Live Feed";
+        startEQ();
+    }
     isPlaying = !isPlaying;
-});
-
-async function initWeather() {
-    try {
-        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=55.8642&longitude=-4.2518&current_weather=true`);
-        const data = await res.json();
-        document.getElementById('weather-temp').innerText = `${Math.round(data.current_weather.temperature)}°C - Live West`;
-    } catch (e) { document.getElementById('weather-temp').innerText = "West of Scotland Weather"; }
 }
 
-function acceptCookies() { localStorage.setItem('rock_consent', 'yes'); document.getElementById('cookie-banner').style.display='none'; }
-function rejectCookies() { localStorage.setItem('rock_consent', 'no'); document.getElementById('cookie-banner').style.display='none'; }
-window.onload = () => { if(!localStorage.getItem('rock_consent')) document.getElementById('cookie-banner').style.display='block'; initWeather(); };
+function startEQ() {
+    eqBars.forEach(bar => {
+        bar.style.animation = "eq 0.8s infinite ease-in-out";
+    });
+}
+
+function stopEQ() {
+    eqBars.forEach(bar => {
+        bar.style.animation = "none";
+    });
+}
+
+// Event Listeners
+playBtn.addEventListener('click', togglePlay);
+
+// Add basic CSS animation for EQ bars via JS if not in CSS file
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes eq {
+        0% { height: 5px; }
+        50% { height: 20px; }
+        100% { height: 5px; }
+    }
+    .eq-container {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 20px;
+    }
+    .eq-bar {
+        width: 3px;
+        height: 5px;
+        background: #ff3e00;
+    }
+`;
+document.head.appendChild(style);
+
+// Simulated Track Update (In reality, fetch from your Icecast/Shoutcast JSON)
+setInterval(() => {
+    if(isPlaying) {
+        const tracks = ["AC/DC - Back in Black", "Guns N' Roses - Welcome to the Jungle", "Biffy Clyro - Mountains"];
+        const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
+        trackTitle.innerText = randomTrack;
+    }
+}, 30000);
