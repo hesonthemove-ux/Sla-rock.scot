@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | ROCK.SCOT | Studio & Advertising</title>
+    <title>Contact | ROCK.SCOT</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -21,12 +21,6 @@
         </div>
     </div>
 
-    <div style="background: #080808; border-bottom: 1px solid #111; overflow: hidden; white-space: nowrap; padding: 8px 0;">
-        <div class="traffic-scroll">
-            ⚡ TRAFFIC: M8 THROUGH PAISLEY CLEAR • A77 AYRSHIRE FLOWING WELL • NO DELAYS REPORTED IN INVERCLYDE • M74 LANARKSHIRE TRAFFIC MOVING NORMALLY • ⚡
-        </div>
-    </div>
-
     <header>
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
@@ -39,20 +33,44 @@
         </div>
     </header>
 
-    <main class="container" style="max-width: 800px; padding-bottom: 60px;">
+    <main class="container">
         <section style="text-align: center; padding: 40px 0;">
             <h1 class="hero-title">GET IN<br>TOUCH</h1>
-            <span class="sub-glow">Studio & Advertising Enquiries</span>
+            <span class="sub-glow">Studio Hotline & Advertising</span>
         </section>
 
-        <div class="card-dark">
-            <form action="mailto:studio@rock.scot" method="post" enctype="text-plain" style="display: flex; flex-direction: column; gap: 20px;">
-                
-                <div style="display: flex; flex-direction: column; gap: 5px;">
-                    <label style="font-size: 0.7rem; color: #666; text-transform: uppercase;">Full Name</label>
-                    <input type="text" name="name" required style="background: #000; border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Oswald';">
-                </div>
+        <img src="contact-studio.jpg" class="img-feature" alt="Rock Scot Studio Team">
 
-                <div style="display: flex; flex-direction: column; gap: 5px;">
-                    <label style="font-size: 0.7rem; color: #666; text-transform: uppercase;">Inquiry Type</label>
-                    <select name="subject" style="background: #000;
+        <div class="grid-layout" style="margin-top: 40px;">
+            <div class="card-dark">
+                <h3>STATION CONTACT</h3>
+                <p>WhatsApp the studio or email us for shoutouts and track requests.</p>
+                <p style="color: #ff3e00; font-weight: bold;">studio@rock.scot</p>
+            </div>
+
+            <div class="card-dark">
+                <h3>ADVERTISING INQUIRY</h3>
+                <form action="#" style="display: flex; flex-direction: column; gap: 10px;">
+                    <input type="text" placeholder="Name" style="padding: 10px; background: #111; border: 1px solid #333; color: white;">
+                    <select style="padding: 10px; background: #111; border: 1px solid #333; color: white;">
+                        <option>Select a Package...</option>
+                        <option>Regional Airtime - £199</option>
+                        <option>Multi-Regional Airtime - £349</option>
+                        <option>Creative Production - £195</option>
+                    </select>
+                    <textarea placeholder="Message" rows="4" style="padding: 10px; background: #111; border: 1px solid #333; color: white;"></textarea>
+                    <button type="submit" style="background: #ff3e00; color: black; border: none; padding: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase;">Send Inquiry</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 40px 0; color: #444;">
+            <p>&copy; 2026 ROCK.SCOT | Built for the West</p>
+        </div>
+    </footer>
+
+    <script src="player.js"></script>
+</body>
+</html>
