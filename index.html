@@ -4,16 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROCK.SCOT | Scotland's Rock Station | Live from the West</title>
-    <meta name="description" content="Rocking Inverclyde, Ayrshire, and Lanarkshire. Regional advertising £199. Multi-regional £349.">
-    
-    <meta property="og:title" content="ROCK.SCOT | Scotland's Rock Station">
-    <meta property="og:description" content="Regional advertising from £199. Multi-regional £349. Creative production £195.">
-    <meta property="og:image" content="logo.png">
-    
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff3e00">
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="apple-touch-icon" href="logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -44,49 +34,48 @@
                 <a href="index.html" class="active">Listen</a>
                 <a href="sponsors.html">Sponsors</a>
                 <a href="advertise.html">Advertise</a>
-                <a href="mailto:studio@rock.scot">Contact</a>
+                <a href="contact.html">Contact</a>
             </nav>
         </div>
     </header>
 
-    <main class="container">
-        <section style="text-align: center; padding: 40px 0;">
-            <h1 class="hero-title">SCOTLAND'S<br>ROCK STATION</h1>
-            <span class="sub-glow">Inverclyde • Ayrshire • Lanarkshire</span>
+    <main>
+        <section class="img-bg-hero" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('studio1.jpg');">
+            <div class="container" style="text-align: center;">
+                <h1 class="hero-title">SCOTLAND'S<br>ROCK STATION</h1>
+                <span class="sub-glow">Inverclyde • Ayrshire • Lanarkshire</span>
+            </div>
         </section>
 
-        <div id="weather-display">
-            <div id="weather-icon">☁️</div>
-            <div style="text-align: left;">
-                <span id="weather-location">Local Conditions</span>
-                <span id="weather-temp">Checking Local Weather...</span>
+        <div class="container">
+            <div id="weather-display">
+                <div id="weather-icon">☁️</div>
+                <div style="text-align: left;">
+                    <span id="weather-location">Local Conditions</span>
+                    <span id="weather-temp">Checking Local Weather...</span>
+                </div>
             </div>
+
+            <section class="grid-layout">
+                <div class="card-dark" style="text-align: center; border: 1px solid #25D366;">
+                    <h3 style="color: #25D366;">TALK TO THE STUDIO</h3>
+                    <p style="margin-bottom: 15px;">Want a shoutout? WhatsApp the studio directly.</p>
+                    <a href="https://wa.me/447XXXXXXXXX" target="_blank" class="btn-whatsapp">MESSAGE DJ</a>
+                </div>
+                <div class="card-dark">
+                    <h3>Broadcasting 24/7</h3>
+                    <p>Scotland's dedicated rock platform. Professional DAB+ audio across the West.</p>
+                </div>
+            </section>
         </div>
-
-        <section class="grid-layout">
-            <div class="card-dark" style="text-align: center; border: 1px solid #25D366;">
-                <h3 style="color: #25D366;">TALK TO THE STUDIO</h3>
-                <p style="margin-bottom: 15px;">Want a shoutout? WhatsApp the studio directly.</p>
-                <a href="https://wa.me/447XXXXXXXXX" target="_blank" class="btn-whatsapp">MESSAGE DJ</a>
-            </div>
-            <div class="card-dark">
-                <h3>Broadcasting 24/7</h3>
-                <p>Scotland's dedicated rock platform. Professional DAB+ audio across the West.</p>
-            </div>
-        </section>
     </main>
 
     <footer>
-        &copy; 2026 ROCK.SCOT | <a href="privacy.html">Privacy</a> | <a href="terms.html">Terms</a>
+        <div class="container">
+            &copy; 2026 ROCK.SCOT | <a href="privacy.html" style="color:#444;">Privacy</a> | <a href="terms.html" style="color:#444;">Terms</a>
+        </div>
     </footer>
 
-    <div id="cookie-banner">
-        <p style="font-size: 0.8rem; margin-bottom: 15px;">We use cookies for the best experience.</p>
-        <button onclick="acceptCookies()" class="btn-cookie-acc">Accept</button>
-        <button onclick="rejectCookies()" class="btn-cookie-rej">Reject</button>
-    </div>
-
     <script src="player.js"></script>
-    <script src="router.js"></script>
 </body>
 </html>
