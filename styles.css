@@ -1,6 +1,6 @@
 /* ROCK.SCOT MASTER STYLES 2026 
     Brand: Scotland's Rock Station
-    Core Identity: Locked 500px Logo, Tight Vertical Spacing
+    Identity: Locked 500px Logo | Magma Red Theme
 */
 
 :root {
@@ -13,6 +13,7 @@
     --oswald: 'Oswald', sans-serif;
 }
 
+/* --- RESET & BASE --- */
 * {
     margin: 0;
     padding: 0;
@@ -37,6 +38,12 @@ body {
     width: 100%;
 }
 
+/* --- ROUTER TRANSITION --- */
+main {
+    transition: opacity 0.2s ease-in-out;
+    opacity: 1;
+}
+
 /* --- HEADER & LOGO (Locked 500px) --- */
 header {
     text-align: center;
@@ -45,10 +52,18 @@ header {
 
 .logo-main {
     width: 500px !important;
-    max-width: 90%; /* For mobile safety */
+    max-width: 95%; /* Safe for mobile */
     height: auto;
     display: block;
     margin: 0 auto;
+    /* Flame Glow Effect for 1000007961.png */
+    filter: drop-shadow(0 0 15px rgba(255, 62, 0, 0.4));
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo-main:hover {
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 25px rgba(255, 62, 0, 0.7));
 }
 
 /* --- NAVIGATION (Tight & Centered) --- */
@@ -56,8 +71,8 @@ header {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
-    margin: 15px auto;
+    gap: 25px;
+    margin: 20px auto;
     max-width: 600px;
 }
 
@@ -65,11 +80,12 @@ header {
     color: #fff;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: 1rem;
     letter-spacing: 1px;
     font-weight: 700;
-    padding-bottom: 2px;
-    transition: color 0.2s;
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+    border-bottom: 2px solid transparent;
 }
 
 .nav-menu a:hover, 
@@ -80,16 +96,16 @@ header {
 
 /* --- CONTENT SECTIONS --- */
 .section-tight {
-    padding: 20px 0;
+    padding: 30px 0;
     border-top: 1px solid #111;
 }
 
 h1.hero-title {
-    font-size: 4rem;
+    font-size: 4.5rem;
     text-transform: uppercase;
     letter-spacing: -2px;
     line-height: 0.85;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
@@ -98,64 +114,94 @@ h1.hero-title {
     text-transform: uppercase;
     letter-spacing: 4px;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.1rem;
     text-align: center;
     display: block;
+    margin-bottom: 20px;
 }
 
-/* --- PRICING & CARDS --- */
+/* --- PRICING GRID --- */
 .grid-layout {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 15px;
+    gap: 20px;
+    margin-top: 20px;
 }
 
 .card-dark {
     background: var(--dark-grey);
     border: 1px solid var(--border-grey);
-    padding: 25px;
+    padding: 30px;
     text-align: center;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, transform 0.3s;
 }
 
 .card-dark:hover {
     border-color: var(--magma-red);
+    transform: translateY(-5px);
 }
 
-/* --- FOOTER & CTAs --- */
+/* --- PLAYER BAR ELEMENTS --- */
+#master-player {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.eq-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 20px;
+}
+
+.eq-bar {
+    width: 3px;
+    background: var(--magma-red);
+    height: 8px;
+    transition: height 0.1s ease;
+}
+
+/* --- FOOTER & CTA STRIP --- */
 .price-strip {
     background: #050505;
     border-top: 1px solid #111;
-    padding: 30px 0;
+    padding: 40px 0;
     text-align: center;
-    margin-top: auto; /* Keeps footer at bottom */
+    margin-top: auto;
+}
+
+.cta-btn {
+    display: inline-block;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.cta-btn:hover {
+    background: #e63800 !important;
+    transform: scale(1.05);
 }
 
 footer {
     text-align: center;
-    padding: 20px 0;
+    padding: 25px 0;
     border-top: 1px solid #111;
-    color: #333;
-    font-size: 0.7rem;
+    color: #444;
+    font-size: 0.75rem;
     text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* --- RESPONSIVE POLISH --- */
+/* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 768px) {
     .logo-main { width: 320px !important; }
-    h1.hero-title { font-size: 2.5rem; }
-    .nav-menu { gap: 10px; }
+    h1.hero-title { font-size: 2.8rem; }
+    .nav-menu { gap: 15px; }
+    .nav-menu a { font-size: 0.85rem; }
 }
 
-/* --- FUTURE PROOFING: THE GLOWING EQUALIZER --- */
-.eq-container {
-    height: 20px;
-    display: flex;
-    align-items: flex-end;
-    gap: 2px;
-}
-.eq-bar {
-    width: 3px;
-    background: var(--magma-red);
-    height: 100%;
+/* --- ANIMATIONS --- */
+@keyframes eqBounce {
+    0% { height: 5px; opacity: 0.5; }
+    50% { height: 20px; opacity: 1; }
+    100% { height: 5px; opacity: 0.5; }
 }
