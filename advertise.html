@@ -15,21 +15,23 @@
                 <a href="index.html">Listen</a>
                 <a href="sponsors.html">Sponsors</a>
                 <a href="advertise.html" class="active">Advertise</a>
-                <a href="mailto:studio@rock.scot">Contact</a>
+                <a href="contact.html">Contact</a>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <h1 class="hero-title" style="font-size: 4rem;">ADVERTISE</h1>
+        <h1 class="hero-title" style="font-size: 4rem; margin-top: 40px;">ADVERTISE</h1>
         
+        <img src="guitaristsilhouette.jpg" class="img-feature" alt="Audience Growth Data">
+
         <section class="grid-layout">
-            <div class="card-dark"><h3>Regional</h3><p>Specific area coverage.</p><strong>£199</strong></div>
-            <div class="card-dark"><h3>Multi-Regional</h3><p>Full West footprint.</p><strong>£349</strong></div>
-            <div class="card-dark"><h3>Creative</h3><p>Production & Script.</p><strong>£195</strong></div>
+            <div class="card-dark"><h3>Regional</h3><p>Area Specific</p><strong>£199</strong></div>
+            <div class="card-dark"><h3>Multi-Regional</h3><p>Full West Footprint</p><strong>£349</strong></div>
+            <div class="card-dark"><h3>Creative Production</h3><p>Script & Voiceover</p><strong>£195</strong></div>
         </section>
 
-        <section class="card-dark" style="margin-top: 40px;">
+        <section class="card-dark" style="margin-top: 40px; border: 1px solid #333;">
             <h3>REACH CALCULATOR</h3>
             <div style="display: flex; gap: 10px; margin: 20px 0;">
                 <button onclick="calcROI(199, 15000)" class="btn-outline">Regional</button>
@@ -41,8 +43,10 @@
             </div>
         </section>
     </main>
+
     <script>
         function calcROI(p, r) { document.getElementById('reach-count').innerText = r.toLocaleString() + "+"; }
     </script>
+    <script src="player.js"></script>
 </body>
 </html>
