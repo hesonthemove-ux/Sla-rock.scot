@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertise | ROCK.SCOT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>main { transition: opacity 0.2s ease-in-out; opacity: 1; }</style>
+</head>
+<body>
+
+    <div id="master-player" style="background: #050505; border-bottom: 1px solid #111; padding: 10px 0; position: sticky; top: 0; z-index: 1000;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div id="now-playing" style="display: flex; align-items: center; gap: 15px;">
+                <div class="eq-container" style="display: flex; align-items: flex-end; gap: 2px; height: 20px;">
+                    <div class="eq-bar" style="width: 3px; background: #ff3e00; height: 10px;"></div>
+                    <div class="eq-bar" style="width: 3px; background: #ff3e00; height: 10px;"></div>
+                    <div class="eq-bar" style="width: 3px; background: #ff3e00; height: 10px;"></div>
+                </div>
+                <div>
+                    <span style="display: block; font-size: 0.6rem; color: #ff3e00; text-transform: uppercase; letter-spacing: 2px;">Live Now</span>
+                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Scotland's Rock Station</span>
+                </div>
+            </div>
+            <button id="play-btn" style="background: transparent; border: 1px solid #ff3e00; color: #ff3e00; padding: 5px 15px; font-family: 'Oswald'; cursor: pointer; text-transform: uppercase; font-weight: 700;">Listen Live</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
+            <nav class="nav-menu">
+                <a href="index.html">Listen</a>
+                <a href="sponsors.html">Sponsors</a>
+                <a href="advertise.html" class="active">Advertise</a>
+                <a href="mailto:studio@rock.scot">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="section-tight" style="border-top: none; text-align: center;">
+                <h1 class="hero-title">ADVERTISE</h1>
+                <span class="sub-glow">Direct • Local • Effective</span>
+            </section>
+
+            <section class="section-tight">
+                <div class="grid-layout">
+                    <div class="card-dark">
+                        <h3 style="color: #ff3e00; text-transform: uppercase; margin-bottom: 10px;">Regional Airtime</h3>
+                        <div style="font-size: 3rem; font-weight: 700; margin-bottom: 10px;"><span style="font-size: 1.5rem; color: #ff3e00;">£</span>199</div>
+                        <p style="color: #888; font-size: 0.85rem; margin-bottom: 20px;">Targeted regional coverage across your choice of Inverclyde, Ayrshire, or Lanarkshire.</p>
+                        <a href="mailto:studio@rock.scot" class="cta-btn" style="display: block; background: #ff3e00; color: #000; text-decoration: none; padding: 12px; font-weight: 700; text-transform: uppercase;">Enquire</a>
+                    </div>
+                    <div class="card-dark">
+                        <h3 style="color: #ff3e00; text-transform: uppercase; margin-bottom: 10px;">Multi-Regional</h3>
+                        <div style="font-size: 3rem; font-weight: 700; margin-bottom: 10px;"><span style="font-size: 1.5rem; color: #ff3e00;">£</span>349</div>
+                        <p style="color: #888; font-size: 0.85rem; margin-bottom: 20px;">Full network dominance. Blanket coverage across all three broadcast areas on DAB+.</p>
+                        <a href="mailto:studio@rock.scot" class="cta-btn" style="display: block; background: #ff3e00; color: #000; text-decoration: none; padding: 12px; font-weight: 700; text-transform: uppercase;">Enquire</a>
+                    </div>
+                    <div class="card-dark">
+                        <h3 style="color: #ff3e00; text-transform: uppercase; margin-bottom: 10px;">Creative</h3>
+                        <div style="font-size: 3rem; font-weight: 700; margin-bottom: 10px;"><span style="font-size: 1.5rem; color: #ff3e00;">£</span>195</div>
+                        <p style="color: #888; font-size: 0.85rem; margin-bottom: 20px;">Professional scripting, voiceover, and full production to make your brand sound massive.</p>
+                        <a href="mailto:studio@rock.scot" class="cta-btn" style="display: block; background: #ff3e00; color: #000; text-decoration: none; padding: 12px; font-weight: 700; text-transform: uppercase;">Enquire</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer><div class="container">&copy; 2026 ROCK.SCOT | THE WEST'S ROCK STATION</div></footer>
+
+    <script src="player.js"></script>
+    <script src="router.js"></script>
+</body>
+</html>
