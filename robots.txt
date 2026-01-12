@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /styles.css
+Allow: /player.js
+Allow: /router.js
+
+# Point Google to your sitemap
+Sitemap: https://rock.scot/sitemap.xml
