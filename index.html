@@ -7,10 +7,8 @@
     <meta name="description" content="Rocking Inverclyde, Ayrshire, and Lanarkshire. Regional advertising £199. Multi-regional £349.">
     
     <meta property="og:title" content="ROCK.SCOT | Scotland's Rock Station">
-    <meta property="og:description" content="Regional advertising from £199. Multi-regional £349. Creative production £195. Listen live now.">
-    <meta property="og:image" content="https://rock.scot/logo.png"> <meta property="og:url" content="https://rock.scot">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:description" content="Regional advertising from £199. Multi-regional £349. Creative production £195.">
+    <meta property="og:image" content="logo.png">
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff3e00">
@@ -33,5 +31,62 @@
         </div>
     </div>
 
-    <header
-        
+    <div style="background: #080808; border-bottom: 1px solid #111; overflow: hidden; white-space: nowrap; padding: 8px 0;">
+        <div class="traffic-scroll">
+            ⚡ TRAFFIC: M8 THROUGH PAISLEY CLEAR • A77 AYRSHIRE FLOWING WELL • NO DELAYS REPORTED IN INVERCLYDE • M74 LANARKSHIRE TRAFFIC MOVING NORMALLY • ⚡
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
+            <nav class="nav-menu">
+                <a href="index.html" class="active">Listen</a>
+                <a href="sponsors.html">Sponsors</a>
+                <a href="advertise.html">Advertise</a>
+                <a href="mailto:studio@rock.scot">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section style="text-align: center; padding: 40px 0;">
+            <h1 class="hero-title">SCOTLAND'S<br>ROCK STATION</h1>
+            <span class="sub-glow">Inverclyde • Ayrshire • Lanarkshire</span>
+        </section>
+
+        <div id="weather-display">
+            <div id="weather-icon">☁️</div>
+            <div style="text-align: left;">
+                <span id="weather-location">Local Conditions</span>
+                <span id="weather-temp">Checking Local Weather...</span>
+            </div>
+        </div>
+
+        <section class="grid-layout">
+            <div class="card-dark" style="text-align: center; border: 1px solid #25D366;">
+                <h3 style="color: #25D366;">TALK TO THE STUDIO</h3>
+                <p style="margin-bottom: 15px;">Want a shoutout? WhatsApp the studio directly.</p>
+                <a href="https://wa.me/447XXXXXXXXX" target="_blank" class="btn-whatsapp">MESSAGE DJ</a>
+            </div>
+            <div class="card-dark">
+                <h3>Broadcasting 24/7</h3>
+                <p>Scotland's dedicated rock platform. Professional DAB+ audio across the West.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2026 ROCK.SCOT | <a href="privacy.html">Privacy</a> | <a href="terms.html">Terms</a>
+    </footer>
+
+    <div id="cookie-banner">
+        <p style="font-size: 0.8rem; margin-bottom: 15px;">We use cookies for the best experience.</p>
+        <button onclick="acceptCookies()" class="btn-cookie-acc">Accept</button>
+        <button onclick="rejectCookies()" class="btn-cookie-rej">Reject</button>
+    </div>
+
+    <script src="player.js"></script>
+    <script src="router.js"></script>
+</body>
+</html>
