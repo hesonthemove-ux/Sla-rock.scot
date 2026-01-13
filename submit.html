@@ -1,61 +1,70 @@
 <main>
     <style>
-        .header-box { text-align: center; padding: 40px 0 20px 0; }
-        .header-box h1 { font-size: 3rem; text-transform: uppercase; color: #ff3e00; margin: 0; }
-        .header-box p { color: #888; text-transform: uppercase; letter-spacing: 2px; }
+        .header-box { text-align: center; padding: 60px 0 20px 0; }
+        .header-box h1 { font-size: 3.5rem; text-transform: uppercase; color: #ff3e00; margin: 0; line-height: 0.9; }
+        .header-box p { color: #888; text-transform: uppercase; letter-spacing: 3px; font-size: 1.1rem; margin-top: 10px; }
 
-        .form-container { max-width: 600px; margin: 40px auto; background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; }
-        .form-group { margin-bottom: 25px; width: 100%; }
-        .form-group label { display: block; text-transform: uppercase; font-size: 0.75rem; color: #ff3e00; margin-bottom: 8px; font-weight: 700; }
-        .form-group input, .form-group textarea {
+        .form-container { max-width: 650px; margin: 40px auto; background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; text-transform: uppercase; font-size: 0.7rem; color: #ff3e00; margin-bottom: 8px; font-weight: 700; letter-spacing: 1px; }
+        
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             background: #111;
             border: 1px solid #222;
             padding: 15px;
             color: #fff;
-            font-family: 'Oswald';
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
             display: block;
+            transition: border 0.3s;
         }
+        .form-group input:focus, .form-group textarea:focus { border-color: #ff3e00; outline: none; }
         
         .submit-btn {
             background: #ff3e00;
             color: #000;
             border: none;
             width: 100%;
-            padding: 18px;
+            padding: 20px;
             font-family: 'Oswald';
             font-weight: 700;
             text-transform: uppercase;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            transition: background 0.3s;
         }
+        .submit-btn:hover { background: #fff; }
+        
+        .legal-note { font-size: 0.65rem; color: #444; text-align: center; margin-top: 20px; text-transform: uppercase; }
     </style>
 
     <div class="container">
         <section class="header-box">
-            <h1>Local Talent</h1>
-            <p>Direct Submission Architecture</p>
+            <h1>Artist Submission</h1>
+            <p>Direct Distribution Architecture</p>
         </section>
 
         <div class="form-container">
             <form action="#" method="POST">
                 <div class="form-group">
-                    <label>Band / Artist Identity</label>
-                    <input type="text" placeholder="Project Name" required>
+                    <label>Band / Artist Project Name</label>
+                    <input type="text" placeholder="IDENTITY" required>
                 </div>
                 <div class="form-group">
-                    <label>Regional Origin</label>
-                    <input type="text" placeholder="e.g. Johnstone / Glasgow / Edinburgh" required>
+                    <label>Regional Origin (Central Scotland)</label>
+                    <input type="text" placeholder="e.g. PAISLEY / STIRLING / FALKIRK" required>
                 </div>
                 <div class="form-group">
-                    <label>Sonic Asset Link</label>
-                    <input type="url" placeholder="Soundcloud / Spotify / YouTube" required>
+                    <label>Sonic Asset URL</label>
+                    <input type="url" placeholder="PRIVATE SOUNDCLOUD / SPOTIFY LINK" required>
                 </div>
                 <div class="form-group">
-                    <label>Creative Narrative</label>
-                    <textarea rows="4" placeholder="Brief bio and context"></textarea>
+                    <label>Narrative / Bio</label>
+                    <textarea rows="4" placeholder="Brief context on your latest release..."></textarea>
                 </div>
                 <button type="submit" class="submit-btn">Submit for Airplay</button>
+                <p class="legal-note">By submitting, you authorize ROCK.SCOT for non-exclusive broadcast use.</p>
             </form>
         </div>
     </div>
