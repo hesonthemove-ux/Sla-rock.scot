@@ -7,7 +7,6 @@ const recentBox = document.getElementById('recent-tracks');
 
 let isPlaying = false;
 
-// PLAY/PAUSE LOGIC
 function togglePlayback() {
     if (!isPlaying) {
         audio.play().then(() => {
@@ -15,7 +14,7 @@ function togglePlayback() {
             playBtn.innerText = "Stop";
             playBtn.style.background = "#ffffff"; 
             trackTitle.innerText = "Streaming Live...";
-            updateStationInfo(); // Fetch info immediately on play
+            updateStationInfo();
         }).catch(err => {
             trackTitle.innerText = "Stream Error";
         });
@@ -29,48 +28,47 @@ function togglePlayback() {
     }
 }
 
-// FETCH NOW PLAYING & RECENTLY PLAYED
 async function updateStationInfo() {
     try {
+        // Broadcast.Radio Public API call
         const response = await fetch(`https://api.broadcast.radio/api/nowplaying/${stationId}`);
         const data = await response.json();
         
-        if (data.success && data.body) {
-            const now = data.body.now_playing;
-            // Update Player Bar
-            if (now.title) {
+        if (data && data.success) {
+            // 1. Update the "Now Playing" bar
+            const now = data.body?.now_playing || data.now_playing;
+            if (now && now.title) {
                 trackTitle.innerText = `${now.artist} - ${now.title}`;
             }
 
-            // Update Recently Played List (First 3 items)
-            if (data.body.recently_played && recentBox) {
-                recentBox.innerHTML = ''; // Clear old list
-                data.body.recently_played.slice(0, 3).forEach(track => {
-                    const trackRow = document.createElement('div');
-                    trackRow.style.display = 'flex';
-                    trackRow.style.justifyContent = 'space-between';
-                    trackRow.style.fontSize = '0.8rem';
-                    trackRow.style.borderBottom = '1px solid #1a1a1a';
-                    trackRow.style.paddingBottom = '4px';
-                    trackRow.style.marginBottom = '4px';
+            // 2. Update Recently Played List
+            const history = data.body?.recently_played || data.recently_played;
+            if (history && Array.isArray(history) && recentBox) {
+                recentBox.innerHTML = ''; // Clear "Fetching history..."
+                
+                history.slice(0, 3).forEach(track => {
+                    const row = document.createElement('div');
+                    row.style.cssText = "display:flex; justify-content:space-between; font-size:0.8rem; border-bottom:1px solid #1a1a1a; padding:6px 0; margin-bottom:2px;";
                     
-                    trackRow.innerHTML = `
-                        <span>${track.artist} - ${track.title}</span>
-                        <span style="color: #444;">${new Date(track.played_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                    // Fallback for time if played_at is missing
+                    const timeStr = track.played_at ? new Date(track.played_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '--:--';
+                    
+                    row.innerHTML = `
+                        <span style="color:#eee;">${track.artist || 'Unknown'} - ${track.title || 'Track'}</span>
+                        <span style="color:#444;">${timeStr}</span>
                     `;
-                    recentBox.appendChild(trackRow);
+                    recentBox.appendChild(row);
                 });
+            } else if (recentBox) {
+                recentBox.innerHTML = '<div style="font-size:0.7rem; color:#444;">No recent history available.</div>';
             }
         }
     } catch (error) {
-        console.error("Metadata fetch failed", error);
+        console.error("Metadata fetch error:", error);
+        if (recentBox) recentBox.innerHTML = '<div style="font-size:0.7rem; color:#444;">Offline History</div>';
     }
 }
 
-// Initial Listener & Auto-Refresh
-if (playBtn) {
-    playBtn.addEventListener('click', togglePlayback);
-}
-setInterval(updateStationInfo, 30000); // Refresh every 30 seconds
-updateStationInfo(); // Run once on page load
-                        
+if (playBtn) { playBtn.addEventListener('click', togglePlayback); }
+setInterval(updateStationInfo, 30000);
+updateStationInfo();
