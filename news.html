@@ -3,140 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latest News | ROCK.SCOT</title>
+    <title>Music News | ROCK.SCOT</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            background-color: #000; 
-            color: #fff; 
-            margin: 0; 
-            padding: 0;
-            font-family: 'Oswald', sans-serif; 
-            overflow-x: hidden;
-        }
-        .container { 
-            width: 100%; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            padding: 0 15px; 
-            box-sizing: border-box;
-        }
-        #master-player {
-            background: #000;
-            border-bottom: 1px solid #1a1a1a;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-            width: 100%;
-        }
-        .logo-main {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-        .nav-menu {
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .nav-menu a {
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
-        .nav-menu a.active {
-            color: #ff3e00;
-            border-bottom: 2px solid #ff3e00;
-        }
+        body { background-color: #000; color: #fff; margin: 0; padding: 0; font-family: 'Oswald', sans-serif; overflow-x: hidden; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; box-sizing: border-box; }
+        #master-player { background: #000; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 2000; width: 100%; }
+        .logo-main { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto; }
+        .nav-menu { margin-top: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+        .nav-menu a { color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; font-size: 0.85rem; }
+        .nav-menu a.active { color: #ff3e00; border-bottom: 2px solid #ff3e00; }
         
-        /* NEWS SPECIFIC STYLES */
-        .news-header {
-            text-align: center;
-            padding: 30px 0 15px 0;
-        }
-        .news-header h1 {
-            font-size: 3rem;
-            text-transform: uppercase;
-            margin: 0;
-            color: #ff3e00;
-        }
-        .news-article {
-            background: #0a0a0a;
-            border-left: 3px solid #ff3e00;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .news-article h2 {
-            text-transform: uppercase;
-            margin: 0 0 10px 0;
-            font-size: 1.4rem;
-        }
-        .news-date {
-            color: #444;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 10px;
-        }
-        .news-content {
-            font-size: 0.95rem;
-            line-height: 1.4;
-            color: #ccc;
-        }
-
-        /* PRICING GRID */
-        .grid-ads {
-            display: flex;
-            flex-direction: row; 
-            justify-content: center;
-            gap: 8px;
-            margin: 40px 0;
+        /* TICKER STYLES */
+        .ticker-wrap {
             width: 100%;
+            overflow: hidden;
+            background-color: #111;
+            border-bottom: 1px solid #ff3e00;
+            padding: 8px 0;
+            margin-top: 15px;
         }
-        .grid-ads .card-ad {
-            flex: 1;
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            padding: 10px 5px;
-            text-align: center;
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation: ticker 60s linear infinite;
         }
-        .ad-label { text-transform: uppercase; font-size: 0.65rem; color: #888; margin: 0; }
-        .ad-price { font-size: 1.1rem; font-weight: 700; color: #ff3e00; margin: 2px 0; }
-
-        button#play-btn {
-            background: #ff3e00;
-            color: #000;
-            border: none;
-            padding: 6px 12px;
-            font-family: 'Oswald';
-            font-weight: 700;
+        .ticker-item {
+            display: inline-block;
+            padding: 0 30px;
+            font-size: 0.85rem;
+            color: #fff;
             text-transform: uppercase;
-            cursor: pointer;
-            font-size: 0.7rem;
         }
-        .footer-link { color: #444; text-decoration: none; font-size: 0.65rem; }
+        .ticker-item span { color: #ff3e00; font-weight: 700; margin-right: 10px; }
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        .news-header { text-align: center; padding: 20px 0 10px 0; }
+        .news-header h1 { font-size: 2.5rem; text-transform: uppercase; margin: 0; color: #ff3e00; }
+        .news-article { background: #0a0a0a; border-left: 3px solid #ff3e00; padding: 15px; margin-bottom: 15px; }
+        .news-article h2 { text-transform: uppercase; margin: 0 0 5px 0; font-size: 1.2rem; }
+        .news-article h2 a { color: #fff; text-decoration: none; }
+        .news-date { color: #ff3e00; font-size: 0.7rem; text-transform: uppercase; display: block; margin-bottom: 5px; font-weight: 700; }
+        .news-content { font-size: 0.9rem; line-height: 1.3; color: #ccc; }
+
+        .grid-ads { display: flex; gap: 8px; margin: 30px 0; }
+        .grid-ads .card-ad { flex: 1; background: #0a0a0a; border: 1px solid #1a1a1a; padding: 10px 5px; text-align: center; }
+        .ad-label { text-transform: uppercase; font-size: 0.6rem; color: #888; margin: 0; }
+        .ad-price { font-size: 1rem; font-weight: 700; color: #ff3e00; margin: 2px 0; }
+        button#play-btn { background: #ff3e00; color: #000; border: none; padding: 6px 12px; font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 0.7rem; }
     </style>
 </head>
 <body>
     <div id="master-player">
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
             <div style="display: flex; align-items: center; gap: 8px;">
-                <div>
-                    <span style="display: block; font-size: 0.45rem; color: #ff3e00; text-transform: uppercase;">Live Now</span>
-                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.65rem;">Ready to Rock</span>
-                </div>
+                <span style="display: block; font-size: 0.45rem; color: #ff3e00; text-transform: uppercase;">Live Now</span>
+                <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.65rem;">Ready to Rock</span>
             </div>
             <button id="play-btn">Listen</button>
         </div>
     </div>
 
-    <header style="padding: 15px 0;">
+    <header style="padding: 10px 0;">
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
             <nav class="nav-menu">
@@ -147,52 +79,78 @@
                 <a href="contact.html">Contact</a>
             </nav>
         </div>
+        <div class="ticker-wrap">
+            <div class="ticker" id="album-ticker">
+                <div class="ticker-item"><span>New Music</span> Loading Scottish Release Ticker...</div>
+            </div>
+        </div>
     </header>
 
     <main class="container">
-        <section class="news-header">
-            <h1>Latest Updates</h1>
-        </section>
-
-        <article class="news-article">
-            <span class="news-date">January 13, 2026</span>
-            <h2>Regional Expansion Confirmed</h2>
-            <div class="news-content">
-                We are proud to announce that ROCK.SCOT is expanding its regional coverage across Inverclyde, North Ayrshire, and South Lanarkshire. New local programming starting next month.
-            </div>
-        </article>
-
-        <article class="news-article">
-            <span class="news-date">January 10, 2026</span>
-            <h2>New Band Submission Portal</h2>
-            <div class="news-content">
-                Local bands can now submit their music directly through our new online portal. We are dedicated to playing loud and supporting the Scottish music scene.
-            </div>
-        </article>
+        <section class="news-header"><h1>Local Music Scene</h1></section>
+        <div id="news-feed-container">
+            <p style="text-align:center; color:#444;">Syncing Central Scotland Music News...</p>
+        </div>
 
         <div class="grid-ads">
-            <div class="card-ad">
-                <p class="ad-label">Regional</p>
-                <p class="ad-price">£199</p>
-            </div>
-            <div class="card-ad">
-                <p class="ad-label">Multi</p>
-                <p class="ad-price">£349</p>
-            </div>
-            <div class="card-ad">
-                <p class="ad-label">Creative</p>
-                <p class="ad-price">£195</p>
-            </div>
+            <div class="card-ad"><p class="ad-label">Regional</p><p class="ad-price">£199</p></div>
+            <div class="card-ad"><p class="ad-label">Multi</p><p class="ad-price">£349</p></div>
+            <div class="card-ad"><p class="ad-label">Creative</p><p class="ad-price">£195</p></div>
         </div>
     </main>
 
-    <footer style="padding: 20px 0; text-align: center;">
-        <div class="container">
-            <p style="color: #222; font-size: 0.6rem; text-transform: uppercase; margin-bottom: 5px;">&copy; 2026 ROCK.SCOT</p>
-            <a href="legal.html" class="footer-link">Privacy & Terms</a>
-        </div>
-    </footer>
+    <footer style="padding: 15px 0; text-align: center; color: #222; font-size: 0.6rem;">&copy; 2026 ROCK.SCOT</footer>
 
     <script src="player.js"></script>
+    <script>
+        const proxy = "https://api.allorigins.win/get?url=";
+
+        // LOAD ALBUM TICKER
+        async function loadTicker() {
+            const releaseFeed = "https://www.scottishmusicnetwork.co.uk/category/new-album-releases/feed/";
+            const ticker = document.getElementById('album-ticker');
+            try {
+                const res = await fetch(proxy + encodeURIComponent(releaseFeed));
+                const data = await res.json();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(data.contents, "text/xml");
+                const items = xml.querySelectorAll("item");
+                ticker.innerHTML = '';
+                items.forEach(item => {
+                    const title = item.querySelector("title").textContent;
+                    ticker.innerHTML += `<div class="ticker-item"><span>Release:</span> ${title}</div>`;
+                });
+            } catch (e) { ticker.innerHTML = '<div class="ticker-item"><span>ROCK.SCOT</span> Check back for new releases!</div>'; }
+        }
+
+        // LOAD NEWS FEED
+        async function loadNews() {
+            const feedUrl = "https://isthismusic.com/feed"; 
+            const container = document.getElementById('news-feed-container');
+            try {
+                const res = await fetch(proxy + encodeURIComponent(feedUrl));
+                const data = await res.json();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(data.contents, "text/xml");
+                const items = xml.querySelectorAll("item");
+                container.innerHTML = '';
+                items.forEach((item, index) => {
+                    if (index < 6) {
+                        const title = item.querySelector("title").textContent;
+                        const link = item.querySelector("link").textContent;
+                        const desc = item.querySelector("description") ? item.querySelector("description").textContent : "";
+                        const date = new Date(item.querySelector("pubDate").textContent).toLocaleDateString('en-GB');
+                        const article = document.createElement('article');
+                        article.className = 'news-article';
+                        article.innerHTML = `<span class="news-date">${date}</span><h2><a href="${link}" target="_blank">${title}</a></h2><div class="news-content">${desc.substring(0, 160)}...</div>`;
+                        container.appendChild(article);
+                    }
+                });
+            } catch (e) { container.innerHTML = '<p style="color:#444; text-align:center;">Feed offline. Stay Loud.</p>'; }
+        }
+        
+        loadTicker();
+        loadNews();
+    </script>
 </body>
 </html>
