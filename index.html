@@ -11,7 +11,7 @@
         #logo { width: 250px; height: auto; }
         .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
         nav { background: #0a0a0a; text-align: center; padding: 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
-        nav a { color: #888; margin: 0 20px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
+        nav a { color: #888; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; font-size: 0.85rem; }
         nav a:hover { color: var(--primary); }
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
         .event-ticker { background: linear-gradient(90deg, #111, #000); border: 1px solid #222; padding: 20px; margin-bottom: 40px; display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; }
@@ -24,7 +24,6 @@
         .news-content { padding: 25px; }
         .news-tag { color: var(--primary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
         .news-link { padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; }
-        .news-card:hover .news-link { background: var(--primary); color: #000; }
         footer { text-align: center; padding: 80px 20px; color: #444; border-top: 1px solid #111; }
     </style>
 </head>
@@ -34,8 +33,9 @@
     <div class="tagline">Rockin' Scotland</div>
 </header>
 <nav>
-    <a href="index.html">On Air</a>
+    <a href="index.html" style="color: var(--primary);">On Air</a>
     <a href="gig-calendar.html">Gigs</a>
+    <a href="submit.html">Submit</a>
     <a href="advertising.html">Advertise</a>
     <a href="contact.html">Contact</a>
 </nav>
