@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertise | Sla-rock.scot</title>
     <style>
-        :root { --primary: #ff3e00; --bg: #050505; }
-        body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; }
-        header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid var(--primary); }
+        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.05); }
+        body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
+        header { background: #000; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
         #logo { width: 250px; }
         .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; }
-        nav { background: #0a0a0a; text-align: center; padding: 15px; }
-        nav a { color: #888; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+        nav { background: #0a0a0a; text-align: center; padding: 20px; border-bottom: 1px solid #1a1a1a; }
+        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; }
         
-        /* AD PACKAGES TABLE */
-        .price-table { width: 100%; border-collapse: collapse; margin-top: 40px; background: #0a0a0a; }
-        .price-table th { text-align: left; padding: 20px; border-bottom: 2px solid var(--primary); color: var(--primary); text-transform: uppercase; }
-        .price-table td { padding: 20px; border-bottom: 1px solid #222; }
-        .price-tag { font-family: monospace; font-size: 1.5rem; font-weight: 900; }
-        
-        footer { text-align: center; padding: 60px; color: #444; }
+        /* STREAM REMAINS VISIBLE */
+        .stream-bar { background: #111; border-bottom: 2px solid #222; padding: 20px; display: flex; align-items: center; justify-content: center; gap: 30px; }
+        .dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        .price-card { background: var(--glass); border: 1px solid #222; padding: 40px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .price-card h3 { margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .price-val { font-size: 2.5rem; font-weight: 900; color: var(--primary); font-family: monospace; }
     </style>
 </head>
 <body>
@@ -29,23 +30,34 @@
     <div class="tagline">Rockin' Scotland</div>
 </header>
 <nav>
-    <a href="index.html">Music</a>
-    <a href="advertising.html" style="color: var(--primary);">Advertising</a>
+    <a href="index.html">On Air</a>
+    <a href="gig-calendar.html">Gigs</a>
+    <a href="advertising.html" style="color: var(--primary);">Advertise</a>
 </nav>
-<div class="container">
-    <h1>Partner with <span style="color: var(--primary);">Rockin' Scotland</span></h1>
-    <table class="price-table">
-        <thead>
-            <tr><th>Package</th><th>Investment</th><th>Coverage</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>Regional Airtime</td><td class="price-tag">£199</td><td>Central Belt FM/Web Slots</td></tr>
-            <tr><td>Multi-Regional</td><td class="price-tag">£349</td><td>Full Network Saturation</td></tr>
-            <tr><td>Creative Production</td><td class="price-tag">£195</td><td>Pro Script & Voiceover</td></tr>
-        </tbody>
-    </table>
 
-    <div id="pricing-component" style="margin-top: 80px;"></div>
+<section class="stream-bar">
+    <div style="font-weight: 900; display:flex; align-items:center; gap:10px;"><div class="dot"></div> LIVE STREAM</div>
+    <audio controls style="filter: invert(1); width: 350px; height: 35px;"><source src="https://uk3.broadcast.radio/8118/stream" type="audio/mpeg"></audio>
+</section>
+
+<div class="container">
+    <h1 style="font-size: 3rem; text-transform: uppercase;">Media <span style="color: var(--primary);">Investment</span></h1>
+    <p style="color: #888; margin-bottom: 40px;">Professional airtime and production for Central Scotland's music architecture.</p>
+
+    <div class="price-card">
+        <div><h3>Regional Airtime</h3><p style="color:#666; margin:0;">Targeted Central Belt Slots</p></div>
+        <div class="price-val">£199</div>
+    </div>
+    <div class="price-card">
+        <div><h3>Multi-Regional</h3><p style="color:#666; margin:0;">Full Network Saturation</p></div>
+        <div class="price-val">£349</div>
+    </div>
+    <div class="price-card">
+        <div><h3>Creative Production</h3><p style="color:#666; margin:0;">Pro Audio Engineering</p></div>
+        <div class="price-val">£195</div>
+    </div>
+
+    <div id="pricing-component" style="margin-top: 60px;"></div>
 </div>
 <footer>&copy; 2026 Sla-rock.scot | Rockin' Scotland</footer>
 <script src="pricing.js"></script>
