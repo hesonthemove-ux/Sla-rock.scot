@@ -6,8 +6,18 @@
     
     <title id="meta-title">ROCK.SCOT | Central Scotland's Loudest Rock Station</title>
     <meta name="description" id="meta-desc" content="Broadcasting the best rock and metal across Central Scotland. Regional airtime and professional sonic identity services.">
-    <meta name="keywords" content="Rock Radio Scotland, Central Scotland Music, Radio Advertising Glasgow, Scottish Rock Bands">
     
+    <meta property="og:type" content="music.radio_station">
+    <meta property="og:title" id="og-title" content="ROCK.SCOT | Central Scotland's Loudest">
+    <meta property="og:description" id="og-desc" content="Broadcasting the best rock and metal across Central Scotland.">
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg"> <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:site_name" content="ROCK.SCOT">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="tw-title" content="ROCK.SCOT | Central Scotland's Loudest">
+    <meta name="twitter:description" id="tw-desc" content="Broadcasting the best rock and metal across Central Scotland.">
+    <meta name="twitter:image" content="https://yourdomain.com/og-image.jpg">
+
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
@@ -16,7 +26,7 @@
         
         #master-player { background: #000; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 2000; width: 100%; }
         
-        /* ENLARGED LOGO - 600px MAX */
+        /* FIXED BRANDING IDENTITY */
         .logo-main { width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; }
         
         .nav-menu { margin-top: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; padding-bottom: 10px; }
@@ -25,6 +35,7 @@
 
         #page-content { min-height: 60vh; padding-top: 20px; }
 
+        /* FIXED PRICING TIERS */
         .grid-ads { display: flex; gap: 8px; margin: 40px 0; width: 100%; }
         .grid-ads .card-ad { flex: 1; background: #0a0a0a; border: 1px solid #1a1a1a; padding: 10px 5px; text-align: center; }
         .ad-label { text-transform: uppercase; font-size: 0.6rem; color: #888; margin: 0; }
@@ -70,13 +81,13 @@
 
     <script src="player.js"></script>
     <script>
-        // SEO MAPPINGS
+        // MASTER SEO & SOCIAL MAPPINGS
         const seoData = {
-            'home.html': { title: 'ROCK.SCOT | Central Scotland\'s Loudest Rock Station', desc: 'The home of Scottish rock. Stream live, get local music news, and explore advertising opportunities.' },
-            'news.html': { title: 'Music News | Central Scotland Music Feeds | ROCK.SCOT', desc: 'Stay updated with the latest music news and album releases from across Central Scotland.' },
-            'about.html': { title: 'About Us | The Voice of Scottish Rock | ROCK.SCOT', desc: 'Learn about ROCK.SCOT, our mission to support local talent, and our broadcast reach.' },
-            'advertise.html': { title: 'Advertise | Regional Market Penetration | ROCK.SCOT', desc: 'Targeted radio advertising in Central Scotland. Regional airtime from £199. Sonic Identity services.' },
-            'submit.html': { title: 'Submit Music | Local Talent Architecture | ROCK.SCOT', desc: 'Bands and artists: Submit your tracks for airplay on Central Scotland\'s loudest station.' }
+            'home.html': { title: 'ROCK.SCOT | Central Scotland\'s Loudest Rock Station', desc: 'Stream live Scottish rock. Local news, album releases, and regional advertising.' },
+            'news.html': { title: 'Music News | Central Scotland Music Feeds | ROCK.SCOT', desc: 'The latest album releases and music news from across Central Scotland.' },
+            'about.html': { title: 'About Us | The Voice of Scottish Rock | ROCK.SCOT', desc: 'Connecting Central Scotland through rock music and supporting local talent.' },
+            'advertise.html': { title: 'Advertise | Regional Market Penetration | ROCK.SCOT', desc: 'Regional airtime from £199. Multi-regional from £349. Custom creative for £195.' },
+            'submit.html': { title: 'Submit Music | Local Talent Architecture | ROCK.SCOT', desc: 'Get your band on the air. Direct submission architecture for Scottish artists.' }
         };
 
         async function loadPage(page, element) {
@@ -91,10 +102,18 @@
                 document.querySelectorAll('#main-nav a').forEach(a => a.classList.remove('active'));
                 if(element) element.classList.add('active');
 
-                // DYNAMIC SEO UPDATE
+                // DYNAMIC SEO & SOCIAL UPDATE
                 if (seoData[page]) {
-                    document.title = seoData[page].title;
-                    document.getElementById('meta-desc').setAttribute('content', seoData[page].desc);
+                    const data = seoData[page];
+                    // Update Title Tags
+                    document.title = data.title;
+                    document.getElementById('og-title').setAttribute('content', data.title);
+                    document.getElementById('tw-title').setAttribute('content', data.title);
+                    
+                    // Update Descriptions
+                    document.getElementById('meta-desc').setAttribute('content', data.desc);
+                    document.getElementById('og-desc').setAttribute('content', data.desc);
+                    document.getElementById('tw-desc').setAttribute('content', data.desc);
                 }
 
                 doc.querySelectorAll('script').forEach(oldScript => {
@@ -104,10 +123,9 @@
                     document.body.appendChild(newScript);
                 });
                 window.scrollTo(0,0);
-            } catch (err) { console.error("SEO Load Error:", err); }
+            } catch (err) { console.error("SPA Error:", err); }
         }
         window.onload = () => { loadPage('home.html', document.getElementById('home-link')); };
     </script>
 </body>
-    </html>
-    
+</html>
