@@ -8,37 +8,73 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="master-player">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+            <div id="now-playing" style="display: flex; align-items: center; gap: 15px;">
+                <div class="eq-container"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                <div>
+                    <span style="display: block; font-size: 0.6rem; color: #ff3e00; text-transform: uppercase; letter-spacing: 2px;">Live Now</span>
+                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Connecting...</span>
+                </div>
+            </div>
+            <button id="play-btn">Listen Live</button>
+        </div>
+    </div>
+
     <header>
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
             <nav class="nav-menu">
                 <a href="index.html">Listen</a>
-                <a href="sponsors.html" class="active">Sponsors</a>
+                <a href="news.html">Music Press</a>
                 <a href="advertise.html">Advertise</a>
-                <a href="contact.html">Contact</a>
+                <a href="sponsors.html" class="active">Sponsors</a>
             </nav>
         </div>
     </header>
 
     <main class="container">
         <section style="text-align: center; padding: 40px 0;">
-            <h1 class="hero-title">OUR<br>PARTNERS</h1>
-            <span class="sub-glow">Supporting Local Industry</span>
+            <h1 class="hero-title">FOUNDING<br>PARTNERS</h1>
+            <span class="sub-glow">Be the first to fuel the noise</span>
         </section>
 
-        <img src="venue.png" class="img-feature" alt="Live Rock Audience">
+        <div class="card-dark" style="text-align: center; border: 1px dashed #333; padding: 60px 20px;">
+            <h2 style="text-transform: uppercase; letter-spacing: 2px;">Your Logo Here</h2>
+            <p style="color: #666; max-width: 600px; margin: 20px auto;">
+                We are currently looking for <strong>Founding Partners</strong> in Inverclyde and Ayrshire. 
+                Sponsor a show, the traffic ticker, or the live stream and put your brand in front of 
+                thousands of local rock fans from day one.
+            </p>
+            <div style="margin-top: 30px;">
+                <a href="advertise.html" style="color: #ff3e00; text-decoration: none; font-weight: bold; text-transform: uppercase; border: 1px solid #ff3e00; padding: 10px 25px;">View Packages</a>
+            </div>
+        </div>
 
-        <section class="grid-layout">
-            <div class="card-dark" style="text-align: center;">
-                <div style="height: 100px; background: #111; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;">LOGO SPACE</div>
-                <h3>Headline Sponsor</h3>
-                <p>Supporting Rock.Scot across the West.</p>
+        <section class="grid-layout" style="margin-top: 40px;">
+            <div class="card-dark">
+                <h4 style="color: #ff3e00; text-transform: uppercase;">Show Sponsorship</h4>
+                <p style="font-size: 0.85rem;">Attach your business name to our Breakfast or Drive-Time slots. Constant brand association every single day.</p>
+            </div>
+            <div class="card-dark">
+                <h4 style="color: #ff3e00; text-transform: uppercase;">Digital Partner</h4>
+                <p style="font-size: 0.85rem;">Get your logo locked onto our web player and mobile app. Direct clicks to your website.</p>
+            </div>
+            <div class="card-dark">
+                <h4 style="color: #ff3e00; text-transform: uppercase;">Event Partner</h4>
+                <p style="font-size: 0.85rem;">When we go out into the West for live broadcasts and gigs, your brand comes with us.</p>
             </div>
         </section>
+
+        <div style="text-align: center; margin: 60px 0;">
+            <p style="font-size: 0.9rem; color: #444;">Contact <strong>studio@rock.scot</strong> for bespoke partnership opportunities.</p>
+        </div>
     </main>
 
     <footer>
-        <div class="container">&copy; 2026 ROCK.SCOT</div>
+        <div class="container" style="text-align: center; padding: 40px 0; color: #444;">
+            <p>&copy; 2026 ROCK.SCOT | Supporting Local Business</p>
+        </div>
     </footer>
 
     <script src="player.js"></script>
