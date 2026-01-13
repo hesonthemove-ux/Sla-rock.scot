@@ -5,49 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gigs | Sla-rock.scot</title>
     <style>
-        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
+        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.05); }
         body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
-        header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid var(--primary); }
-        #logo { width: 250px; height: auto; }
-        .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
-        nav { background: #0a0a0a; text-align: center; padding: 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
-        nav a { color: #888; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; font-size: 0.85rem; }
+        
+        header { background: #000; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        #logo { width: 280px; height: auto; }
+        .tagline { font-size: 2rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 5px; margin-top: 10px; }
+
+        nav { background: #0a0a0a; text-align: center; padding: 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
+        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; font-size: 0.9rem; }
         nav a:hover { color: var(--primary); }
+
+        /* SLA STREAM BAR */
+        .stream-bar { background: #111; border-bottom: 2px solid #222; padding: 25px; display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .on-air-status { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: 1px; }
+        .dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-        .featured-show { background: linear-gradient(90deg, rgba(255,62,0,0.2) 0%, rgba(0,0,0,0) 100%); padding: 40px; border-left: 5px solid var(--primary); margin-bottom: 50px; }
-        .gig-row { display: grid; grid-template-columns: 120px 1fr 200px 150px; padding: 25px; background: var(--glass); border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; align-items: center; }
-        .gig-date { font-weight: 900; color: var(--primary); text-transform: uppercase; font-size: 1.2rem; }
-        .gig-date span { display: block; font-size: 0.8rem; color: #888; }
-        .ticket-link { border: 1px solid var(--primary); color: var(--primary); padding: 10px; text-align: center; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 0.7rem; }
-        .ticket-link:hover { background: var(--primary); color: #000; }
-        footer { text-align: center; padding: 80px 20px; color: #444; border-top: 1px solid #111; }
+
+        .gig-list { margin-top: 40px; }
+        .gig-row { 
+            display: grid; 
+            grid-template-columns: 100px 1fr 200px 150px; 
+            background: var(--glass); 
+            border: 1px solid #1a1a1a; 
+            margin-bottom: 10px; 
+            align-items: center; 
+            padding: 20px;
+            transition: 0.3s;
+        }
+        .gig-row:hover { border-color: var(--primary); background: rgba(255,62,0,0.02); }
+        .date-box { font-weight: 900; color: var(--primary); line-height: 1; }
+        .date-box span { display: block; font-size: 0.7rem; color: #666; text-transform: uppercase; margin-top: 5px; }
+        
+        .ticket-btn { 
+            background: transparent; border: 1px solid var(--primary); color: var(--primary); 
+            padding: 10px; text-decoration: none; text-align: center; font-weight: 900; 
+            text-transform: uppercase; font-size: 0.7rem; transition: 0.3s;
+        }
+        .ticket-btn:hover { background: var(--primary); color: #000; }
+
+        footer { text-align: center; padding: 60px; color: #333; font-weight: 900; border-top: 1px solid #111; }
     </style>
 </head>
 <body>
+
 <header>
     <img src="logo.png" alt="Sla-rock.scot" id="logo">
     <div class="tagline">Rockin' Scotland</div>
 </header>
+
 <nav>
     <a href="index.html">On Air</a>
     <a href="gig-calendar.html" style="color: var(--primary);">Gigs</a>
+    <a href="venues.html">Venues</a>
     <a href="submit.html">Submit</a>
     <a href="advertising.html">Advertise</a>
-    <a href="contact.html">Contact</a>
 </nav>
+
+<section class="stream-bar">
+    <div class="on-air-status"><div class="dot"></div> LIVE NOW</div>
+    <audio controls style="filter: invert(1); width: 350px; height: 35px;">
+        <source src="https://uk3.broadcast.radio/8118/stream" type="audio/mpeg">
+    </audio>
+</section>
+
 <div class="container">
-    <section class="featured-show">
-        <h1 style="font-size: 3rem; margin: 0; text-transform: uppercase;">The Cure <span style="color:#888;">@ Edinburgh</span></h1>
-    </section>
-    <div class="gig-row">
-        <div class="gig-date">24<span>JAN 2026</span></div>
-        <div><h3>Heavy Lungs</h3><p>Post-punk at the Gallowgate.</p></div>
-        <div style="color:#888; text-transform:uppercase; font-size:0.8rem;">Barrowlands, Glasgow</div>
-        <a href="#" class="ticket-link">Tickets</a>
+    <h2 style="font-size: 3rem; text-transform: uppercase;">Central Belt <span style="color: var(--primary);">Gig Guide</span></h2>
+    
+    
+
+    <div class="gig-list">
+        <div class="gig-row">
+            <div class="date-box">18<span>JAN 26</span></div>
+            <div><h3 style="margin:0; text-transform: uppercase;">The Snuts</h3><p style="margin:0; font-size: 0.8rem; color: #888;">High energy indie-rock takeover.</p></div>
+            <div style="font-weight: bold; color: #ccc;">Barrowlands, Glasgow</div>
+            <a href="#" class="ticket-btn">Get Tickets</a>
+        </div>
+
+        <div class="gig-row">
+            <div class="date-box">22<span>JAN 26</span></div>
+            <div><h3 style="margin:0; text-transform: uppercase;">Dead Pony</h3><p style="margin:0; font-size: 0.8rem; color: #888;">Post-punk chaos in the capital.</p></div>
+            <div style="font-weight: bold; color: #ccc;">Sneaky Pete's, Edin</div>
+            <a href="#" class="ticket-btn">Get Tickets</a>
+        </div>
     </div>
-    <div id="pricing-component" style="margin-top:50px;"></div>
 </div>
-<footer><p>&copy; 2026 Sla-rock.scot | Rockin' Scotland</p></footer>
-<script src="pricing.js"></script>
+
+<footer>&copy; 2026 Sla-rock.scot | Rockin' Scotland</footer>
 </body>
 </html>
