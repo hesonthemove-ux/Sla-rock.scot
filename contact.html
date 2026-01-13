@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Sla-rock.scot</title>
     <style>
-        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
+        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.05); }
         body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
-        header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid var(--primary); }
-        #logo { width: 250px; height: auto; }
-        .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
-        nav { background: #0a0a0a; text-align: center; padding: 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
-        nav a { color: #888; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; font-size: 0.85rem; }
-        nav a:hover { color: var(--primary); }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-        .contact-wrapper { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); padding: 50px; }
-        input, select, textarea { width: 100%; padding: 15px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; }
-        button { background: var(--primary); color: #000; border: none; padding: 20px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; }
-        footer { text-align: center; padding: 80px 20px; color: #444; border-top: 1px solid #111; }
+        header { background: #000; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        #logo { width: 250px; }
+        .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; }
+        nav { background: #0a0a0a; text-align: center; padding: 20px; border-bottom: 1px solid #1a1a1a; position: sticky; top:0; z-index:100; }
+        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; }
+        
+        .stream-bar { background: #111; border-bottom: 2px solid #222; padding: 20px; display: flex; align-items: center; justify-content: center; gap: 30px; }
+        .dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; }
+        
+        .container { max-width: 800px; margin: 0 auto; padding: 60px 20px; text-align: center; }
+        .contact-details { margin-top: 40px; background: var(--glass); padding: 50px; border: 1px solid #222; }
+        .contact-details h3 { color: var(--primary); text-transform: uppercase; font-size: 2rem; margin-top: 0; }
+        .contact-details p { font-size: 1.2rem; color: #ccc; }
     </style>
 </head>
 <body>
@@ -28,27 +30,27 @@
 <nav>
     <a href="index.html">On Air</a>
     <a href="gig-calendar.html">Gigs</a>
-    <a href="submit.html">Submit</a>
-    <a href="advertising.html">Advertise</a>
+    <a href="venues.html">Venues</a>
     <a href="contact.html" style="color: var(--primary);">Contact</a>
+    <a href="advertising.html">Advertise</a>
 </nav>
+
+<section class="stream-bar">
+    <div style="font-weight: 900; display:flex; align-items:center; gap:10px;"><div class="dot"></div> LIVE STREAM</div>
+    <audio controls style="filter: invert(1); width: 350px; height: 35px;"><source src="https://uk3.broadcast.radio/8118/stream" type="audio/mpeg"></audio>
+</section>
+
 <div class="container">
-    <div class="contact-wrapper">
-        <form>
-            <input type="text" placeholder="Name" required>
-            <input type="email" placeholder="Email" required>
-            <select>
-                <option>Regional Airtime (£299)</option>
-                <option>Multi-Regional (£449)</option>
-                <option>Creative (£195)</option>
-            </select>
-            <textarea rows="5" placeholder="Message"></textarea>
-            <button type="submit">Send</button>
-        </form>
+    <h1 style="font-size: 3rem; text-transform: uppercase;">Get in <span style="color: var(--primary);">Touch</span></h1>
+    <div class="contact-details">
+        <h3>General Enquiries</h3>
+        <p>Email: studio@sla-rock.scot</p>
+        <p>Location: Central Scotland Broadcast Hub</p>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+        <h3>Advertising Team</h3>
+        <p>Regional & Multi-Regional Enquiries: ads@sla-rock.scot</p>
     </div>
-    <div id="pricing-component" style="margin-top:40px;"></div>
 </div>
-<footer><p>&copy; 2026 Sla-rock.scot | Rockin' Scotland</p></footer>
-<script src="pricing.js"></script>
+<footer>&copy; 2026 Sla-rock.scot | Rockin' Scotland</footer>
 </body>
 </html>
