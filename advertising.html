@@ -3,31 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advertising | Sla-rock.scot</title>
+    <title>Advertise | Sla-rock.scot</title>
     <style>
-        /* CORE LAYOUT - FIXED POSITIONS */
-        body { font-family: 'Arial', sans-serif; margin: 0; background-color: #050505; color: #eeeeee; line-height: 1.6; }
-        header { background-color: #000; padding: 30px 20px; text-align: center; border-bottom: 4px solid #ff3e00; }
-        #logo { width: 250px; height: auto; display: block; margin: 0 auto; }
-        .tagline { font-size: 1.8rem; color: #ff3e00; font-weight: 800; text-transform: uppercase; margin-top: 15px; letter-spacing: 2px; }
-        nav { background: #111; text-align: center; padding: 15px; border-bottom: 1px solid #222; }
-        nav a { color: #fff; margin: 0 20px; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
-        nav a:hover { color: #ff3e00; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
+        body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
+        
+        header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid var(--primary); }
+        #logo { width: 250px; height: auto; }
+        .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
 
-        /* NEWS SECTION STYLE */
-        .news-container { padding: 40px 0; text-align: left; }
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
-        .news-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 0; display: flex; flex-direction: column; transition: 0.3s; }
-        .news-card:hover { border-color: #ff3e00; transform: translateY(-5px); }
-        .news-content { padding: 20px; }
-        .news-tag { color: #ff3e00; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
-        .news-card h3 { margin: 10px 0; font-size: 1.2rem; line-height: 1.2; text-transform: uppercase; color: #fff; }
-        .news-card p { color: #888; font-size: 0.9rem; line-height: 1.5; }
-        .news-link { color: #fff; text-decoration: none; font-weight: 700; font-size: 0.8rem; margin-top: auto; border-top: 1px solid #111; padding: 15px 20px; display: block; text-transform: uppercase; text-align: center; }
-        .news-link:hover { background: #ff3e00; color: #000; }
+        nav { background: #0a0a0a; text-align: center; padding: 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
+        nav a { color: #888; margin: 0 20px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
+        nav a:hover { color: var(--primary); }
 
-        footer { text-align: center; padding: 60px 20px; background: #000; color: #444; font-size: 0.8rem; border-top: 1px solid #111; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        /* Advertising Content Block */
+        .ad-hero { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1514525253361-bee873830db0?auto=format&fit=crop&w=1200&q=80'); background-size: cover; padding: 60px; border: 1px solid #222; margin-bottom: 40px; text-align: center; }
+        
+        /* News Grid (Restored & Enhanced) */
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 40px; }
+        .news-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); transition: 0.4s; display: flex; flex-direction: column; }
+        .news-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .news-content { padding: 25px; }
+        .news-tag { color: var(--primary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
+        .news-link { padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; }
+        .news-card:hover .news-link { background: var(--primary); color: #000; }
+
+        footer { text-align: center; padding: 80px 20px; color: #444; border-top: 1px solid #111; }
     </style>
 </head>
 <body>
@@ -38,60 +41,58 @@
 </header>
 
 <nav>
-    <a href="index.html">Live Radio</a>
-    <a href="advertising.html" style="color:#ff3e00;">Advertising</a>
+    <a href="index.html">On Air</a>
+    <a href="advertising.html" style="color: var(--primary);">Advertise</a>
     <a href="contact.html">Contact</a>
 </nav>
 
 <div class="container">
-    <h1 style="text-transform: uppercase; font-size: 2.5rem;">Commercial <span style="color:#ff3e00;">Opportunities</span></h1>
-    <p>Partner with Sla-rock.scot to reach a dedicated rock audience across Central Scotland.</p>
+    <section class="ad-hero">
+        <h1 style="font-size: 3.5rem; text-transform: uppercase; margin: 0;">Dominate the <span style="color: var(--primary);">Airwaves</span></h1>
+        <p style="font-size: 1.2rem; color: #ccc; max-width: 800px; margin: 20px auto;">Join Central Scotland's fastest-growing rock platform. From Glasgow Green to the Edinburgh circuit, we put your brand in front of a dedicated, high-value audience.</p>
+    </section>
 
     <div id="pricing-component"></div>
 
-    <main>
-        <div class="news-container">
-            <h2 style="font-size: 2rem; text-transform: uppercase;">LATEST <span style="color:#ff3e00;">ROCK UPDATES</span></h2>
-            <div class="news-grid">
-                <div class="news-card">
-                    <div class="news-content">
-                        <span class="news-tag">Glasgow Green</span>
-                        <h3>TRNSMT 2026: Lewis Capaldi & Rock Headliners</h3>
-                        <p>Latest updates on the lineup. Rumours suggest a heavy rock presence to celebrate the festival's anniversary.</p>
-                    </div>
-                    <a href="#" class="news-link">Read Full Story</a>
+    <main class="news-container">
+        <h2 style="font-size: 2.5rem; text-transform: uppercase; margin-bottom: 30px;">Why <span style="color:var(--primary);">Sla-Rock?</span></h2>
+        <div class="news-grid">
+            <div class="news-card">
+                <div class="news-content">
+                    <span class="news-tag">Local Impact</span>
+                    <h3>Hyper-Targeted Reach</h3>
+                    <p>Our Regional Airtime (£299) focuses exclusively on the Central Belt music fans who drive the local economy.</p>
                 </div>
-                <div class="news-card">
-                    <div class="news-content">
-                        <span class="news-tag">Edinburgh Gigs</span>
-                        <h3>Summer Sessions: The Cure at Royal Highland</h3>
-                        <p>Edinburgh prepares for its biggest summer yet as <strong>The Cure</strong> are confirmed for the 2026 Summer Sessions.</p>
-                    </div>
-                    <a href="#" class="news-link">Read Full Story</a>
+            </div>
+            <div class="news-card">
+                <div class="news-content">
+                    <span class="news-tag">Production</span>
+                    <h3>Professional Creative</h3>
+                    <p>Our £195 Creative package includes full scriptwriting and studio production for your radio spots.</p>
                 </div>
-                <div class="news-card">
-                    <div class="news-content">
-                        <span class="news-tag">Unsigned Rock</span>
-                        <h3>The Next Big Thing: Glasgow Circuit</h3>
-                        <p>We track the unsigned bands ready to break out of the Central Belt rock scene from SWG3 to the O2 Academy.</p>
-                    </div>
-                    <a href="#" class="news-link">Read Full Story</a>
+            </div>
+            <div class="news-card">
+                <div class="news-content">
+                    <span class="news-tag">Glasgow Green</span>
+                    <h3>TRNSMT 2026: Rock Lineup</h3>
+                    <p>Position your brand alongside the biggest festival updates in Central Scotland.</p>
                 </div>
-                <div class="news-card" style="border-color: #333;">
-                    <div class="news-content">
-                        <span class="news-tag">Global Rock News</span>
-                        <h3>Foo Fighters Announce 2026 World Tour</h3>
-                        <p>Dave Grohl confirms a massive global stadium run for the summer of 2026, with a high-profile stop expected at <strong>Hampden Park</strong>.</p>
-                    </div>
-                    <a href="#" class="news-link">Read Global Updates</a>
+                <a href="#" class="news-link">Full Story</a>
+            </div>
+            <div class="news-card">
+                <div class="news-content">
+                    <span class="news-tag">World Tour</span>
+                    <h3>Foo Fighters 2026</h3>
+                    <p>Dave Grohl confirms Hampden Park. Advertise now to capture the summer concert hype.</p>
                 </div>
+                <a href="#" class="news-link">Full Story</a>
             </div>
         </div>
     </main>
 </div>
 
 <footer>
-    <p>&copy; 2026 Sla-rock.scot | Tagline: Rockin' Scotland</p>
+    <p>&copy; 2026 Sla-rock.scot | Corporate Identity Locked | hesonthemove-ux</p>
 </footer>
 
 <script src="pricing.js"></script>
