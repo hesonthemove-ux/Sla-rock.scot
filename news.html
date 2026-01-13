@@ -1,81 +1,86 @@
 <main>
     <style>
-        /* Ticker specific to this view */
-        .ticker-wrap { width: 100%; overflow: hidden; background: #111; border-bottom: 1px solid #ff3e00; padding: 8px 0; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 120s linear infinite; }
-        .ticker-item { display: inline-block; padding: 0 50px; font-size: 0.85rem; text-transform: uppercase; }
-        .ticker-item span { color: #ff3e00; font-weight: 700; margin-right: 10px; }
+        .ticker-wrap { width: 100%; overflow: hidden; background: #111; border-bottom: 1px solid #ff3e00; padding: 10px 0; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 90s linear infinite; }
+        .ticker-item { display: inline-block; padding: 0 40px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .ticker-item span { color: #ff3e00; font-weight: 700; margin-right: 8px; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .news-header { text-align: center; padding: 20px 0; }
-        .news-header h1 { font-size: 2.5rem; text-transform: uppercase; color: #ff3e00; margin: 0; }
-        .news-article { background: #0a0a0a; border-left: 3px solid #ff3e00; padding: 15px; margin-bottom: 15px; }
-        .news-article h2 { text-transform: uppercase; margin: 0 0 5px 0; font-size: 1.2rem; }
-        .news-article h2 a { color: #fff; text-decoration: none; }
-        .news-date { color: #ff3e00; font-size: 0.7rem; text-transform: uppercase; display: block; font-weight: 700; }
-        .news-content { font-size: 0.9rem; color: #ccc; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+        .news-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 20px; transition: 0.3s; }
+        .news-card:hover { border-color: #333; background: #0d0d0d; }
+        .news-card h2 { font-size: 1.1rem; text-transform: uppercase; margin: 10px 0; line-height: 1.3; }
+        .news-card h2 a { color: #fff; text-decoration: none; }
+        .news-card h2 a:hover { color: #ff3e00; }
+        .news-date { color: #ff3e00; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+        .news-excerpt { font-size: 0.85rem; color: #888; line-height: 1.5; }
     </style>
 
     <div class="ticker-wrap">
-        <div class="ticker" id="album-ticker">
-            <div class="ticker-item"><span>NEW RELEASES</span> Syncing Scottish Album Ticker...</div>
+        <div class="ticker" id="news-ticker">
+            <div class="ticker-item"><span>SCOTTISH ALBUMS</span> Syncing Central Scotland Release Feed...</div>
         </div>
     </div>
 
     <div class="container">
-        <section class="news-header"><h1>Music News</h1></section>
-        <div id="news-feed-container">
-            <p style="text-align:center; color:#444; padding: 40px 0;">Loading Central Scotland Music Feed...</p>
+        <div style="text-align: center; padding: 40px 0;">
+            <h1 style="font-size: 3rem; text-transform: uppercase; margin: 0;">Music News</h1>
+            <p style="color: #ff3e00; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">Central Scotland Intelligence</p>
+        </div>
+
+        <div id="central-news-feed" class="news-grid">
+            <p style="grid-column: 1/-1; text-align: center; padding: 50px; color: #444;">Aggregating Scottish Music Network...</p>
         </div>
     </div>
 
     <script>
         (function() {
             const proxy = "https://corsproxy.io/?";
+            const feedUrl = "https://www.scottishmusicnetwork.co.uk/feed/";
             
-            async function loadTicker() {
-                const releaseFeed = "https://www.scottishmusicnetwork.co.uk/category/new-album-releases/feed/";
-                const ticker = document.getElementById('album-ticker');
-                try {
-                    const res = await fetch(proxy + encodeURIComponent(releaseFeed));
-                    const text = await res.text();
-                    const xml = new DOMParser().parseFromString(text, "text/xml");
-                    const items = xml.querySelectorAll("item");
-                    if(items.length > 0) {
-                        let content = '';
-                        items.forEach(item => {
-                            content += `<div class="ticker-item"><span>NEW RELEASE:</span> ${item.querySelector("title").textContent}</div>`;
-                        });
-                        ticker.innerHTML = content + content;
-                    }
-                } catch (e) { ticker.innerHTML = '<div class="ticker-item"><span>ROCK.SCOT</span> Local Music News Loading...</div>'; }
-            }
-
-            async function loadNews() {
-                const feedUrl = "https://isthismusic.com/feed"; 
-                const container = document.getElementById('news-feed-container');
+            async function fetchNews() {
                 try {
                     const res = await fetch(proxy + encodeURIComponent(feedUrl));
                     const text = await res.text();
                     const xml = new DOMParser().parseFromString(text, "text/xml");
                     const items = xml.querySelectorAll("item");
-                    if(items.length > 0) {
-                        container.innerHTML = '';
-                        items.forEach((item, index) => {
-                            if (index < 6) {
-                                const title = item.querySelector("title").textContent;
-                                const link = item.querySelector("link").textContent;
-                                let desc = item.querySelector("description") ? item.querySelector("description").textContent : "";
-                                desc = desc.replace(/<[^>]*>?/gm, '').substring(0, 160);
-                                const date = new Date(item.querySelector("pubDate").textContent).toLocaleDateString('en-GB');
-                                container.innerHTML += `<article class="news-article"><span class="news-date">${date}</span><h2><a href="${link}" target="_blank">${title}</a></h2><div class="news-content">${desc}...</div></article>`;
-                            }
-                        });
-                    }
-                } catch (e) { container.innerHTML = '<p style="text-align:center; padding: 40px 0;">Feed Temporarily Offline.</p>'; }
+                    
+                    const ticker = document.getElementById('news-ticker');
+                    const feed = document.getElementById('central-news-feed');
+                    
+                    let tickerHTML = '';
+                    let gridHTML = '';
+
+                    items.forEach((item, i) => {
+                        const title = item.querySelector("title").textContent;
+                        const link = item.querySelector("link").textContent;
+                        const pubDate = new Date(item.querySelector("pubDate").textContent).toLocaleDateString('en-GB');
+                        let desc = item.querySelector("description").textContent.replace(/<[^>]*>?/gm, '').substring(0, 120);
+
+                        // Populate Ticker (First 10 items)
+                        if (i < 10) {
+                            tickerHTML += `<div class="ticker-item"><span>BREAKING:</span> ${title}</div>`;
+                        }
+
+                        // Populate Grid (First 9 items)
+                        if (i < 9) {
+                            gridHTML += `
+                                <article class="news-card">
+                                    <span class="news-date">${pubDate}</span>
+                                    <h2><a href="${link}" target="_blank">${title}</a></h2>
+                                    <p class="news-excerpt">${desc}...</p>
+                                </article>`;
+                        }
+                    });
+
+                    ticker.innerHTML = tickerHTML + tickerHTML; // Double for loop
+                    feed.innerHTML = gridHTML;
+
+                } catch (e) {
+                    document.getElementById('central-news-feed').innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>Feed offline. Checking frequency...</p>";
+                }
             }
-            loadTicker();
-            loadNews();
+            fetchNews();
         })();
     </script>
 </main>
