@@ -1,12 +1,12 @@
 /**
- * Sla-rock.scot Pricing Architecture 2026
- * Rates: £199 Regional | £349 Multi-Regional | £195 Creative
- * Note: Non-VAT Registered
+ * Sla-rock.scot Locked Pricing Architecture 2026
+ * Rates: £299 Regional | £449 Multi-Regional | £195 Creative
+ * Status: Non-VAT Registered (LOCKED)
  */
 
 const rates = {
-    regional: 199.00,
-    multi: 349.00,
+    regional: 299.00,
+    multi: 449.00,
     creative: 195.00
 };
 
@@ -16,15 +16,15 @@ function initCalculator() {
 
     container.innerHTML = `
         <div style="background: rgba(255,255,255,0.03); border: 1px solid #222; padding: 40px; color: #fff; font-family: 'Inter', sans-serif;">
-            <h2 style="text-transform: uppercase; margin-top: 0; color: #ff3e00;">Package Calculator</h2>
-            <p style="color: #888; font-size: 0.9rem; margin-bottom: 30px;">Select your broadcast requirements below. No VAT applicable.</p>
+            <h2 style="text-transform: uppercase; margin-top: 0; color: #ff3e00;">Rate Calculator</h2>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 30px;">Select your broadcast territory. No VAT applicable.</p>
             
             <div style="margin-bottom: 20px;">
                 <label style="display:block; text-transform: uppercase; font-size: 0.7rem; font-weight: 900; margin-bottom: 10px;">Airtime Territory</label>
                 <select id="airtime-select" style="width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; font-weight: bold; font-size: 1rem;">
                     <option value="0">None</option>
-                    <option value="${rates.regional}">Regional Airtime (£199)</option>
-                    <option value="${rates.multi}">Multi-Regional Airtime (£349)</option>
+                    <option value="${rates.regional}">Regional Airtime (£299)</option>
+                    <option value="${rates.multi}">Multi-Regional Airtime (£449)</option>
                 </select>
             </div>
 
@@ -41,8 +41,6 @@ function initCalculator() {
                     <span id="grand-total">£0.00</span>
                 </div>
             </div>
-            
-            <p style="font-size: 0.65rem; color: #555; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px;">Broadcast slots are subject to availability. Rockin' Scotland 2026.</p>
         </div>
     `;
 
