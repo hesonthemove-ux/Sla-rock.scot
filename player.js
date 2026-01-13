@@ -1,30 +1,32 @@
 const streamUrl = "HTTPS://uksouth.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd"; 
+const audio = new Audio(streamUrl);
 const playBtn = document.getElementById('play-btn');
 const trackTitle = document.getElementById('track-title');
 
-// POPUP PLAYER LOGIC
-// This keeps the music playing even when the user changes pages on the main site.
-function openPlayer() {
-    const width = 400;
-    const height = 600;
-    const left = (screen.width / 2) - (width / 2);
-    const top = (screen.height / 2) - (height / 2);
-    
-    window.open(
-        'player-window.html', 
-        'RockScotPlayer', 
-        `width=${width},height=${height},top=${top},left=${left},menubar=no,status=no,toolbar=no`
-    );
+let isPlaying = false;
+
+// THE FIX: Standard in-page play/stop logic (No Popups)
+function toggleAudio() {
+    if (isPlaying) {
+        audio.pause();
+        playBtn.innerText = "Listen";
+        playBtn.style.background = "#ff3e00";
+    } else {
+        audio.play().catch(e => console.error("Playback failed:", e));
+        playBtn.innerText = "Stop";
+        playBtn.style.background = "#fff"; // White when playing
+    }
+    isPlaying = !isPlaying;
 }
 
 if (playBtn) {
     playBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        openPlayer();
+        toggleAudio();
     });
 }
 
-// Keep the "Now Playing" text updated on the main site even if they aren't in the popup
+// METADATA SYNC (Updates the artist/track name every 30s)
 async function updateGlobalStatus() {
     const stationId = "16641";
     const proxy = "https://corsproxy.io/?";
