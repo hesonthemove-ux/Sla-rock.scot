@@ -3,107 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title id="meta-title">ROCK.SCOT | Rockin' Scotland</title>
-    <meta name="description" id="meta-desc" content="All genres. All rock. Serving the public and breaking unsigned talent. Regional airtime from £299. Rockin' Scotland live.">
-    
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#000000">
-    <link rel="canonical" href="https://rock.scot/">
-
-    <meta property="og:type" content="music.radio_station">
-    <meta property="og:title" id="og-title" content="ROCK.SCOT | Rockin' Scotland">
-    <meta property="og:description" id="og-desc" content="Pure Scottish Rock. All Genres. Serving the Public. Airtime from £299.">
-    <meta property="og:image" content="og-image.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-
+    <meta name="description" id="meta-desc" content="Central Scotland's Rock Station. Regional airtime from £199. Multi-regional from £349.">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* GLOBAL LAYOUT LOCK */
         * { box-sizing: border-box; }
-        body { 
-            background-color: #000; 
-            color: #fff; 
-            margin: 0; 
-            padding: 0; 
-            font-family: 'Oswald', sans-serif; 
-            overflow-x: hidden; 
-        }
+        body { background-color: #000; color: #fff; margin: 0; padding: 0; font-family: 'Oswald', sans-serif; overflow-x: hidden; }
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
         
         /* PLAYER BAR */
-        #master-player { 
-            background: #000; 
-            border-bottom: 1px solid #1a1a1a; 
-            position: sticky; 
-            top: 0; 
-            z-index: 2000; 
-            width: 100%; 
-        }
+        #master-player { background: #000; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 2000; width: 100%; }
         
-        /* CORPORATE IDENTITY - 600px LOGO LOCK */
+        /* LOGO PUSH - 900px */
         .logo-main { 
             width: 100%; 
-            max-width: 600px; 
+            max-width: 900px; 
             height: auto; 
             display: block; 
             margin: 0 auto; 
+            filter: drop-shadow(0 0 10px rgba(255, 62, 0, 0.1));
         }
         
+        /* NAV MENU PUSH - Larger to match 900px logo */
         .nav-menu { 
-            margin-top: 15px; 
+            margin-top: 25px; 
             display: flex; 
             justify-content: center; 
             flex-wrap: wrap; 
-            gap: 12px; 
-            padding-bottom: 10px;
+            gap: 40px; /* Increased gap */
+            padding-bottom: 20px;
         }
         .nav-menu a { 
             color: #fff; 
             text-decoration: none; 
             text-transform: uppercase; 
             font-weight: 700; 
-            font-size: 0.85rem; 
+            font-size: 1.4rem; /* Pushed font size from 0.85rem */
+            letter-spacing: 2px;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
+            border-bottom: 3px solid transparent; /* Thicker border */
+            transition: 0.3s;
         }
-        .nav-menu a.active { color: #ff3e00; border-bottom: 2px solid #ff3e00; }
+        .nav-menu a.active { color: #ff3e00; border-bottom: 3px solid #ff3e00; }
+        .nav-menu a:hover { color: #ff3e00; }
 
         #page-content { min-height: 60vh; padding-top: 20px; }
 
-        /* PRICING FOOTER */
-        .grid-ads { display: flex; gap: 8px; margin: 40px 0; width: 100%; }
+        /* PRICING FOOTER - FIXED TO £199 / £349 */
+        .grid-ads { display: flex; gap: 15px; margin: 40px 0; width: 100%; }
         .grid-ads .card-ad { 
             flex: 1; 
             background: #0a0a0a; 
             border: 1px solid #1a1a1a; 
-            padding: 10px 5px; 
+            padding: 20px 10px; 
             text-align: center; 
         }
-        .ad-label { text-transform: uppercase; font-size: 0.6rem; color: #888; margin: 0; }
-        .ad-price { font-size: 1rem; font-weight: 700; color: #ff3e00; margin: 2px 0; }
+        .ad-label { text-transform: uppercase; font-size: 0.8rem; color: #888; margin: 0; }
+        .ad-price { font-size: 1.5rem; font-weight: 700; color: #ff3e00; margin: 5px 0; }
         
         button#play-btn { 
-            background: #ff3e00; color: #000; border: none; padding: 6px 12px; 
+            background: #ff3e00; color: #000; border: none; padding: 10px 20px; 
             font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; 
-            cursor: pointer; font-size: 0.7rem; 
+            cursor: pointer; font-size: 0.9rem; 
         }
-        .footer-legal { color: #222; font-size: 0.6rem; text-decoration: none; cursor: pointer; }
-        .footer-legal:hover { color: #444; }
+
+        /* MOBILE FIX */
+        @media (max-width: 768px) {
+            .logo-main { max-width: 450px; }
+            .nav-menu { gap: 15px; }
+            .nav-menu a { font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
 
     <div id="master-player">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.65rem;">Rockin' Scotland</span>
-            </div>
-            <button id="play-btn">Listen</button>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.8rem; color: #ff3e00;">Rockin' Scotland</span>
+            <button id="play-btn">Listen Live</button>
         </div>
     </div>
 
-    <header style="padding: 15px 0 0 0;">
+    <header style="padding: 30px 0 0 0;">
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
             <nav class="nav-menu" id="main-nav">
@@ -118,32 +99,19 @@
 
     <main id="page-content"></main>
 
-    <footer class="container" style="padding: 20px 0; text-align: center;">
+    <footer class="container" style="padding: 40px 0; text-align: center;">
         <div class="grid-ads">
-            <div class="card-ad"><p class="ad-label">Regional</p><p class="ad-price">From £299</p></div>
-            <div class="card-ad"><p class="ad-label">Multi-Region</p><p class="ad-price">From £499</p></div>
-            <div class="card-ad"><p class="ad-label">Creative</p><p class="ad-price">From £195</p></div>
+            <div class="card-ad"><p class="ad-label">Regional Airtime</p><p class="ad-price">£199</p></div>
+            <div class="card-ad"><p class="ad-label">Multi-Regional</p><p class="ad-price">£349</p></div>
+            <div class="card-ad"><p class="ad-label">Creative Production</p><p class="ad-price">£195</p></div>
         </div>
-        <div style="margin-top: 10px;">
-            <span style="color: #222; font-size: 0.6rem;">&copy; 2026 ROCK.SCOT | </span>
-            <a onclick="loadPage('privacy.html', null)" class="footer-legal">Privacy & GDPR Policy</a>
-        </div>
+        <p style="color: #222; font-size: 0.7rem;">&copy; 2026 ROCK.SCOT | Rockin' Scotland</p>
     </footer>
 
-    <script src="player.js"></script>
     <script>
-        const seoData = {
-            'home.html': { title: 'ROCK.SCOT | Rockin\' Scotland', desc: 'Serving the public with all-genre rock. Breaking unsigned Scottish talent.' },
-            'news.html': { title: 'Music News | Rockin\' Scotland Feeds | ROCK.SCOT', desc: 'Latest releases and news from the Scottish rock scene.' },
-            'about.html': { title: 'About Us | Rockin\' Scotland | ROCK.SCOT', desc: 'Rocky, edgy, and dedicated to the Scottish music community.' },
-            'advertise.html': { title: 'Advertise | Regional Market Penetration | ROCK.SCOT', desc: 'Regional airtime from £299. Multi-regional from £499.' },
-            'submit.html': { title: 'Submit Music | Artist Architecture | ROCK.SCOT', desc: 'Direct submission for Scottish bands.' },
-            'privacy.html': { title: 'Privacy Policy | ROCK.SCOT', desc: 'GDPR compliance data protocols.' }
-        };
-
         async function loadPage(page, element) {
             try {
-                const response = await fetch(page);
+                const response = await fetch(page + '?v=' + Date.now());
                 const html = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
@@ -151,17 +119,6 @@
                 document.getElementById('page-content').innerHTML = newContent;
                 document.querySelectorAll('#main-nav a').forEach(a => a.classList.remove('active'));
                 if(element) element.classList.add('active');
-                else if (page === 'home.html') document.getElementById('home-link').classList.add('active');
-                if (seoData[page]) {
-                    document.title = seoData[page].title;
-                    document.getElementById('meta-desc').setAttribute('content', seoData[page].desc);
-                }
-                doc.querySelectorAll('script').forEach(oldScript => {
-                    const newScript = document.createElement("script");
-                    if (oldScript.src) newScript.src = oldScript.src;
-                    else newScript.textContent = oldScript.textContent;
-                    document.body.appendChild(newScript);
-                });
                 window.scrollTo(0,0);
             } catch (err) { console.error(err); }
         }
