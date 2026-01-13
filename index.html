@@ -9,8 +9,7 @@
         
         body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
         
-        /* Fixed Corporate Identity */
-        header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid var(--primary); }
         #logo { width: 250px; height: auto; }
         .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
 
@@ -20,24 +19,22 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 
-        /* Live Status Pulse */
-        .live-status { display: inline-flex; align-items: center; background: rgba(255,0,0,0.1); padding: 5px 15px; border-radius: 20px; border: 1px solid var(--primary); margin-bottom: 20px; }
-        .pulse { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; margin-right: 10px; box-shadow: 0 0 10px var(--primary); animation: blink 1.5s infinite; }
-        
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        /* Countdown Section */
+        .event-ticker { background: linear-gradient(90deg, #111, #000); border: 1px solid #222; padding: 20px; margin-bottom: 40px; display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .event-label { text-transform: uppercase; font-weight: 900; color: var(--primary); letter-spacing: 2px; }
+        .countdown-timer { font-family: 'Courier New', monospace; font-size: 1.8rem; font-weight: bold; color: #fff; }
 
         /* Stream Dashboard */
         .player-dashboard { background: linear-gradient(145deg, #0f0f0f, #1a1a1a); padding: 40px; border: 1px solid #222; margin-bottom: 50px; position: relative; overflow: hidden; }
         .player-dashboard::after { content: "LIVE"; position: absolute; right: -20px; bottom: -20px; font-size: 10rem; font-weight: 900; color: rgba(255,255,255,0.02); }
 
-        /* Next-Level News Grid */
+        /* News Grid */
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .news-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; }
-        .news-card:hover { border-color: var(--primary); transform: scale(1.02); background: rgba(255, 255, 255, 0.05); }
+        .news-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); transition: 0.4s; display: flex; flex-direction: column; }
+        .news-card:hover { border-color: var(--primary); transform: scale(1.02); }
         .news-content { padding: 25px; }
-        .news-tag { color: var(--primary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
-        .news-card h3 { font-size: 1.5rem; text-transform: uppercase; margin: 15px 0; line-height: 1.1; }
-        .news-link { padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
+        .news-tag { color: var(--primary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
+        .news-link { padding: 20px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; }
         .news-card:hover .news-link { background: var(--primary); color: #000; }
 
         footer { text-align: center; padding: 80px 20px; color: #444; border-top: 1px solid #111; }
@@ -57,9 +54,10 @@
 </nav>
 
 <div class="container">
-    <div class="live-status">
-        <div class="pulse"></div>
-        <span style="font-size: 0.8rem; font-weight: bold; text-transform: uppercase; color: var(--primary);">Live from Central Scotland</span>
+    
+    <div class="event-ticker">
+        <div class="event-label">TRNSMT 2026 : GLASGOW GREEN</div>
+        <div id="countdown" class="countdown-timer">00d : 00h : 00m : 00s</div>
     </div>
 
     <section class="player-dashboard">
@@ -76,8 +74,8 @@
         <div class="news-grid">
             <div class="news-card">
                 <div class="news-content">
-                    <span class="news-tag">Glasgow</span>
-                    <h3>TRNSMT 2026: Rock Lineup Confirmed</h3>
+                    <span class="news-tag">Glasgow Green</span>
+                    <h3>TRNSMT 2026 Lineup</h3>
                     <p>Rumours of a heavy rock anniversary set at Glasgow Green are now official.</p>
                 </div>
                 <a href="#" class="news-link">Full Story</a>
@@ -92,8 +90,8 @@
             </div>
             <div class="news-card">
                 <div class="news-content">
-                    <span class="news-tag">Live Venue</span>
-                    <h3>The Next Big Thing: SWG3 Circuit</h3>
+                    <span class="news-tag">Unsigned</span>
+                    <h3>The Next Big Thing: SWG3</h3>
                     <p>Spotlighting the central belt bands ready to explode onto the national scene.</p>
                 </div>
                 <a href="#" class="news-link">Full Story</a>
@@ -101,7 +99,7 @@
             <div class="news-card">
                 <div class="news-content">
                     <span class="news-tag">World Tour</span>
-                    <h3>Foo Fighters: Hampden Park 2026</h3>
+                    <h3>Foo Fighters: Hampden Park</h3>
                     <p>Dave Grohl confirms a summer stop in Glasgow as part of their global run.</p>
                 </div>
                 <a href="#" class="news-link">Full Story</a>
@@ -111,9 +109,30 @@
 </div>
 
 <footer>
-    <p>&copy; 2026 Sla-rock.scot | Rockin' Scotland | hesonthemove-ux</p>
+    <p>&copy; 2026 Sla-rock.scot | Rockin' Scotland</p>
 </footer>
 
 <script src="pricing.js"></script>
+<script>
+    // Countdown Logic for TRNSMT July 10, 2026
+    const countDownDate = new Date("July 10, 2026 12:00:00").getTime();
+
+    const x = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML = days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s ";
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "EVENT LIVE";
+        }
+    }, 1000);
+</script>
 </body>
 </html>
