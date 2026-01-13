@@ -14,7 +14,7 @@
         .nav-menu a { color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; font-size: 0.85rem; }
         .nav-menu a.active { color: #ff3e00; border-bottom: 2px solid #ff3e00; }
         
-        /* TICKER STYLES */
+        /* TICKER STYLES - SLOWED DOWN */
         .ticker-wrap {
             width: 100%;
             overflow: hidden;
@@ -26,20 +26,19 @@
         .ticker {
             display: inline-block;
             white-space: nowrap;
-            padding-right: 100%;
-            animation: ticker 45s linear infinite;
+            animation: ticker 120s linear infinite; /* SLOWED TO 120 SECONDS */
         }
         .ticker-item {
             display: inline-block;
-            padding: 0 40px;
+            padding: 0 50px;
             font-size: 0.85rem;
             color: #fff;
             text-transform: uppercase;
         }
         .ticker-item span { color: #ff3e00; font-weight: 700; margin-right: 10px; }
         @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* Halfway because we duplicate items for seamless loop */
         }
 
         .news-header { text-align: center; padding: 20px 0 10px 0; }
@@ -81,7 +80,7 @@
         </div>
         <div class="ticker-wrap">
             <div class="ticker" id="album-ticker">
-                <div class="ticker-item"><span>NEW RELEASES</span> Syncing Scottish Album Ticker...</div>
+                <div class="ticker-item"><span>NEW RELEASES</span> Loading Scottish Album Ticker...</div>
             </div>
         </div>
     </header>
@@ -103,7 +102,6 @@
 
     <script src="player.js"></script>
     <script>
-        // Updated to corsproxy.io for better reliability
         const proxy = "https://corsproxy.io/?";
 
         async function loadTicker() {
@@ -116,15 +114,16 @@
                 const xml = parser.parseFromString(text, "text/xml");
                 const items = xml.querySelectorAll("item");
                 if(items.length > 0) {
-                    ticker.innerHTML = '';
+                    let content = '';
                     items.forEach(item => {
                         const title = item.querySelector("title").textContent;
-                        ticker.innerHTML += `<div class="ticker-item"><span>NEW RELEASE:</span> ${title}</div>`;
+                        content += `<div class="ticker-item"><span>NEW RELEASE:</span> ${title}</div>`;
                     });
+                    // Double the content for a seamless infinite loop
+                    ticker.innerHTML = content + content;
                 }
             } catch (e) { 
-                console.error("Ticker error", e);
-                ticker.innerHTML = '<div class="ticker-item"><span>STAY TUNED</span> New Scottish Music Loading...</div>'; 
+                ticker.innerHTML = '<div class="ticker-item"><span>ROCK.SCOT</span> Scottish Music News Loading...</div>'; 
             }
         }
 
@@ -145,25 +144,18 @@
                             const title = item.querySelector("title").textContent;
                             const link = item.querySelector("link").textContent;
                             let desc = item.querySelector("description") ? item.querySelector("description").textContent : "";
-                            // Clean up HTML tags in description
                             desc = desc.replace(/<[^>]*>?/gm, '').substring(0, 160);
                             const date = new Date(item.querySelector("pubDate").textContent).toLocaleDateString('en-GB');
                             
                             const article = document.createElement('article');
                             article.className = 'news-article';
-                            article.innerHTML = `
-                                <span class="news-date">${date}</span>
-                                <h2><a href="${link}" target="_blank">${title}</a></h2>
-                                <div class="news-content">${desc}...</div>
-                            `;
+                            article.innerHTML = `<span class="news-date">${date}</span><h2><a href="${link}" target="_blank">${title}</a></h2><div class="news-content">${desc}...</div>`;
                             container.appendChild(article);
                         }
                     });
-                } else {
-                    throw new Error("Empty Feed");
                 }
             } catch (e) { 
-                container.innerHTML = '<p style="color:#444; text-align:center; padding: 40px 0;">Music Feed Updating. Check back soon for local rock news!</p>'; 
+                container.innerHTML = '<p style="color:#444; text-align:center; padding: 40px 0;">Music Feed Temporarily Offline.</p>'; 
             }
         }
         
