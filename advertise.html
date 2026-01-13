@@ -1,61 +1,46 @@
-<main>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertising | Sla-rock.scot</title>
     <style>
-        .ad-hero { text-align: center; padding: 80px 0 40px 0; }
-        .ad-hero h1 { font-size: 4rem; text-transform: uppercase; color: #ff3e00; margin: 0; }
-        .ad-hero p { color: #888; text-transform: uppercase; letter-spacing: 3px; font-size: 1.1rem; }
-
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 50px 0; }
-        .price-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; text-align: center; transition: 0.3s; position: relative; }
-        .price-card:hover { border-color: #ff3e00; transform: translateY(-5px); }
-        .price-card h3 { text-transform: uppercase; letter-spacing: 2px; color: #fff; margin-bottom: 10px; }
-        .price-card .amount { font-size: 3rem; font-weight: 700; color: #ff3e00; display: block; }
-        .price-card .amount span { font-size: 1rem; color: #444; vertical-align: middle; }
-        .price-card ul { list-style: none; padding: 0; margin: 30px 0; color: #888; font-size: 0.9rem; text-align: left; }
-        .price-card ul li { margin-bottom: 12px; border-bottom: 1px solid #111; padding-bottom: 12px; }
-        
-        .contact-trigger { background: #fff; color: #000; border: none; padding: 15px 30px; font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; cursor: pointer; width: 100%; }
-        .contact-trigger:hover { background: #ff3e00; }
+        body { font-family: sans-serif; margin: 0; background-color: #121212; color: #eee; }
+        header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid #cc0000; }
+        #logo { width: 250px; height: auto; } /* Same size/position */
+        .tagline { font-size: 1.8rem; color: #cc0000; font-weight: bold; margin-top: 10px; }
+        .main-content { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+        footer { text-align: center; padding: 40px; color: #666; }
     </style>
+</head>
+<body>
 
-    <div class="container">
-        <section class="ad-hero">
-            <h1>Market Penetration</h1>
-            <p>Direct Access to the Scottish Rock Audience</p>
-        </section>
+<header>
+    <img src="logo.png" alt="Sla-rock.scot" id="logo">
+    <div class="tagline">Rockin' Scotland</div>
+</header>
 
-        <div class="pricing-grid">
-            <div class="price-card">
-                <h3>Single / Regional Mux</h3>
-                <span class="amount"><span>From</span> £299</span>
-                <ul>
-                    <li>Strategic Regional Placement</li>
-                    <li>Targeted Local Demographics</li>
-                    <li>24/7 Broadcast Rotation</li>
-                </ul>
-                <button class="contact-trigger" onclick="loadPage('contact.html')">Secure Airtime</button>
-            </div>
+<div class="main-content">
+    <h1>Advertise with Us</h1>
+    <p>Reach the heart of Central Scotland's music scene. Our current rates are listed below:</p>
 
-            <div class="price-card" style="border-color: #333;">
-                <h3>Multi-Region / Full</h3>
-                <span class="amount"><span>From</span> £499</span>
-                <ul>
-                    <li>Full Network Saturation</li>
-                    <li>Maximum Audience Reach</li>
-                    <li>Premium Schedule Priority</li>
-                </ul>
-                <button class="contact-trigger" onclick="loadPage('contact.html')">Secure Network</button>
-            </div>
+    <div id="pricing-component"></div>
 
-            <div class="price-card">
-                <h3>Creative Production</h3>
-                <span class="amount"><span>From</span> £195</span>
-                <ul>
-                    <li>Pro-Audio Script & Voice</li>
-                    <li>Custom Sonic Branding</li>
-                    <li>Full Mastering & Delivery</li>
-                </ul>
-                <button class="contact-trigger" onclick="loadPage('contact.html')">Start Creative</button>
-            </div>
-        </div>
-    </div>
-</main>
+    <section style="margin-top: 40px;">
+        <h3>Why Sla-rock?</h3>
+        <ul>
+            <li>Hyper-local focus on Central Scotland.</li>
+            <li>Dedicated rock and alternative audience.</li>
+            <li>Professional production included in our Creative package.</li>
+        </ul>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2026 Sla-rock.scot</p>
+</footer>
+
+<script src="pricing.js"></script>
+
+</body>
+</html>
