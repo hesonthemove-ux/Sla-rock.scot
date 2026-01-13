@@ -1,27 +1,43 @@
 <main>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RadioStation",
+      "name": "Rockin' Scotland",
+      "url": "https://rock.scot",
+      "logo": "https://rock.scot/logo.png",
+      "description": "Central Scotland's PURE ROCK station. Broadcasting all genres of rock across Glasgow, Edinburgh, and the Central Belt.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Glasgow",
+        "addressRegion": "Central Scotland",
+        "addressCountry": "GB"
+      },
+      "slogan": "Rockin' Scotland",
+      "genre": "Rock Music",
+      "areaServed": "Central Scotland"
+    }
+    </script>
+
     <style>
         .home-grid { display: grid; grid-template-columns: 1fr 350px; gap: 30px; padding: 20px 0; }
         .hero-box { text-align: left; }
-        .hero-box h2 { font-size: 5rem; line-height: 0.8; margin: 0; text-transform: uppercase; }
-        .hero-box h2 span { color: #ff3e00; }
-        
+        .hero-box h1 { font-size: clamp(3rem, 8vw, 5rem); line-height: 0.8; margin: 0; text-transform: uppercase; color: #fff; }
+        .hero-box h1 span { color: #ff3e00; }
+        .seo-text { font-size: 1.1rem; color: #ccc; line-height: 1.6; margin-top: 30px; }
         .sidebar { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 20px; }
         .sidebar h3 { color: #ff3e00; text-transform: uppercase; border-bottom: 1px solid #222; padding-bottom: 10px; margin-top: 0; }
-        
         ul#recent-tracks { list-style: none; padding: 0; margin: 0; }
-        ul#recent-tracks li { padding: 12px 0; border-bottom: 1px solid #111; line-height: 1.2; }
-        
-        @media (max-width: 900px) {
-            .home-grid { grid-template-columns: 1fr; }
-        }
+        ul#recent-tracks li { padding: 12px 0; border-bottom: 1px solid #111; }
+        @media (max-width: 900px) { .home-grid { grid-template-columns: 1fr; } }
     </style>
 
     <div class="container home-grid">
         <div class="hero-box">
-            <h2>SCOTLAND'S<br><span>PURE ROCK</span></h2>
-            <p style="font-size: 1.5rem; letter-spacing: 2px; color: #888;">ALL GENRES. ALL ROCK. SERVING THE PUBLIC.</p>
-            <div style="margin-top: 40px;">
-                <p>Welcome to Rockin' Scotland. From the legends of the Central Belt to the newest unsigned talent breaking out of Glasgow and Edinburgh, we play it all.</p>
+            <h1>SCOTLAND'S<br><span>PURE ROCK</span></h1>
+            <div class="seo-text">
+                <p><strong>Rockin' Scotland</strong> is the premier destination for rock music fans across <strong>Glasgow, Edinburgh, and the Central Belt</strong>. From the legendary <strong>Barrowland Ballroom</strong> to <strong>Biffy Clyro at the OVO Hydro</strong>, we are the heartbeat of the Scottish rock scene.</p>
+                <p>Whether you are following <strong>Metallica at Hampden Park</strong>, catching <strong>The Cure at the Royal Highland Showground</strong>, or looking for unsigned talent at <strong>King Tut's</strong>, we provide the ultimate 24/7 soundtrack. Serving the public with regional airtime from <strong>£199</strong>.</p>
             </div>
         </div>
 
