@@ -1,61 +1,43 @@
-// ROCKIN' SCOTLAND PLAYER - HTTPS SECURE STREAM & METADATA
-const stationId = "9400";
-// UPDATED TO HTTPS
-const streamUrl = "https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd";
+// Sla-rock.scot Global Pricing Component
+// Update these values here to change them across the entire site instantly.
 
-const audio = new Audio(streamUrl);
-const playBtn = document.getElementById('play-btn');
-const trackTitle = document.getElementById('track-title');
+const pricingData = {
+    regional: "£299",
+    multiRegional: "£449",
+    creative: "£195"
+};
 
-// 1. STABLE AUDIO ENGINE
-let isPlaying = false;
-playBtn.addEventListener('click', () => {
-    if (!isPlaying) {
-        audio.play().then(() => {
-            playBtn.textContent = "Stop";
-            isPlaying = true;
-        }).catch(err => {
-            console.error("HTTPS Playback failed:", err);
-            // If the secure stream fails, we alert the user
-            alert("Stream error. Please check your internet connection.");
-        });
-    } else {
-        audio.pause();
-        audio.src = streamUrl; // Flush buffer
-        playBtn.textContent = "Listen Live";
-        isPlaying = false;
-    }
-});
-
-// 2. METADATA ENGINE (Station ID 9400)
-async function updateLiveData() {
-    try {
-        const response = await fetch(`https://api.broadcast.radio/api/nowplaying/${stationId}`);
-        const data = await response.json();
-
-        if (data) {
-            const current = data.now_playing;
-            const show = data.current_show ? data.current_show.title : "Rockin' Scotland";
-            
-            if (current) {
-                trackTitle.innerHTML = `LIVE: ${current.title} - ${current.artist} | <span style="color: #ff3e00">WITH ${show}</span>`;
-            }
-
-            const historyList = document.getElementById('recent-tracks');
-            if (historyList && data.recently_played) {
-                const historyHTML = data.recently_played.slice(0, 4).map(track => `
-                    <li>
-                        <span style="color: #ff3e00; font-weight: bold;">${track.title}</span><br>
-                        <span style="color: #888; font-size: 0.8rem;">${track.artist}</span>
-                    </li>
-                `).join('');
-                historyList.innerHTML = historyHTML;
-            }
-        }
-    } catch (err) {
-        console.error("Metadata error:", err);
+function loadPricing() {
+    const container = document.getElementById('pricing-component');
+    if (container) {
+        container.innerHTML = `
+            <div style="margin-top: 30px; border: 1px solid #333; border-radius: 8px; overflow: hidden; background: #1a1a1a;">
+                <table style="width: 100%; border-collapse: collapse; color: #fff; font-family: Arial, sans-serif;">
+                    <thead>
+                        <tr style="background-color: #cc0000;">
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid #900;">Service Type</th>
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid #900;">Rate (GBP)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 15px; border-bottom: 1px solid #333;">Regional Airtime</td>
+                            <td style="padding: 15px; border-bottom: 1px solid #333; font-weight: bold; color: #cc0000;">${pricingData.regional}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border-bottom: 1px solid #333;">Multi-Regional Airtime</td>
+                            <td style="padding: 15px; border-bottom: 1px solid #333; font-weight: bold; color: #cc0000;">${pricingData.multiRegional}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px;">Creative / Production</td>
+                            <td style="padding: 15px; font-weight: bold; color: #cc0000;">${pricingData.creative}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        `;
     }
 }
 
-setInterval(updateLiveData, 30000);
-updateLiveData();
+// Initialize when the DOM is ready
+document.addEventListener('DOMContentLoaded', loadPricing);
