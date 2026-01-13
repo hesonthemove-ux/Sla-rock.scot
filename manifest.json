@@ -1,7 +1,10 @@
 {
-  "short_name": "ROCK.SCOT",
-  "name": "ROCK.SCOT | Central Scotland's Loudest",
-  "description": "Premium Rock Broadcasting. Stream live across Central Scotland.",
+  "name": "Sla-Rock",
+  "short_name": "Sla-Rock",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#ff3e00",
   "icons": [
     {
       "src": "logo.png",
@@ -13,12 +16,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "start_url": "/index.html",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#000000",
-  "orientation": "portrait",
-  "scope": "/",
-  "lang": "en-GB"
+  ]
 }
