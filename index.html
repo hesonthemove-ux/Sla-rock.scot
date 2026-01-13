@@ -3,46 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROCK.SCOT | Listen Live</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <title>Listen Live | ROCK.SCOT</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            margin: 0; 
+            padding: 0;
+            font-family: 'Oswald', sans-serif; 
+            overflow-x: hidden;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 15px; 
+            box-sizing: border-box;
+        }
+        #master-player {
+            background: #000;
+            border-bottom: 1px solid #1a1a1a;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            width: 100%;
+        }
+        .logo-main {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .nav-menu {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        .nav-menu a.active {
+            color: #ff3e00;
+            border-bottom: 2px solid #ff3e00;
+        }
+        .hero-section {
+            text-align: center;
+            padding: 50px 0 15px 0;
+        }
+        .hero-title {
+            font-size: clamp(3rem, 15vw, 6rem);
+            line-height: 0.85;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .smolder-text {
+            color: #fff;
+            animation: smolder 2s infinite alternate;
+        }
+        .solid-loud {
+            color: #ff3e00;
+            display: block;
+        }
+        @keyframes smolder {
+            0%, 100% { text-shadow: 0 -1px 2px #ff3e00, 0 -2px 5px #801a00, 0 -5px 10px #ff3e00; }
+            50% { text-shadow: 0 -2px 5px #ff3e00, 0 -5px 15px #ff1100, 0 -10px 25px #ff3e00; }
+        }
+        .location-bar {
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #ff3e00;
+            margin-top: 10px;
+            font-size: clamp(0.65rem, 2.5vw, 0.85rem);
+            font-weight: 700;
+        }
+        .grid-ads {
+            display: flex;
+            flex-direction: row; 
+            justify-content: center;
+            gap: 8px;
+            margin: 25px 0 40px 0;
+            width: 100%;
+        }
+        .grid-ads .card-ad {
+            flex: 1;
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            padding: 10px 5px;
+            text-align: center;
+            min-width: 0;
+        }
+        .ad-label { text-transform: uppercase; font-size: 0.65rem; color: #888; margin: 0; }
+        .ad-price { font-size: 1.1rem; font-weight: 700; color: #ff3e00; margin: 2px 0; }
+        .card-dark {
+            background: #0a0a0a;
+            padding: 15px;
+            border: 1px solid #1a1a1a;
+            margin-bottom: 20px;
+        }
+        .band-callout {
+            border: 1px solid #ff3e00;
+            padding: 10px;
+            text-align: center;
+            margin: 0 0 20px 0;
+        }
+        button#play-btn {
+            background: #ff3e00;
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            font-family: 'Oswald';
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+        .footer-link { color: #444; text-decoration: none; font-size: 0.65rem; }
+    </style>
 </head>
-<body style="background-color: #000000; color: #ffffff; margin: 0; padding: 0; font-family: 'Oswald', sans-serif; text-align: center;">
-
-    <div style="background: #111; border-bottom: 2px solid #ff3e00; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000;">
-        <div style="text-align: left;">
-            <div style="color: #ff3e00; font-size: 9px; text-transform: uppercase; letter-spacing: 1px;">Live Now</div>
-            <div id="track-title" style="font-size: 13px; text-transform: uppercase;">Ready to Rock</div>
-        </div>
-        <button id="play-btn" onclick="toggleBtn()" style="background: #ff3e00; border: none; color: #000; padding: 6px 12px; font-weight: bold; text-transform: uppercase; font-family: 'Oswald'; font-size: 12px; cursor: pointer;">Listen</button>
-    </div>
-
-    <div style="padding: 10px 15px 5px 15px;">
-        <img src="logo.png" alt="ROCK.SCOT" style="width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto;">
-    </div>
-
-    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; padding: 5px 10px 10px 10px; border-bottom: 1px solid #222;">
-        <a href="index.html" style="color: #ff3e00; text-decoration: none; text-transform: uppercase; font-size: 13px;">Listen</a>
-        <a href="news.html" style="color: #fff; text-decoration: none; text-transform: uppercase; font-size: 13px;">News</a>
-        <a href="about.html" style="color: #fff; text-decoration: none; text-transform: uppercase; font-size: 13px;">About</a>
-        <a href="advertise.html" style="color: #fff; text-decoration: none; text-transform: uppercase; font-size: 13px;">Advertise</a>
-        <a href="contact.html" style="color: #fff; text-decoration: none; text-transform: uppercase; font-size: 13px;">Contact</a>
-    </div>
-
-    <div style="padding: 15px 15px 10px 15px;">
-        <h1 style="font-size: 55px; line-height: 0.85; margin: 0; text-transform: uppercase;">
-            <span style="color: #fff;">WE PLAY</span><br>
-            <span style="color: #ff3e00;">LOUD</span>
-        </h1>
-        <div style="color: #ff3e00; text-transform: uppercase; font-size: 11px; margin-top: 8px; letter-spacing: 1px; font-weight: bold;">
-            Inverclyde &bull; North Ayrshire &bull; South Lanarkshire
+<body>
+    <div id="master-player">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="display: flex; align-items: flex-end; gap: 2px; height: 10px;">
+                    <div style="width: 2px; height: 60%; background: #ff3e00;"></div>
+                    <div style="width: 2px; height: 100%; background: #ff3e00;"></div>
+                    <div style="width: 2px; height: 40%; background: #ff3e00;"></div>
+                </div>
+                <div>
+                    <span style="display: block; font-size: 0.45rem; color: #ff3e00; text-transform: uppercase;">Live Now</span>
+                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.65rem;">Ready to Rock</span>
+                </div>
+            </div>
+            <button id="play-btn">Listen</button>
         </div>
     </div>
-
-    <div style="margin: 5px 15px 15px 15px; border: 1px solid #ff3e00; padding: 10px;">
-        <a href="submit.html" style="color: #ff3e00; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 13px;">Submit Your Music &rarr;</a>
-    </div>
-
-    <div style="margin: 0 15px 15px 15px; background: #0a0a0a; border-top: 2px solid #ff3e00; padding: 12px; text-align: left;">
-        <h2 style="font-size: 11px; color: #ff3e00; text-transform: uppercase; margin: 0 0 8px 0;">Recently Played</h2>
-        <div style="display: flex; justify-content: space-between; font-size: 13px; border-bottom: 1px
-            
+    <header style="padding: 15px 0;">
+        <div class="container">
+            <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
+            <nav class="nav-menu">
+                <a href="index.html" class="active">Listen</a>
+                <a href="news.html">News</a>
+                <a href="about.html">About</a>
+                <a href="advertise.html">Advertise</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <section class="hero-section">
+            <h1 class="hero-title">
+                <span class="smolder-text">WE PLAY</span>
+                <span class="solid-loud">LOUD</span>
+            </h1>
+            <div class="location-bar">
+                Inverclyde &bull; North Ayrshire &bull; South Lanarkshire
+            </div>
+        </section>
+        <div class="band-callout">
+            <a href="submit.html" style="color: #ff3e00; text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 0.75rem;">Band Submission &rarr;</a>
+        </div>
+        <section class="card-dark" style="border-top: 2px solid #ff3e00;">
+            <h2 style="text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; color: #ff3e00; margin: 0 0 10px 0;">Recently Played</h2>
+            <div id="recent-tracks" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; border-bottom: 1px solid #1a1a1a; padding-bottom: 4px;">
+                    <span>The Snuts - Glasgow</span>
+                    <span style="color: #444;">12:05</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                    <span style="color: #ff3e00;">[LOCAL] Brownbear - Retro</span>
+                    <span style="color: #444;">11:50</span>
+                </div>
+            </div>
+        </section>
+        <div class="grid-ads">
+            <div class="card-ad">
+                <p class="ad-label">Regional</p>
+                <p class="ad-price">£199</p>
+            </div>
+            <div class="card-ad">
+                <p class="ad-label">Multi</p>
+                <p class="ad-price">£349</p>
+            </div>
+            <div class="card-ad">
+                <p class="ad-label">Creative</p>
+                <p class="ad-price">£195</p>
+            </div>
+        </div>
+    </main>
+    <footer style="padding: 20px 0; text-align: center;">
+        <div class="container">
+            <p style="color: #222; font-size: 0.6rem; text-transform: uppercase; margin-bottom: 5px;">&copy; 2026 ROCK.SCOT</p>
+            <a href="legal.html" class="footer-link">Privacy & Terms</a>
+        </div>
+    </footer>
+    <script src="player.js"></script>
+</body>
+</html>
