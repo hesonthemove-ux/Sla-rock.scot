@@ -3,30 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | ROCK.SCOT</title>
+    <title>About Us | ROCK.SCOT</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background-color: #000; color: #fff; margin: 0; padding: 0; font-family: 'Oswald', sans-serif; overflow-x: hidden; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; box-sizing: border-box; }
+        #master-player { background: #000; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 2000; width: 100%; }
+        .logo-main { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto; }
+        .nav-menu { margin-top: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+        .nav-menu a { color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; font-size: 0.85rem; }
+        .nav-menu a.active { color: #ff3e00; border-bottom: 2px solid #ff3e00; }
+        
+        .content-section { padding: 40px 0; line-height: 1.6; }
+        .content-section h1 { font-size: 3rem; text-transform: uppercase; color: #ff3e00; margin-bottom: 20px; text-align: center; }
+        .content-section h2 { font-size: 1.8rem; text-transform: uppercase; border-left: 4px solid #ff3e00; padding-left: 15px; margin: 30px 0 15px 0; }
+        .content-section p { font-size: 1.1rem; color: #ccc; margin-bottom: 20px; }
+
+        /* PRICING GRID */
+        .grid-ads { display: flex; flex-direction: row; justify-content: center; gap: 8px; margin: 40px 0; width: 100%; }
+        .grid-ads .card-ad { flex: 1; background: #0a0a0a; border: 1px solid #1a1a1a; padding: 10px 5px; text-align: center; }
+        .ad-label { text-transform: uppercase; font-size: 0.65rem; color: #888; margin: 0; }
+        .ad-price { font-size: 1.1rem; font-weight: 700; color: #ff3e00; margin: 2px 0; }
+
+        button#play-btn { background: #ff3e00; color: #000; border: none; padding: 6px 12px; font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 0.7rem; }
+    </style>
 </head>
 <body>
     <div id="master-player">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
-            <div id="now-playing" style="display: flex; align-items: center; gap: 15px;">
-                <div class="eq-container"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
-                <div>
-                    <span style="display: block; font-size: 0.6rem; color: #ff3e00; text-transform: uppercase; letter-spacing: 2px;">Live Now</span>
-                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Connecting...</span>
-                </div>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="display: block; font-size: 0.45rem; color: #ff3e00; text-transform: uppercase;">Live Now</span>
+                <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.65rem;">Ready to Rock</span>
             </div>
-            <button id="play-btn">Listen Live</button>
+            <button id="play-btn">Listen</button>
         </div>
     </div>
 
-    <header>
+    <header style="padding: 15px 0;">
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
             <nav class="nav-menu">
                 <a href="index.html">Listen</a>
-                <a href="news.html">Music Press</a>
+                <a href="news.html">News</a>
                 <a href="about.html" class="active">About</a>
                 <a href="advertise.html">Advertise</a>
                 <a href="contact.html">Contact</a>
@@ -34,47 +52,37 @@
         </div>
     </header>
 
-    <main class="container" style="max-width: 900px;">
-        <section style="text-align: center; padding: 40px 0;">
-            <h1 class="hero-title">THE<br>MISSION</h1>
-            <span class="sub-glow">Amplifying the West & Central Belt</span>
+    <main class="container">
+        <section class="content-section">
+            <h1>Loud. Local. Scottish.</h1>
+            
+            <p>ROCK.SCOT is the definitive voice for rock music across Central Scotland. We aren't just a radio station; we are a community dedicated to the riffs, the anthems, and the unsigned talent that makes the Scottish music scene world-class.</p>
+
+            <h2>Our Mission</h2>
+            <p>From the heart of Glasgow to the venues of Edinburgh and everywhere in between, we provide a platform for the music that matters. Whether it’s classic legends or the next big thing from a basement in Paisley, if it rocks, we play it.</p>
+
+            <h2>Supporting the Scene</h2>
+            <p>We believe in more than just airplay. ROCK.SCOT actively supports local venues, independent festivals, and the technical crews that keep the lights on. We are committed to regional expansion, ensuring every corner of Central Scotland has a station that speaks their language.</p>
         </section>
 
-        <section class="card-dark" style="border-left: 4px solid #ff3e00; margin-bottom: 40px;">
-            <h2 style="text-transform: uppercase; letter-spacing: 1px;">Our Identity</h2>
-            <p>
-                ROCK.SCOT was forged from a simple realization: the West of Scotland is the heartbeat of the nation’s music scene, yet it lacks a dedicated, high-fidelity platform that prioritizes local resonance over generic broadcasting. 
-            </p>
-            <p>
-                We aren't just a radio station; we are a digital-first ecosystem designed to bridge the gap between emerging local talent and an audience that demands more than just background noise. From the docks of Inverclyde to the coasts of Ayrshire and the industrial core of the Central Belt, we are the frequency of the region.
-            </p>
-        </section>
-
-        <div class="grid-layout">
-            <div class="card-dark">
-                <h4 style="color: #ff3e00; text-transform: uppercase; font-size: 0.8rem;">Strategic Localization</h4>
-                <p style="font-size: 0.85rem; color: #888;">We leverage hyper-local insights to deliver content that resonates with specific regional demographics, ensuring maximum engagement and community synergy.</p>
+        <div class="grid-ads">
+            <div class="card-ad">
+                <p class="ad-label">Regional</p>
+                <p class="ad-price">£199</p>
             </div>
-            <div class="card-dark">
-                <h4 style="color: #ff3e00; text-transform: uppercase; font-size: 0.8rem;">Sonic Excellence</h4>
-                <p style="font-size: 0.85rem; color: #888;">Utilizing industry-leading processing, we provide a premium auditory experience that elevates local artists to a global production standard.</p>
+            <div class="card-ad">
+                <p class="ad-label">Multi</p>
+                <p class="ad-price">£349</p>
             </div>
-            <div class="card-dark">
-                <h4 style="color: #ff3e00; text-transform: uppercase; font-size: 0.8rem;">Commercial Synergy</h4>
-                <p style="font-size: 0.85rem; color: #888;">Our advertising architecture (£199 - £349) is designed for scalable growth, allowing local SMEs to compete within a high-impact media environment.</p>
+            <div class="card-ad">
+                <p class="ad-label">Creative</p>
+                <p class="ad-price">£195</p>
             </div>
         </div>
-
-        <section style="text-align: center; margin: 60px 0; padding: 40px; border-top: 1px solid #1a1a1a;">
-            <h3 style="text-transform: uppercase; letter-spacing: 5px;">Built In Scotland.</h3>
-            <p style="color: #444; font-size: 0.9rem;">ROCK.SCOT is independent, listener-focused, and 100% committed to the noise.</p>
-        </section>
     </main>
 
-    <footer>
-        <div class="container" style="text-align: center; padding: 40px 0; color: #444;">
-            <p>&copy; 2026 ROCK.SCOT | Authenticity Guaranteed</p>
-        </div>
+    <footer style="padding: 20px 0; text-align: center; color: #222; font-size: 0.6rem;">
+        &copy; 2026 ROCK.SCOT
     </footer>
 
     <script src="player.js"></script>
