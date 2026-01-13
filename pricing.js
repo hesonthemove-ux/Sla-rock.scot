@@ -1,50 +1,64 @@
-// Sla-rock.scot Global Pricing & Calculator Component
-const pricingData = {
-    regional: 299,
-    multiRegional: 449,
-    creative: 195
+/**
+ * Sla-rock.scot Pricing Architecture 2026
+ * Rates: £199 Regional | £349 Multi-Regional | £195 Creative
+ * Note: Non-VAT Registered
+ */
+
+const rates = {
+    regional: 199.00,
+    multi: 349.00,
+    creative: 195.00
 };
 
-function loadPricing() {
+function initCalculator() {
     const container = document.getElementById('pricing-component');
-    if (container) {
-        container.innerHTML = `
-            <div style="background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(255, 62, 0, 0.4); padding: 40px; border-radius: 0; margin-bottom: 40px;">
-                <h2 style="color: #fff; text-transform: uppercase; margin-top: 0; font-size: 1.5rem; letter-spacing: 2px;">
-                    <span style="color:#ff3e00;">Package</span> Calculator
-                </h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 25px;">
-                    <div>
-                        <label style="display:block; margin-bottom: 12px; font-size: 0.7rem; font-weight: 900; color: #ff3e00; text-transform: uppercase;">Airtime Package</label>
-                        <select id="packageSelect" onchange="calculateTotal()" style="width:100%; padding:15px; background:#000; color:#fff; border:1px solid #333; font-weight: bold;">
-                            <option value="299">Regional Airtime - £299</option>
-                            <option value="449">Multi-Regional Airtime - £449</option>
-                            <option value="0">Production Only</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label style="display:block; margin-bottom: 12px; font-size: 0.7rem; font-weight: 900; color: #ff3e00; text-transform: uppercase;">Creative Add-on</label>
-                        <select id="prodSelect" onchange="calculateTotal()" style="width:100%; padding:15px; background:#000; color:#fff; border:1px solid #333; font-weight: bold;">
-                            <option value="195">Production Included - £195</option>
-                            <option value="0">Client Supplied Audio</option>
-                        </select>
-                    </div>
-                    <div style="text-align: right; border-left: 1px solid #222; padding-left: 30px;">
-                        <label style="display:block; margin-bottom: 5px; font-size: 0.7rem; font-weight: 900; color: #888; text-transform: uppercase;">Investment Total</label>
-                        <span id="totalDisplay" style="font-size: 3rem; color: #ff3e00; font-weight: 900; display: block; line-height: 1;">£494</span>
-                    </div>
+    if (!container) return;
+
+    container.innerHTML = `
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid #222; padding: 40px; color: #fff; font-family: 'Inter', sans-serif;">
+            <h2 style="text-transform: uppercase; margin-top: 0; color: #ff3e00;">Package Calculator</h2>
+            <p style="color: #888; font-size: 0.9rem; margin-bottom: 30px;">Select your broadcast requirements below. No VAT applicable.</p>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display:block; text-transform: uppercase; font-size: 0.7rem; font-weight: 900; margin-bottom: 10px;">Airtime Territory</label>
+                <select id="airtime-select" style="width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; font-weight: bold; font-size: 1rem;">
+                    <option value="0">None</option>
+                    <option value="${rates.regional}">Regional Airtime (£199)</option>
+                    <option value="${rates.multi}">Multi-Regional Airtime (£349)</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <label style="display:flex; align-items: center; gap: 15px; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; font-weight: 900;">
+                    <input type="checkbox" id="creative-check" style="width: 22px; height: 22px; accent-color: #ff3e00;">
+                    Include Creative Production (£195)
+                </label>
+            </div>
+
+            <div style="border-top: 1px solid #222; padding-top: 20px;">
+                <div style="display: flex; justify-content: space-between; font-size: 2.5rem; font-weight: 900; color: #ff3e00; margin-top: 10px;">
+                    <span>TOTAL</span>
+                    <span id="grand-total">£0.00</span>
                 </div>
             </div>
-        `;
-        calculateTotal();
+            
+            <p style="font-size: 0.65rem; color: #555; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px;">Broadcast slots are subject to availability. Rockin' Scotland 2026.</p>
+        </div>
+    `;
+
+    const airtimeSelect = document.getElementById('airtime-select');
+    const creativeCheck = document.getElementById('creative-check');
+    const totalEl = document.getElementById('grand-total');
+
+    function calculate() {
+        let airtimePrice = parseFloat(airtimeSelect.value);
+        let creativePrice = creativeCheck.checked ? rates.creative : 0;
+        let total = airtimePrice + creativePrice;
+        totalEl.innerText = `£${total.toFixed(2)}`;
     }
+
+    airtimeSelect.addEventListener('change', calculate);
+    creativeCheck.addEventListener('change', calculate);
 }
 
-function calculateTotal() {
-    const pkg = parseInt(document.getElementById('packageSelect').value);
-    const prod = parseInt(document.getElementById('prodSelect').value);
-    const total = pkg + prod;
-    document.getElementById('totalDisplay').innerText = `£${total}`;
-}
-
-document.addEventListener('DOMContentLoaded', loadPricing);
+window.addEventListener('DOMContentLoaded', initCalculator);
