@@ -4,14 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sla-rock.scot | Rockin' Scotland</title>
+    
+    <meta name="description" content="Central Scotland's Pure Rock Feed. Streaming live from the heart of the music scene.">
+    <meta property="og:title" content="Sla-rock.scot | Rockin' Scotland">
+    <meta property="og:description" content="Uninterrupted rock for Glasgow, Edinburgh, and the Central Belt.">
+    <meta property="og:image" content="logo.png">
+    <meta name="theme-color" content="#ff3e00">
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo.png">
+
     <style>
         :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.05); }
         body, html { margin: 0; padding: 0; background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; }
 
-        /* --- THE SHELL: PERSISTENT ARCHITECTURE --- */
         #app-shell { display: flex; flex-direction: column; height: 100vh; }
         
-        /* DESKTOP MAX IMPACT */
         header { background: #000; padding: 50px 20px; text-align: center; border-bottom: 4px solid var(--primary); flex-shrink: 0; }
         #logo { width: 100%; max-width: 650px; height: auto; transition: 0.3s; }
         .tagline { 
@@ -21,7 +29,7 @@
         }
 
         @keyframes pulse-glow {
-            0%, 100__ { opacity: 1; text-shadow: 0 0 20px rgba(255,62,0,0.6); }
+            0%, 100% { opacity: 1; text-shadow: 0 0 20px rgba(255,62,0,0.6); }
             50% { opacity: 0.5; text-shadow: 0 0 40px rgba(255,62,0,0.9); }
         }
 
@@ -29,15 +37,128 @@
         nav a { color: #fff; margin: 0 25px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 0.9rem; letter-spacing: 2px; }
         nav a:hover { color: var(--primary); }
 
-        /* DYNAMIC CONTENT AREA (SPA Compliant) */
         #content-window { flex-grow: 1; overflow-y: auto; padding: 50px; padding-bottom: 140px; scroll-behavior: smooth; }
 
-        /* THE HOLY GRAIL: PERSISTENT PLAYER BAR (NEVER RELOADS) */
         footer#master-player {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: #000; border-top: 3px solid var(--primary);
             padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; z-index: 9999;
         }
         .player-frame { width: 450px; height: 70px; border: none; }
-        .now-playing-meta { flex: 1; padding-left: 40
-                           
+        .now-playing-meta { flex: 1; padding-left: 40px; border-left: 1px solid #222; margin-left: 40px; }
+
+        @media (max-width: 768px) {
+            header { padding: 30px 15px; }
+            #logo { max-width: 280px; }
+            .tagline { font-size: 1.1rem; letter-spacing: 4px; }
+            nav { padding: 15px 5px; overflow-x: auto; white-space: nowrap; }
+            nav a { margin: 0 12px; font-size: 0.75rem; }
+            #content-window { padding: 25px; }
+            footer#master-player { flex-direction: column; height: auto; padding: 15px; text-align: center; }
+            .player-frame { width: 100%; height: 60px; }
+            .now-playing-meta { border-left: none; margin-left: 0; padding-left: 0; margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-shell">
+    <header>
+        <img src="logo.png" alt="Sla-rock.scot" id="logo">
+        <div class="tagline">Rockin' Scotland</div>
+    </header>
+
+    <nav>
+        <a onclick="spa.load('home')">On Air</a>
+        <a onclick="spa.load('gigs')">Gigs</a>
+        <a onclick="spa.load('ads')">Advertise</a>
+        <a onclick="spa.load('contact')">Contact</a>
+    </nav>
+
+    <div id="content-window">
+        <div id="page-content"></div>
+    </div>
+
+    <footer id="master-player">
+        <iframe class="player-frame" src="https://player.broadcast.radio/caledonia-tx-ltd" allow="autoplay"></iframe>
+        <div class="now-playing-meta">
+            <strong style="color:var(--primary); display:block; text-transform:uppercase; font-size: 1.1rem;">Live Stream</strong>
+            <span id="track-info" style="font-size: 0.9rem; font-weight:bold; color: #888;">SLA-ROCK.SCOT | PURE CENTRAL BELT ROCK</span>
+        </div>
+    </footer>
+</div>
+
+<script>
+    const spa = {
+        pages: {
+            home: `
+                <h2 style="text-transform:uppercase; font-size:3rem; margin-bottom:40px;">The <span style="color:var(--primary)">Frontline</span></h2>
+                <div id="news-feed" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(350px, 1fr)); gap:30px;">Loading royalty-free news...</div>
+            `,
+            gigs: `
+                <h2 style="text-transform:uppercase; font-size:3rem; margin-bottom:40px;">Gig <span style="color:var(--primary)">Calendar</span></h2>
+                <div style="background:var(--glass); border:1px solid #222; padding:30px; margin-bottom:20px;">
+                    <h3 style="color:var(--primary); margin:0; text-transform:uppercase;">Central Scotland Live Circuit</h3>
+                    <p style="color:#888;">Checking the latest listings for Glasgow, Edinburgh, and the Central Belt...</p>
+                </div>
+                <div id="gig-list" style="display:grid; grid-template-columns:1fr; gap:15px;">
+                    <div style="border-left:4px solid var(--primary); padding:20px; background:rgba(255,255,255,0.02);">
+                        <strong>Glasgow | Barrowland Ballroom</strong>
+                        <p style="margin:5px 0 0 0; font-size:0.9rem; color:#aaa;">Check official venue box office for Jan 2026 availability.</p>
+                    </div>
+                </div>
+            `,
+            ads: `
+                <h2 style="text-transform:uppercase; font-size:3rem; margin-bottom:40px;">Broadcast <span style="color:var(--primary)">Rates</span></h2>
+                <div style="background:var(--glass); border:1px solid #222; padding:40px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-weight:900;">REGIONAL AIRTIME</span><span style="font-size:2.5rem; font-weight:900; color:var(--primary);">£299</span>
+                </div>
+                <div style="background:var(--glass); border:1px solid #222; padding:40px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-weight:900;">MULTI-REGIONAL</span><span style="font-size:2.5rem; font-weight:900; color:var(--primary);">£449</span>
+                </div>
+                <div style="background:var(--glass); border:1px solid #222; padding:40px; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-weight:900;">CREATIVE PRODUCTION</span><span style="font-size:2.5rem; font-weight:900; color:var(--primary);">£195</span>
+                </div>
+                <p style="font-size:0.8rem; color:#444; margin-top:30px; text-transform:uppercase; letter-spacing:1px;">Non-VAT Registered. Locked Jan 2026 Policy.</p>
+            `,
+            contact: `
+                <h2 style="text-transform:uppercase; font-size:3rem;">Contact <span style="color:var(--primary)">Studio</span></h2>
+                <p style="font-size: 1.5rem;">Email: studio@sla-rock.scot</p>
+                <p>For advertising enquiries: ads@sla-rock.scot</p>
+            `
+        },
+        load: function(id) {
+            document.getElementById('page-content').innerHTML = this.pages[id];
+            if(id === 'home') fetchNews();
+            document.getElementById('content-window').scrollTop = 0;
+        }
+    };
+
+    async function fetchNews() {
+        const rss = 'https://www.scottishmusicnetwork.co.uk/feed/';
+        try {
+            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rss}`);
+            const data = await res.json();
+            const feed = document.getElementById('news-feed');
+            if(!feed) return;
+            feed.innerHTML = '';
+            data.items.slice(0, 6).forEach(item => {
+                feed.innerHTML += `
+                    <div style="background:var(--glass); border:1px solid #222; padding:30px;">
+                        <h4 style="margin:0 0 15px 0; text-transform:uppercase; line-height:1.2;">${item.title}</h4>
+                        <a href="${item.link}" target="_blank" style="color:var(--primary); font-size:0.8rem; text-decoration:none; font-weight:900; text-transform:uppercase;">Read Article</a>
+                    </div>
+                `;
+            });
+        } catch(e) { 
+            if(document.getElementById('news-feed')) {
+                document.getElementById('news-feed').innerHTML = "News feed temporarily unavailable."; 
+            }
+        }
+    }
+
+    window.onload = () => spa.load('home');
+</script>
+
+</body>
+</html>
