@@ -1,85 +1,35 @@
 <main>
     <style>
-        .hero-section {
-            text-align: center;
-            padding: 80px 0;
-            background: linear-gradient(to bottom, #000, #0a0a0a);
-        }
-        .hero-section h2 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            text-transform: uppercase;
-            line-height: 0.85;
-            margin: 0 0 20px 0;
-            letter-spacing: -3px;
-        }
-        .hero-section h2 span {
-            color: #ff3e00;
-        }
-        .hero-section p {
-            font-size: 1.2rem;
-            color: #888;
-            max-width: 700px;
-            margin: 0 auto 40px auto;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+        .home-grid { display: grid; grid-template-columns: 1fr 350px; gap: 30px; padding: 20px 0; }
+        .hero-box { text-align: left; }
+        .hero-box h2 { font-size: 5rem; line-height: 0.8; margin: 0; text-transform: uppercase; }
+        .hero-box h2 span { color: #ff3e00; }
         
-        .big-play-trigger {
-            background: #ff3e00;
-            color: #000;
-            border: none;
-            padding: 25px 60px;
-            font-family: 'Oswald';
-            font-weight: 700;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-block;
+        .sidebar { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 20px; }
+        .sidebar h3 { color: #ff3e00; text-transform: uppercase; border-bottom: 1px solid #222; padding-bottom: 10px; margin-top: 0; }
+        
+        ul#recent-tracks { list-style: none; padding: 0; margin: 0; }
+        ul#recent-tracks li { padding: 12px 0; border-bottom: 1px solid #111; line-height: 1.2; }
+        
+        @media (max-width: 900px) {
+            .home-grid { grid-template-columns: 1fr; }
         }
-        .big-play-trigger:hover {
-            background: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 62, 0, 0.2);
-        }
-
-        .sub-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 60px;
-        }
-        .feature-box {
-            background: #050505;
-            border: 1px solid #1a1a1a;
-            padding: 30px;
-            text-align: center;
-            transition: border 0.3s;
-        }
-        .feature-box:hover { border-color: #ff3e00; }
-        .feature-box h3 {
-            color: #ff3e00;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-        .feature-box p { font-size: 0.85rem; color: #888; margin: 0; line-height: 1.6; }
     </style>
 
-    <section class="hero-section">
-        <div class="container">
-            <h2>CENTRAL SCOTLAND'S<br><span>LOUDEST</span></h2>
-            <p>Premium Rock Broadcasting. No Filler. Total Sonic Penetration.</p>
-            
-            <button class="big-play-trigger" onclick="document.getElementById('play-btn').click()">
-                Launch Live Stream
-            </button>
+    <div class="container home-grid">
+        <div class="hero-box">
+            <h2>SCOTLAND'S<br><span>PURE ROCK</span></h2>
+            <p style="font-size: 1.5rem; letter-spacing: 2px; color: #888;">ALL GENRES. ALL ROCK. SERVING THE PUBLIC.</p>
+            <div style="margin-top: 40px;">
+                <p>Welcome to Rockin' Scotland. From the legends of the Central Belt to the newest unsigned talent breaking out of Glasgow and Edinburgh, we play it all.</p>
+            </div>
         </div>
-    </section>
 
-    <section class="container">
-        <div class="sub-features">
-            <div class="feature-box">
-                <h3>Regional Airtime</h3>
-                <p>
-                    
+        <div class="sidebar">
+            <h3>Recently Played</h3>
+            <ul id="recent-tracks">
+                <li>Loading history...</li>
+            </ul>
+        </div>
+    </div>
+</main>
