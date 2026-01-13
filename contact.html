@@ -1,80 +1,71 @@
 <main>
     <style>
-        .contact-header { text-align: center; padding: 40px 0 20px 0; }
-        .contact-header h1 { font-size: 3rem; text-transform: uppercase; color: #ff3e00; margin: 0; }
-        .contact-header p { color: #888; text-transform: uppercase; letter-spacing: 2px; }
+        .contact-header { text-align: center; padding: 60px 0 20px 0; }
+        .contact-header h1 { font-size: 3.5rem; text-transform: uppercase; color: #ff3e00; margin: 0; line-height: 0.9; }
+        .contact-header p { color: #888; text-transform: uppercase; letter-spacing: 3px; font-size: 1.1rem; }
 
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin: 40px 0; }
-        .form-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 30px; }
-        .info-card h2 { color: #ff3e00; text-transform: uppercase; margin-top: 0; }
-        .info-card p { color: #ccc; font-size: 1.1rem; line-height: 1.6; }
-
-        .form-group { margin-bottom: 20px; width: 100%; }
-        .form-group label { display: block; text-transform: uppercase; font-size: 0.75rem; color: #ff3e00; margin-bottom: 5px; font-weight: 700; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            background: #111;
-            border: 1px solid #222;
-            padding: 12px;
-            color: #fff;
-            font-family: 'Oswald';
-            display: block;
-        }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin: 50px 0; }
+        .info-card { padding: 40px; background: #050505; border-left: 4px solid #ff3e00; }
+        .info-card h2 { color: #fff; text-transform: uppercase; margin-top: 0; font-size: 1.8rem; }
+        .info-card p { color: #888; line-height: 1.6; font-size: 1rem; }
         
-        .submit-btn {
-            background: #ff3e00;
-            color: #000;
-            border: none;
-            width: 100%;
-            padding: 15px;
-            font-family: 'Oswald';
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-            font-size: 1rem;
+        .contact-details { margin-top: 40px; }
+        .detail-item { margin-bottom: 25px; }
+        .detail-label { display: block; color: #ff3e00; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+        .detail-value { font-size: 1.4rem; font-weight: 700; color: #fff; text-transform: uppercase; }
+
+        .form-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; text-transform: uppercase; font-size: 0.7rem; color: #ff3e00; margin-bottom: 8px; font-weight: 700; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; background: #111; border: 1px solid #222; padding: 15px; color: #fff; font-family: 'Oswald';
         }
+        .send-btn { background: #ff3e00; color: #000; border: none; width: 100%; padding: 18px; font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 1.1rem; }
     </style>
 
     <div class="container">
         <section class="contact-header">
-            <h1>Connect</h1>
-            <p>Direct Access to the Station</p>
+            <h1>Direct Access</h1>
+            <p>Facilitating Commercial Conversations</p>
         </section>
 
         <div class="contact-grid">
             <div class="info-card">
-                <h2>Get in Touch</h2>
-                <p>Whether you're looking for Regional Market Penetration or you're a local band—this is the place.</p>
-                <div style="margin-top: 30px;">
-                    <p style="color: #ff3e00; font-weight: 700; margin-bottom: 5px;">STUDIO LINE</p>
-                    <p style="font-size: 1.5rem; margin-top: 0;">0141 ROCK SCOT</p>
+                <h2>Engage</h2>
+                <p>For Regional Penetration inquiries or Creative Identity sessions, reach our corporate desk directly.</p>
+                
+                <div class="contact-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Studio Hotline</span>
+                        <span class="detail-value">0141 ROCK SCOT</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Commercial Inquiries</span>
+                        <span class="detail-value">HQ@ROCK.SCOT</span>
+                    </div>
                 </div>
             </div>
 
             <div class="form-card">
                 <form action="#" method="POST">
                     <div class="form-group">
-                        <label>Your Name</label>
-                        <input type="text" placeholder="Full Name" required>
+                        <label>Your Name / Organization</label>
+                        <input type="text" required>
                     </div>
                     <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" placeholder="email@company.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Nature of Inquiry</label>
+                        <label>Engagement Tier</label>
                         <select>
-                            <option>General Inquiry</option>
-                            <option>Regional Airtime (£199)</option>
-                            <option>Multi-Regional Airtime (£349)</option>
-                            <option>Creative/Production (£195)</option>
+                            <option>Regional Airtime (£299)</option>
+                            <option>Multi-Regional Suite (£449)</option>
+                            <option>Creative Production (£195)</option>
+                            <option>General Inquiries</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Message</label>
-                        <textarea rows="5" placeholder="How can we help?"></textarea>
+                        <label>Message Architecture</label>
+                        <textarea rows="5" placeholder="Outline your requirements..."></textarea>
                     </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
+                    <button type="submit" class="send-btn">Transmit Message</button>
                 </form>
             </div>
         </div>
