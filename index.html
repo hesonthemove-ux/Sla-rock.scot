@@ -93,7 +93,7 @@
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
             <nav class="nav-menu" id="main-nav">
-                <a onclick="loadPage('home.html', this)" class="active">Listen</a>
+                <a onclick="loadPage('home.html', this)" class="active">Home</a>
                 <a onclick="loadPage('news.html', this)">News</a>
                 <a onclick="loadPage('about.html', this)">About</a>
                 <a onclick="loadPage('advertise.html', this)">Advertise</a>
@@ -106,46 +106,5 @@
         </main>
 
     <footer class="container" style="padding: 20px 0; text-align: center; color: #222; font-size: 0.6rem;">
-        <div class="grid-ads">
-            <div class="card-ad"><p class="ad-label">Regional</p><p class="ad-price">£199</p></div>
-            <div class="card-ad"><p class="ad-label">Multi</p><p class="ad-price">£349</p></div>
-            <div class="card-ad"><p class="ad-label">Creative</p><p class="ad-price">£195</p></div>
-        </div>
-        &copy; 2026 ROCK.SCOT | All Rights Reserved.
-    </footer>
-
-    <script src="player.js"></script>
-    <script>
-        async function loadPage(page, element) {
-            try {
-                const response = await fetch(page);
-                const html = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                
-                // Extract ONLY the <main> content from the target file
-                const newContent = doc.querySelector('main').innerHTML;
-                document.getElementById('page-content').innerHTML = newContent;
-                
-                // Update active state
-                document.querySelectorAll('#main-nav a').forEach(a => a.classList.remove('active'));
-                if(element) element.classList.add('active');
-
-                // Re-init any scripts (like the News Ticker/Feeds)
-                doc.querySelectorAll('script').forEach(oldScript => {
-                    const newScript = document.createElement("script");
-                    if (oldScript.src) newScript.src = oldScript.src;
-                    else newScript.textContent = oldScript.textContent;
-                    document.body.appendChild(newScript);
-                });
-                
-                window.scrollTo(0,0);
-            } catch (err) {
-                console.error("Navigation error:", err);
-            }
-        }
-        // Load the home view immediately
-        loadPage('home.html');
-    </script>
-</body>
-</html>
+        <div
+            
