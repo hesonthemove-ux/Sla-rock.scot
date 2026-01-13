@@ -1,50 +1,66 @@
 <main>
     <style>
-        .about-hero { text-align: center; padding: 60px 0; background: #050505; border-bottom: 1px solid #1a1a1a; }
-        .about-hero h1 { font-size: 3.5rem; text-transform: uppercase; color: #ff3e00; margin: 0; line-height: 0.9; }
-        .about-hero p { font-size: 1.2rem; color: #888; text-transform: uppercase; letter-spacing: 3px; margin-top: 10px; }
+        .about-hero { text-align: center; padding: 100px 0 40px 0; background: #000; }
+        .about-hero h1 { font-size: clamp(3.5rem, 12vw, 6rem); text-transform: uppercase; color: #ff3e00; margin: 0; line-height: 0.8; letter-spacing: -4px; font-weight: 700; }
+        .about-hero p { font-size: 1.2rem; color: #fff; text-transform: uppercase; letter-spacing: 6px; margin-top: 20px; font-weight: 700; }
 
-        .content-box { max-width: 800px; margin: 50px auto; line-height: 1.8; color: #ccc; font-size: 1.1rem; }
-        .content-box h2 { color: #fff; text-transform: uppercase; border-left: 4px solid #ff3e00; padding-left: 15px; margin: 40px 0 20px 0; }
+        .content-box { max-width: 850px; margin: 0 auto; padding: 20px 20px 100px 20px; line-height: 1.7; color: #bbb; font-size: 1.2rem; }
+        .content-box h2 { color: #fff; text-transform: uppercase; font-size: 2.2rem; margin: 60px 0 20px 0; letter-spacing: -1px; }
         
-        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
-        .stat-item { background: #0a0a0a; padding: 20px; border: 1px solid #1a1a1a; text-align: center; }
-        .stat-number { display: block; font-size: 2rem; font-weight: 700; color: #ff3e00; }
-        .stat-label { font-size: 0.7rem; text-transform: uppercase; color: #666; letter-spacing: 1px; }
+        .rock-border { border-left: 6px solid #ff3e00; padding-left: 25px; margin: 40px 0; }
+        .highlight { color: #fff; font-weight: 700; text-transform: uppercase; }
+        
+        .grit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 50px 0; }
+        @media (max-width: 768px) { .grit-grid { grid-template-columns: 1fr; } }
+        
+        .grit-item { background: #080808; border: 1px solid #1a1a1a; padding: 30px; position: relative; }
+        .grit-item h3 { color: #ff3e00; text-transform: uppercase; font-size: 1.3rem; margin-top: 0; margin-bottom: 10px; }
+        .grit-item p { font-size: 1rem; color: #888; margin: 0; }
 
-        .highlight { color: #fff; font-weight: 700; }
+        .strong-close { 
+            font-size: 3rem; 
+            text-transform: uppercase; 
+            color: #fff; 
+            line-height: 0.9; 
+            margin: 80px 0; 
+            text-align: left;
+            font-weight: 700;
+        }
+        .strong-close span { color: #ff3e00; }
     </style>
 
     <div class="container">
         <section class="about-hero">
-            <h1>The Voice of <br>Scottish Rock</h1>
-            <p>Premium Regional Broadcasting</p>
+            <h1>LOUD. LOCAL.<br>LOCKED IN.</h1>
+            <p>Central Scotland Rock</p>
         </section>
 
         <div class="content-box">
-            <h2>Our Mission</h2>
-            <p>ROCK.SCOT isn't just a radio station; it is a <span class="highlight">Sonic Identity Hub</span> for Central Scotland. We exist to bridge the gap between high-octane rock and the regional commercial landscape. We don't believe in background noise. We believe in presence.</p>
+            <div class="rock-border">
+                <p style="color: #fff; font-size: 1.5rem; font-weight: 700; line-height: 1.2;">We don’t do background noise. We do rock music. All of it. From the legends who built the scene to the bands currently tearing up the basement bars.</p>
+            </div>
+            
+            <p>ROCK.SCOT is built on a simple foundation: <span class="highlight">Serving the public</span> and feeding the riff. We are a dedicated regional asset for Central Scotland, delivering a high-voltage stream that covers every corner of the genre. If it’s got grit and it’s got heart, it’s on the air.</p>
 
-            <div class="stat-grid">
-                <div class="stat-item">
-                    <span class="stat-number">24/7</span>
-                    <span class="stat-label">Uninterrupted Rock</span>
+            <div class="grit-grid">
+                <div class="grit-item">
+                    <h3>All Rock. No Limits.</h3>
+                    <p>Classic, Alt, Metal, Punk, or Grunge. We don’t care about labels; we care about the energy. We broadcast the full spectrum of the loud.</p>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">£299</span>
-                    <span class="stat-label">Entry Tier Regional</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">Local Talent Focused</span>
+                <div class="grit-item">
+                    <h3>Unsigned & Raw</h3>
+                    <p>We give the next generation a real shot. We’ve built the architecture to get unsigned talent off the hard drive and onto the regional airwaves.</p>
                 </div>
             </div>
 
-            <h2>Commercial Dominance</h2>
-            <p>In an era of "Wankernomics" and digital clutter, we provide a streamlined, high-impact alternative. Our advertising architecture—starting at <span class="highlight">£299 for Regional Airtime</span>—is designed for businesses that require high-frequency recall and a premium audience profile.</p>
+            <h2>Why we're here</h2>
+            <p>The scene in Central Scotland is alive, and it deserves a station that’s as confident as the music it plays. We aren't here to play it safe. We are here to support the local venues, back the artists who are grinding, and give the public a rock station that actually belongs to them.</p>
 
-            <h2>Supporting the Scene</h2>
-            <p>From the basement bars of Glasgow to the main stages of Edinburgh, we provide the <span class="highlight">Local Talent Architecture</span> necessary for unsigned bands to reach a professional audience. We provide the airwaves; you provide the noise.</p>
+            <div class="strong-close">
+                THE <span>RIFF</span>.<br>THE <span>CITY</span>.<br>THE <span>STATION</span>.
+            </div>
+
+            <p>We are a strong, independent voice for the Scottish rock community. No corporate filters, no safe playlists—just a commitment to the artists and the listeners. This is <span class="highlight">ROCK.SCOT</span>.</p>
         </div>
     </div>
 </main>
