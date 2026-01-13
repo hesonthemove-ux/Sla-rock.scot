@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title id="meta-title">ROCK.SCOT | Central Scotland's Loudest Rock Station</title>
-    <meta name="description" id="meta-desc" content="Premium rock broadcasting. Regional airtime from £299. Stream live Scottish rock and local news across Central Scotland.">
+    <title id="meta-title">ROCK.SCOT | Rockin' Scotland</title>
+    <meta name="description" id="meta-desc" content="All genres. All rock. Serving the public and breaking unsigned talent. Regional airtime from £299. Rockin' Scotland live.">
     
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#000000">
     <link rel="canonical" href="https://rock.scot/">
 
     <meta property="og:type" content="music.radio_station">
-    <meta property="og:title" id="og-title" content="ROCK.SCOT | Central Scotland's Loudest">
-    <meta property="og:description" id="og-desc" content="Premium Regional Airtime from £299. Stream Central Scotland's Loudest Rock.">
+    <meta property="og:title" id="og-title" content="ROCK.SCOT | Rockin' Scotland">
+    <meta property="og:description" id="og-desc" content="Pure Scottish Rock. All Genres. Serving the Public. Airtime from £299.">
     <meta property="og:image" content="og-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -31,7 +31,7 @@
         }
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
         
-        /* PLAYER BAR - FIXED POSITION */
+        /* PLAYER BAR */
         #master-player { 
             background: #000; 
             border-bottom: 1px solid #1a1a1a; 
@@ -69,10 +69,9 @@
         }
         .nav-menu a.active { color: #ff3e00; border-bottom: 2px solid #ff3e00; }
 
-        /* CONTENT SWAP AREA */
         #page-content { min-height: 60vh; padding-top: 20px; }
 
-        /* PRICING TIERS - LOCKED IN FOOTER */
+        /* PRICING FOOTER */
         .grid-ads { display: flex; gap: 8px; margin: 40px 0; width: 100%; }
         .grid-ads .card-ad { 
             flex: 1; 
@@ -89,7 +88,6 @@
             font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; 
             cursor: pointer; font-size: 0.7rem; 
         }
-        
         .footer-legal { color: #222; font-size: 0.6rem; text-decoration: none; cursor: pointer; }
         .footer-legal:hover { color: #444; }
     </style>
@@ -99,7 +97,7 @@
     <div id="master-player">
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
             <div style="display: flex; align-items: center; gap: 8px;">
-                <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.65rem;">Ready to Rock</span>
+                <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.65rem;">Rockin' Scotland</span>
             </div>
             <button id="play-btn">Listen</button>
         </div>
@@ -118,8 +116,7 @@
         </div>
     </header>
 
-    <main id="page-content">
-        </main>
+    <main id="page-content"></main>
 
     <footer class="container" style="padding: 20px 0; text-align: center;">
         <div class="grid-ads">
@@ -135,14 +132,13 @@
 
     <script src="player.js"></script>
     <script>
-        // MASTER SEO DATA ENGINE
         const seoData = {
-            'home.html': { title: 'ROCK.SCOT | Central Scotland\'s Loudest Rock Station', desc: 'Premium rock broadcasting. Regional airtime from £299. Stream live Scottish rock.' },
-            'news.html': { title: 'Music News | Central Scotland Music Feeds | ROCK.SCOT', desc: 'The latest album releases and music news from across Central Scotland.' },
-            'about.html': { title: 'About Us | Premium Regional Broadcaster | ROCK.SCOT', desc: 'Connecting Central Scotland through high-impact rock and premium commercial airtime.' },
-            'advertise.html': { title: 'Advertise | Regional Market Penetration | ROCK.SCOT', desc: 'Regional airtime from £299. Multi-regional from £449. Custom creative for £195.' },
-            'submit.html': { title: 'Submit Music | Local Talent Architecture | ROCK.SCOT', desc: 'Direct submission architecture for Scottish bands and artists.' },
-            'privacy.html': { title: 'Privacy Policy | Data Sovereignty | ROCK.SCOT', desc: 'ROCK.SCOT Privacy and GDPR compliance data protocols.' }
+            'home.html': { title: 'ROCK.SCOT | Rockin\' Scotland', desc: 'Serving the public with all-genre rock. Breaking unsigned Scottish talent.' },
+            'news.html': { title: 'Music News | Rockin\' Scotland Feeds | ROCK.SCOT', desc: 'Latest releases and news from the Scottish rock scene.' },
+            'about.html': { title: 'About Us | Confident & Strong | ROCK.SCOT', desc: 'Rocky, edgy, and dedicated to the Scottish music community.' },
+            'advertise.html': { title: 'Advertise | Regional Market Penetration | ROCK.SCOT', desc: 'Regional airtime from £299. Multi-regional from £449.' },
+            'submit.html': { title: 'Submit Music | Artist Architecture | ROCK.SCOT', desc: 'Direct submission for Scottish bands.' },
+            'privacy.html': { title: 'Privacy Policy | ROCK.SCOT', desc: 'GDPR compliance data protocols.' }
         };
 
         async function loadPage(page, element) {
@@ -152,41 +148,25 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 const newContent = doc.querySelector('main').innerHTML;
-                
                 document.getElementById('page-content').innerHTML = newContent;
                 document.querySelectorAll('#main-nav a').forEach(a => a.classList.remove('active'));
-                
-                if(element) {
-                    element.classList.add('active');
-                } else if (page === 'home.html') {
-                    document.getElementById('home-link').classList.add('active');
-                }
-
-                // DYNAMIC SEO UPDATE
+                if(element) element.classList.add('active');
+                else if (page === 'home.html') document.getElementById('home-link').classList.add('active');
                 if (seoData[page]) {
                     document.title = seoData[page].title;
                     document.getElementById('meta-desc').setAttribute('content', seoData[page].desc);
-                    document.getElementById('og-title').setAttribute('content', seoData[page].title);
-                    document.getElementById('og-desc').setAttribute('content', seoData[page].desc);
                 }
-
-                // RE-RUN SCRIPTS (Ticker, etc)
                 doc.querySelectorAll('script').forEach(oldScript => {
                     const newScript = document.createElement("script");
                     if (oldScript.src) newScript.src = oldScript.src;
                     else newScript.textContent = oldScript.textContent;
                     document.body.appendChild(newScript);
                 });
-                
                 window.scrollTo(0,0);
-            } catch (err) {
-                console.error("SPA Error:", err);
-            }
+            } catch (err) { console.error(err); }
         }
-        
-        window.onload = () => {
-            loadPage('home.html', document.getElementById('home-link'));
-        };
+        window.onload = () => loadPage('home.html', document.getElementById('home-link'));
     </script>
 </body>
-</html>
+    </html>
+    
