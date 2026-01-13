@@ -30,42 +30,42 @@ function togglePlayback() {
 
 async function updateStationInfo() {
     try {
-        // Broadcast.Radio Public API call
-        const response = await fetch(`https://api.broadcast.radio/api/nowplaying/${stationId}`);
-        const data = await response.json();
+        // Using a public proxy to bypass CORS security blocks
+        const proxy = "https://api.allorigins.win/get?url=";
+        const apiUrl = encodeURIComponent(`https://api.broadcast.radio/api/nowplaying/${stationId}`);
+        
+        const response = await fetch(proxy + apiUrl);
+        const wrapper = await response.json();
+        const data = JSON.parse(wrapper.contents);
         
         if (data && data.success) {
             // 1. Update the "Now Playing" bar
-            const now = data.body?.now_playing || data.now_playing;
+            const now = data.body?.now_playing;
             if (now && now.title) {
                 trackTitle.innerText = `${now.artist} - ${now.title}`;
             }
 
             // 2. Update Recently Played List
-            const history = data.body?.recently_played || data.recently_played;
+            const history = data.body?.recently_played;
             if (history && Array.isArray(history) && recentBox) {
-                recentBox.innerHTML = ''; // Clear "Fetching history..."
+                recentBox.innerHTML = ''; // Clear "Fetching" message
                 
                 history.slice(0, 3).forEach(track => {
                     const row = document.createElement('div');
                     row.style.cssText = "display:flex; justify-content:space-between; font-size:0.8rem; border-bottom:1px solid #1a1a1a; padding:6px 0; margin-bottom:2px;";
                     
-                    // Fallback for time if played_at is missing
                     const timeStr = track.played_at ? new Date(track.played_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '--:--';
                     
                     row.innerHTML = `
-                        <span style="color:#eee;">${track.artist || 'Unknown'} - ${track.title || 'Track'}</span>
+                        <span style="color:#eee;">${track.artist} - ${track.title}</span>
                         <span style="color:#444;">${timeStr}</span>
                     `;
                     recentBox.appendChild(row);
                 });
-            } else if (recentBox) {
-                recentBox.innerHTML = '<div style="font-size:0.7rem; color:#444;">No recent history available.</div>';
             }
         }
     } catch (error) {
         console.error("Metadata fetch error:", error);
-        if (recentBox) recentBox.innerHTML = '<div style="font-size:0.7rem; color:#444;">Offline History</div>';
     }
 }
 
