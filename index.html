@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="meta-title">ROCK.SCOT | Rockin' Scotland</title>
-    <meta name="description" id="meta-desc" content="Central Scotland's Rock Station. Regional airtime from £199. Multi-regional from £349.">
+    <meta name="description" id="meta-desc" content="Rockin' Scotland. All Genres. All Rock. Regional airtime from £199. Multi-regional from £349.">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
@@ -14,6 +14,9 @@
         /* PLAYER BAR */
         #master-player { background: #000; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 2000; width: 100%; }
         
+        /* HEADER TIGHTENING - Moving everything up 2 lines */
+        header { padding: 10px 0 0 0; } /* Reduced from 30px to 10px */
+
         /* LOGO PUSH - 900px */
         .logo-main { 
             width: 100%; 
@@ -21,36 +24,52 @@
             height: auto; 
             display: block; 
             margin: 0 auto; 
-            filter: drop-shadow(0 0 10px rgba(255, 62, 0, 0.1));
+        }
+
+        /* TAGLINE: Rockin' Scotland with Pulsing Glow */
+        .tagline-pulse {
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 8px;
+            color: #ff3e00;
+            margin: 5px 0 15px 0; /* Reduced margin to move nav up */
+            text-align: center;
+            animation: rockGlow 2s infinite ease-in-out;
+        }
+
+        @keyframes rockGlow {
+            0% { text-shadow: 0 0 5px #ff3e00, 0 0 10px #ff3e00; transform: scale(1); }
+            50% { text-shadow: 0 0 20px #ff3e00, 0 0 30px #ff7b00, 0 0 40px #ff3e00; transform: scale(1.02); }
+            100% { text-shadow: 0 0 5px #ff3e00, 0 0 10px #ff3e00; transform: scale(1); }
         }
         
-        /* NAV MENU PUSH - Larger to match 900px logo */
+        /* NAV MENU - Pushed up and enlarged */
         .nav-menu { 
-            margin-top: 25px; 
             display: flex; 
             justify-content: center; 
             flex-wrap: wrap; 
-            gap: 40px; /* Increased gap */
-            padding-bottom: 20px;
+            gap: 40px; 
+            padding-bottom: 10px;
         }
         .nav-menu a { 
             color: #fff; 
             text-decoration: none; 
             text-transform: uppercase; 
             font-weight: 700; 
-            font-size: 1.4rem; /* Pushed font size from 0.85rem */
+            font-size: 1.4rem; 
             letter-spacing: 2px;
             cursor: pointer;
-            border-bottom: 3px solid transparent; /* Thicker border */
+            border-bottom: 3px solid transparent;
             transition: 0.3s;
         }
         .nav-menu a.active { color: #ff3e00; border-bottom: 3px solid #ff3e00; }
         .nav-menu a:hover { color: #ff3e00; }
 
-        #page-content { min-height: 60vh; padding-top: 20px; }
+        #page-content { min-height: 50vh; padding-top: 10px; }
 
-        /* PRICING FOOTER - FIXED TO £199 / £349 */
-        .grid-ads { display: flex; gap: 15px; margin: 40px 0; width: 100%; }
+        /* PRICING FOOTER */
+        .grid-ads { display: flex; gap: 15px; margin: 30px 0; width: 100%; }
         .grid-ads .card-ad { 
             flex: 1; 
             background: #0a0a0a; 
@@ -70,6 +89,7 @@
         /* MOBILE FIX */
         @media (max-width: 768px) {
             .logo-main { max-width: 450px; }
+            .tagline-pulse { font-size: 1.2rem; letter-spacing: 4px; }
             .nav-menu { gap: 15px; }
             .nav-menu a { font-size: 1rem; }
         }
@@ -84,9 +104,10 @@
         </div>
     </div>
 
-    <header style="padding: 30px 0 0 0;">
+    <header>
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
+            <div class="tagline-pulse">Rockin' Scotland</div>
             <nav class="nav-menu" id="main-nav">
                 <a onclick="loadPage('home.html', this)" id="home-link">Home</a>
                 <a onclick="loadPage('news.html', this)">News</a>
@@ -99,7 +120,7 @@
 
     <main id="page-content"></main>
 
-    <footer class="container" style="padding: 40px 0; text-align: center;">
+    <footer class="container" style="padding: 20px 0; text-align: center;">
         <div class="grid-ads">
             <div class="card-ad"><p class="ad-label">Regional Airtime</p><p class="ad-price">£199</p></div>
             <div class="card-ad"><p class="ad-label">Multi-Regional</p><p class="ad-price">£349</p></div>
