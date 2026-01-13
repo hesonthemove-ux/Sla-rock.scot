@@ -150,12 +150,13 @@
             `,
             submit: `
                 <h2 style="text-transform:uppercase; font-size:3rem; margin-bottom:40px;">Submit <span style="color:var(--primary)">Music</span></h2>
-                <p style="margin-bottom:20px;">Local Central Scotland bands: Send us your Amazon or Spotify links for airplay consideration.</p>
-                <form onsubmit="event.preventDefault(); alert('Submission Received! Rockin Scotland.');">
-                    <input type="text" placeholder="Band Name" required>
-                    <input type="email" placeholder="Contact Email" required>
-                    <input type="url" placeholder="Amazon/Spotify Link" required>
-                    <textarea placeholder="Tell us about the track..." rows="4"></textarea>
+                <p style="margin-bottom:20px;">Local Central Scotland bands: Send us your Amazon or Spotify links.</p>
+                <div id="form-response"></div>
+                <form id="band-form" onsubmit="spa.submitForm(event)">
+                    <input type="text" name="band" placeholder="Band Name" required>
+                    <input type="email" name="email" placeholder="Contact Email" required>
+                    <input type="url" name="link" placeholder="Amazon/Spotify Link" required>
+                    <textarea name="message" placeholder="Tell us about the track..." rows="4"></textarea>
                     <button type="submit">Send to Studio</button>
                 </form>
             `
@@ -167,6 +168,31 @@
                 updateRecentList();
             }
             document.getElementById('content-window').scrollTop = 0;
+        },
+        submitForm: async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const responseDiv = document.getElementById('form-response');
+            
+            responseDiv.innerHTML = "Sending...";
+            
+            try {
+                const response = await fetch('submit.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                
+                if(result.status === 'success') {
+                    responseDiv.innerHTML = `<p style="color:var(--primary); font-weight:bold;">\${result.message}</p>`;
+                    form.reset();
+                } else {
+                    responseDiv.innerHTML = `<p style="color:red;">\${result.message}</p>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<p style="color:red;">Submission failed. Check your connection.</p>`;
+            }
         }
     };
 
@@ -183,11 +209,11 @@
             if (data && data.nowPlaying && data.nowPlaying.artist) {
                 const artist = data.nowPlaying.artist.toUpperCase();
                 const title = data.nowPlaying.title.toUpperCase();
-                const currentTrack = `${artist} - ${title}`;
+                const currentTrack = \`\${artist} - \${title}\`;
 
                 if (trackEl.innerText !== currentTrack) {
                     trackEl.innerText = currentTrack;
-                    amazonBtn.href = `https://www.amazon.co.uk/s?k=${encodeURIComponent(currentTrack)}&tag=YOUR_AFFILIATE_TAG_HERE`;
+                    amazonBtn.href = \`https://www.amazon.co.uk/s?k=\${encodeURIComponent(currentTrack)}&tag=YOUR_AFFILIATE_TAG_HERE\`;
                     amazonBtn.style.display = "inline-block";
                     
                     if(!trackHistory.includes(currentTrack)) {
@@ -206,26 +232,24 @@
     function updateRecentList() {
         const listContainer = document.getElementById('recent-tracks');
         if (!listContainer) return;
-
         if (trackHistory.length === 0) {
             listContainer.innerHTML = "<p style='color:#666;'>Rockin' Scotland Continuous Feed...</p>";
             return;
         }
-
-        listContainer.innerHTML = trackHistory.map(track => `<div class="recent-track"><strong>${track}</strong></div>`).join('');
+        listContainer.innerHTML = trackHistory.map(track => `<div class="recent-track"><strong>\${track}</strong></div>`).join('');
     }
 
     async function fetchNews() {
         const rss = 'https://www.scottishmusicnetwork.co.uk/feed/';
         try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rss}`);
+            const res = await fetch(\`https://api.rss2json.com/v1/api.json?rss_url=\${rss}\`);
             const data = await res.json();
             const feed = document.getElementById('news-feed');
             if(!feed) return;
             feed.innerHTML = data.items.slice(0, 4).map(item => `
                 <div style="background:var(--glass); padding:20px; margin-bottom:15px; border:1px solid #222;">
-                    <h4 style="margin:0 0 10px 0; text-transform:uppercase;">${item.title}</h4>
-                    <a href="${item.link}" target="_blank" style="color:var(--primary); font-size:0.7rem; text-decoration:none; font-weight:900;">READ MORE</a>
+                    <h4 style="margin:0 0 10px 0; text-transform:uppercase;">\${item.title}</h4>
+                    <a href="\${item.link}" target="_blank" style="color:var(--primary); font-size:0.7rem; text-decoration:none; font-weight:900;">READ MORE</a>
                 </div>
             `).join('');
         } catch(e) { 
