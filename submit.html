@@ -6,77 +6,33 @@
     <title>Submit | Sla-rock.scot</title>
     <style>
         :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
-        
         body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
-        
-        /* Fixed Corporate Identity */
         header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid var(--primary); }
         #logo { width: 250px; height: auto; }
         .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
-
         nav { background: #0a0a0a; text-align: center; padding: 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
-        nav a { color: #888; margin: 0 20px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
+        nav a { color: #888; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; font-size: 0.85rem; }
         nav a:hover { color: var(--primary); }
-
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-
-        /* Your Submit Page Styles with Glassmorphism Updates */
         .header-box { text-align: center; padding: 60px 0 20px 0; }
         .header-box h1 { font-size: 3.5rem; text-transform: uppercase; color: var(--primary); margin: 0; line-height: 0.9; }
         .header-box p { color: #888; text-transform: uppercase; letter-spacing: 3px; font-size: 1.1rem; margin-top: 10px; }
-
-        .form-container { 
-            max-width: 650px; 
-            margin: 40px auto; 
-            background: var(--glass); 
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.05); 
-            padding: 40px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
-        }
-        
+        .form-container { max-width: 650px; margin: 40px auto; background: var(--glass); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         .form-group { margin-bottom: 25px; }
         .form-group label { display: block; text-transform: uppercase; font-size: 0.7rem; color: var(--primary); margin-bottom: 8px; font-weight: 700; letter-spacing: 1px; }
-        
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            background: #111;
-            border: 1px solid #222;
-            padding: 15px;
-            color: #fff;
-            font-size: 1rem;
-            display: block;
-            transition: border 0.3s;
-            box-sizing: border-box; /* Ensures padding doesn't break width */
-        }
+        .form-group input, .form-group textarea { width: 100%; background: #111; border: 1px solid #222; padding: 15px; color: #fff; font-size: 1rem; display: block; transition: border 0.3s; box-sizing: border-box; }
         .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); outline: none; }
-        
-        .submit-btn {
-            background: var(--primary);
-            color: #000;
-            border: none;
-            width: 100%;
-            padding: 20px;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: background 0.3s;
-        }
+        .submit-btn { background: var(--primary); color: #000; border: none; width: 100%; padding: 20px; font-weight: 900; text-transform: uppercase; cursor: pointer; font-size: 1.2rem; transition: 0.3s; }
         .submit-btn:hover { background: #fff; }
-        
         .legal-note { font-size: 0.65rem; color: #444; text-align: center; margin-top: 20px; text-transform: uppercase; }
-
         footer { text-align: center; padding: 80px 20px; color: #444; border-top: 1px solid #111; }
     </style>
 </head>
 <body>
-
 <header>
     <img src="logo.png" alt="Sla-rock.scot" id="logo">
     <div class="tagline">Rockin' Scotland</div>
 </header>
-
 <nav>
     <a href="index.html">On Air</a>
     <a href="gig-calendar.html">Gigs</a>
@@ -84,15 +40,13 @@
     <a href="advertising.html">Advertise</a>
     <a href="contact.html">Contact</a>
 </nav>
-
 <main class="container">
     <section class="header-box">
         <h1>Artist Submission</h1>
         <p>Direct Distribution Architecture</p>
     </section>
-
     <div class="form-container">
-        <form action="#" method="POST">
+        <form action="success.html" method="GET">
             <div class="form-group">
                 <label>Band / Artist Project Name</label>
                 <input type="text" placeholder="IDENTITY" required>
@@ -114,11 +68,6 @@
         </form>
     </div>
 </main>
-
-<footer>
-    <p>&copy; 2026 Sla-rock.scot | Rockin' Scotland</p>
-</footer>
-
-<script src="pricing.js"></script>
+<footer><p>&copy; 2026 Sla-rock.scot | Rockin' Scotland</p></footer>
 </body>
 </html>
