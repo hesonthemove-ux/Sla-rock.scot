@@ -20,6 +20,7 @@
 
         #app-shell { display: flex; flex-direction: column; height: 100vh; }
         
+        /* DESKTOP MAX IMPACT */
         header { background: #000; padding: 50px 20px; text-align: center; border-bottom: 4px solid var(--primary); flex-shrink: 0; }
         #logo { width: 100%; max-width: 650px; height: auto; transition: 0.3s; }
         .tagline { 
@@ -39,22 +40,25 @@
 
         #content-window { flex-grow: 1; overflow-y: auto; padding: 50px; padding-bottom: 140px; scroll-behavior: smooth; }
 
+        /* PERSISTENT PLAYER BAR */
         footer#master-player {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: #000; border-top: 3px solid var(--primary);
             padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; z-index: 9999;
         }
         .player-frame { width: 450px; height: 70px; border: none; }
-        .now-playing-meta { flex: 1; padding-left: 40px; border-left: 1px solid #222; margin-left: 40px; min-width: 0; }
+        .now-playing-meta { flex: 1; padding-left: 40px; border-left: 1px solid #222; margin-left: 40px; min-width: 0; display: flex; align-items: center; justify-content: space-between; }
         
+        #track-info-container { flex: 1; min-width: 0; }
         #track-info { 
-            font-size: 0.9rem; 
-            font-weight: bold; 
-            color: #888; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-            display: block;
+            font-size: 0.9rem; font-weight: bold; color: #888; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;
+        }
+        
+        .buy-link {
+            background: #ff9900; color: #000; padding: 8px 15px; border-radius: 4px;
+            text-decoration: none; font-weight: 900; font-size: 0.7rem; text-transform: uppercase;
+            margin-left: 20px; display: none; white-space: nowrap;
         }
 
         @media (max-width: 768px) {
@@ -66,7 +70,8 @@
             #content-window { padding: 25px; }
             footer#master-player { flex-direction: column; height: auto; padding: 15px; text-align: center; }
             .player-frame { width: 100%; height: 60px; }
-            .now-playing-meta { border-left: none; margin-left: 0; padding-left: 0; margin-top: 10px; width: 100%; }
+            .now-playing-meta { border-left: none; margin-left: 0; padding-left: 0; margin-top: 10px; width: 100%; flex-direction: column; }
+            .buy-link { margin-left: 0; margin-top: 10px; width: 100%; text-align: center; }
         }
     </style>
 </head>
@@ -92,8 +97,11 @@
     <footer id="master-player">
         <iframe class="player-frame" src="https://player.broadcast.radio/caledonia-tx-ltd" allow="autoplay"></iframe>
         <div class="now-playing-meta">
-            <strong id="status-label" style="color:var(--primary); display:block; text-transform:uppercase; font-size: 1.1rem;">Live Now</strong>
-            <span id="track-info">SLA-ROCK.SCOT | PURE CENTRAL BELT ROCK</span>
+            <div id="track-info-container">
+                <strong id="status-label" style="color:var(--primary); display:block; text-transform:uppercase; font-size: 1.1rem;">Live Now</strong>
+                <span id="track-info">SLA-ROCK.SCOT | PURE CENTRAL BELT ROCK</span>
+            </div>
+            <a id="amazon-btn" href="#" target="_blank" class="buy-link">Get it on Amazon</a>
         </div>
     </footer>
 </div>
@@ -123,77 +131,5 @@
                 <div style="background:var(--glass); border:1px solid #222; padding:40px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
                     <span style="font-weight:900;">REGIONAL AIRTIME</span><span style="font-size:2.5rem; font-weight:900; color:var(--primary);">£299</span>
                 </div>
-                <div style="background:var(--glass); border:1px solid #222; padding:40px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-weight:900;">MULTI-REGIONAL</span><span style="font-size:2.5rem; font-weight:900; color:var(--primary);">£449</span>
-                </div>
-                <div style="background:var(--glass); border:1px solid #222; padding:40px; display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-weight:900;">CREATIVE PRODUCTION</span><span style="font-size:2.5rem; font-weight:900; color:var(--primary);">£195</span>
-                </div>
-                <p style="font-size:0.8rem; color:#444; margin-top:30px; text-transform:uppercase; letter-spacing:1px;">Non-VAT Registered. Locked Jan 2026 Policy.</p>
-            `,
-            contact: `
-                <h2 style="text-transform:uppercase; font-size:3rem;">Contact <span style="color:var(--primary)">Studio</span></h2>
-                <p style="font-size: 1.5rem;">Email: studio@sla-rock.scot</p>
-            `
-        },
-        load: function(id) {
-            document.getElementById('page-content').innerHTML = this.pages[id];
-            if(id === 'home') fetchNews();
-            document.getElementById('content-window').scrollTop = 0;
-        }
-    };
-
-    // TRACK METADATA SCRIPT
-    async function updateMetadata() {
-        const trackEl = document.getElementById('track-info');
-        const statusEl = document.getElementById('status-label');
-        
-        try {
-            // Attempting to fetch from the broadcast.radio public API for your station
-            const response = await fetch('https://api.broadcast.radio/v1/nowplaying/caledonia-tx-ltd');
-            const data = await response.json();
-            
-            if (data && data.nowPlaying) {
-                statusEl.innerText = "Now Playing";
-                trackEl.innerText = `${data.nowPlaying.artist.toUpperCase()} - ${data.nowPlaying.title.toUpperCase()}`;
-            }
-        } catch (error) {
-            // Fallback if API is unreachable or private
-            statusEl.innerText = "Live Stream";
-            trackEl.innerText = "SLA-ROCK.SCOT | ROCKIN' SCOTLAND";
-        }
-    }
-
-    async function fetchNews() {
-        const rss = 'https://www.scottishmusicnetwork.co.uk/feed/';
-        try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rss}`);
-            const data = await res.json();
-            const feed = document.getElementById('news-feed');
-            if(!feed) return;
-            feed.innerHTML = '';
-            data.items.slice(0, 6).forEach(item => {
-                feed.innerHTML += `
-                    <div style="background:var(--glass); border:1px solid #222; padding:30px;">
-                        <h4 style="margin:0 0 15px 0; text-transform:uppercase; line-height:1.2;">${item.title}</h4>
-                        <a href="${item.link}" target="_blank" style="color:var(--primary); font-size:0.8rem; text-decoration:none; font-weight:900; text-transform:uppercase;">Read Article</a>
-                    </div>
-                `;
-            });
-        } catch(e) { 
-            if(document.getElementById('news-feed')) {
-                document.getElementById('news-feed').innerHTML = "News feed temporarily unavailable."; 
-            }
-        }
-    }
-
-    // INITIALIZE SPA AND METADATA POLLING
-    window.onload = () => {
-        spa.load('home');
-        updateMetadata();
-        setInterval(updateMetadata, 30000); // Check for new track every 30 seconds
-    };
-</script>
-
-</body>
-</html>
+                <div style="background:var(--glass); border:1px solid #222; padding
+    
