@@ -8,45 +8,38 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="master-player">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+            <div id="now-playing" style="display: flex; align-items: center; gap: 15px;">
+                <div class="eq-container"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                <div>
+                    <span style="display: block; font-size: 0.6rem; color: #ff3e00; text-transform: uppercase; letter-spacing: 2px;">Live Now</span>
+                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Connecting...</span>
+                </div>
+            </div>
+            <button id="play-btn">Listen Live</button>
+        </div>
+    </div>
+
     <header>
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
             <nav class="nav-menu">
                 <a href="index.html">Listen</a>
-                <a href="sponsors.html">Sponsors</a>
+                <a href="news.html">Music Press</a>
                 <a href="advertise.html" class="active">Advertise</a>
-                <a href="contact.html">Contact</a>
+                <a href="submit.html">Submit Music</a>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <h1 class="hero-title" style="font-size: 4rem; margin-top: 40px;">ADVERTISE</h1>
-        
-        <img src="guitaristsilhouette.jpg" class="img-feature" alt="Audience Growth Data">
-
-        <section class="grid-layout">
-            <div class="card-dark"><h3>Regional</h3><p>Area Specific</p><strong>£199</strong></div>
-            <div class="card-dark"><h3>Multi-Regional</h3><p>Full West Footprint</p><strong>£349</strong></div>
-            <div class="card-dark"><h3>Creative Production</h3><p>Script & Voiceover</p><strong>£195</strong></div>
+        <section style="text-align: center; padding: 40px 0;">
+            <h1 class="hero-title">GROW YOUR<br>BUSINESS</h1>
+            <span class="sub-glow">Direct Access to the West of Scotland</span>
         </section>
 
-        <section class="card-dark" style="margin-top: 40px; border: 1px solid #333;">
-            <h3>REACH CALCULATOR</h3>
-            <div style="display: flex; gap: 10px; margin: 20px 0;">
-                <button onclick="calcROI(199, 15000)" class="btn-outline">Regional</button>
-                <button onclick="calcROI(349, 45000)" class="btn-outline">Multi-Reg</button>
-            </div>
-            <div id="roi-result" style="background: #000; padding: 20px; border-radius: 8px; text-align: center;">
-                <label style="font-size: 0.6rem; color: #666;">ESTIMATED WEEKLY IMPRESSIONS</label>
-                <span id="reach-count" style="font-size: 2.5rem; display: block; font-weight: 700;">15,000+</span>
-            </div>
-        </section>
-    </main>
-
-    <script>
-        function calcROI(p, r) { document.getElementById('reach-count').innerText = r.toLocaleString() + "+"; }
-    </script>
-    <script src="player.js"></script>
-</body>
-</html>
+        <div class="grid-layout">
+            <div class="card-dark" style="border-top: 4px solid #ff3e00;">
+                <h3 style="margin-bottom: 5px;">REG
+                    
