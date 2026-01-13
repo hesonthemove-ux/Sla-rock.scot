@@ -6,7 +6,6 @@
     <title>ROCK.SCOT | Central Scotland's Loudest</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* GLOBAL LAYOUT LOCK */
         * { box-sizing: border-box; }
         body { 
             background-color: #000; 
@@ -18,7 +17,6 @@
         }
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
         
-        /* PLAYER BAR - FIXED POSITION */
         #master-player { 
             background: #000; 
             border-bottom: 1px solid #1a1a1a; 
@@ -28,10 +26,10 @@
             width: 100%; 
         }
         
-        /* CORPORATE IDENTITY - FIXED SIZE/POSITION */
+        /* LOGO SIZE INCREASED TO 600px */
         .logo-main { 
             width: 100%; 
-            max-width: 500px; 
+            max-width: 600px; 
             height: auto; 
             display: block; 
             margin: 0 auto; 
@@ -56,10 +54,8 @@
         }
         .nav-menu a.active { color: #ff3e00; border-bottom: 2px solid #ff3e00; }
 
-        /* CONTENT SWAP AREA */
         #page-content { min-height: 60vh; padding-top: 20px; }
 
-        /* PRICING TIERS - LOCKED IN FOOTER */
         .grid-ads { display: flex; gap: 8px; margin: 40px 0; width: 100%; }
         .grid-ads .card-ad { 
             flex: 1; 
@@ -122,41 +118,20 @@
                 const html = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                
-                // Get the inner content of the <main> tag from the requested file
                 const newContent = doc.querySelector('main').innerHTML;
                 document.getElementById('page-content').innerHTML = newContent;
-                
-                // Reset nav active states
                 document.querySelectorAll('#main-nav a').forEach(a => a.classList.remove('active'));
-                
-                // If we clicked a link, highlight it. 
-                if(element) {
-                    element.classList.add('active');
-                } else {
-                    // On initial load, highlight 'Home'
-                    document.getElementById('home-link').classList.add('active');
-                }
-
-                // Re-run scripts (ticker, etc.)
+                if(element) element.classList.add('active');
                 doc.querySelectorAll('script').forEach(oldScript => {
                     const newScript = document.createElement("script");
                     if (oldScript.src) newScript.src = oldScript.src;
                     else newScript.textContent = oldScript.textContent;
                     document.body.appendChild(newScript);
                 });
-                
                 window.scrollTo(0,0);
-            } catch (err) {
-                console.error("Navigation error:", err);
-                document.getElementById('page-content').innerHTML = "<p style='text-align:center; padding:50px;'>Error loading content. Please refresh.</p>";
-            }
+            } catch (err) { console.error("Navigation error:", err); }
         }
-
-        // BOOTSTRAP: Load home.html automatically when index.html is opened
-        window.onload = () => {
-            loadPage('home.html', document.getElementById('home-link'));
-        };
+        window.onload = () => { loadPage('home.html', document.getElementById('home-link')); };
     </script>
 </body>
 </html>
