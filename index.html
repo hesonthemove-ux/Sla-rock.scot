@@ -3,75 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROCK.SCOT | Central Scotland's Loudest</title>
+    
+    <title id="meta-title">ROCK.SCOT | Central Scotland's Loudest Rock Station</title>
+    <meta name="description" id="meta-desc" content="Broadcasting the best rock and metal across Central Scotland. Regional airtime and professional sonic identity services.">
+    <meta name="keywords" content="Rock Radio Scotland, Central Scotland Music, Radio Advertising Glasgow, Scottish Rock Bands">
+    
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        body { 
-            background-color: #000; 
-            color: #fff; 
-            margin: 0; 
-            padding: 0; 
-            font-family: 'Oswald', sans-serif; 
-            overflow-x: hidden; 
-        }
+        body { background-color: #000; color: #fff; margin: 0; padding: 0; font-family: 'Oswald', sans-serif; overflow-x: hidden; }
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
         
-        #master-player { 
-            background: #000; 
-            border-bottom: 1px solid #1a1a1a; 
-            position: sticky; 
-            top: 0; 
-            z-index: 2000; 
-            width: 100%; 
-        }
+        #master-player { background: #000; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 2000; width: 100%; }
         
-        /* LOGO SIZE INCREASED TO 600px */
-        .logo-main { 
-            width: 100%; 
-            max-width: 600px; 
-            height: auto; 
-            display: block; 
-            margin: 0 auto; 
-        }
+        /* ENLARGED LOGO - 600px MAX */
+        .logo-main { width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; }
         
-        .nav-menu { 
-            margin-top: 15px; 
-            display: flex; 
-            justify-content: center; 
-            flex-wrap: wrap; 
-            gap: 12px; 
-            padding-bottom: 10px;
-        }
-        .nav-menu a { 
-            color: #fff; 
-            text-decoration: none; 
-            text-transform: uppercase; 
-            font-weight: 700; 
-            font-size: 0.85rem; 
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-        }
+        .nav-menu { margin-top: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; padding-bottom: 10px; }
+        .nav-menu a { color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; font-size: 0.85rem; cursor: pointer; border-bottom: 2px solid transparent; }
         .nav-menu a.active { color: #ff3e00; border-bottom: 2px solid #ff3e00; }
 
         #page-content { min-height: 60vh; padding-top: 20px; }
 
         .grid-ads { display: flex; gap: 8px; margin: 40px 0; width: 100%; }
-        .grid-ads .card-ad { 
-            flex: 1; 
-            background: #0a0a0a; 
-            border: 1px solid #1a1a1a; 
-            padding: 10px 5px; 
-            text-align: center; 
-        }
+        .grid-ads .card-ad { flex: 1; background: #0a0a0a; border: 1px solid #1a1a1a; padding: 10px 5px; text-align: center; }
         .ad-label { text-transform: uppercase; font-size: 0.6rem; color: #888; margin: 0; }
         .ad-price { font-size: 1rem; font-weight: 700; color: #ff3e00; margin: 2px 0; }
         
-        button#play-btn { 
-            background: #ff3e00; color: #000; border: none; padding: 6px 12px; 
-            font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; 
-            cursor: pointer; font-size: 0.7rem; 
-        }
+        button#play-btn { background: #ff3e00; color: #000; border: none; padding: 6px 12px; font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 0.7rem; }
     </style>
 </head>
 <body>
@@ -89,7 +48,7 @@
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
             <nav class="nav-menu" id="main-nav">
-                <a onclick="loadPage('home.html', this)" id="home-link" class="active">Home</a>
+                <a onclick="loadPage('home.html', this)" id="home-link">Home</a>
                 <a onclick="loadPage('news.html', this)">News</a>
                 <a onclick="loadPage('about.html', this)">About</a>
                 <a onclick="loadPage('advertise.html', this)">Advertise</a>
@@ -98,8 +57,7 @@
         </div>
     </header>
 
-    <main id="page-content">
-        </main>
+    <main id="page-content"></main>
 
     <footer class="container" style="padding: 20px 0; text-align: center; color: #222; font-size: 0.6rem;">
         <div class="grid-ads">
@@ -112,6 +70,15 @@
 
     <script src="player.js"></script>
     <script>
+        // SEO MAPPINGS
+        const seoData = {
+            'home.html': { title: 'ROCK.SCOT | Central Scotland\'s Loudest Rock Station', desc: 'The home of Scottish rock. Stream live, get local music news, and explore advertising opportunities.' },
+            'news.html': { title: 'Music News | Central Scotland Music Feeds | ROCK.SCOT', desc: 'Stay updated with the latest music news and album releases from across Central Scotland.' },
+            'about.html': { title: 'About Us | The Voice of Scottish Rock | ROCK.SCOT', desc: 'Learn about ROCK.SCOT, our mission to support local talent, and our broadcast reach.' },
+            'advertise.html': { title: 'Advertise | Regional Market Penetration | ROCK.SCOT', desc: 'Targeted radio advertising in Central Scotland. Regional airtime from £199. Sonic Identity services.' },
+            'submit.html': { title: 'Submit Music | Local Talent Architecture | ROCK.SCOT', desc: 'Bands and artists: Submit your tracks for airplay on Central Scotland\'s loudest station.' }
+        };
+
         async function loadPage(page, element) {
             try {
                 const response = await fetch(page);
@@ -119,9 +86,17 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 const newContent = doc.querySelector('main').innerHTML;
+                
                 document.getElementById('page-content').innerHTML = newContent;
                 document.querySelectorAll('#main-nav a').forEach(a => a.classList.remove('active'));
                 if(element) element.classList.add('active');
+
+                // DYNAMIC SEO UPDATE
+                if (seoData[page]) {
+                    document.title = seoData[page].title;
+                    document.getElementById('meta-desc').setAttribute('content', seoData[page].desc);
+                }
+
                 doc.querySelectorAll('script').forEach(oldScript => {
                     const newScript = document.createElement("script");
                     if (oldScript.src) newScript.src = oldScript.src;
@@ -129,9 +104,10 @@
                     document.body.appendChild(newScript);
                 });
                 window.scrollTo(0,0);
-            } catch (err) { console.error("Navigation error:", err); }
+            } catch (err) { console.error("SEO Load Error:", err); }
         }
         window.onload = () => { loadPage('home.html', document.getElementById('home-link')); };
     </script>
 </body>
-</html>
+    </html>
+    
