@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gig Calendar | Sla-rock.scot</title>
+    <style>
+        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
+        body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
+        
+        header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid var(--primary); }
+        #logo { width: 250px; height: auto; }
+        .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
+
+        nav { background: #0a0a0a; text-align: center; padding: 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
+        nav a { color: #888; margin: 0 20px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
+        nav a:hover { color: var(--primary); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        /* Gig List Styling */
+        .gig-list { margin-top: 30px; }
+        .gig-row { 
+            display: grid; 
+            grid-template-columns: 120px 1fr 200px 150px; 
+            padding: 25px; 
+            background: var(--glass); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            margin-bottom: 15px; 
+            align-items: center;
+            transition: 0.3s;
+        }
+        .gig-row:hover { border-color: var(--primary); background: rgba(255, 62, 0, 0.05); }
+
+        .gig-date { font-weight: 900; color: var(--primary); text-transform: uppercase; font-size: 1.2rem; line-height: 1; }
+        .gig-date span { display: block; font-size: 0.8rem; color: #888; }
+        
+        .gig-info h3 { margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .gig-info p { margin: 5px 0 0; color: #888; font-size: 0.9rem; }
+
+        .gig-venue { font-weight: bold; color: #ccc; text-transform: uppercase; font-size: 0.8rem; }
+        .ticket-link { 
+            background: transparent; 
+            border: 1px solid var(--primary); 
+            color: var(--primary); 
+            padding: 10px; 
+            text-align: center; 
+            text-decoration: none; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            font-size: 0.7rem; 
+        }
+        .ticket-link:hover { background: var(--primary); color: #000; }
+
+        /* Featured Show */
+        .featured-show { 
+            background: linear-gradient(90deg, rgba(255,62,0,0.2) 0%, rgba(0,0,0,0) 100%); 
+            padding: 40px; 
+            border-left: 5px solid var(--primary); 
+            margin-bottom: 50px; 
+        }
+
+        footer { text-align: center; padding: 80px 20px; color: #444; }
+
+        @media (max-width: 768px) {
+            .gig-row { grid-template-columns: 1fr; gap: 15px; text-align: center; }
+            .gig-row > div { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="logo.png" alt="Sla-rock.scot" id="logo">
+    <div class="tagline">Rockin' Scotland</div>
+</header>
+
+<nav>
+    <a href="index.html">On Air</a>
+    <a href="gig-calendar.html" style="color: var(--primary);">Gig Calendar</a>
+    <a href="advertising.html">Advertise</a>
+    <a href="contact.html">Contact</a>
+</nav>
+
+<div class="container">
+    <section class="featured-show">
+        <span style="color: var(--primary); font-weight: 900; text-transform: uppercase; font-size: 0.8rem;">Gig of the Month</span>
+        <h1 style="font-size: 3rem; margin: 10px 0; text-transform: uppercase;">The Cure <span style="color:#888;">@ Royal Highland Centre</span></h1>
+        <p>The goth-rock legends return to Edinburgh for a massive outdoor summer session. Tickets selling fast.</p>
+    </section>
+
+    <h2 style="text-transform: uppercase; font-size: 2rem;">Upcoming <span style="color: var(--primary);">Shows</span></h2>
+    
+    <div class="gig-list">
+        <div class="gig-row">
+            <div class="gig-date">24<span>JAN 2026</span></div>
+            <div class="gig-info">
+                <h3>Heavy Lungs</h3>
+                <p>Post-punk energy coming to the Gallowgate.</p>
+            </div>
+            <div class="gig-venue">Barrowland Ballroom, Glasgow</div>
+            <a href="#" class="ticket-link">Tickets</a>
+        </div>
+
+        <div class="gig-row">
+            <div class="gig-date">05<span>FEB 2026</span></div>
+            <div class="gig-info">
+                <h3>The Snuts</h3>
+                <p>Whitburn's finest return for a localized club show.</p>
+            </div>
+            <div class="gig-venue">The Tolbooth, Stirling</div>
+            <a href="#" class="ticket-link">Tickets</a>
+        </div>
+
+        <div class="gig-row">
+            <div class="gig-date">12<span>MAR 2026</span></div>
+            <div class="gig-info">
+                <h3>Idlewild</h3>
+                <p>A special anniversary acoustic performance.</p>
+            </div>
+            <div class="gig-venue">Usher Hall, Edinburgh</div>
+            <a href="#" class="ticket-link">Tickets</a>
+        </div>
+
+        <div class="gig-row">
+            <div class="gig-date">10<span>JUL 2026</span></div>
+            <div class="gig-info">
+                <h3>TRNSMT 2026</h3>
+                <p>Day One: Liam Gallagher & The Courteeners.</p>
+            </div>
+            <div class="gig-venue">Glasgow Green</div>
+            <a href="#" class="ticket-link">Tickets</a>
+        </div>
+    </div>
+
+    <div id="pricing-component" style="margin-top: 60px;"></div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Sla-rock.scot | Corporate Identity Locked | Tagline: Rockin' Scotland</p>
+</footer>
+
+<script src="pricing.js"></script>
+</body>
+</html>
