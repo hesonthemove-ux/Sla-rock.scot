@@ -6,44 +6,36 @@
     <title>Sla-rock.scot | Rockin' Scotland</title>
     <style>
         :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.05); }
-        body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; overflow-x: hidden; }
+        body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
         
-        /* Fixed Corporate Identity & Tagline */
-        header { background: #000; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--primary); position: relative; }
-        #logo { width: 280px; height: auto; position: relative; z-index: 5; }
-        .tagline { font-size: 2rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 5px; margin-top: 10px; position: relative; z-index: 5; }
+        header { background: #000; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        #logo { width: 280px; height: auto; }
+        .tagline { font-size: 2rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 5px; margin-top: 10px; }
 
         nav { background: #0a0a0a; text-align: center; padding: 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
         nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; font-size: 0.9rem; }
-        nav a:hover, nav a.active { color: var(--primary); }
+        nav a:hover { color: var(--primary); }
 
-        /* THE SLA STREAM PLAYER - CONSTANT & BOLD */
+        /* SLA COMPLIANT STREAM BAR */
         .stream-bar { 
-            background: linear-gradient(90deg, #111 0%, #000 100%); 
-            border-bottom: 2px solid #222; 
-            padding: 30px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 40px; 
-            flex-wrap: wrap;
+            background: #111; border-bottom: 2px solid #222; padding: 25px; 
+            display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; 
         }
-        .on-air-status { display: flex; align-items: center; gap: 10px; }
-        .dot { width: 12px; height: 12px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.4; } 100% { transform: scale(1); opacity: 1; } }
+        .on-air-status { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: 1px; }
+        .dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 
-        /* Visual News Feed */
+        /* Visual News Layout */
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        .news-card { background: var(--glass); border: 1px solid #222; position: relative; overflow: hidden; transition: 0.4s; }
-        .news-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        .news-image { width: 100%; height: 250px; background-size: cover; background-position: center; filter: grayscale(100%) contrast(1.2); transition: 0.5s; }
-        .news-card:hover .news-image { filter: grayscale(0%) contrast(1); }
-        .news-overlay { padding: 25px; background: linear-gradient(0deg, #000 0%, transparent 100%); }
-        .news-tag { color: var(--primary); font-weight: 900; text-transform: uppercase; font-size: 0.8rem; }
+        .news-card { background: var(--glass); border: 1px solid #1a1a1a; overflow: hidden; transition: 0.4s; }
+        .news-img { width: 100%; height: 250px; object-fit: cover; filter: grayscale(1) contrast(1.2); transition: 0.5s; }
+        .news-card:hover .news-img { filter: grayscale(0) contrast(1); transform: scale(1.05); }
+        .news-content { padding: 25px; }
+        .news-tag { color: var(--primary); font-weight: 900; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; }
         
-        footer { text-align: center; padding: 60px; color: #444; border-top: 1px solid #111; text-transform: uppercase; font-weight: bold; letter-spacing: 2px; }
+        footer { text-align: center; padding: 60px; color: #333; font-weight: 900; border-top: 1px solid #111; }
     </style>
 </head>
 <body>
@@ -54,7 +46,7 @@
 </header>
 
 <nav>
-    <a href="index.html" class="active">On Air</a>
+    <a href="index.html" style="color: var(--primary);">On Air</a>
     <a href="gig-calendar.html">Gigs</a>
     <a href="venues.html">Venues</a>
     <a href="submit.html">Submit</a>
@@ -62,50 +54,39 @@
 </nav>
 
 <section class="stream-bar">
-    <div class="on-air-status">
-        <div class="dot"></div>
-        <span style="font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">Live Stream</span>
-    </div>
-    <audio controls style="filter: invert(1); width: 400px; height: 40px;">
+    <div class="on-air-status"><div class="dot"></div> LIVE NOW</div>
+    <audio controls style="filter: invert(1); width: 350px; height: 35px;">
         <source src="https://uk3.broadcast.radio/8118/stream" type="audio/mpeg">
     </audio>
-    <div style="color: #666; font-family: monospace; font-weight: bold;">[ CURRENTLY: UNFILTERED ROCK ]</div>
+    <div style="font-family: monospace; font-size: 0.8rem; color: #777;">SLA: STREAM ACTIVE</div>
 </section>
 
 <div class="container">
-    <h2 style="font-size: 3.5rem; text-transform: uppercase; margin-bottom: 40px;">Latest <span style="color: var(--primary);">Noise</span></h2>
+    <h2 style="font-size: 3rem; text-transform: uppercase; margin-bottom: 40px;">The <span style="color: var(--primary);">Frontline</span></h2>
+
+    
 
     <div class="news-grid">
         <div class="news-card">
-            <div class="news-image" style="background-image: url('https://images.unsplash.com/photo-1459749411177-042180ce673c?q=80&w=2070&auto=format&fit=crop');"></div>
-            <div class="news-overlay">
-                <span class="news-tag">Gallowgate</span>
-                <h3>Barrowland Antics: Weekend Recap</h3>
-                <p>Sweat on the ceiling and the best crowd in the world. See the highlights.</p>
-            </div>
-        </div>
-
-        <div class="news-image" style="background-image: url('https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=2070&auto=format&fit=crop');"></div>
-        <div class="news-card">
-            <div class="news-overlay">
-                <span class="news-tag">Edinburgh</span>
-                <h3>Sneaky Pete's: Small Room, Huge Riffs</h3>
-                <p>Why the Cowgate is still the place to find Central Scotland's next big breakout.</p>
+            <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80" class="news-img" alt="Glasgow Scene">
+            <div class="news-content">
+                <span class="news-tag">Glasgow Central</span>
+                <h3>Late Night Gallowgate: The Barrowlands Legacy</h3>
+                <p>Sweat, neon, and the loudest crowds in Europe. Why the Gallowgate is still the soul of the scene.</p>
             </div>
         </div>
 
         <div class="news-card">
-            <div class="news-image" style="background-image: url('https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070&auto=format&fit=crop');"></div>
-            <div class="news-overlay">
-                <span class="news-tag">New Music</span>
-                <h3>Top 5 Tracks Submitted This Week</h3>
-                <p>We've sifted through the Artist Submissions. Here is the pure gold.</p>
+            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80" class="news-img" alt="Edinburgh Gig">
+            <div class="news-content">
+                <span class="news-tag">Edinburgh Cowgate</span>
+                <h3>Basement Riffs: Sneaky Pete's Unplugged</h3>
+                <p>How 100 people in a room can make more noise than a stadium. The Cowgate's hidden power.</p>
             </div>
         </div>
     </div>
 </div>
 
 <footer>&copy; 2026 Sla-rock.scot | Rockin' Scotland</footer>
-
 </body>
 </html>
