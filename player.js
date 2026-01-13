@@ -1,43 +1,46 @@
-// Sla-rock.scot Global Pricing Component
-// Update these values here to change them across the entire site instantly.
-
 const pricingData = {
-    regional: "£299",
-    multiRegional: "£449",
-    creative: "£195"
+    regional: 299,
+    multiRegional: 449,
+    creative: 195
 };
 
 function loadPricing() {
     const container = document.getElementById('pricing-component');
     if (container) {
         container.innerHTML = `
-            <div style="margin-top: 30px; border: 1px solid #333; border-radius: 8px; overflow: hidden; background: #1a1a1a;">
-                <table style="width: 100%; border-collapse: collapse; color: #fff; font-family: Arial, sans-serif;">
-                    <thead>
-                        <tr style="background-color: #cc0000;">
-                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid #900;">Service Type</th>
-                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid #900;">Rate (GBP)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="padding: 15px; border-bottom: 1px solid #333;">Regional Airtime</td>
-                            <td style="padding: 15px; border-bottom: 1px solid #333; font-weight: bold; color: #cc0000;">${pricingData.regional}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 15px; border-bottom: 1px solid #333;">Multi-Regional Airtime</td>
-                            <td style="padding: 15px; border-bottom: 1px solid #333; font-weight: bold; color: #cc0000;">${pricingData.multiRegional}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 15px;">Creative / Production</td>
-                            <td style="padding: 15px; font-weight: bold; color: #cc0000;">${pricingData.creative}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div style="background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 62, 0, 0.3); padding: 30px; border-radius: 15px; margin-bottom: 40px;">
+                <h2 style="color: #ff3e00; text-transform: uppercase; margin-top: 0;">Commercial <span style="color:#fff;">Calculator</span></h2>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <label style="display:block; margin-bottom: 10px; font-weight: bold; color: #888;">SELECT AIRTIME PACKAGE:</label>
+                        <select id="packageSelect" onchange="calculateTotal()" style="width:100%; padding:12px; background:#111; color:#fff; border:1px solid #333;">
+                            <option value="299">Regional Airtime - £299</option>
+                            <option value="449">Multi-Regional Airtime - £449</option>
+                            <option value="0">None (Production Only)</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <label style="display:block; margin-bottom: 10px; font-weight: bold; color: #888;">ADD PRODUCTION?</label>
+                        <select id="prodSelect" onchange="calculateTotal()" style="width:100%; padding:12px; background:#111; color:#fff; border:1px solid #333;">
+                            <option value="195">Creative / Production - £195</option>
+                            <option value="0">No Production Needed</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="text-align: right; border-top: 1px solid #222; padding-top: 20px;">
+                    <span style="font-size: 1.2rem; color: #888;">ESTIMATED TOTAL: </span>
+                    <span id="totalDisplay" style="font-size: 2.5rem; color: #ff3e00; font-weight: 800; margin-left: 10px;">£494</span>
+                </div>
             </div>
         `;
+        calculateTotal();
     }
 }
 
-// Initialize when the DOM is ready
+function calculateTotal() {
+    const pkg = parseInt(document.getElementById('packageSelect').value);
+    const prod = parseInt(document.getElementById('prodSelect').value);
+    document.getElementById('totalDisplay').innerText = `£${pkg + prod}`;
+}
+
 document.addEventListener('DOMContentLoaded', loadPricing);
