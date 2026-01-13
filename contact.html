@@ -5,28 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | ROCK.SCOT</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background-color: #000; color: #fff; margin: 0; padding: 0; font-family: 'Oswald', sans-serif; overflow-x: hidden; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; box-sizing: border-box; }
+        #master-player { background: #000; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 2000; width: 100%; }
+        .logo-main { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto; }
+        .nav-menu { margin-top: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+        .nav-menu a { color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; font-size: 0.85rem; }
+        .nav-menu a.active { color: #ff3e00; border-bottom: 2px solid #ff3e00; }
+        
+        .contact-header { text-align: center; padding: 40px 0 20px 0; }
+        .contact-header h1 { font-size: 3rem; text-transform: uppercase; color: #ff3e00; margin: 0; }
+        .contact-header p { color: #888; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* FORM STYLES */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin: 40px 0; }
+        .form-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 30px; }
+        .info-card h2 { color: #ff3e00; text-transform: uppercase; margin-top: 0; }
+        .info-card p { color: #ccc; font-size: 1.1rem; line-height: 1.6; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; text-transform: uppercase; font-size: 0.75rem; color: #ff3e00; margin-bottom: 5px; font-weight: 700; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            background: #111;
+            border: 1px solid #222;
+            padding: 12px;
+            color: #fff;
+            font-family: 'Oswald';
+            box-sizing: border-box;
+        }
+        .form-group input:focus { border-color: #ff3e00; outline: none; }
+        
+        .submit-btn {
+            background: #ff3e00;
+            color: #000;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            font-family: 'Oswald';
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .submit-btn:hover { background: #fff; }
+
+        /* FOOTER PRICING */
+        .grid-ads { display: flex; gap: 8px; margin: 40px 0; }
+        .grid-ads .card-ad { flex: 1; background: #0a0a0a; border: 1px solid #1a1a1a; padding: 10px 5px; text-align: center; }
+        .ad-label { text-transform: uppercase; font-size: 0.6rem; color: #888; margin: 0; }
+        .ad-price { font-size: 1rem; font-weight: 700; color: #ff3e00; margin: 2px 0; }
+        
+        button#play-btn { background: #ff3e00; color: #000; border: none; padding: 6px 12px; font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 0.7rem; }
+    </style>
 </head>
 <body>
     <div id="master-player">
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
-            <div id="now-playing" style="display: flex; align-items: center; gap: 15px;">
-                <div class="eq-container"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
-                <div>
-                    <span style="display: block; font-size: 0.6rem; color: #ff3e00; text-transform: uppercase; letter-spacing: 2px;">Live Now</span>
-                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Connecting...</span>
-                </div>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.65rem;">Ready to Rock</span>
             </div>
-            <button id="play-btn">Listen Live</button>
+            <button id="play-btn">Listen</button>
         </div>
     </div>
 
-    <header>
+    <header style="padding: 15px 0;">
         <div class="container">
             <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
             <nav class="nav-menu">
                 <a href="index.html">Listen</a>
-                <a href="sponsors.html">Sponsors</a>
+                <a href="news.html">News</a>
+                <a href="about.html">About</a>
                 <a href="advertise.html">Advertise</a>
                 <a href="contact.html" class="active">Contact</a>
             </nav>
@@ -34,42 +85,58 @@
     </header>
 
     <main class="container">
-        <section style="text-align: center; padding: 40px 0;">
-            <h1 class="hero-title">GET IN<br>TOUCH</h1>
-            <span class="sub-glow">Studio Hotline & Advertising</span>
+        <section class="contact-header">
+            <h1>Connect</h1>
+            <p>Direct Access to the Station</p>
         </section>
 
-        <img src="contact-studio.jpg" class="img-feature" alt="Rock Scot Studio Team">
-
-        <div class="grid-layout" style="margin-top: 40px;">
-            <div class="card-dark">
-                <h3>STATION CONTACT</h3>
-                <p>WhatsApp the studio or email us for shoutouts and track requests.</p>
-                <p style="color: #ff3e00; font-weight: bold;">studio@rock.scot</p>
+        <div class="contact-grid">
+            <div class="info-card">
+                <h2>Get in Touch</h2>
+                <p>Whether you're looking for Regional Market Penetration, Sonic Identity services, or you're a local band wanting to get your tracks on the air—this is the place.</p>
+                <div style="margin-top: 30px;">
+                    <p style="color: #ff3e00; font-weight: 700; margin-bottom: 5px;">STUDIO LINE</p>
+                    <p style="font-size: 1.5rem; margin-top: 0;">0141 ROCK SCOT</p>
+                </div>
             </div>
 
-            <div class="card-dark">
-                <h3>ADVERTISING INQUIRY</h3>
-                <form action="#" style="display: flex; flex-direction: column; gap: 10px;">
-                    <input type="text" placeholder="Name" style="padding: 10px; background: #111; border: 1px solid #333; color: white;">
-                    <select style="padding: 10px; background: #111; border: 1px solid #333; color: white;">
-                        <option>Select a Package...</option>
-                        <option>Regional Airtime - £199</option>
-                        <option>Multi-Regional Airtime - £349</option>
-                        <option>Creative Production - £195</option>
-                    </select>
-                    <textarea placeholder="Message" rows="4" style="padding: 10px; background: #111; border: 1px solid #333; color: white;"></textarea>
-                    <button type="submit" style="background: #ff3e00; color: black; border: none; padding: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase;">Send Inquiry</button>
+            <div class="form-card">
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="email@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nature of Inquiry</label>
+                        <select>
+                            <option>General Inquiry</option>
+                            <option>Regional Airtime (£199)</option>
+                            <option>Multi-Regional Airtime (£349)</option>
+                            <option>Creative/Production (£195)</option>
+                            <option>Band Submission</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea rows="5" placeholder="How can we help?"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
                 </form>
             </div>
         </div>
+
+        <div class="grid-ads">
+            <div class="card-ad"><p class="ad-label">Regional</p><p class="ad-price">£199</p></div>
+            <div class="card-ad"><p class="ad-label">Multi</p><p class="ad-price">£349</p></div>
+            <div class="card-ad"><p class="ad-label">Creative</p><p class="ad-price">£195</p></div>
+        </div>
     </main>
 
-    <footer>
-        <div class="container" style="text-align: center; padding: 40px 0; color: #444;">
-            <p>&copy; 2026 ROCK.SCOT | Built for the West</p>
-        </div>
-    </footer>
+    <footer style="padding: 20px 0; text-align: center; color: #222; font-size: 0.6rem;">&copy; 2026 ROCK.SCOT</footer>
 
     <script src="player.js"></script>
 </body>
