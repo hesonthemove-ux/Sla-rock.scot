@@ -65,7 +65,7 @@
             <h2>CENTRAL SCOTLAND'S <span>LOUDEST</span></h2>
             <p>Broadcasting the best in local and global rock, 24/7, without the filler.</p>
             
-            <button class="big-play-trigger" onclick="document.getElementById('play-btn').click()">
+            <button class="big-play-trigger" onclick="toggleStream()">
                 Launch Live Stream
             </button>
         </div>
@@ -87,4 +87,14 @@
             </div>
         </div>
     </section>
+
+    <script>
+        // This function finds the play button in the MASTER SHELL and clicks it for the user
+        function toggleStream() {
+            const masterPlayBtn = window.parent.document.getElementById('play-btn') || document.getElementById('play-btn');
+            if (masterPlayBtn) {
+                masterPlayBtn.click();
+            }
+        }
+    </script>
 </main>
