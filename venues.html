@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venues | Sla-rock.scot</title>
+    <style>
+        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.05); }
+        body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
+        header { background: #000; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        #logo { width: 250px; }
+        .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; }
+        nav { background: #0a0a0a; text-align: center; padding: 20px; border-bottom: 1px solid #1a1a1a; position: sticky; top:0; z-index:100; }
+        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; }
+        .stream-bar { background: #111; border-bottom: 2px solid #222; padding: 20px; display: flex; align-items: center; justify-content: center; gap: 30px; }
+        .dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+        .venue-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .venue-card { background: var(--glass); border: 1px solid #222; padding: 30px; transition: 0.3s; }
+        .venue-card:hover { border-color: var(--primary); }
+    </style>
+</head>
+<body>
+<header>
+    <img src="logo.png" alt="Sla-rock.scot" id="logo">
+    <div class="tagline">Rockin' Scotland</div>
+</header>
+<nav>
+    <a href="index.html">On Air</a>
+    <a href="gig-calendar.html">Gigs</a>
+    <a href="venues.html" style="color: var(--primary);">Venues</a>
+    <a href="submit.html">Submit</a>
+    <a href="advertising.html">Advertise</a>
+</nav>
+<section class="stream-bar">
+    <div style="font-weight: 900; display:flex; align-items:center; gap:10px;"><div class="dot"></div> LIVE STREAM</div>
+    <audio controls style="filter: invert(1); width: 350px; height: 35px;"><source src="https://uk3.broadcast.radio/8118/stream" type="audio/mpeg"></audio>
+</section>
+<div class="container">
+    <h1 style="font-size: 3rem; text-transform: uppercase;">Central Belt <span style="color: var(--primary);">Venues</span></h1>
+    <div class="venue-grid">
+        <div class="venue-card"><h3>King Tut's</h3><p>The legendary basement on St Vincent Street.</p></div>
+        <div class="venue-card"><h3>SWG3</h3><p>Finnieston's industrial heart of the arts.</p></div>
+        <div class="venue-card"><h3>The Tolbooth</h3><p>Stirling's premier creative music space.</p></div>
+    </div>
+</div>
+<footer>&copy; 2026 Sla-rock.scot | Rockin' Scotland</footer>
+</body>
+</html>
