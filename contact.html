@@ -7,93 +7,47 @@
     <style>
         :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.03); }
         body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
-        
         header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid var(--primary); }
         #logo { width: 250px; height: auto; }
         .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; margin-top: 10px; }
-
-        nav { background: #0a0a0a; text-align: center; padding: 15px; position: sticky; top: 0; border-bottom: 1px solid #1a1a1a; }
+        nav { background: #0a0a0a; text-align: center; padding: 15px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
         nav a { color: #888; margin: 0 20px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
         nav a:hover { color: var(--primary); }
-
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-
-        /* Contact Glass Form */
-        .contact-wrapper { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 50px; margin-bottom: 50px; }
-        input, select, textarea { width: 100%; padding: 15px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 0; }
-        button { background: var(--primary); color: #000; border: none; padding: 20px 40px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 20px; }
-        button:hover { background: #fff; letter-spacing: 2px; }
-
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 40px; }
-        .news-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); padding: 25px; }
-        .news-tag { color: var(--primary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
-
+        .contact-wrapper { background: var(--glass); border: 1px solid rgba(255,255,255,0.05); padding: 50px; }
+        input, select, textarea { width: 100%; padding: 15px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; }
+        button { background: var(--primary); color: #000; border: none; padding: 20px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; }
         footer { text-align: center; padding: 80px 20px; color: #444; }
     </style>
 </head>
 <body>
-
 <header>
     <img src="logo.png" alt="Sla-rock.scot" id="logo">
     <div class="tagline">Rockin' Scotland</div>
 </header>
-
 <nav>
     <a href="index.html">On Air</a>
+    <a href="gig-calendar.html">Gigs</a>
     <a href="advertising.html">Advertise</a>
     <a href="contact.html" style="color: var(--primary);">Contact</a>
 </nav>
-
 <div class="container">
-    <h1 style="font-size: 3rem; text-transform: uppercase;">Get In <span style="color: var(--primary);">Touch</span></h1>
-    
     <div class="contact-wrapper">
         <form>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <input type="text" placeholder="Full Name" required>
-                <input type="email" placeholder="Email Address" required>
-            </div>
+            <input type="text" placeholder="Name" required>
+            <input type="email" placeholder="Email" required>
             <select>
-                <option>General Inquiry</option>
-                <option>Regional Airtime Package (£299)</option>
-                <option>Multi-Regional Airtime Package (£449)</option>
-                <option>Production & Creative Inquiry (£195)</option>
+                <option>Regional Airtime (£299)</option>
+                <option>Multi-Regional (£449)</option>
+                <option>Creative (£195)</option>
             </select>
-            <textarea rows="6" placeholder="Your Message..."></textarea>
-            <button type="submit">Send Message</button>
+            <textarea rows="5" placeholder="Message"></textarea>
+            <button type="submit">Send</button>
         </form>
     </div>
-
-    <div id="pricing-component"></div>
-
-    <div class="news-grid">
-        <div class="news-card">
-            <span class="news-tag">Live Support</span>
-            <h3>Studio Hotline</h3>
-            <p>Direct contact for central Scotland venue owners and local promoters looking for airtime.</p>
-        </div>
-        <div class="news-card">
-            <span class="news-tag">Global</span>
-            <h3>Foo Fighters 2026</h3>
-            <p>Advertise during our special Foo Fighters Hampden Park coverage week.</p>
-        </div>
-        <div class="news-card">
-            <span class="news-tag">Edinburgh</span>
-            <h3>Summer Sessions</h3>
-            <p>Catch us live from Edinburgh for the 2026 Summer Sessions rock coverage.</p>
-        </div>
-        <div class="news-card">
-            <span class="news-tag">Glasgow</span>
-            <h3>SWG3 Breakout</h3>
-            <p>We are currently scouting for the next 'Breakout Band' from Glasgow SWG3.</p>
-        </div>
-    </div>
+    <div id="pricing-component" style="margin-top:40px;"></div>
 </div>
-
-<footer>
-    <p>&copy; 2026 Sla-rock.scot | Tagline: Rockin' Scotland</p>
-</footer>
-
+<footer><p>&copy; 2026 Sla-rock.scot | Rockin' Scotland</p></footer>
 <script src="pricing.js"></script>
 </body>
 </html>
