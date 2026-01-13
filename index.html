@@ -8,12 +8,12 @@
 </head>
 <body style="background-color: #000000; color: #ffffff; margin: 0; padding: 0; font-family: 'Oswald', sans-serif; text-align: center;">
 
-    <div style="background: #111; border-bottom: 2px solid #ff3e00; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="background: #111; border-bottom: 2px solid #ff3e00; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000;">
         <div style="text-align: left;">
             <div style="color: #ff3e00; font-size: 9px; text-transform: uppercase; letter-spacing: 1px;">Live Now</div>
-            <div id="track-title" style="font-size: 13px; text-transform: uppercase;">Connecting...</div>
+            <div id="track-title" style="font-size: 13px; text-transform: uppercase;">Ready to Rock</div>
         </div>
-        <button id="play-btn" style="background: #ff3e00; border: none; color: #000; padding: 6px 12px; font-weight: bold; text-transform: uppercase; font-family: 'Oswald'; font-size: 12px;">Listen</button>
+        <button id="play-btn" onclick="toggleBtn()" style="background: #ff3e00; border: none; color: #000; padding: 6px 12px; font-weight: bold; text-transform: uppercase; font-family: 'Oswald'; font-size: 12px; cursor: pointer;">Listen</button>
     </div>
 
     <div style="padding: 10px 15px 5px 15px;">
@@ -44,32 +44,5 @@
 
     <div style="margin: 0 15px 15px 15px; background: #0a0a0a; border-top: 2px solid #ff3e00; padding: 12px; text-align: left;">
         <h2 style="font-size: 11px; color: #ff3e00; text-transform: uppercase; margin: 0 0 8px 0;">Recently Played</h2>
-        <div style="display: flex; justify-content: space-between; font-size: 13px; border-bottom: 1px solid #222; padding: 4px 0;">
-            <span>The Snuts - Glasgow</span>
-            <span style="color: #444;">12:05</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; font-size: 13px; padding-top: 4px;">
-            <span style="color: #ff3e00;">[LOCAL] Brownbear - Retro</span>
-            <span style="color: #444;">11:50</span>
-        </div>
-    </div>
-
-    <div style="display: flex; padding: 0 15px; gap: 4px; margin-bottom: 30px;">
-        <div style="flex: 1; background: #111; border: 1px solid #222; padding: 8px 2px;">
-            <div style="font-size: 9px; color: #888; text-transform: uppercase;">Regional</div>
-            <div style="font-size: 16px; color: #ff3e00; font-weight: bold;">£199</div>
-        </div>
-        <div style="flex: 1; background: #111; border: 1px solid #222; padding: 8px 2px;">
-            <div style="font-size: 9px; color: #888; text-transform: uppercase;">Multi</div>
-            <div style="font-size: 16px; color: #ff3e00; font-weight: bold;">£349</div>
-        </div>
-        <div style="flex: 1; background: #111; border: 1px solid #222; padding: 8px 2px;">
-            <div style="font-size: 9px; color: #888; text-transform: uppercase;">Creative</div>
-            <div style="font-size: 16px; color: #ff3e00; font-weight: bold;">£195</div>
-        </div>
-    </div>
-
-    <footer style="padding-bottom: 20px; font-size: 9px; color: #333;">
-        &copy; 2026 ROCK.SCOT | <a href="legal.html" style="color: #333;">LEGAL</a>
-    </footer>
-    
+        <div style="display: flex; justify-content: space-between; font-size: 13px; border-bottom: 1px
+            
