@@ -1,38 +1,43 @@
-// CONFIGURATION - REPLACE 'YOUR_ID' WITH YOUR ACTUAL STATION ID NUMBER
-const stationId = "YOUR_ID"; 
+// ROCKIN' SCOTLAND PLAYER ENGINE - STATION ID 9400
+const stationId = "9400";
 const streamUrl = "https://stream.broadcast.radio/caledonia-tx-ltd";
 
 const audio = new Audio(streamUrl);
 const playBtn = document.getElementById('play-btn');
 const trackTitle = document.getElementById('track-title');
 
-// Metadata logic
-async function updateMetadata() {
+// FUNCTION TO FETCH LIVE DATA
+async function updateLiveData() {
     try {
+        // Fetching from the Broadcast Radio API
         const response = await fetch(`https://api.broadcast.radio/api/nowplaying/${stationId}`);
         const data = await response.json();
-        
-        if (data.success && data.body.now_playing) {
-            const current = data.body.now_playing;
-            const presenter = data.body.current_show ? data.body.current_show.title : "Rockin' Scotland";
+
+        if (data) {
+            // 1. Update the Player Bar Tagline
+            const current = data.now_playing;
+            const show = data.current_show ? data.current_show.title : "Rockin' Scotland";
             
-            // Update the player bar
-            trackTitle.innerHTML = `<strong>LIVE:</strong> ${current.title} - ${current.artist} <span style="margin-left:15px; color:#888;">WITH ${presenter}</span>`;
-            
-            // If you have a list for "Last 4", you can populate it here
-            if (document.getElementById('recent-tracks')) {
-                const history = data.body.recently_played.slice(0, 4);
-                document.getElementById('recent-tracks').innerHTML = history.map(t => `<li>${t.title} - ${t.artist}</li>`).join('');
+            if (current) {
+                trackTitle.innerHTML = `LIVE: ${current.title} - ${current.artist} | <span style="color: #ff3e00">WITH ${show}</span>`;
+            }
+
+            // 2. Update the "Last 4" list if it exists on the page
+            const historyList = document.getElementById('recent-tracks');
+            if (historyList && data.recently_played) {
+                const historyHTML = data.recently_played.slice(0, 4).map(track => `
+                    <li>
+                        <span style="color: #ff3e00; font-weight: bold;">${track.title}</span><br>
+                        <span style="color: #888; font-size: 0.8rem;">${track.artist}</span>
+                    </li>
+                `).join('');
+                historyList.innerHTML = historyHTML;
             }
         }
     } catch (err) {
-        console.error("Metadata error:", err);
+        console.error("Metadata fetch error:", err);
     }
 }
-
-// Update metadata every 30 seconds
-setInterval(updateMetadata, 30000);
-updateMetadata();
 
 // Play/Pause Logic
 let isPlaying = false;
@@ -43,9 +48,12 @@ playBtn.addEventListener('click', () => {
         isPlaying = true;
     } else {
         audio.pause();
-        audio.src = streamUrl; 
+        audio.src = streamUrl; // Flush buffer
         playBtn.textContent = "Listen Live";
         isPlaying = false;
     }
 });
-                         
+
+// Refresh data every 30 seconds
+setInterval(updateLiveData, 30000);
+updateLiveData();
