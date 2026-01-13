@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Music | ROCK.SCOT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="master-player">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+            <div id="now-playing" style="display: flex; align-items: center; gap: 15px;">
+                <div class="eq-container"><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div></div>
+                <div>
+                    <span style="display: block; font-size: 0.6rem; color: #ff3e00; text-transform: uppercase; letter-spacing: 2px;">Live Now</span>
+                    <span id="track-title" style="font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">Connecting...</span>
+                </div>
+            </div>
+            <button id="play-btn">Listen Live</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <img src="logo.png" alt="ROCK.SCOT" class="logo-main">
+            <nav class="nav-menu">
+                <a href="index.html">Listen</a>
+                <a href="news.html">Music Press</a>
+                <a href="advertise.html">Advertise</a>
+                <a href="submit.html" class="active">Submit Music</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="max-width: 800px;">
+        <section style="text-align: center; padding: 40px 0;">
+            <h1 class="hero-title">DEMO<br>DROP</h1>
+            <span class="sub-glow">Get Your Riffs On Air</span>
+        </section>
+
+        <div class="card-dark" style="border-left: 5px solid #ff3e00;">
+            <p style="margin-top: 0; color: #ccc;">We want to hear the noise coming out of <strong>Inverclyde, Ayrshire, and the West.</strong> Don't worry if you don't have a full press kit—we just want the music. Fill in what you can.</p>
+            
+            <form action="mailto:demos@rock.scot" method="post" enctype="text-plain" style="display: flex; flex-direction: column; gap: 20px; margin-top: 30px;">
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-size: 0.7rem; color: #ff3e00; text-transform: uppercase;">Artist/Band Name *</label>
+                        <input type="text" name="band_name" required style="background: #000; border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Oswald';">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-size: 0.7rem; color: #ff3e00; text-transform: uppercase;">Location (Town) *</label>
+                        <input type="text" name="location" placeholder="e.g. Largs" required style="background: #000; border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Oswald';">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-size: 0.7rem; color: #ff3e00; text-transform: uppercase;">Track Title *</label>
+                        <input type="text" name="track_title" required style="background: #000; border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Oswald';">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-size: 0.7rem; color: #ff3e00; text-transform: uppercase;">Audio Link * (Dropbox/Drive/Soundcloud)</label>
+                        <input type="url" name="audio_link" required style="background: #000; border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Oswald';">
+                    </div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #222; margin: 10px 0;">
+
+                <div style="display: flex; flex-direction: column; gap: 5px;">
+                    <label style="font-size: 0.7rem; color: #666; text-transform: uppercase;">Band Bio (Optional)</label>
+                    <textarea name="bio" rows="4" placeholder="Tell us your story..." style="background: #000; border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Oswald'; resize: none;"></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-size: 0.7rem; color: #666; text-transform: uppercase;">Press Photo Link (Optional)</label>
+                        <input type="url" name="photo_link" placeholder="Link to image" style="background: #000; border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Oswald';">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <label style="font-size: 0.7rem; color: #666; text-transform: uppercase;">Social Media/Web Link (Optional)</label>
+                        <input type="url" name="social_link" placeholder="Instagram/Facebook/Web" style="background: #000; border: 1px solid #333; color: #fff; padding: 12px; font-family: 'Oswald';">
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: flex-start; gap: 10px; margin-top: 10px;">
+                    <input type="checkbox" required style="width: 20px; height: 20px; accent-color: #ff3e00;">
+                    <label style="font-size: 0.8rem; color: #999;">I confirm I own the rights to this music and grant ROCK.SCOT permission to broadcast this track.</label>
+                </div>
+
+                <button type="submit" style="background: #ff3e00; color: #000; border: none; padding: 15px; font-weight: 700; text-transform: uppercase; cursor: pointer; font-family: 'Oswald'; font-size: 1.1rem; margin-top: 10px;">Send to Studio</button>
+            </form>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center; color: #444; font-size: 0.8rem; padding-bottom: 60px;">
+            <p>ROCK.SCOT: Promoting the noise from the West Coast to the Central Belt.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container" style="text-align: center; padding: 40px 0; color: #444;">
+            <p>&copy; 2026 ROCK.SCOT | Support Your Local Scene</p>
+        </div>
+    </footer>
+
+    <script src="player.js"></script>
+</body>
+</html>
