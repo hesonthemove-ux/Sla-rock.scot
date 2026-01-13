@@ -1,66 +1,99 @@
-<main>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Sla-rock.scot</title>
     <style>
-        .about-hero { text-align: center; padding: 100px 0 40px 0; background: #000; }
-        .about-hero h1 { font-size: clamp(3.5rem, 12vw, 6rem); text-transform: uppercase; color: #ff3e00; margin: 0; line-height: 0.8; letter-spacing: -4px; font-weight: 700; }
-        .about-hero p { font-size: 1.2rem; color: #fff; text-transform: uppercase; letter-spacing: 6px; margin-top: 20px; font-weight: 700; }
+        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.05); }
+        body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
+        
+        header { background: #000; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        #logo { width: 280px; height: auto; }
+        .tagline { font-size: 2rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 5px; margin-top: 10px; }
 
-        .content-box { max-width: 850px; margin: 0 auto; padding: 20px 20px 100px 20px; line-height: 1.7; color: #bbb; font-size: 1.2rem; }
-        .content-box h2 { color: #fff; text-transform: uppercase; font-size: 2.2rem; margin: 60px 0 20px 0; letter-spacing: -1px; }
-        
-        .rock-border { border-left: 6px solid #ff3e00; padding-left: 25px; margin: 40px 0; }
-        .highlight { color: #fff; font-weight: 700; text-transform: uppercase; }
-        
-        .grit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 50px 0; }
-        @media (max-width: 768px) { .grit-grid { grid-template-columns: 1fr; } }
-        
-        .grit-item { background: #080808; border: 1px solid #1a1a1a; padding: 30px; }
-        .grit-item h3 { color: #ff3e00; text-transform: uppercase; font-size: 1.3rem; margin-top: 0; margin-bottom: 10px; }
-        .grit-item p { font-size: 1rem; color: #888; margin: 0; }
+        nav { background: #0a0a0a; text-align: center; padding: 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
+        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; font-size: 0.9rem; }
+        nav a:hover { color: var(--primary); }
 
-        .strong-close { 
-            font-size: 3rem; 
-            text-transform: uppercase; 
-            color: #fff; 
-            line-height: 0.9; 
-            margin: 80px 0; 
-            text-align: left;
-            font-weight: 700;
-        }
-        .strong-close span { color: #ff3e00; }
+        /* MANDATORY SLA STREAM BAR */
+        .stream-bar { background: #111; border-bottom: 2px solid #222; padding: 25px; display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+        
+        /* Manifesto Content */
+        .manifesto-section { margin-bottom: 80px; }
+        .manifesto-section h2 { font-size: 3.5rem; text-transform: uppercase; color: var(--primary); line-height: 0.9; margin-bottom: 30px; }
+        .manifesto-section p { font-size: 1.25rem; color: #ccc; max-width: 800px; margin-bottom: 20px; }
+        
+        .coverage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin: 50px 0; }
+        .stat-card { background: var(--glass); border-left: 4px solid var(--primary); padding: 30px; }
+        .stat-card h4 { text-transform: uppercase; color: var(--primary); margin: 0; font-size: 0.8rem; letter-spacing: 2px; }
+        .stat-card div { font-size: 2rem; font-weight: 900; margin-top: 10px; }
+
+        .highlight-box { background: #fff; color: #000; padding: 40px; font-weight: 900; text-transform: uppercase; font-size: 1.8rem; text-align: center; transform: rotate(-1deg); }
+
+        footer { text-align: center; padding: 60px; color: #333; font-weight: 900; border-top: 1px solid #111; }
     </style>
+</head>
+<body>
 
-    <div class="container">
-        <section class="about-hero">
-            <h1>ROCKIN'<br>SCOTLAND</h1>
-            <p>Our Station. Our Scene.</p>
-        </section>
+<header>
+    <img src="logo.png" alt="Sla-rock.scot" id="logo">
+    <div class="tagline">Rockin' Scotland</div>
+</header>
 
-        <div class="content-box">
-            <div class="rock-border">
-                <p style="color: #fff; font-size: 1.5rem; font-weight: 700; line-height: 1.2;">We serve the public, we feed the riff, and we back the bands that make Scotland move.</p>
-            </div>
-            
-            <p>ROCK.SCOT is a dedicated regional asset. We aren't here for the background noise; we’re here to deliver every genre of rock with the grit and confidence it deserves. From the icons to the local legends, we keep it moving.</p>
+<nav>
+    <a href="index.html">On Air</a>
+    <a href="gig-calendar.html">Gigs</a>
+    <a href="venues.html">Venues</a>
+    <a href="about.html" style="color: var(--primary);">About</a>
+    <a href="advertising.html">Advertise</a>
+</nav>
 
-            <div class="grit-grid">
-                <div class="grit-item">
-                    <h3>Regional Reach</h3>
-                    <p>We provide a high-voltage platform for our partners. With Single Mux airtime starting <strong>From £299</strong>, we make professional regional impact accessible.</p>
-                </div>
-                <div class="grit-item">
-                    <h3>Creative Edge</h3>
-                    <p>Our production desk builds the sound of the station. Get a professional sonic identity for your brand starting <strong>From £195</strong>.</p>
-                </div>
-            </div>
+<section class="stream-bar">
+    <div style="font-weight: 900; display:flex; align-items:center; gap:10px;"><div class="dot"></div> LIVE NOW</div>
+    <audio controls style="filter: invert(1); width: 350px; height: 35px;">
+        <source src="https://uk3.broadcast.radio/8118/stream" type="audio/mpeg">
+    </audio>
+</section>
 
-            <h2>Confidence & Service</h2>
-            <p>We’re proud to be an independent voice. We support the venues, the listeners, and the regional partners that keep our culture alive. Rockin' Scotland isn't just a tagline—it's how we operate every single day.</p>
+<div class="container">
+    <section class="manifesto-section">
+        <h2>Unfiltered.<br>Unapologetic.<br>Pure Rock.</h2>
+        <p>Sla-rock.scot isn't just a station; it’s the <strong>sonic architecture</strong> of Central Scotland. We don't play background music. We broadcast the energy of the front row, the sweat of the basement venue, and the roar of the Gallowgate.</p>
+        <p>From the industrial heart of Glasgow to the historic echoes of Edinburgh and Stirling, we cover the Central Belt with one mission: <strong>Rockin' Scotland.</strong></p>
+    </section>
 
-            <div class="strong-close">
-                THE <span>MUSIC</span>.<br>THE <span>PUBLIC</span>.<br>THE <span>FUTURE</span>.
-            </div>
+    
 
-            <p>Confident, strong, and 100% focused on the music. This is <span class="highlight">ROCK.SCOT</span>.</p>
+    <div class="coverage-grid">
+        <div class="stat-card">
+            <h4>Broadcast Power</h4>
+            <div>High Velocity</div>
+        </div>
+        <div class="stat-card">
+            <h4>Primary Territory</h4>
+            <div>Central Belt</div>
+        </div>
+        <div class="stat-card">
+            <h4>Sonic Output</h4>
+            <div>100% Raw Rock</div>
         </div>
     </div>
-</main>
+
+    <div class="highlight-box">
+        NO POP. NO FILLER. JUST THE NOISE YOU NEED.
+    </div>
+
+    <section class="manifesto-section" style="margin-top:80px;">
+        <h3 style="text-transform: uppercase; font-size: 2rem;">Broadcasting Excellence</h3>
+        <p>Our coverage is designed for the modern listener. Whether you're in a car in Falkirk or a studio in Paisley, our digital architecture ensures crystal-clear, high-bitrate rock 24/7. We support the venues that keep the scene alive and the artists who aren't afraid to turn it up to eleven.</p>
+    </section>
+</div>
+
+<footer>&copy; 2026 Sla-rock.scot | Rockin' Scotland</footer>
+</body>
+</html>
