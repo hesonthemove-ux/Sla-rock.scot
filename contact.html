@@ -4,53 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact | Sla-rock.scot</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#ff3e00">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
     <style>
         :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.05); }
         body { font-family: 'Inter', Arial, sans-serif; margin: 0; background-color: var(--bg); color: #fff; line-height: 1.6; }
+        
         header { background: #000; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
-        #logo { width: 250px; }
-        .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 4px; }
-        nav { background: #0a0a0a; text-align: center; padding: 20px; border-bottom: 1px solid #1a1a1a; position: sticky; top:0; z-index:100; }
-        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; }
-        
-        .stream-bar { background: #111; border-bottom: 2px solid #222; padding: 20px; display: flex; align-items: center; justify-content: center; gap: 30px; }
+        #logo { width: 280px; height: auto; }
+        .tagline { font-size: 2rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 5px; margin-top: 10px; }
+
+        nav { background: #0a0a0a; text-align: center; padding: 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1a1a1a; }
+        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.3s; font-size: 0.9rem; }
+        nav a:hover { color: var(--primary); }
+
+        /* SLA STREAM BAR */
+        .stream-bar { background: #111; border-bottom: 2px solid #222; padding: 25px; display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; }
         .dot { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; }
-        
-        .container { max-width: 800px; margin: 0 auto; padding: 60px 20px; text-align: center; }
-        .contact-details { margin-top: 40px; background: var(--glass); padding: 50px; border: 1px solid #222; }
-        .contact-details h3 { color: var(--primary); text-transform: uppercase; font-size: 2rem; margin-top: 0; }
-        .contact-details p { font-size: 1.2rem; color: #ccc; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
+        .contact-card { background: var(--glass); border: 1px solid #222; padding: 50px; text-align: center; }
+        .contact-card h2 { text-transform: uppercase; font-size: 2.5rem; margin-top: 0; }
+        .contact-card p { font-size: 1.2rem; color: #888; margin: 10px 0; }
+        .email-link { color: var(--primary); font-weight: 900; text-decoration: none; font-size: 1.5rem; border-bottom: 2px solid transparent; transition: 0.3s; }
+        .email-link:hover { border-bottom-color: var(--primary); }
+
+        footer { text-align: center; padding: 60px; color: #333; font-weight: 900; border-top: 1px solid #111; }
     </style>
 </head>
 <body>
+
 <header>
     <img src="logo.png" alt="Sla-rock.scot" id="logo">
     <div class="tagline">Rockin' Scotland</div>
 </header>
+
 <nav>
     <a href="index.html">On Air</a>
     <a href="gig-calendar.html">Gigs</a>
     <a href="venues.html">Venues</a>
+    <a href="about.html">About</a>
     <a href="contact.html" style="color: var(--primary);">Contact</a>
     <a href="advertising.html">Advertise</a>
 </nav>
 
 <section class="stream-bar">
     <div style="font-weight: 900; display:flex; align-items:center; gap:10px;"><div class="dot"></div> LIVE STREAM</div>
-    <audio controls style="filter: invert(1); width: 350px; height: 35px;"><source src="https://uk3.broadcast.radio/8118/stream" type="audio/mpeg"></audio>
+    <audio controls style="filter: invert(1); width: 350px; height: 35px;">
+        <source src="https://uk3.broadcast.radio/8118/stream" type="audio/mpeg">
+    </audio>
 </section>
 
 <div class="container">
-    <h1 style="font-size: 3rem; text-transform: uppercase;">Get in <span style="color: var(--primary);">Touch</span></h1>
-    <div class="contact-details">
-        <h3>General Enquiries</h3>
-        <p>Email: studio@sla-rock.scot</p>
-        <p>Location: Central Scotland Broadcast Hub</p>
-        <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
-        <h3>Advertising Team</h3>
-        <p>Regional & Multi-Regional Enquiries: ads@sla-rock.scot</p>
+    <div class="contact-card">
+        <h2>Direct Line</h2>
+        <p>For music submissions, use the <a href="submit.html" style="color:var(--primary); text-decoration:none; font-weight:bold;">Submit Page</a>.</p>
+        <p>For studio enquiries & wild rock antics:</p>
+        <a href="mailto:studio@sla-rock.scot" class="email-link">studio@sla-rock.scot</a>
+        
+        <div style="margin-top: 40px; border-top: 1px solid #222; padding-top: 40px;">
+            <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Regional Advertising</p>
+            <a href="mailto:ads@sla-rock.scot" class="email-link" style="font-size: 1.1rem;">ads@sla-rock.scot</a>
+        </div>
     </div>
 </div>
+
 <footer>&copy; 2026 Sla-rock.scot | Rockin' Scotland</footer>
 </body>
 </html>
