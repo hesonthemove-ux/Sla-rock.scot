@@ -19,6 +19,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* GLOBAL LAYOUT LOCK */
         * { box-sizing: border-box; }
         body { 
             background-color: #000; 
@@ -30,6 +31,7 @@
         }
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
         
+        /* PLAYER BAR */
         #master-player { 
             background: #000; 
             border-bottom: 1px solid #1a1a1a; 
@@ -39,6 +41,7 @@
             width: 100%; 
         }
         
+        /* CORPORATE IDENTITY - 600px LOGO LOCK */
         .logo-main { 
             width: 100%; 
             max-width: 600px; 
@@ -68,6 +71,7 @@
 
         #page-content { min-height: 60vh; padding-top: 20px; }
 
+        /* PRICING FOOTER */
         .grid-ads { display: flex; gap: 8px; margin: 40px 0; width: 100%; }
         .grid-ads .card-ad { 
             flex: 1; 
@@ -150,6 +154,7 @@
                 else if (page === 'home.html') document.getElementById('home-link').classList.add('active');
                 if (seoData[page]) {
                     document.title = seoData[page].title;
+                    document.getElementById('meta-desc').setAttribute('content', seoData[page].desc);
                 }
                 doc.querySelectorAll('script').forEach(oldScript => {
                     const newScript = document.createElement("script");
