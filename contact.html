@@ -1,73 +1,56 @@
-<main>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Sla-rock.scot</title>
     <style>
-        .contact-header { text-align: center; padding: 60px 0 20px 0; }
-        .contact-header h1 { font-size: 3.5rem; text-transform: uppercase; color: #ff3e00; margin: 0; line-height: 0.9; }
-        .contact-header p { color: #888; text-transform: uppercase; letter-spacing: 3px; font-size: 1.1rem; }
-
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin: 50px 0; }
-        .info-card { padding: 40px; background: #050505; border-left: 4px solid #ff3e00; }
-        .info-card h2 { color: #fff; text-transform: uppercase; margin-top: 0; font-size: 1.8rem; }
-        .info-card p { color: #888; line-height: 1.6; font-size: 1rem; }
-        
-        .contact-details { margin-top: 40px; }
-        .detail-item { margin-bottom: 25px; }
-        .detail-label { display: block; color: #ff3e00; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
-        .detail-value { font-size: 1.4rem; font-weight: 700; color: #fff; text-transform: uppercase; }
-
-        .form-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 40px; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; text-transform: uppercase; font-size: 0.7rem; color: #ff3e00; margin-bottom: 8px; font-weight: 700; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; background: #111; border: 1px solid #222; padding: 15px; color: #fff; font-family: 'Oswald';
-        }
-        .send-btn { background: #ff3e00; color: #000; border: none; width: 100%; padding: 18px; font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 1.1rem; }
+        body { font-family: 'Arial', sans-serif; margin: 0; background-color: #121212; color: #eeeeee; line-height: 1.6; }
+        header { background-color: #000; padding: 30px 20px; text-align: center; border-bottom: 4px solid #cc0000; }
+        #logo { width: 250px; height: auto; display: block; margin: 0 auto; }
+        .tagline { font-size: 1.8rem; color: #cc0000; font-weight: 800; text-transform: uppercase; margin-top: 15px; letter-spacing: 2px; }
+        nav { background: #222; text-align: center; padding: 10px; }
+        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .contact-form { background: #1e1e1e; padding: 30px; border-radius: 15px; border: 1px solid #333; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #333; border: 1px solid #444; color: #fff; border-radius: 5px; }
+        button { background: #cc0000; color: #fff; border: none; padding: 15px 30px; cursor: pointer; font-weight: bold; border-radius: 5px; }
+        footer { text-align: center; padding: 40px; background: #000; color: #666; font-size: 0.9rem; }
     </style>
+</head>
+<body>
 
-    <div class="container">
-        <section class="contact-header">
-            <h1>Direct Access</h1>
-            <p>Facilitating Commercial Conversations</p>
-        </section>
+<header>
+    <img src="logo.png" alt="Sla-rock.scot" id="logo">
+    <div class="tagline">Rockin' Scotland</div>
+</header>
 
-        <div class="contact-grid">
-            <div class="info-card">
-                <h2>Engage</h2>
-                <p>For Regional Penetration inquiries or Creative Identity sessions, reach our corporate desk directly.</p>
-                
-                <div class="contact-details">
-                    <div class="detail-item">
-                        <span class="detail-label">Studio Hotline</span>
-                        <span class="detail-value">0141 ROCK SCOT</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Commercial Inquiries</span>
-                        <span class="detail-value">HQ@ROCK.SCOT</span>
-                    </div>
-                </div>
-            </div>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="advertising.html">Advertising</a>
+    <a href="contact.html" style="color:#cc0000;">Contact</a>
+</nav>
 
-            <div class="form-card">
-                <form action="#" method="POST">
-                    <div class="form-group">
-                        <label>Your Name / Organization</label>
-                        <input type="text" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Engagement Tier</label>
-                        <select>
-                            <option>Regional Airtime (£299)</option>
-                            <option>Multi-Regional Suite (£449)</option>
-                            <option>Creative Production (£195)</option>
-                            <option>General Inquiries</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Message Architecture</label>
-                        <textarea rows="5" placeholder="Outline your requirements..."></textarea>
-                    </div>
-                    <button type="submit" class="send-btn">Transmit Message</button>
-                </form>
-            </div>
-        </div>
+<div class="container">
+    <h1>Get In Touch</h1>
+    <div class="contact-form">
+        <p>Interested in our £299 Regional airtime packages or need help with a creative project? Drop us a line below.</p>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea rows="5" placeholder="Your Message"></textarea>
+            <button type="submit">Send Message</button>
+        </form>
     </div>
-</main>
+
+    <h3 style="margin-top: 40px;">Our Standard Rates</h3>
+    <div id="pricing-component"></div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Sla-rock.scot</p>
+</footer>
+
+<script src="pricing.js"></script>
+</body>
+</html>
