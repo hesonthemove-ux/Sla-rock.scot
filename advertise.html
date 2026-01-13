@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertising | Sla-rock.scot</title>
     <style>
-        body { font-family: sans-serif; margin: 0; background-color: #121212; color: #eee; }
-        header { background: #000; padding: 30px; text-align: center; border-bottom: 4px solid #cc0000; }
-        #logo { width: 250px; height: auto; } /* Same size/position */
-        .tagline { font-size: 1.8rem; color: #cc0000; font-weight: bold; margin-top: 10px; }
-        .main-content { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-        footer { text-align: center; padding: 40px; color: #666; }
+        body { font-family: 'Arial', sans-serif; margin: 0; background-color: #121212; color: #eeeeee; line-height: 1.6; }
+        header { background-color: #000; padding: 30px 20px; text-align: center; border-bottom: 4px solid #cc0000; }
+        #logo { width: 250px; height: auto; display: block; margin: 0 auto; }
+        .tagline { font-size: 1.8rem; color: #cc0000; font-weight: 800; text-transform: uppercase; margin-top: 15px; letter-spacing: 2px; }
+        nav { background: #222; text-align: center; padding: 10px; }
+        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+        .info-card { background: #1e1e1e; padding: 30px; border-radius: 15px; border: 1px solid #333; margin-bottom: 30px; }
+        footer { text-align: center; padding: 40px; background: #000; color: #666; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -20,20 +23,27 @@
     <div class="tagline">Rockin' Scotland</div>
 </header>
 
-<div class="main-content">
-    <h1>Advertise with Us</h1>
-    <p>Reach the heart of Central Scotland's music scene. Our current rates are listed below:</p>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="advertising.html" style="color:#cc0000;">Advertising</a>
+    <a href="contact.html">Contact</a>
+</nav>
 
-    <div id="pricing-component"></div>
+<div class="container">
+    <h1>Advertise With Us</h1>
+    <div class="info-card">
+        <p>Sla-rock.scot is the premier destination for rock fans across Central Scotland. We offer targeted airtime packages that put your brand in front of a dedicated local audience.</p>
+        
+        <h3>Current Airtime Rates</h3>
+        <div id="pricing-component"></div>
+        
+        <p style="margin-top: 20px; font-style: italic;">*All rates include digital distribution via our web stream and mobile app presence.</p>
+    </div>
 
-    <section style="margin-top: 40px;">
-        <h3>Why Sla-rock?</h3>
-        <ul>
-            <li>Hyper-local focus on Central Scotland.</li>
-            <li>Dedicated rock and alternative audience.</li>
-            <li>Professional production included in our Creative package.</li>
-        </ul>
-    </section>
+    <div class="info-card">
+        <h3>Creative & Production</h3>
+        <p>Need a professional radio commercial? Our creative team handles scriptwriting, voiceovers, and full audio production for a flat fee of <strong>£195</strong>.</p>
+    </div>
 </div>
 
 <footer>
@@ -41,6 +51,5 @@
 </footer>
 
 <script src="pricing.js"></script>
-
 </body>
 </html>
