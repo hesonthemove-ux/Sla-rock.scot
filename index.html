@@ -3,30 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="meta-title">ROCK.SCOT | Central Scotland's Loudest Rock Station</title>
-    <meta name="description" id="meta-desc" content="Regional airtime from £299. Stream live Scottish rock and local music news across Central Scotland.">
     
+    <title id="meta-title">ROCK.SCOT | Central Scotland's Loudest Rock Station</title>
+    <meta name="description" id="meta-desc" content="Premium rock broadcasting. Regional airtime from £299. Stream live Scottish rock and local news across Central Scotland.">
+    <meta property="og:type" content="music.radio_station">
+    <meta property="og:title" id="og-title" content="ROCK.SCOT | Central Scotland's Loudest">
+    <meta property="og:description" id="og-desc" content="Premium Regional Airtime from £299. Stream Central Scotland's Loudest Rock.">
+    <meta property="og:image" content="og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* GLOBAL LAYOUT LOCK */
         * { box-sizing: border-box; }
-        body { background-color: #000; color: #fff; margin: 0; padding: 0; font-family: 'Oswald', sans-serif; overflow-x: hidden; }
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Oswald', sans-serif; 
+            overflow-x: hidden; 
+        }
         .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
-        #master-player { background: #000; border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 2000; width: 100%; }
         
-        /* LOGO SIZE LOCKED AT 600px */
-        .logo-main { width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; }
+        /* PLAYER BAR - FIXED POSITION */
+        #master-player { 
+            background: #000; 
+            border-bottom: 1px solid #1a1a1a; 
+            position: sticky; 
+            top: 0; 
+            z-index: 2000; 
+            width: 100%; 
+        }
         
-        .nav-menu { margin-top: 15px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; padding-bottom: 10px; }
-        .nav-menu a { color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; font-size: 0.85rem; cursor: pointer; border-bottom: 2px solid transparent; }
+        /* CORPORATE IDENTITY - 600px LOGO LOCK */
+        .logo-main { 
+            width: 100%; 
+            max-width: 600px; 
+            height: auto; 
+            display: block; 
+            margin: 0 auto; 
+        }
+        
+        .nav-menu { 
+            margin-top: 15px; 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            gap: 12px; 
+            padding-bottom: 10px;
+        }
+        .nav-menu a { 
+            color: #fff; 
+            text-decoration: none; 
+            text-transform: uppercase; 
+            font-weight: 700; 
+            font-size: 0.85rem; 
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
         .nav-menu a.active { color: #ff3e00; border-bottom: 2px solid #ff3e00; }
+
+        /* CONTENT SWAP AREA */
         #page-content { min-height: 60vh; padding-top: 20px; }
 
+        /* PRICING TIERS - LOCKED IN FOOTER */
         .grid-ads { display: flex; gap: 8px; margin: 40px 0; width: 100%; }
-        .grid-ads .card-ad { flex: 1; background: #0a0a0a; border: 1px solid #1a1a1a; padding: 10px 5px; text-align: center; }
+        .grid-ads .card-ad { 
+            flex: 1; 
+            background: #0a0a0a; 
+            border: 1px solid #1a1a1a; 
+            padding: 10px 5px; 
+            text-align: center; 
+        }
         .ad-label { text-transform: uppercase; font-size: 0.6rem; color: #888; margin: 0; }
         .ad-price { font-size: 1rem; font-weight: 700; color: #ff3e00; margin: 2px 0; }
         
-        button#play-btn { background: #ff3e00; color: #000; border: none; padding: 6px 12px; font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 0.7rem; }
+        button#play-btn { 
+            background: #ff3e00; color: #000; border: none; padding: 6px 12px; 
+            font-family: 'Oswald'; font-weight: 700; text-transform: uppercase; 
+            cursor: pointer; font-size: 0.7rem; 
+        }
     </style>
 </head>
 <body>
@@ -53,7 +110,8 @@
         </div>
     </header>
 
-    <main id="page-content"></main>
+    <main id="page-content">
+        </main>
 
     <footer class="container" style="padding: 20px 0; text-align: center; color: #222; font-size: 0.6rem;">
         <div class="grid-ads">
@@ -66,12 +124,13 @@
 
     <script src="player.js"></script>
     <script>
+        // MASTER SEO DATA ENGINE
         const seoData = {
-            'home.html': { title: 'ROCK.SCOT | Central Scotland\'s Loudest Rock Station', desc: 'Premium rock broadcasting. Regional airtime from £299. Stream live now.' },
+            'home.html': { title: 'ROCK.SCOT | Central Scotland\'s Loudest Rock Station', desc: 'Premium rock broadcasting. Regional airtime from £299. Stream live Scottish rock.' },
             'news.html': { title: 'Music News | Central Scotland Music Feeds | ROCK.SCOT', desc: 'The latest album releases and music news from across Central Scotland.' },
-            'about.html': { title: 'About Us | Premium Regional Broadcaster | ROCK.SCOT', desc: 'Broadcasting from the heart of Scotland. High-impact audio for the rock community.' },
-            'advertise.html': { title: 'Advertise | Premium Market Penetration | ROCK.SCOT', desc: 'Regional airtime from £299. Multi-regional from £449. Custom creative for £195.' },
-            'submit.html': { title: 'Submit Music | Local Talent Architecture | ROCK.SCOT', desc: 'Bands: Submit your music for professional airplay on ROCK.SCOT.' }
+            'about.html': { title: 'About Us | Premium Regional Broadcaster | ROCK.SCOT', desc: 'Connecting Central Scotland through high-impact rock and premium commercial airtime.' },
+            'advertise.html': { title: 'Advertise | Regional Market Penetration | ROCK.SCOT', desc: 'Regional airtime from £299. Multi-regional from £449. Custom creative for £195.' },
+            'submit.html': { title: 'Submit Music | Local Talent Architecture | ROCK.SCOT', desc: 'Direct submission architecture for Scottish bands and artists.' }
         };
 
         async function loadPage(page, element) {
@@ -81,23 +140,41 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 const newContent = doc.querySelector('main').innerHTML;
+                
                 document.getElementById('page-content').innerHTML = newContent;
                 document.querySelectorAll('#main-nav a').forEach(a => a.classList.remove('active'));
-                if(element) element.classList.add('active');
+                
+                if(element) {
+                    element.classList.add('active');
+                } else {
+                    document.getElementById('home-link').classList.add('active');
+                }
+
+                // DYNAMIC SEO UPDATE
                 if (seoData[page]) {
                     document.title = seoData[page].title;
                     document.getElementById('meta-desc').setAttribute('content', seoData[page].desc);
+                    document.getElementById('og-title').setAttribute('content', seoData[page].title);
+                    document.getElementById('og-desc').setAttribute('content', seoData[page].desc);
                 }
+
+                // RE-RUN SCRIPTS (Ticker, etc)
                 doc.querySelectorAll('script').forEach(oldScript => {
                     const newScript = document.createElement("script");
                     if (oldScript.src) newScript.src = oldScript.src;
                     else newScript.textContent = oldScript.textContent;
                     document.body.appendChild(newScript);
                 });
+                
                 window.scrollTo(0,0);
-            } catch (err) { console.error("Load Error:", err); }
+            } catch (err) {
+                console.error("SPA Error:", err);
+            }
         }
-        window.onload = () => { loadPage('home.html', document.getElementById('home-link')); };
+        
+        window.onload = () => {
+            loadPage('home.html', document.getElementById('home-link'));
+        };
     </script>
 </body>
 </html>
