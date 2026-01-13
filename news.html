@@ -1,86 +1,47 @@
 <main>
     <style>
-        .ticker-wrap { width: 100%; overflow: hidden; background: #111; border-bottom: 1px solid #ff3e00; padding: 10px 0; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 90s linear infinite; }
-        .ticker-item { display: inline-block; padding: 0 40px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
-        .ticker-item span { color: #ff3e00; font-weight: 700; margin-right: 8px; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
+        .news-container { padding: 40px 20px; text-align: left; max-width: 1000px; margin: 0 auto; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
-        .news-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 20px; transition: 0.3s; }
-        .news-card:hover { border-color: #333; background: #0d0d0d; }
-        .news-card h2 { font-size: 1.1rem; text-transform: uppercase; margin: 10px 0; line-height: 1.3; }
-        .news-card h2 a { color: #fff; text-decoration: none; }
-        .news-card h2 a:hover { color: #ff3e00; }
-        .news-date { color: #ff3e00; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
-        .news-excerpt { font-size: 0.85rem; color: #888; line-height: 1.5; }
+        .news-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 0; display: flex; flex-direction: column; transition: 0.3s; }
+        .news-card:hover { border-color: #ff3e00; transform: translateY(-5px); }
+        .news-content { padding: 20px; }
+        .news-tag { color: #ff3e00; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
+        .news-card h3 { margin: 10px 0; font-size: 1.4rem; line-height: 1.2; text-transform: uppercase; color: #fff; }
+        .news-card p { color: #888; font-size: 0.9rem; line-height: 1.5; }
+        .news-link { color: #fff; text-decoration: none; font-weight: 700; font-size: 0.8rem; margin-top: auto; border-top: 1px solid #111; padding: 15px 20px; display: block; text-transform: uppercase; text-align: center; }
+        .news-link:hover { background: #ff3e00; color: #000; }
     </style>
 
-    <div class="ticker-wrap">
-        <div class="ticker" id="news-ticker">
-            <div class="ticker-item"><span>SCOTTISH ALBUMS</span> Syncing Central Scotland Release Feed...</div>
+    <div class="news-container">
+        <h2 style="font-size: 3rem; text-transform: uppercase;">CENTRAL SCOTLAND <span style="color:#ff3e00;">ROCK NEWS</span></h2>
+        
+        <div class="news-grid">
+            <div class="news-card">
+                <div class="news-content">
+                    <span class="news-tag">Glasgow Green</span>
+                    <h3>TRNSMT 2026: Lewis Capaldi & Rock Headliners</h3>
+                    <p>The latest updates on the <strong>TRNSMT 2026</strong> lineup at Glasgow Green. Rumours suggest a heavy rock presence to celebrate the festival's anniversary.</p>
+                </div>
+                <a href="#" class="news-link">Read Full Story</a>
+            </div>
+
+            <div class="news-card">
+                <div class="news-content">
+                    <span class="news-tag">Edinburgh Gigs</span>
+                    <h3>Summer Sessions: The Cure at Royal Highland</h3>
+                    <p>Edinburgh prepares for its biggest summer yet as <strong>The Cure</strong> and <strong>Florence + The Machine</strong> are confirmed for the 2026 Summer Sessions.</p>
+                </div>
+                <a href="#" class="news-link">Read Full Story</a>
+            </div>
+
+            <div class="news-card">
+                <div class="news-content">
+                    <span class="news-tag">Unsigned Rock</span>
+                    <h3>The Next Big Thing: Glasgow's Venue Circuit</h3>
+                    <p>From <strong>SWG3</strong> to the <strong>O2 Academy</strong>, we track the unsigned bands ready to break out of the Central Belt rock scene this year.</p>
+                </div>
+                <a href="#" class="news-link">Read Full Story</a>
+            </div>
         </div>
     </div>
-
-    <div class="container">
-        <div style="text-align: center; padding: 40px 0;">
-            <h1 style="font-size: 3rem; text-transform: uppercase; margin: 0;">Music News</h1>
-            <p style="color: #ff3e00; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">Central Scotland Intelligence</p>
-        </div>
-
-        <div id="central-news-feed" class="news-grid">
-            <p style="grid-column: 1/-1; text-align: center; padding: 50px; color: #444;">Aggregating Scottish Music Network...</p>
-        </div>
-    </div>
-
-    <script>
-        (function() {
-            const proxy = "https://corsproxy.io/?";
-            const feedUrl = "https://www.scottishmusicnetwork.co.uk/feed/";
-            
-            async function fetchNews() {
-                try {
-                    const res = await fetch(proxy + encodeURIComponent(feedUrl));
-                    const text = await res.text();
-                    const xml = new DOMParser().parseFromString(text, "text/xml");
-                    const items = xml.querySelectorAll("item");
-                    
-                    const ticker = document.getElementById('news-ticker');
-                    const feed = document.getElementById('central-news-feed');
-                    
-                    let tickerHTML = '';
-                    let gridHTML = '';
-
-                    items.forEach((item, i) => {
-                        const title = item.querySelector("title").textContent;
-                        const link = item.querySelector("link").textContent;
-                        const pubDate = new Date(item.querySelector("pubDate").textContent).toLocaleDateString('en-GB');
-                        let desc = item.querySelector("description").textContent.replace(/<[^>]*>?/gm, '').substring(0, 120);
-
-                        // Populate Ticker (First 10 items)
-                        if (i < 10) {
-                            tickerHTML += `<div class="ticker-item"><span>BREAKING:</span> ${title}</div>`;
-                        }
-
-                        // Populate Grid (First 9 items)
-                        if (i < 9) {
-                            gridHTML += `
-                                <article class="news-card">
-                                    <span class="news-date">${pubDate}</span>
-                                    <h2><a href="${link}" target="_blank">${title}</a></h2>
-                                    <p class="news-excerpt">${desc}...</p>
-                                </article>`;
-                        }
-                    });
-
-                    ticker.innerHTML = tickerHTML + tickerHTML; // Double for loop
-                    feed.innerHTML = gridHTML;
-
-                } catch (e) {
-                    document.getElementById('central-news-feed').innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>Feed offline. Checking frequency...</p>";
-                }
-            }
-            fetchNews();
-        })();
-    </script>
 </main>
