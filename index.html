@@ -3,218 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rock.Scot | Central Scotland's Rock Authority</title>
+    
+    <title>Rock.Scot | Central Scotland's Rock Authority | Live Radio, News & Advertising</title>
+    <meta name="description" content="Rock.Scot is the definitive rock authority for Central Scotland. Broadcasting live Grunge, Punk, Metal, and Classic Rock to Glasgow, Paisley, Motherwell, Hamilton, and the West. Submit your band music or book regional radio advertising today.">
+    <meta name="keywords" content="Rock Radio Scotland, Live Rock Stream, Central Belt Music, Glasgow Rock Bands, Paisley Music News, Motherwell Radio, Hamilton Rock Authority, Greenock Punk Scene, East Kilbride Metal, Dumbarton New Wave, Nirvana, AC/DC, Metallica, Guns N Roses, Foo Fighters, Local Band Airplay Scotland, Radio Advertising Glasgow, Regional Airtime Scotland, Scotland Rock News, The Skinny Music RSS">
+    
+    <meta property="og:title" content="Rock.Scot | Central Scotland's Rock Authority">
+    <meta property="og:description" content="Streaming the loudest rock across the Central Belt. Support Local Bands. Book Regional Ads.">
+    <meta property="og:image" content="top_banner.jpg">
+    <meta property="og:url" content="https://rock.scot">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BroadcastingService",
+        "name": "Rock.Scot",
+        "broadcastServiceTier": "Regional",
+        "areaServed": ["Glasgow", "Paisley", "Motherwell", "Hamilton", "East Kilbride", "Greenock", "Dumbarton", "Johnstone", "Lanarkshire", "Renfrewshire"],
+        "parentOrganization": {
+          "@type": "Organization",
+          "name": "Rock.Scot Authority",
+          "logo": "top_banner.jpg"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "MusicPlaylist",
+        "name": "Central Scotland Rock Feed",
+        "numTracks": "1000",
+        "genre": ["Rock", "Punk", "Grunge", "Metal", "New Wave", "Classic Rock"]
+      }
+    ]
+    </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=New+Rocker&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     
     <style>
-        :root { 
-            --primary: #ff3e00; 
-            --bg: #050505; 
-            --header-h: 130px; 
-            --nav-h: 60px;
-            --footer-h: 80px;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background: var(--bg) url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            color: #fff; font-family: 'Inter', sans-serif; height: 100dvh; 
-            display: grid; grid-template-rows: var(--header-h) var(--nav-h) 1fr var(--footer-h);
-            overflow: hidden;
-        }
-
-        /* 1. HEADER & ROCK NEON */
-        header { 
-            background: #000; border-bottom: 3px solid var(--primary);
-            position: relative; overflow: hidden;
-        }
-        .hdr-logo { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-        
-        .neon-rock-guitar {
-            position: absolute; right: 20px; top: 15px; height: 100px;
-            filter: drop-shadow(0 0 10px var(--primary));
-            animation: flicker 2s infinite; z-index: 10;
-        }
-        @keyframes flicker {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; filter: brightness(1); }
-            20%, 24%, 55% { opacity: 0.2; filter: brightness(0.5); }
-        }
-
-        /* 3. GLITCH CRACKLE FIX */
-        nav { display: grid; grid-template-columns: repeat(4, 1fr); background: #000; gap: 2px; }
-        .nav-btn {
-            background: #111; border: none; color: #666; font-family: 'Oswald';
-            text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
-            transition: 0.2s; position: relative;
-        }
+        :root { --primary: #ff3e00; --bg: #050505; --nav-h: 60px; --footer-h: 80px; --max-w: 1920px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; height: 100dvh; display: grid; grid-template-rows: auto auto var(--nav-h) 1fr var(--footer-h); overflow: hidden; }
+        header { background: #000; border-bottom: 3px solid var(--primary); display: flex; justify-content: center; overflow: hidden; }
+        .hdr-logo { width: 100%; max-width: var(--max-w); height: 280px; object-fit: cover; display: block; }
+        .ticker-wrap { background: #111; border-bottom: 1px solid var(--primary); overflow: hidden; height: 40px; display: flex; align-items: center; z-index: 10; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 45s linear infinite; font-family: 'Oswald'; transform: translateZ(0); }
+        .ticker span { color: var(--primary); padding: 0 40px; text-transform: uppercase; font-size: 1rem; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        nav { display: grid; grid-template-columns: repeat(5, 1fr); background: #000; gap: 2px; margin-top: 1rem; height: var(--nav-h); width: 100%; max-width: var(--max-w); margin-inline: auto; }
+        .nav-btn { background: #111; border: none; color: #666; font-family: 'Oswald'; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
         .nav-btn.active { color: #fff; background: #1a1a1a; box-shadow: inset 0 -4px 0 var(--primary); }
-        
-        .nav-btn:hover {
-            animation: glitch-crack 0.2s infinite;
-            color: var(--primary);
-            text-shadow: 2px 0 #fff, -2px 0 #000;
-        }
-        @keyframes glitch-crack {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-
-        /* CONTENT AREA */
-        main { overflow-y: auto; padding: 20px; scrollbar-width: thin; scrollbar-color: var(--primary) #000; }
-        .view { display: none; max-width: 1400px; margin: 0 auto; }
+        main { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--primary) #000; -webkit-overflow-scrolling: touch; }
+        .view { display: none; width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 40px; animation: fadeIn 0.3s ease-in; }
         .view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .rolodex { display: flex; overflow-x: auto; gap: 25px; padding: 20px 0; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .dj-card { flex: 0 0 280px; scroll-snap-align: center; background: #111; border: 1px solid #222; padding: 30px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .dj-card img { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); margin-bottom: 15px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: #111; border: 2px solid var(--primary); max-width: 600px; width: 100%; padding: 40px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-modal { position: absolute; top: 20px; right: 25px; color: var(--primary); font-size: 2rem; cursor: pointer; }
+        .action-card { background: #111; border: 1px solid #333; padding: 40px; text-align: center; margin-bottom: 20px; }
+        .price-big { font-family: 'Oswald'; font-size: 3rem; margin: 15px 0; }
+        .play-btn { background: var(--primary); color: #fff; font-family: 'Oswald'; padding: 14px 40px; border: none; cursor: pointer; font-weight: bold; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); transition: 0.2s; }
+        .ad-card.selected { border: 2px solid var(--primary); background: #1a0b06; }
+        footer { background: #000; border-top: 4px solid var(--primary); display: flex; align-items: center; justify-content: center; height: var(--footer-h); z-index: 100; }
+        
+        /* HIDDEN SEO FOOTER - Visible to Google, subtle to humans */
+        .seo-footer { padding: 40px; background: #000; border-top: 1px solid #111; font-size: 0.7rem; color: #222; line-height: 1.6; }
+        .seo-footer a { color: #222; text-decoration: none; }
 
-        /* LIVE CONSOLE */
-        .console-row { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 15px; align-items: center; margin-bottom: 10px; }
-        .console-panel { background: #111; border: 1px solid #333; padding: 20px; text-align: center; font-family: 'Oswald'; }
-        .hero-img-box { height: 150px; display: flex; align-items: center; justify-content: center; }
-        .hero-img-box img { max-height: 100%; width: auto; }
-
-        /* DJ GRID (CREW) */
-        .dj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-        .dj-card { display: flex; background: rgba(20,20,20,0.8); border: 1px solid #333; overflow: hidden; }
-        .dj-photo { width: 150px; height: 150px; object-fit: cover; border-right: 3px solid var(--primary); }
-        .dj-info { padding: 15px; }
-
-        /* HORIZONTAL NEWS WIRE */
-        .wire-item { display: flex; background: #111; margin-bottom: 15px; border: 1px solid #222; }
-        .wire-img { width: 200px; height: 120px; object-fit: cover; }
-        .wire-body { padding: 15px; }
-
-        footer { background: #000; border-top: 4px solid var(--primary); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; }
-        .play-btn { background: var(--primary); color: #fff; font-family: 'Oswald'; padding: 12px 30px; border: none; cursor: pointer; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
-
-        @media (max-width: 1024px) {
-            .console-row { grid-template-columns: 1fr; }
-            .console-panel, .neon-rock-guitar { display: none; }
-            .dj-card { flex-direction: column; }
-            .dj-photo { width: 100%; height: 250px; }
-        }
+        @media (max-width: 768px) { nav { grid-template-columns: repeat(3, 1fr); height: auto; } .hdr-logo { height: 150px; } .view { padding: 20px; } }
     </style>
 </head>
 <body>
 
-<header>
-    <img src="logo.jpg" alt="Rock.Scot Banner" class="hdr-logo">
-    <svg class="neon-rock-guitar" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50 10 L55 80 L90 140 L50 120 L10 140 L45 80 Z" stroke="#ff3e00" stroke-width="3" fill="none" />
-        <line x1="50" y1="10" x2="50" y2="120" stroke="#ff3e00" stroke-width="1" />
-        <rect x="42" y="80" width="16" height="20" stroke="#ff3e00" fill="none"/>
-    </svg>
-</header>
+<header><img src="top_banner.jpg" class="hdr-logo" alt="Rock.Scot Central Scotland Radio Authority - Glasgow Paisley Motherwell Hamilton"></header>
+<div class="ticker-wrap"><div class="ticker" id="ticker-content"><span>ROCK.SCOT AUTHORITY WIRE - CENTRAL SCOTLAND...</span></div></div>
 
 <nav>
-    <button class="nav-btn active" onclick="tab('radio')">Live</button>
-    <button class="nav-btn" onclick="tab('wire')">Wire</button>
-    <button class="nav-btn" onclick="tab('crew')">Crew</button>
-    <button class="nav-btn" onclick="tab('ads')">Ads</button>
+    <button id="nav-radio" class="nav-btn active" onclick="tab('radio')">Live</button>
+    <button id="nav-wire" class="nav-btn" onclick="tab('wire')">Wire</button>
+    <button id="nav-crew" class="nav-btn" onclick="tab('crew')">Crew</button>
+    <button id="nav-sub" class="nav-btn" onclick="tab('sub')">Submits</button>
+    <button id="nav-ads" class="nav-btn" onclick="tab('ads')">Ads</button>
 </nav>
 
-<main id="scroll-target">
+<main>
     <section id="v-radio" class="view active">
-        <div class="console-row">
-            <div class="console-panel">
-                <span style="color:var(--primary)">SIGNAL</span><br>CENTRAL BELT
-            </div>
-            <div class="hero-img-box">
-                <img src="logo.png" alt="Rockin Scotland">
-            </div>
-            <div class="console-panel">
-                <span style="color:var(--primary)">STATUS</span><br>LIVE & LOUD
-            </div>
-        </div>
-        <div style="height: 40vh; background: url('studio-main.jpg') center/cover; border: 1px solid #333;"></div>
+        <h1 style="font-family:'New Rocker'; font-size: 4rem; color:var(--primary);">ROCK.SCOT</h1>
+        <h2 style="font-family:'Oswald'; letter-spacing:5px; color:#aaa; font-size: 1.2rem;">THE CENTRAL SCOTLAND ROCK AUTHORITY</h2>
     </section>
 
-    <section id="v-wire" class="view">
-        <h2 style="font-family:'Oswald'; margin-bottom:20px;">MUSIC WIRE</h2>
-        <div id="news-container"></div>
-    </section>
+    <section id="v-wire" class="view"><h2 style="font-family:'Oswald'; margin-bottom:10px;">CENTRAL BELT MUSIC WIRE</h2><div id="news-container">Indexing Scotland Music News...</div></section>
 
-    <section id="v-crew" class="view">
-        <div class="dj-grid">
-            <div class="dj-card">
-                <img src="dj1.jpg" class="dj-photo" onerror="this.src='https://via.placeholder.com/150?text=DJ+1'">
-                <div class="dj-info">
-                    <h3 style="font-family:'Oswald'; color:var(--primary);">THE RAZOR</h3>
-                    <p>6am - 10am Weekdays. Breakfast with a bite.</p>
-                </div>
-            </div>
-            <div class="dj-card">
-                <img src="dj2.jpg" class="dj-photo" onerror="this.src='https://via.placeholder.com/150?text=DJ+2'">
-                <div class="dj-info">
-                    <h3 style="font-family:'Oswald'; color:var(--primary);">SCOTTISH METAL MASS</h3>
-                    <p>10pm Nightly. Pure heavy local talent.</p>
-                </div>
-            </div>
+    <section id="v-crew" class="view"><h2 style="font-family:'Oswald'; margin-bottom: 20px;">STATION CREW</h2><div class="rolodex" id="crew-rolodex"></div></section>
+
+    <section id="v-sub" class="view">
+        <div class="action-card">
+            <h2 style="font-family:'Oswald'; color:var(--primary); font-size: 2.5rem;">LOCAL BAND SUBMISSIONS</h2>
+            <p style="margin: 20px 0; color: #ccc;">Are you a band from <strong>Glasgow, Paisley, Greenock, or Lanarkshire</strong>? We play local music.</p>
+            <button class="play-btn" onclick="window.location.href='mailto:music@rock.scot?subject=Band Submission&body=Band Name:%0AHometown:%0ALink:'">SUBMIT TRACK</button>
         </div>
-        <div style="margin-top:20px; height:200px; background:url('filler1.jpg') center/cover; border:1px solid #222;"></div>
     </section>
 
     <section id="v-ads" class="view">
-        <h2 style="font-family:'Oswald'; margin-bottom:20px;">ADVERTISING</h2>
-        <div class="dj-grid">
-            <div class="console-panel" style="text-align:left;">
-                <h3 style="color:var(--primary)">REGIONAL PACK</h3>
-                <p>£299/Week. High impact audio spots across Central Scotland.</p>
-            </div>
-            <div class="console-panel">
-                <h3 style="color:var(--primary)">CALCULATOR</h3>
-                <input type="number" id="wks" value="1" style="width:100%; padding:10px; background:#000; color:#fff; border:1px solid #333;" oninput="recalc()">
-                <div style="font-size:2rem; margin-top:10px;">£<span id="tot">299</span></div>
-            </div>
+        <h2 style="font-family:'Oswald'; text-align:center;">REGIONAL RADIO ADVERTISING</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+            <div class="action-card ad-card" id="card-reg"><h3>Regional Airtime</h3><div class="price-big">£299</div><button class="play-btn" onclick="updateCalc('Regional', 299, 'card-reg')">Select</button></div>
+            <div class="action-card ad-card" id="card-multi"><h3>Multi-Regional</h3><div class="price-big">£449</div><button class="play-btn" onclick="updateCalc('Multi-Regional', 449, 'card-multi')">Select</button></div>
+            <div class="action-card ad-card" id="card-crea"><h3>Creative Production</h3><div class="price-big">£195</div><button class="play-btn" onclick="updateCalc('Creative', 195, 'card-crea')">Add</button></div>
         </div>
+        <div style="margin-top:40px; text-align:center; border: 1px solid var(--primary); padding: 30px; background: #111;">
+            <h4 style="font-family:'Oswald'; color:var(--primary);">MONTHLY INVESTMENT: <span id="calc-display">£0</span></h4>
+            <button class="play-btn" style="width:100%; max-width: 400px; margin-top:20px;" onclick="sendInquiry()">BOOK CAMPAIGN</button>
+        </div>
+    </section>
+
+    <section class="seo-footer">
+        <h3>Central Scotland Rock Radio Catchment Area:</h3>
+        <p>Broadcasting across Glasgow, Paisley, Motherwell, Hamilton, East Kilbride, Johnstone, Greenock, Dumbarton, Clydebank, Coatbridge, Airdrie, Falkirk, and Stirling. Rock.Scot is the premier choice for regional radio advertising and local band promotion in the West of Scotland.</p>
+        <h3>Genres & Bands:</h3>
+        <p>Grunge, Punk, Metal, Classic Rock, New Wave. Featuring music from Nirvana, Metallica, AC/DC, Guns N' Roses, Foo Fighters, Pearl Jam, Green Day, Iron Maiden, and the best emerging Scottish local bands. Stay tuned for Central Belt music news and regional airtime opportunities.</p>
     </section>
 </main>
 
-<footer>
-    <button class="play-btn" onclick="toggleStream()" id="play-trigger">LISTEN LIVE</button>
-    <div style="font-family:'New Rocker'; font-size:1.5rem;">Rock.Scot</div>
-</footer>
+<div class="modal" id="bio-modal">
+    <div class="modal-content"><span class="close-modal" onclick="closeBio()">&times;</span><div id="bio-body"></div></div>
+</div>
+
+<footer><button class="play-btn" onclick="toggleStream()" id="play-trigger">LISTEN LIVE</button></footer>
 
 <script>
+    const crewData = [
+        { name: "Andy", role: "Daytime Rock Authority", loc: "East Kilbride", song: "In The End", first: "Wet Wet Wet", gig: "Oasis at Knebworth", icon: "Dave Grohl", bio: "The EK Powerhouse. Central Scotland's rock authority." },
+        { name: "Alex", role: "Late Night Tech Metal", loc: "Johnstone", song: "Master of Puppets", first: "Green Day @ Barrowlands", gig: "Paisley mosh pits", icon: "Lemmy", bio: "Johnstone's heavy metal tech specialist." },
+        { name: "Cal", role: "Greenock Punk & Grunge", loc: "Greenock (via Ohio)", song: "Smells Like Teen Spirit", first: "Bluegrass Festival", gig: "Nirvana '92", icon: "Kurt Cobain", bio: "From Ohio to Greenock. Bringing US grunge to the West of Scotland." },
+        { name: "Jude", role: "Hamilton Rock Mix", loc: "Hamilton", song: "Everlong", first: "S Club 7", gig: "Foo Fighters @ Murrayfield", icon: "Stevie Nicks", bio: "Hamilton rock queen." },
+        { name: "Mhairi", role: "Motherwell Scene Hero", loc: "Motherwell", song: "The Chain", first: "Steps", gig: "Fleetwood Mac", icon: "Debbie Harry", bio: "Motherwell talent scout." },
+        { name: "Chris", role: "Paisley Classics", loc: "Paisley", song: "Highway to Hell", first: "Bay City Rollers", gig: "AC/DC at Hampden", icon: "Angus Young", bio: "Paisley's classic rock legend." },
+        { name: "Blue", role: "Dumbarton New Wave", loc: "Dumbarton", song: "Blue Monday", first: "Bros", gig: "New Order", icon: "David Bowie", bio: "Dumbarton's synth-rock expert." }
+    ];
+
     function tab(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('v-' + id).classList.add('active');
-        event.currentTarget.classList.add('active');
+        document.getElementById('nav-' + id).classList.add('active');
     }
 
-    function recalc() { document.getElementById('tot').innerText = document.getElementById('wks').value * 299; }
-
-    const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
-    let isP = false;
-    function toggleStream() {
-        const btn = document.getElementById('play-trigger');
-        if(!isP) { stream.play(); btn.innerText = "STOP FEED"; isP = true; }
-        else { stream.pause(); btn.innerText = "LISTEN LIVE"; isP = false; }
+    function initCrew() {
+        document.getElementById('crew-rolodex').innerHTML = crewData.map((dj, i) => `
+            <div class="dj-card" onclick="openBio(${i})">
+                <img src="dj_${dj.name.toLowerCase()}.jpg" onerror="this.src='venue.png'" alt="${dj.name} Rock DJ ${dj.loc}" loading="lazy">
+                <h3>${dj.name}</h3><p>${dj.role}</p>
+            </div>
+        `).join('');
     }
 
-    async function loadWire() {
-        const api = "https://api.rss2json.com/v1/api.json?rss_url=https://www.theskinny.co.uk/rss/music";
-        try {
-            const res = await fetch(api);
-            const data = await res.json();
-            let h = '';
-            data.items.slice(0, 6).forEach(item => {
-                const img = item.thumbnail || 'https://via.placeholder.com/200x120?text=ROCK.SCOT';
-                h += `<div class="wire-item">
-                    <img src="${img}" class="wire-img">
-                    <div class="wire-body">
-                        <h4 style="font-family:'Oswald'; color:var(--primary);">${item.title}</h4>
-                        <p style="font-size:0.8rem; color:#888;">${item.description.substring(0, 120).replace(/<[^>]*>?/gm, '')}...</p>
-                    </div>
-                </div>`;
-            });
-            document.getElementById('news-container').innerHTML = h;
-        } catch(e) { console.log(e); }
+    function openBio(i) {
+        const dj = crewData[i];
+        document.getElementById('bio-body').innerHTML = `<h2>${dj.name}</h2><p><strong>From:</strong> ${dj.loc}</p><p>${dj.bio}</p>`;
+        document.getElementById('bio-modal').style.display = 'flex';
     }
-    window.onload = loadWire;
+
+    function closeBio() { document.getElementById('bio-modal').style.display = 'none'; }
+
+    let pP = 0, cP = 0, pN = "None";
+    function updateCalc(type, price, id) {
+        if(type === 'Creative') { cP = (cP === 0) ? 195 : 0; document.getElementById(id).classList.toggle('selected'); }
+        else { pP = price; pN = type; document.querySelectorAll('.ad-card').forEach(c => c.classList.remove('selected')); document.getElementById(id).classList.add('selected'); }
+        document.getElementById('calc-display').innerText = "£" + (pP + cP);
+    }
+
+    function sendInquiry() {
+        if(pP === 0) return alert("Select a package.");
+        window.location.href = `mailto:production@rock.scot?subject=Ad Booking Request&body=Package: ${pN}%0ACreative: ${cP > 0 ? 'Yes' : 'No'}`;
+    }
+
+    async function loadFeeds() {
+        const feeds = ["https://www.theskinny.co.uk/rss/music", "http://www.isthismusic.com/feed"];
+        let all = [];
+        for (const f of feeds) {
+            try {
+                const r = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(f)}`);
+                const d = await r.json();
+                if(d.status === 'ok') all = [...all, ...d.items];
+            } catch(e) {}
+        }
+        renderNews(all);
+    }
+
+    function renderNews(items) {
+        const cont = document.getElementById('news-container');
+        const tick = document.getElementById('ticker-content');
+        let h = '', t = '';
+        items.slice(0, 10).forEach(item => {
+            const clean = item.description.replace(/<[^>]*>?/gm, '').substring(0, 120);
+            t += `<span> +++ ${item.title.toUpperCase()} </span>`;
+            h += `<div style="margin-bottom:20px; background:#111; padding:20px; border-left:4px solid var(--primary);"><h4>${item.title}</h4><p>${clean}...</p></div>`;
+        });
+        cont.innerHTML = h; tick.innerHTML = t + t;
+    }
+
+    const audio = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
+    function toggleStream() { audio.paused ? audio.play() : audio.pause(); }
+
+    window.onload = () => { initCrew(); loadFeeds(); };
 </script>
 </body>
 </html>
