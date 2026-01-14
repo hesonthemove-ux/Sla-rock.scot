@@ -5,38 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sla-rock.scot | Rockin' Scotland | Glasgow & Online Rock Radio</title>
     <style>
-        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.08); }
+        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.08); --live: #2ecc71; }
         body, html { margin: 0; padding: 0; background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; }
         #app-shell { display: flex; flex-direction: column; height: 100vh; }
         
-        header { background: #000; padding: 30px 20px; text-align: center; border-bottom: 4px solid var(--primary); flex-shrink: 0; }
+        header { background: #000; padding: 30px 20px; text-align: center; border-bottom: 4px solid var(--primary); flex-shrink: 0; position: relative; }
         #logo { width: 100%; max-width: 550px; height: auto; }
         .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 8px; margin-top: 10px; }
 
-        nav { background: #0a0a0a; padding: 15px; text-align: center; border-bottom: 1px solid #222; flex-shrink: 0; overflow-x: auto; white-space: nowrap; }
+        /* Countdown Timer Style */
+        #next-show-timer { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #fff; padding: 5px 15px; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; border-radius: 20px; z-index: 10; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+
+        nav { background: #0a0a0a; padding: 25px 15px 15px; text-align: center; border-bottom: 1px solid #222; flex-shrink: 0; overflow-x: auto; }
         nav a { color: #fff; margin: 0 10px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 0.7rem; letter-spacing: 1px; transition: 0.3s; padding: 8px 10px; border-radius: 4px; }
         nav a:hover { background: var(--glass); color: var(--primary); }
 
         #content-window { flex-grow: 1; overflow-y: auto; padding: 40px; padding-bottom: 140px; }
 
-        /* Automation Styling */
         .auto-card { background: var(--glass); border: 1px solid #222; padding: 25px; margin-bottom: 25px; }
-        .legal-note { font-size: 0.65rem; color: #666; margin-top: 10px; line-height: 1.4; }
         
-        /* Map & Shop Placeholders */
-        .map-frame { width: 100%; height: 300px; background: #111; border: 1px solid #333; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 900; text-transform: uppercase; }
-        .shop-coming-soon { height: 200px; border: 2px dashed #333; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-
-        /* Form Styling */
-        input[type="file"] { background: #000; border: 1px solid #333; padding: 10px; width: 100%; box-sizing: border-box; }
-        .btn-action { background: var(--primary); color: #fff; border: none; padding: 12px 25px; font-weight: 900; text-transform: uppercase; cursor: pointer; margin-top: 10px; }
-
         footer#master-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 3px solid var(--primary); padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; z-index: 9999; }
         .player-frame { width: 400px; height: 60px; border: none; }
 
         @media (max-width: 768px) {
             #logo { max-width: 240px; }
             .tagline { font-size: 1rem; letter-spacing: 4px; }
+            #next-show-timer { font-size: 0.6rem; bottom: -15px; }
             footer#master-player { flex-direction: column; padding: 10px; }
             .player-frame { width: 100%; }
         }
@@ -48,13 +42,13 @@
     <header>
         <img src="logo.png" alt="Sla-rock.scot" id="logo">
         <div class="tagline">Rockin' Scotland</div>
+        <div id="next-show-timer">Next Show: Loading...</div>
     </header>
 
     <nav>
         <a onclick="spa.load('home')">On Air</a>
         <a onclick="spa.load('community')">Pit Photos</a>
-        <a onclick="spa.load('venues')">Gig Map</a>
-        <a onclick="spa.load('shop')">Merch</a>
+        <a onclick="spa.load('schedule')">Schedule</a>
         <a onclick="spa.load('djs')">The Crew</a>
     </nav>
 
@@ -69,67 +63,25 @@
 </div>
 
 <script>
-    const spa = {
-        pages: {
-            home: `
-                <div class="auto-card">
-                    <h2 style="color:var(--primary); margin:0;">RIFF OF THE WEEK</h2>
-                    <p id="riff-automation">Syncing with charts...</p>
-                </div>
-                <div class="auto-card">
-                    <h3>Artist Spotlight</h3>
-                    <div id="artist-spotlight">Trending in the Central Belt...</div>
-                </div>
-            `,
-            community: `
-                <h2>Pit <span style="color:var(--primary)">Photos</span></h2>
-                <div class="auto-card">
-                    <h3>Upload Your Gig Shots</h3>
-                    <p style="font-size:0.8rem;">Max size: 2MB. JPEGs only.</p>
-                    <form onsubmit="alert('Upload successful. Pending moderation.'); return false;">
-                        <input type="file" accept="image/jpeg" required>
-                        <div style="margin-top:15px;">
-                            <input type="checkbox" required id="legal"> 
-                            <label for="legal" style="font-size:0.7rem;">I own this photo and grant Sla-rock.scot usage rights.</label>
-                        </div>
-                        <button class="btn-action">Upload to Gallery</button>
-                    </form>
-                    <p class="legal-note">Sla-rock.scot reserves the right to remove any content. All uploads are subject to our SLA Privacy Policy.</p>
-                </div>
-            `,
-            venues: `
-                <h2>Rock <span style="color:var(--primary)">Venues</span></h2>
-                <div class="map-frame">Interactive Glasgow & Central Map Coming Soon</div>
-                <p style="font-size:0.8rem; margin-top:10px;">Tracking live dates in Glasgow, Paisley, EK, and Stirling.</p>
-            `,
-            shop: `
-                <h2>Sla-Rock <span style="color:var(--primary)">Merch</span></h2>
-                <div class="shop-coming-soon">
-                    <h3 style="margin:0;">SHOP COMING SOON</h3>
-                    <p style="color:#666;">Official Sla-Rock Tees & Hoodies</p>
-                </div>
-            `,
-            djs: `<h2>The Crew</h2><p>Meet the team in the Crew tab.</p>`
-        },
-        load: function(id) {
-            document.getElementById('page-content').innerHTML = this.pages[id] || this.pages['home'];
-            if(id === 'home') { this.runAutomation(); }
-            window.location.hash = id;
-            document.getElementById('content-window').scrollTop = 0;
-        },
-        runAutomation: async function() {
-            // Simulated AI/API fetch for Riff & Artist
-            const riffBox = document.getElementById('riff-automation');
-            const artistBox = document.getElementById('artist-spotlight');
+    const schedule = [
+        { hr: 7, name: "Morning Chaos", dj: "Cal" },
+        { hr: 10, name: "The Wall of Sound", dj: "Alex" },
+        { hr: 14, name: "EK Rock Voyager", dj: "Andy" },
+        { hr: 18, name: "Friday Night Rock", dj: "Tom" },
+        { hr: 22, name: "Highland Hammer", dj: "Mhairi" }
+    ];
+
+    function updateCountdown() {
+        const now = new Date();
+        const currentHr = now.getHours();
+        const currentMin = now.getMinutes();
+        const currentSec = now.getSeconds();
+
+        let nextShow = schedule.find(s => s.hr > currentHr);
+        if (!nextShow) nextShow = schedule[0]; // Loop back to tomorrow morning
+
+        let targetHr = nextShow.hr;
+        if (targetHr <= currentHr) targetHr += 24; // Handle overnight
+
+        let diffSec = ((targetHr * 3600) - (
             
-            // This would normally hit a Scraper or Chart API
-            setTimeout(() => {
-                if(riffBox) riffBox.innerHTML = "<strong>AC/DC - Shot in the Dark</strong><br><small>Rotated: " + new Date().toDateString() + "</small>";
-                if(artistBox) artistBox.innerHTML = "<strong>The Snuts</strong><br>Making massive waves across the UK rock circuit this month.";
-            }, 1000);
-        }
-    };
-    window.onload = () => spa.load(window.location.hash.replace('#', '') || 'home');
-</script>
-</body>
-</html>
