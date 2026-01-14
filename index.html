@@ -5,46 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sla-rock.scot | Rockin' Scotland | Glasgow & Online Rock Radio</title>
     <style>
-        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.05); }
+        :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.08); }
         body, html { margin: 0; padding: 0; background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; }
         #app-shell { display: flex; flex-direction: column; height: 100vh; }
         
-        header { background: #000; padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--primary); flex-shrink: 0; }
-        #logo { width: 100%; max-width: 600px; height: auto; transition: 0.3s; }
-        .tagline { font-size: 2rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 10px; margin-top: 10px; }
+        header { background: #000; padding: 30px 20px; text-align: center; border-bottom: 4px solid var(--primary); flex-shrink: 0; }
+        #logo { width: 100%; max-width: 550px; height: auto; }
+        .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 8px; margin-top: 10px; }
 
-        nav { background: #0a0a0a; padding: 15px; text-align: center; border-bottom: 1px solid #222; flex-shrink: 0; }
-        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; padding: 8px 12px; border-radius: 5px; }
+        nav { background: #0a0a0a; padding: 15px; text-align: center; border-bottom: 1px solid #222; flex-shrink: 0; overflow-x: auto; white-space: nowrap; }
+        nav a { color: #fff; margin: 0 10px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 0.7rem; letter-spacing: 1px; transition: 0.3s; padding: 8px 10px; border-radius: 4px; }
         nav a:hover { background: var(--glass); color: var(--primary); }
 
         #content-window { flex-grow: 1; overflow-y: auto; padding: 40px; padding-bottom: 140px; }
 
-        /* DJ Profile Styles */
-        .dj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .dj-card { background: #111; border: 1px solid #222; overflow: hidden; transition: 0.3s; border-bottom: 4px solid transparent; position: relative; }
-        .dj-card:hover { border-bottom: 4px solid var(--primary); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        /* Automation Styling */
+        .auto-card { background: var(--glass); border: 1px solid #222; padding: 25px; margin-bottom: 25px; }
+        .legal-note { font-size: 0.65rem; color: #666; margin-top: 10px; line-height: 1.4; }
         
-        /* Tom's Placeholder Box */
-        .dj-placeholder { width: 100%; height: 300px; background: #000; display: flex; align-items: center; justify-content: center; text-align: center; border-bottom: 1px solid #222; position: relative; overflow: hidden; }
-        .dj-placeholder::after { content: 'SLA-ROCK'; position: absolute; font-size: 5rem; font-weight: 900; color: rgba(255,62,0,0.05); transform: rotate(-20deg); }
-        .placeholder-text { z-index: 1; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 2px; border: 2px solid var(--primary); padding: 10px 20px; }
+        /* Map & Shop Placeholders */
+        .map-frame { width: 100%; height: 300px; background: #111; border: 1px solid #333; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 900; text-transform: uppercase; }
+        .shop-coming-soon { height: 200px; border: 2px dashed #333; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-        .dj-img { width: 100%; height: 300px; object-fit: cover; filter: grayscale(100%) contrast(120%); transition: 0.5s; }
-        .dj-card:hover .dj-img { filter: grayscale(0%) contrast(100%); }
-        
-        .dj-info { padding: 25px; background: linear-gradient(to top, #000, transparent); margin-top: -80px; position: relative; z-index: 2; }
-        .dj-info h3 { margin: 0; color: #fff; text-transform: uppercase; font-size: 1.8rem; letter-spacing: 2px; text-shadow: 2px 2px 0px var(--primary); }
-        .dj-info strong { display: block; color: var(--primary); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 10px; }
-        .dj-info p { font-size: 0.9rem; line-height: 1.5; color: #ddd; }
+        /* Form Styling */
+        input[type="file"] { background: #000; border: 1px solid #333; padding: 10px; width: 100%; box-sizing: border-box; }
+        .btn-action { background: var(--primary); color: #fff; border: none; padding: 12px 25px; font-weight: 900; text-transform: uppercase; cursor: pointer; margin-top: 10px; }
 
         footer#master-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 3px solid var(--primary); padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; z-index: 9999; }
         .player-frame { width: 400px; height: 60px; border: none; }
 
         @media (max-width: 768px) {
-            #logo { max-width: 260px; }
+            #logo { max-width: 240px; }
             .tagline { font-size: 1rem; letter-spacing: 4px; }
-            nav a { margin: 0 5px; font-size: 0.65rem; padding: 5px; }
-            footer#master-player { flex-direction: column; padding: 10px; height: auto; }
+            footer#master-player { flex-direction: column; padding: 10px; }
             .player-frame { width: 100%; }
         }
     </style>
@@ -59,9 +52,10 @@
 
     <nav>
         <a onclick="spa.load('home')">On Air</a>
+        <a onclick="spa.load('community')">Pit Photos</a>
+        <a onclick="spa.load('venues')">Gig Map</a>
+        <a onclick="spa.load('shop')">Merch</a>
         <a onclick="spa.load('djs')">The Crew</a>
-        <a onclick="spa.load('gigs')">Gigs</a>
-        <a onclick="spa.load('ads')">Advertise</a>
     </nav>
 
     <div id="content-window">
@@ -77,84 +71,62 @@
 <script>
     const spa = {
         pages: {
-            home: `<h2>Now <span style="color:var(--primary)">Live</span></h2><p>The heaviest feed in the Central Belt.</p>`,
-            djs: `
-                <h2 style="text-transform:uppercase; font-size:2.5rem; margin-bottom:40px;">The <span style="color:var(--primary)">Crew</span></h2>
-                <div class="dj-grid">
-                    
-                    <div class="dj-card">
-                        <div class="dj-placeholder">
-                            <div class="placeholder-text">Camera Shy Legend</div>
-                        </div>
-                        <div class="dj-info">
-                            <h3>Tom Russell</h3>
-                            <strong>The Godfather</strong>
-                            <p>An absolute titan of the airwaves. Tom prefers to let the music do the talking, broadcasting from the shadows of the Sla-Rock studio. A true pioneer of the Scottish rock scene.</p>
-                        </div>
-                    </div>
-
-                    <div class="dj-card">
-                        <img src="dj_alex.jpg" class="dj-img">
-                        <div class="dj-info">
-                            <h3>Alex Jenkins</h3>
-                            <strong>The Curator of Noise</strong>
-                            <p>Alex lives for the power chord. Decades deep in the Glasgow rock scene, he's developed an ear for production that makes your chest rattle. He cares about the soul and the "Wall of Sound."</p>
-                        </div>
-                    </div>
-
-                    <div class="dj-card">
-                        <img src="dj_andy.jpg" class="dj-img">
-                        <div class="dj-info">
-                            <h3>Andy Hood</h3>
-                            <strong>The EK Rock Voyager</strong>
-                            <p>Straight out of East Kilbride, Andy has spent a lifetime on the trains into Glasgow chasing the loudest shows in the city. He’s the fan that never left the front row.</p>
-                        </div>
-                    </div>
-
-                    <div class="dj-card">
-                        <img src="dj_mhairi.jpg" class="dj-img">
-                        <div class="dj-info">
-                            <h3>Mhairi Macleod</h3>
-                            <strong>The Highland Hammer</strong>
-                            <p>Bringing the spirit of the Highlands and the grit of 80s heavy metal to the late-night slot. A former roadie who knows exactly how a real rock track should land.</p>
-                        </div>
-                    </div>
-
-                    <div class="dj-card">
-                        <img src="dj_cal.jpg" class="dj-img">
-                        <div class="dj-info">
-                            <h3>Cal Cunningham</h3>
-                            <strong>The Paisley Punk</strong>
-                            <p>Champion of the alternative. Cal handles the morning chaos with a blend of grunge and garage rock. Keeping the Central Belt awake and properly distorted.</p>
-                        </div>
-                    </div>
-
-                    <div class="dj-card">
-                        <img src="dj_jude.jpg" class="dj-img">
-                        <div class="dj-info">
-                            <h3>Jude Vance</h3>
-                            <strong>The Vinyl Junkie</strong>
-                            <p>West End crate-digger Jude specializing in the "Lost Classics"—those B-sides and forgotten anthems that built the Glasgow underground sound.</p>
-                        </div>
-                    </div>
-
-                    <div class="dj-card">
-                        <img src="dj_stevie.jpg" class="dj-img">
-                        <div class="dj-info">
-                            <h3>Stevie Bell</h3>
-                            <strong>The Festival Nomad</strong>
-                            <p>If there’s a mud-pit at a Scottish festival, Stevie’s in it. He brings the big-stage, outdoor anthem vibe to the weekend slots at 50,000 watts.</p>
-                        </div>
-                    </div>
+            home: `
+                <div class="auto-card">
+                    <h2 style="color:var(--primary); margin:0;">RIFF OF THE WEEK</h2>
+                    <p id="riff-automation">Syncing with charts...</p>
+                </div>
+                <div class="auto-card">
+                    <h3>Artist Spotlight</h3>
+                    <div id="artist-spotlight">Trending in the Central Belt...</div>
                 </div>
             `,
-            gigs: `<h2>Live <span style="color:var(--primary)">Gigs</span></h2>`,
-            ads: `<h2>Ad <span style="color:var(--primary)">Rates</span></h2>`
+            community: `
+                <h2>Pit <span style="color:var(--primary)">Photos</span></h2>
+                <div class="auto-card">
+                    <h3>Upload Your Gig Shots</h3>
+                    <p style="font-size:0.8rem;">Max size: 2MB. JPEGs only.</p>
+                    <form onsubmit="alert('Upload successful. Pending moderation.'); return false;">
+                        <input type="file" accept="image/jpeg" required>
+                        <div style="margin-top:15px;">
+                            <input type="checkbox" required id="legal"> 
+                            <label for="legal" style="font-size:0.7rem;">I own this photo and grant Sla-rock.scot usage rights.</label>
+                        </div>
+                        <button class="btn-action">Upload to Gallery</button>
+                    </form>
+                    <p class="legal-note">Sla-rock.scot reserves the right to remove any content. All uploads are subject to our SLA Privacy Policy.</p>
+                </div>
+            `,
+            venues: `
+                <h2>Rock <span style="color:var(--primary)">Venues</span></h2>
+                <div class="map-frame">Interactive Glasgow & Central Map Coming Soon</div>
+                <p style="font-size:0.8rem; margin-top:10px;">Tracking live dates in Glasgow, Paisley, EK, and Stirling.</p>
+            `,
+            shop: `
+                <h2>Sla-Rock <span style="color:var(--primary)">Merch</span></h2>
+                <div class="shop-coming-soon">
+                    <h3 style="margin:0;">SHOP COMING SOON</h3>
+                    <p style="color:#666;">Official Sla-Rock Tees & Hoodies</p>
+                </div>
+            `,
+            djs: `<h2>The Crew</h2><p>Meet the team in the Crew tab.</p>`
         },
         load: function(id) {
             document.getElementById('page-content').innerHTML = this.pages[id] || this.pages['home'];
+            if(id === 'home') { this.runAutomation(); }
             window.location.hash = id;
             document.getElementById('content-window').scrollTop = 0;
+        },
+        runAutomation: async function() {
+            // Simulated AI/API fetch for Riff & Artist
+            const riffBox = document.getElementById('riff-automation');
+            const artistBox = document.getElementById('artist-spotlight');
+            
+            // This would normally hit a Scraper or Chart API
+            setTimeout(() => {
+                if(riffBox) riffBox.innerHTML = "<strong>AC/DC - Shot in the Dark</strong><br><small>Rotated: " + new Date().toDateString() + "</small>";
+                if(artistBox) artistBox.innerHTML = "<strong>The Snuts</strong><br>Making massive waves across the UK rock circuit this month.";
+            }, 1000);
         }
     };
     window.onload = () => spa.load(window.location.hash.replace('#', '') || 'home');
