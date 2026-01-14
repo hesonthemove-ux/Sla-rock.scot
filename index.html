@@ -5,218 +5,216 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Rock.Scot | Central Scotland's Rock Authority</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=New+Rocker&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     
     <style>
         :root { 
             --primary: #ff3e00; 
             --bg: #050505; 
-            --header-h: 70px; 
+            --header-h: clamp(90px, 12vh, 130px);
+            --nav-h: 60px;
+            --footer-h: 80px;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
+        /* RESET & BASE */
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
         body { 
-            background: var(--bg);
-            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            background: var(--bg) url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
             color: #fff; 
             font-family: 'Inter', sans-serif; 
             height: 100dvh; 
-            overflow: hidden; 
+            display: grid;
+            grid-template-rows: var(--header-h) var(--nav-h) 1fr var(--footer-h);
+            overflow: hidden;
         }
 
-        #app-shell { display: flex; flex-direction: column; height: 100%; }
-
-        /* HEADER OPTIMIZED FOR LOGO.JPG */
+        /* HEADER: CENTERED LOGO.JPG */
         header { 
-            flex-shrink: 0;
-            height: var(--header-h);
+            background: rgba(0,0,0,0.95);
+            border-bottom: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            will-change: transform;
+        }
+        .hdr-logo { 
+            height: 70%; 
+            width: auto; 
+            filter: drop-shadow(0 0 15px rgba(255,62,0,0.4));
+        }
+
+        /* NAV: INDUSTRIAL SWITCHES */
+        nav { 
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: #000;
+            gap: 2px;
+            border-bottom: 1px solid #222;
+        }
+        .nav-btn {
+            background: #111;
+            border: none;
+            color: #555;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .nav-btn.active { 
+            color: #fff; 
+            background: #1a1a1a;
+            box-shadow: inset 0 -3px 0 var(--primary);
+        }
+
+        /* CONTENT AREA */
+        main { 
+            overflow-y: auto;
+            padding: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) transparent;
+        }
+        .view { display: none; max-width: 1200px; margin: 0 auto; animation: fade 0.3s ease; }
+        .view.active { display: block; }
+
+        @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+        /* REPURPOSED LOGO.PNG SECTION */
+        .hero-unit {
+            background: rgba(15,15,15,0.8);
+            border: 1px solid #222;
+            padding: clamp(30px, 8vh, 60px) 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .body-logo { width: 100%; max-width: 450px; height: auto; margin-bottom: 20px; }
+
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        
+        .card {
+            background: rgba(25,25,25,0.5);
+            padding: 25px;
+            border-left: 4px solid var(--primary);
+            transition: 0.3s;
+        }
+        .card:hover { background: rgba(35,35,35,0.8); transform: translateY(-3px); }
+
+        /* FOOTER */
+        footer { 
             background: #000;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
-            border-bottom: 2px solid var(--primary);
-            z-index: 1000;
-        }
-
-        #logo-header { 
-            height: 48px; /* Perfectly sized for 400x100 ratio */
-            width: auto; 
-            display: block;
-        }
-
-        .live-indicator {
-            font-family: 'Oswald';
-            font-size: 0.6rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border: 1px solid var(--primary);
-            padding: 4px 10px;
-        }
-
-        nav { 
-            flex-shrink: 0;
-            display: flex; 
-            background: #0a0a0a; 
-            border-bottom: 1px solid #222;
-        }
-        nav button {
-            background: transparent;
-            color: #666;
-            border: none;
-            padding: 15px 0;
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            flex: 1;
-            cursor: pointer;
-        }
-        nav button.active { 
-            color: #fff;
-            background: rgba(255, 62, 0, 0.1);
-            border-bottom: 2px solid var(--primary);
-        }
-
-        #content-window { flex: 1; overflow-y: auto; padding-bottom: 120px; }
-        .view { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; }
-        .view.active { display: block; animation: powerOn 0.4s ease-out; }
-
-        @keyframes powerOn {
-            0% { opacity: 0; filter: brightness(2); }
-            100% { opacity: 1; filter: brightness(1); }
-        }
-
-        .pro-card {
-            background: rgba(15, 15, 15, 0.95);
-            padding: 25px;
-            border-left: 4px solid var(--primary);
-            margin-bottom: 15px;
-            backdrop-filter: blur(10px);
-        }
-
-        footer { 
-            position: fixed; bottom: 0; width: 100%; 
-            background: #000; padding: 15px 25px; 
+            padding: 0 25px;
             border-top: 4px solid var(--primary);
-            display: flex; align-items: center; justify-content: space-between;
-            z-index: 1000;
         }
-
-        #play-btn {
+        .play-trigger {
             background: var(--primary);
-            border: none; color: #fff;
-            padding: 10px 25px;
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            cursor: pointer;
-            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-        }
-
-        .neon-brand {
-            font-family: 'New Rocker', cursive;
             color: #fff;
-            font-size: 1.2rem;
-            text-shadow: 0 0 10px var(--primary);
+            font-family: 'Oswald';
+            font-weight: 900;
+            padding: 10px 25px;
+            border: none;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            cursor: pointer;
         }
+        .station-id { font-family: 'New Rocker'; font-size: 1.3rem; color: #fff; text-shadow: 0 0 10px var(--primary); }
 
         @media (min-width: 1024px) {
-            header { height: 90px; padding: 0 60px; }
-            #logo-header { height: 58px; }
-            .pro-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .grid-layout { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
 
-<div id="app-shell">
-    <header>
-        <img src="logo.jpg" alt="Rock.Scot" id="logo-header">
-        <div class="live-indicator">Central Scotland Live</div>
-    </header>
+<header>
+    <img src="logo.jpg" alt="Rock.Scot" class="hdr-logo">
+</header>
 
-    <nav>
-        <button onclick="show('onair')" id="b-onair" class="active">Radio</button>
-        <button onclick="show('news')" id="b-news">Wire</button>
-        <button onclick="show('crew')" id="b-crew">Crew</button>
-        <button onclick="show('ads')" id="b-ads">Ads</button>
-    </nav>
+<nav id="main-nav">
+    <button class="nav-btn active" onclick="tab('radio')">Live</button>
+    <button class="nav-btn" onclick="tab('wire')">Wire</button>
+    <button class="nav-btn" onclick="tab('crew')">Crew</button>
+    <button class="nav-btn" onclick="tab('ads')">Ads</button>
+</nav>
 
-    <div id="content-window">
-        <section id="p-onair" class="view active">
-            <div style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('studio-main.jpg'); height: 400px; background-size: cover; border: 1px solid #333; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-                <h2 style="font-family: 'Oswald'; font-size: 4rem; line-height: 0.9;">STAY<br>LOUD</h2>
-                <div style="height: 4px; width: 60px; background: var(--primary); margin: 20px 0;"></div>
-                <p style="font-family: 'Oswald'; letter-spacing: 5px; color: #888;">THE CENTRAL BELT AUTHORITY</p>
+<main id="scroll-container">
+    <section id="v-radio" class="view active">
+        <div class="hero-unit">
+            <img src="logo.png" alt="Rockin Scotland" class="body-logo">
+            <h1 style="font-family:'Oswald'; letter-spacing:8px; font-size:1rem; color:var(--primary);">CENTRAL SCOTLAND AUTHORITY</h1>
+        </div>
+        <div style="height:300px; background:url('studio-main.jpg') center/cover; border:1px solid #333;"></div>
+    </section>
+
+    <section id="v-wire" class="view">
+        <h2 style="font-family:'Oswald'; margin-bottom:20px; font-size:2rem; font-style:italic;">THE WIRE</h2>
+        <div id="feed-target" class="grid-layout"></div>
+    </section>
+
+    <section id="v-crew" class="view">
+        <div class="card">
+            <h3 style="font-family:'Oswald'; font-size:2rem; color:var(--primary);">STATION CREW</h3>
+            <p style="margin-top:10px; color:#888;">Broadcasting the loudest rock across the Central Belt 24/7.</p>
+        </div>
+    </section>
+
+    <section id="v-ads" class="view">
+        <h2 style="font-family:'Oswald'; margin-bottom:20px; font-size:2rem;">PARTNER WITH US</h2>
+        <div class="grid-layout">
+            <div class="card">
+                <h4 style="font-family:'Oswald'; color:var(--primary);">REGIONAL AIRTIME</h4>
+                <p>Reach the heart of Scotland. £299</p>
             </div>
-        </section>
-
-        <section id="p-news" class="view">
-            <h2 style="font-family: 'Oswald'; margin-bottom: 20px; font-size: 2rem;">THE WIRE</h2>
-            <div id="news-feed" class="pro-grid"></div>
-        </section>
-
-        <section id="p-crew" class="view">
-            <div class="pro-card">
-                <h3 style="font-family: 'Oswald'; font-size: 1.8rem; color: var(--primary);">THE CREW</h3>
-                <p style="margin-top: 10px; color: #888;">Broadcasting live from studios across the Central Belt.</p>
+            <div class="card">
+                <h4 style="font-family:'Oswald'; color:var(--primary);">STUDIO CREATIVE</h4>
+                <p>Pro-grade ad production. £195</p>
             </div>
-            </section>
+        </div>
+    </section>
+</main>
 
-        <section id="p-ads" class="view">
-            <h2 style="font-family: 'Oswald'; margin-bottom: 20px; font-size: 2rem;">MEDIA RATES</h2>
-            <div class="pro-card">
-                <h3 style="font-family:'Oswald'; color:var(--primary);">REGIONAL - £299</h3>
-                <p>Targeted Central Scotland coverage.</p>
-            </div>
-            <div class="pro-card">
-                <h3 style="font-family:'Oswald'; color:var(--primary);">CREATIVE - £195</h3>
-                <p>Full station-grade production.</p>
-            </div>
-        </section>
-    </div>
-
-    <footer>
-        <button id="play-btn" onclick="toggle()">LISTEN LIVE</button>
-        <div class="neon-brand">Rockin' Scotland</div>
-    </footer>
-</div>
+<footer>
+    <button class="play-trigger" id="master-play" onclick="streamToggle()">LISTEN LIVE</button>
+    <div class="station-id">Rock.Scot</div>
+</footer>
 
 <script>
-    function show(id) {
+    function tab(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-        document.getElementById('p-' + id).classList.add('active');
-        document.getElementById('b-' + id).classList.add('active');
-        document.getElementById('content-window').scrollTop = 0;
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('v-' + id).classList.add('active');
+        event.currentTarget.classList.add('active');
+        document.getElementById('scroll-container').scrollTop = 0;
     }
 
-    const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
-    let playing = false;
-    function toggle() {
-        if(!playing) { stream.play(); document.getElementById('play-btn').innerText = "STOP FEED"; playing = true; }
-        else { stream.pause(); document.getElementById('play-btn').innerText = "LISTEN LIVE"; playing = false; }
+    const player = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
+    let isPlaying = false;
+    function streamToggle() {
+        const btn = document.getElementById('master-play');
+        if(!isPlaying) { player.play(); btn.innerText = "STOP FEED"; isPlaying = true; }
+        else { player.pause(); btn.innerText = "LISTEN LIVE"; isPlaying = false; }
     }
 
-    async function loadNews() {
-        const proxyUrl = "https://api.rss2json.com/v1/api.json?rss_url=";
-        const feed = "https://www.theskinny.co.uk/rss/music";
+    async function getNews() {
+        const rss = "https://api.rss2json.com/v1/api.json?rss_url=https://www.theskinny.co.uk/rss/music";
         try {
-            const res = await fetch(proxyUrl + encodeURIComponent(feed));
-            const data = await res.json();
-            let html = '';
-            data.items.slice(0, 6).forEach(item => {
-                html += `
-                <div class="pro-card">
-                    <h4 style="font-family:'Oswald'; color:var(--primary);">${item.title}</h4>
-                    <p style="font-size:0.8rem; color:#888; margin-top:5px;">${item.description.substring(0, 100).replace(/<[^>]*>?/gm, '')}...</p>
+            const r = await fetch(rss);
+            const d = await r.json();
+            let h = '';
+            d.items.slice(0, 9).forEach(i => {
+                h += `<div class="card">
+                    <h5 style="font-family:'Oswald'; color:var(--primary); font-size:1.1rem; margin-bottom:10px;">${i.title}</h5>
+                    <p style="font-size:0.85rem; color:#888; line-height:1.4;">${i.description.substring(0, 110).replace(/<[^>]*>?/gm, '')}...</p>
                 </div>`;
             });
-            document.getElementById('news-feed').innerHTML = html;
-        } catch(e) { document.getElementById('news-feed').innerHTML = 'Wire Active.'; }
+            document.getElementById('feed-target').innerHTML = h;
+        } catch(e) { document.getElementById('feed-target').innerHTML = '<div class="card">Wire Connection Active.</div>'; }
     }
-    window.onload = loadNews;
+    window.onload = getNews;
 </script>
 </body>
 </html>
