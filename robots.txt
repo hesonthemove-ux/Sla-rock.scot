@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Allow: /index.html
+Allow: /#news
+Allow: /#ads
 
-Sitemap: https://rock.scot/sitemap.xml
+# Sitemaps
+Sitemap: https://sla-rock.scot/sitemap.xml
