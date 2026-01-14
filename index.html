@@ -11,8 +11,7 @@
         :root { 
             --primary: #ff3e00; 
             --bg: #050505; 
-            --surface: rgba(20, 20, 20, 0.9);
-            --border: #222;
+            --header-h: 70px; 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -28,185 +27,152 @@
 
         #app-shell { display: flex; flex-direction: column; height: 100%; }
 
+        /* HEADER OPTIMIZED FOR LOGO.JPG */
         header { 
             flex-shrink: 0;
-            padding: 40px 20px; 
-            background: linear-gradient(to bottom, #000, transparent);
-            text-align: center;
+            height: var(--header-h);
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
             border-bottom: 2px solid var(--primary);
+            z-index: 1000;
         }
-        #logo { width: 100%; max-width: 650px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8)); }
+
+        #logo-header { 
+            height: 48px; /* Perfectly sized for 400x100 ratio */
+            width: auto; 
+            display: block;
+        }
+
+        .live-indicator {
+            font-family: 'Oswald';
+            font-size: 0.6rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid var(--primary);
+            padding: 4px 10px;
+        }
 
         nav { 
             flex-shrink: 0;
             display: flex; 
-            background: #000; 
-            padding: 5px; 
-            gap: 2px;
+            background: #0a0a0a; 
+            border-bottom: 1px solid #222;
         }
         nav button {
-            background: #111;
-            color: #555;
+            background: transparent;
+            color: #666;
             border: none;
             padding: 15px 0;
             font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+            font-size: 0.75rem;
             flex: 1;
             cursor: pointer;
-            transition: 0.3s;
         }
         nav button.active { 
             color: #fff;
-            background: var(--primary);
-            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+            background: rgba(255, 62, 0, 0.1);
+            border-bottom: 2px solid var(--primary);
         }
 
-        #content-window { flex: 1; overflow-y: auto; padding: 20px 0 120px 0; -webkit-overflow-scrolling: touch; }
-        .view { display: none; padding: 0 20px; max-width: 1200px; margin: 0 auto; }
-        .view.active { display: block; animation: powerOn 0.3s ease-out; }
+        #content-window { flex: 1; overflow-y: auto; padding-bottom: 120px; }
+        .view { display: none; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .view.active { display: block; animation: powerOn 0.4s ease-out; }
 
         @keyframes powerOn {
-            0% { opacity: 0; filter: brightness(2); transform: translateY(5px); }
-            100% { opacity: 1; filter: brightness(1); transform: translateY(0); }
+            0% { opacity: 0; filter: brightness(2); }
+            100% { opacity: 1; filter: brightness(1); }
         }
 
         .pro-card {
-            background: var(--surface);
-            border-left: 4px solid var(--primary);
+            background: rgba(15, 15, 15, 0.95);
             padding: 25px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 15px;
             backdrop-filter: blur(10px);
         }
-        .pro-card::after {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            width: 0; height: 0;
-            border-style: solid;
-            border-width: 0 40px 40px 0;
-            border-color: transparent var(--primary) transparent transparent;
-        }
-
-        .price-tag { font-family: 'Oswald'; font-size: 3rem; color: var(--primary); line-height: 1; margin: 10px 0; }
 
         footer { 
             position: fixed; bottom: 0; width: 100%; 
-            background: #000;
-            padding: 20px 30px; 
+            background: #000; padding: 15px 25px; 
             border-top: 4px solid var(--primary);
             display: flex; align-items: center; justify-content: space-between;
             z-index: 1000;
         }
 
-        .neon-brand {
-            font-family: 'New Rocker', cursive;
-            color: #fff;
-            font-size: 1.4rem;
-            text-shadow: 0 0 10px var(--primary);
-            animation: flicker 4s infinite;
-        }
-
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary); }
-            20%, 22%, 24%, 55% { opacity: 0.4; text-shadow: none; }
-        }
-
         #play-btn {
             background: var(--primary);
-            border: none;
-            color: #fff;
-            padding: 12px 25px;
+            border: none; color: #fff;
+            padding: 10px 25px;
             font-family: 'Oswald', sans-serif;
             font-weight: 700;
             cursor: pointer;
             clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
         }
 
-        input, select, textarea {
-            width: 100%;
-            background: #111;
-            border: 1px solid #333;
+        .neon-brand {
+            font-family: 'New Rocker', cursive;
             color: #fff;
-            padding: 15px;
-            margin-bottom: 15px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px var(--primary);
         }
 
         @media (min-width: 1024px) {
-            header { padding: 60px 20px; }
-            #logo { max-width: 800px; }
-            .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            header { height: 90px; padding: 0 60px; }
+            #logo-header { height: 58px; }
+            .pro-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         }
     </style>
 </head>
 <body>
 
 <div id="app-shell">
-    <header><img src="logo.png" alt="Rock.Scot" id="logo"></header>
+    <header>
+        <img src="logo.jpg" alt="Rock.Scot" id="logo-header">
+        <div class="live-indicator">Central Scotland Live</div>
+    </header>
 
     <nav>
-        <button onclick="show('onair')" id="b-onair" class="active">Live Feed</button>
-        <button onclick="show('news')" id="b-news">News Wire</button>
-        <button onclick="show('crew')" id="b-crew">The Crew</button>
-        <button onclick="show('ads')" id="b-ads">Advertise</button>
+        <button onclick="show('onair')" id="b-onair" class="active">Radio</button>
+        <button onclick="show('news')" id="b-news">Wire</button>
+        <button onclick="show('crew')" id="b-crew">Crew</button>
+        <button onclick="show('ads')" id="b-ads">Ads</button>
     </nav>
 
     <div id="content-window">
         <section id="p-onair" class="view active">
-            <div style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('studio-main.jpg'); height: 450px; background-size: cover; border: 1px solid #333; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-                <h2 style="font-family: 'Oswald'; font-size: 4rem; letter-spacing: -2px; line-height: 0.9;">STAY<br>LOUD</h2>
-                <div style="height: 4px; width: 80px; background: var(--primary); margin: 20px 0;"></div>
-                <p style="font-family: 'Oswald'; letter-spacing: 6px; color: #888; text-transform: uppercase;">Central Scotland Authority</p>
+            <div style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('studio-main.jpg'); height: 400px; background-size: cover; border: 1px solid #333; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                <h2 style="font-family: 'Oswald'; font-size: 4rem; line-height: 0.9;">STAY<br>LOUD</h2>
+                <div style="height: 4px; width: 60px; background: var(--primary); margin: 20px 0;"></div>
+                <p style="font-family: 'Oswald'; letter-spacing: 5px; color: #888;">THE CENTRAL BELT AUTHORITY</p>
             </div>
         </section>
 
         <section id="p-news" class="view">
-            <h2 style="font-family: 'Oswald'; margin-bottom: 25px; font-size: 2.5rem; font-style: italic; text-transform: uppercase;">The Wire</h2>
-            <div id="news-feed" class="news-grid">
-                </div>
+            <h2 style="font-family: 'Oswald'; margin-bottom: 20px; font-size: 2rem;">THE WIRE</h2>
+            <div id="news-feed" class="pro-grid"></div>
         </section>
 
         <section id="p-crew" class="view">
             <div class="pro-card">
-                <h3 style="font-family: 'Oswald'; font-size: 2rem;">CAL</h3>
-                <p style="color: #bbb; margin-top: 10px;">The Morning Chaos. Waking up the Central Belt with enough energy to power a steel mill.</p>
+                <h3 style="font-family: 'Oswald'; font-size: 1.8rem; color: var(--primary);">THE CREW</h3>
+                <p style="margin-top: 10px; color: #888;">Broadcasting live from studios across the Central Belt.</p>
             </div>
-            <div class="pro-card">
-                <h3 style="font-family: 'Oswald'; font-size: 2rem;">ALEX</h3>
-                <p style="color: #bbb; margin-top: 10px;">The Wall of Sound. Inverclyde legend handling the high-octane afternoon drive.</p>
-            </div>
-            <div class="pro-card">
-                <h3 style="font-family: 'Oswald'; font-size: 2rem;">ANDY</h3>
-                <p style="color: #bbb; margin-top: 10px;">EK Rock Voyager. Deep cuts and archive rarities live from East Kilbride.</p>
-            </div>
-        </section>
+            </section>
 
         <section id="p-ads" class="view">
-            <h2 style="font-family: 'Oswald'; margin-bottom: 25px; font-size: 2.5rem; font-style: italic; text-transform: uppercase;">Media Kit</h2>
+            <h2 style="font-family: 'Oswald'; margin-bottom: 20px; font-size: 2rem;">MEDIA RATES</h2>
             <div class="pro-card">
-                <label style="font-family:'Oswald'; display:block; margin-bottom:10px; color:#888;">AIRTIME PACKAGE</label>
-                <select id="p-air" onchange="calc()">
-                    <option value="299">REGIONAL - £299</option>
-                    <option value="449">MULTI-REGIONAL - £449</option>
-                </select>
-                
-                <label style="font-family:'Oswald'; display:block; margin-bottom:10px; color:#888; margin-top:10px;">CREATIVE</label>
-                <select id="p-prod" onchange="calc()">
-                    <option value="0">AUDIO SUPPLIED (£0)</option>
-                    <option value="195">ROCK.SCOT PRODUCTION (£195)</option>
-                </select>
-
-                <div style="margin-top: 40px; border-top: 1px solid #333; padding-top: 20px;">
-                    <p style="font-family: 'Oswald'; font-size: 0.9rem; color: #666; letter-spacing: 2px;">ESTIMATED TOTAL</p>
-                    <div id="p-total" class="price-tag">£299</div>
-                    <p style="font-size: 0.7rem; color: #444;">Rates locked for 2026. Non-VAT.</p>
-                </div>
+                <h3 style="font-family:'Oswald'; color:var(--primary);">REGIONAL - £299</h3>
+                <p>Targeted Central Scotland coverage.</p>
+            </div>
+            <div class="pro-card">
+                <h3 style="font-family:'Oswald'; color:var(--primary);">CREATIVE - £195</h3>
+                <p>Full station-grade production.</p>
             </div>
         </section>
     </div>
@@ -243,20 +209,13 @@
             data.items.slice(0, 6).forEach(item => {
                 html += `
                 <div class="pro-card">
-                    <h4 style="font-family:'Oswald'; font-size:1.2rem; color:var(--primary); text-transform:uppercase;">${item.title}</h4>
-                    <p style="font-size:0.85rem; color:#888; margin-top:10px; line-height:1.4;">${item.description.substring(0, 120).replace(/<[^>]*>?/gm, '')}...</p>
+                    <h4 style="font-family:'Oswald'; color:var(--primary);">${item.title}</h4>
+                    <p style="font-size:0.8rem; color:#888; margin-top:5px;">${item.description.substring(0, 100).replace(/<[^>]*>?/gm, '')}...</p>
                 </div>`;
             });
             document.getElementById('news-feed').innerHTML = html;
-        } catch(e) { document.getElementById('news-feed').innerHTML = '<div class="pro-card">Wire connection active. Refresh for latest Central news.</div>'; }
+        } catch(e) { document.getElementById('news-feed').innerHTML = 'Wire Active.'; }
     }
-
-    function calc() {
-        const a = parseInt(document.getElementById('p-air').value);
-        const p = parseInt(document.getElementById('p-prod').value);
-        document.getElementById('p-total').innerText = "£" + (a + p);
-    }
-
     window.onload = loadNews;
 </script>
 </body>
