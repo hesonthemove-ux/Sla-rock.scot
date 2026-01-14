@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Allow: /index.html
 Sitemap: https://rock.scot/sitemap.xml
 
-# Rock.Scot SEO Monster: Targeting Central Scotland & Rock Genres
+# Rock.Scot Authority - Central Scotland Regional Radio
