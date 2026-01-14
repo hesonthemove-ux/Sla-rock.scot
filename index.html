@@ -15,11 +15,9 @@
 
         #app-shell { display: flex; flex-direction: column; height: 100dvh; width: 100%; }
 
-        /* --- HEADER & LOGO --- */
         header { flex-shrink: 0; background: #000; padding: 25px; text-align: center; border-bottom: 4px solid var(--primary); }
         #logo { width: 100%; max-width: 500px; height: auto; }
 
-        /* --- NAVIGATION --- */
         nav { 
             flex-shrink: 0; background: #0a0a0a; display: flex; justify-content: center; 
             padding: 10px; border-bottom: 1px solid #222; gap: 5px;
@@ -31,116 +29,116 @@
         }
         nav button.active { background: var(--primary); border-color: var(--primary); }
 
-        /* --- MAIN CONTENT & SCROLL --- */
         #content-window { 
             flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; 
-            padding-bottom: 100px; background: var(--bg);
+            padding-bottom: 120px; background: var(--bg);
         }
-        .view { display: none; padding: 20px; max-width: 900px; margin: 0 auto; animation: fadeIn 0.3s ease; }
+        .view { display: none; padding: 20px; max-width: 1000px; margin: 0 auto; animation: fadeIn 0.3s ease; }
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* --- NEWS CARDS --- */
-        .news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-left: 5px solid var(--primary); padding-left: 15px; }
+        .news-header { border-left: 5px solid var(--primary); padding-left: 15px; margin-bottom: 20px; }
         .feed-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
-        .news-card { 
-            background: var(--panel); border: 1px solid #222; padding: 15px; 
-            border-radius: 6px; position: relative; transition: 0.2s;
-        }
-        .news-card:hover { border-color: var(--primary); }
+        .news-card { background: var(--panel); border: 1px solid #222; padding: 15px; border-radius: 6px; }
         .news-card small { color: var(--primary); font-weight: 900; text-transform: uppercase; font-size: 0.7rem; }
-        .news-card h3 { font-size: 1.1rem; margin: 8px 0; line-height: 1.3; }
-        .news-card p { font-size: 0.85rem; color: #aaa; line-height: 1.5; }
 
-        /* --- CREW SECTION --- */
-        .crew-card { background: #111; border-radius: 10px; overflow: hidden; margin-bottom: 20px; border: 1px solid #222; }
-        .crew-img { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; border-bottom: 3px solid var(--primary); }
-        .crew-info { padding: 20px; }
+        /* --- RESTORED DETAILED BIOS --- */
+        .bio-card { background: #111; border: 1px solid #333; border-radius: 12px; margin-bottom: 30px; overflow: hidden; display: flex; flex-direction: column; }
+        .bio-img { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; border-bottom: 4px solid var(--primary); }
+        .bio-text { padding: 25px; }
+        .bio-text h3 { color: var(--primary); text-transform: uppercase; font-size: 1.8rem; margin-bottom: 5px; }
+        .bio-text h4 { color: #888; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 15px; letter-spacing: 2px; }
+        .bio-text p { line-height: 1.6; color: #ccc; font-size: 0.95rem; }
 
-        /* --- PLAYER FOOTER --- */
+        /* --- FOOTER --- */
         footer { 
-            flex-shrink: 0; background: #000; border-top: 3px solid var(--primary); 
-            padding: 15px 20px; display: flex; align-items: center; justify-content: space-between;
+            position: fixed; bottom: 0; width: 100%; background: #000; border-top: 3px solid var(--primary); 
+            padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 100;
         }
-        #play-btn { background: var(--primary); border: none; color: #fff; padding: 10px 20px; font-weight: 900; cursor: pointer; border-radius: 4px; font-size: 0.8rem; }
-        #now-playing { font-size: 0.7rem; color: #666; font-weight: bold; text-transform: uppercase; }
+        #play-btn { background: var(--primary); border: none; color: #fff; padding: 10px 20px; font-weight: 900; cursor: pointer; border-radius: 4px; }
 
         @media (min-width: 1024px) {
             #logo { max-width: 650px; }
-            nav button { font-size: 0.8rem; max-width: 150px; }
-            .feed-grid { grid-template-columns: repeat(3, 1fr); }
+            .bio-card { flex-direction: row; height: 350px; }
+            .bio-img { width: 400px; height: 100%; border-bottom: none; border-right: 4px solid var(--primary); }
         }
     </style>
 </head>
 <body>
 
 <div id="app-shell">
-    <header>
-        <img src="logo.png" alt="Sla-rock.scot" id="logo">
-    </header>
-
+    <header><img src="logo.png" alt="Sla-rock.scot" id="logo"></header>
     <nav>
         <button onclick="show('onair')" id="b-onair" class="active">On Air</button>
-        <button onclick="show('news')" id="b-news">News Wire</button>
-        <button onclick="show('crew')" id="b-crew">The Crew</button>
+        <button onclick="show('news')" id="b-news">News</button>
+        <button onclick="show('crew')" id="b-crew">Crew</button>
         <button onclick="show('radar')" id="b-radar">Radar</button>
         <button onclick="show('ads')" id="b-ads">Ads</button>
     </nav>
 
     <div id="content-window">
-        
         <section id="p-onair" class="view active">
-            <div style="background: var(--primary); color: #fff; text-align: center; padding: 10px; font-weight: 900; margin-bottom: 20px;">
-                GIG COUNTDOWN: <span id="timer">--:--:--</span>
-            </div>
-            <div style="background-image: url('studio-main.jpg'); height: 250px; background-size: cover; border-radius: 8px;"></div>
+            <div style="background: var(--primary); color: #fff; text-align: center; padding: 10px; font-weight: 900; margin-bottom: 20px;">GIG COUNTDOWN: <span id="timer">--:--:--</span></div>
+            <div style="background-image: url('studio-main.jpg'); height: 300px; background-size: cover; border-radius: 8px; border: 1px solid #333;"></div>
         </section>
 
         <section id="p-news" class="view">
-            <div class="news-header">
-                <h2>NEWS WIRE</h2>
-            </div>
-            <div id="news-feed" class="feed-grid">
-                <div class="news-card"><p>Loading on-trend feeds from The Skinny & SMIA...</p></div>
-            </div>
+            <div class="news-header"><h2>THE CENTRAL WIRE</h2></div>
+            <div id="news-feed" class="feed-grid"><div class="news-card">Connecting to The Skinny & SMIA...</div></div>
         </section>
 
         <section id="p-crew" class="view">
-            <div class="crew-card"><div class="crew-img" style="background-image:url('dj_cal.jpg')"></div><div class="crew-info"><h3>CAL</h3><p>The Morning Chaos. Regional rock specialist.</p></div></div>
-            <div class="crew-card"><div class="crew-img" style="background-image:url('Dj_alex.jpg')"></div><div class="crew-info"><h3>ALEX</h3><p>Wall of Sound. Inverclyde authority.</p></div></div>
-            <div class="crew-card"><div class="crew-img" style="background-image:url('dj_andy.jpg')"></div><div class="crew-info"><h3>ANDY</h3><p>Rock Voyager. Deep cuts from the belt.</p></div></div>
-            <div class="crew-card"><div class="crew-img" style="background-image:url('dj_stevie.jpg')"></div><div class="crew-info"><h3>STEVIE</h3><p>Friday Night High. Starting the weekend loud.</p></div></div>
-            <div class="crew-card"><div class="crew-img" style="background-image:url('dj_mhairi.jpg')"></div><div class="crew-info"><h3>MHAIRI</h3><p>Highland Hammer. Heavy metal champion.</p></div></div>
+            <div class="bio-card">
+                <div class="bio-img" style="background-image:url('dj_cal.jpg')"></div>
+                <div class="bio-text"><h3>CAL</h3><h4>The Morning Chaos</h4><p>Waking up the Central Belt with enough energy to power a steel mill. Cal brings the loudest tracks and the sharpest local wit every weekday morning.</p></div>
+            </div>
+            <div class="bio-card">
+                <div class="bio-img" style="background-image:url('Dj_alex.jpg')"></div>
+                <div class="bio-text"><h3>ALEX</h3><h4>The Wall of Sound</h4><p>A legend in the Inverclyde scene, Alex handles the afternoon drive with a mix of classic rock anthems and tech news.</p></div>
+            </div>
+            <div class="bio-card">
+                <div class="bio-img" style="background-image:url('dj_andy.jpg')"></div>
+                <div class="bio-text"><h3>ANDY</h3><h4>EK Rock Voyager</h4><p>Broadcasting from East Kilbride, Andy specializes in the "Deep Cuts." He digs through the archives to find the tracks others are too scared to play.</p></div>
+            </div>
+            <div class="bio-card">
+                <div class="bio-img" style="background-image:url('dj_stevie.jpg')"></div>
+                <div class="bio-text"><h3>STEVIE</h3><h4>Friday Night High</h4><p>The weekend starts when Stevie says so. High-voltage rock, listener requests, and zero apologies.</p></div>
+            </div>
+            <div class="bio-card">
+                <div class="bio-img" style="background-image:url('dj_mhairi.jpg')"></div>
+                <div class="bio-text"><h3>MHAIRI</h3><h4>Highland Hammer</h4><p>Bringing the weight of the north down to the Central Belt. Mhairi hosts the Metal Hour, showcasing the absolute heaviest talent.</p></div>
+            </div>
         </section>
 
         <section id="p-radar" class="view">
+            <div style="background-image: url('venue.png'); height: 200px; background-size: cover; border-radius: 8px; margin-bottom: 20px;"></div>
             <div style="background:#111; padding:25px; border-radius:10px; border:1px solid #333;">
-                <h2 style="color:var(--primary); margin-bottom:15px;">BAND SUBMISSION</h2>
+                <h3>BAND SUBMISSION</h3><br>
                 <input type="text" placeholder="Band Name"><br>
-                <input type="text" placeholder="Hometown (Inverclyde/Lanarkshire/Ayrshire)"><br>
-                <textarea rows="4" placeholder="Streaming Link & Bio"></textarea><br>
-                <button class="btn-submit" onclick="alert('Sent!')">Submit to Music Team</button>
+                <input type="text" placeholder="Hometown"><br>
+                <textarea rows="4" placeholder="Music Link & Bio"></textarea><br>
+                <button onclick="alert('Sent!')" style="background:var(--primary); color:#fff; border:none; padding:15px; width:100%; font-weight:900; cursor:pointer;">SUBMIT TRACK</button>
             </div>
         </section>
 
         <section id="p-ads" class="view">
             <div style="background:#111; padding:25px; border-radius:10px; border:1px solid #333;">
-                <h2>AD CALCULATOR</h2><br>
+                <h2>CAMPAIGN CALCULATOR</h2><br>
                 <select id="p-air" onchange="calc()"><option value="299">Regional (£299)</option><option value="449">Multi-Regional (£449)</option></select><br>
                 <select id="p-prod" onchange="calc()"><option value="0">Own Audio</option><option value="195">Creative Production (£195)</option></select><br>
-                <div id="p-total" style="font-size: 2.5rem; color: var(--primary); font-weight: 900;">£299</div>
+                <div id="p-total" style="font-size: 3rem; color: var(--primary); font-weight: 900; margin: 15px 0;">£299</div>
             </div>
         </section>
     </div>
 
     <footer>
         <button id="play-btn" onclick="toggle()">LISTEN LIVE</button>
-        <div id="now-playing">SLA-ROCK.SCOT | THE MONSTER FEED</div>
+        <div style="font-size:0.7rem; color:#666; font-weight:bold;">SLA-ROCK.SCOT | THE MONSTER FEED</div>
     </footer>
 </div>
 
 <script>
-    // SPA NAVIGATION
     function show(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -149,44 +147,31 @@
         document.getElementById('content-window').scrollTop = 0;
     }
 
-    // AUDIO ENGINE
     const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
-    let isPlaying = false;
+    let playing = false;
     function toggle() {
-        if(!isPlaying) { stream.play(); document.getElementById('play-btn').innerText = "STOP FEED"; isPlaying = true; }
-        else { stream.pause(); document.getElementById('play-btn').innerText = "LISTEN LIVE"; isPlaying = false; }
+        if(!playing) { stream.play(); document.getElementById('play-btn').innerText = "STOP FEED"; playing = true; }
+        else { stream.pause(); document.getElementById('play-btn').innerText = "LISTEN LIVE"; playing = false; }
     }
 
-    // DYNAMIC NEWS FETCH (Skinny, Discovery, SMIA)
     async function loadNews() {
-        const feedContainer = document.getElementById('news-feed');
-        // Using RSS2JSON as a bridge for SPA/CORS compliance
         const sources = [
             { name: 'THE SKINNY', url: 'https://www.theskinny.co.uk/rss/music' },
             { name: 'SMIA', url: 'https://www.smia.org.uk/feed/' }
         ];
-        
         try {
             let html = '';
-            for(let source of sources) {
-                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${source.url}`);
+            for(let s of sources) {
+                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${s.url}`);
                 const data = await res.json();
                 data.items.slice(0, 3).forEach(item => {
-                    html += `
-                        <div class="news-card">
-                            <small>${source.name}</small>
-                            <h3>${item.title}</h3>
-                            <p>${item.description.substring(0, 100).replace(/<[^>]*>?/gm, '')}...</p>
-                        </div>`;
+                    html += `<div class="news-card"><small>${s.name}</small><h3>${item.title}</h3><p>${item.description.substring(0, 80).replace(/<[^>]*>?/gm, '')}...</p></div>`;
                 });
             }
-            feedContainer.innerHTML = html;
-        } catch (e) {
-            feedContainer.innerHTML = '<p>Error loading trending news. Local wire active.</p>';
-        }
+            document.getElementById('news-feed').innerHTML = html;
+        } catch (e) { document.getElementById('news-feed').innerHTML = 'Wire Offline. Check back soon.'; }
     }
 
-    // GIG TIMER
     function timer() {
         const target = new Date("Jan 24, 2026 20:00:00").getTime();
         setInterval(() => {
