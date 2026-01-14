@@ -3,274 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sla-rock.scot | Rockin' Scotland | Central Scotland Music News</title>
+    <title>Sla-rock.scot | Rockin' Scotland | Central Scotland Music Authority</title>
     <style>
+        /* --- BRANDING & THEME --- */
         :root { 
             --primary: #ff3e00; 
             --bg: #050505; 
             --panel: #111;
-            --glass: rgba(255, 62, 0, 0.1);
+            --text: #eee;
         }
 
-        /* --- CORE SYSTEM --- */
+        /* --- RESET & FIXED SCROLLING PHYSICS --- */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
-        body, html { 
-            background: var(--bg); color: #fff; font-family: 'Inter', -apple-system, sans-serif; 
-            height: 100%; width: 100%; overflow: hidden; 
+        html, body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            height: 100%; 
+            width: 100%; 
+            overflow: hidden; /* Stops the body from double-scrolling */
         }
 
-        #app-shell { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
+        #app-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Fallback */
+            height: 100dvh; /* Dynamic Height for Mobile Address Bars */
+            width: 100%;
+        }
 
-        /* --- HEADER & DESKTOP SCALE --- */
+        /* --- HEADER --- */
         header { 
-            flex-shrink: 0; background: #000; padding: 30px 20px; text-align: center;
-            border-bottom: 5px solid var(--primary); z-index: 100;
+            flex-shrink: 0; 
+            background: #000; 
+            padding: 20px; 
+            text-align: center;
+            border-bottom: 4px solid var(--primary);
+            z-index: 10;
         }
         
-        #logo { width: 100%; max-width: 650px; height: auto; transition: 0.4s ease; }
+        #logo { width: 100%; max-width: 550px; height: auto; }
         
-        .neon-tagline {
-            font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase;
-            letter-spacing: 8px; margin-top: 15px; display: block;
-            text-shadow: 0 0 15px rgba(255, 62, 0, 0.6);
-            animation: pulse-glow 2s infinite ease-in-out;
-        }
-        @keyframes pulse-glow { 
-            0%, 100% { opacity: 0.8; transform: scale(1); } 
-            50% { opacity: 1; transform: scale(1.02); text-shadow: 0 0 30px var(--primary); } 
+        .tagline {
+            font-size: 1.4rem; color: var(--primary); font-weight: 900; text-transform: uppercase;
+            letter-spacing: 5px; margin-top: 10px; display: block;
+            text-shadow: 0 0 10px rgba(255, 62, 0, 0.5);
         }
 
-        /* --- NAVIGATION: 5 BUTTONS FITTED --- */
+        /* --- NAVIGATION: AUTO-FIT MENU --- */
         nav { 
-            background: #0a0a0a; display: flex; justify-content: center; 
-            gap: 5px; padding: 10px; border-bottom: 1px solid #222; flex-shrink: 0;
+            flex-shrink: 0;
+            background: #0a0a0a; 
+            display: flex; 
+            justify-content: center; 
+            padding: 8px 5px; 
+            border-bottom: 1px solid #222;
+            gap: 4px;
         }
         nav button {
-            background: #111; color: #fff; border: 1px solid #333; padding: 12px 5px;
-            text-transform: uppercase; font-weight: 800; cursor: pointer; transition: 0.2s;
-            font-size: 0.65rem; letter-spacing: 0.5px; flex: 1; max-width: 140px;
+            background: #111; 
+            color: #fff; 
+            border: 1px solid #333; 
+            padding: 10px 2px;
+            text-transform: uppercase; 
+            font-weight: 800; 
+            cursor: pointer; 
+            font-size: 0.65rem; /* Shrunk for phone fitting */
+            flex: 1; /* Forces buttons to share width */
+            max-width: 120px;
         }
-        nav button.active { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 10px var(--primary); }
+        nav button.active { background: var(--primary); border-color: var(--primary); }
 
-        /* --- MAIN VIEW: SMOOTH SCROLL --- */
-        #main-view { 
+        /* --- MAIN SCROLL AREA (The Fix) --- */
+        #content-area { 
             flex: 1; 
             overflow-y: auto; 
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch; 
-            padding-bottom: 150px; 
-            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; /* Momentum scroll for iPhone */
+            background: var(--bg);
+            padding-bottom: 100px; /* Space for the persistent footer */
         }
-        .view { display: none; padding: 25px; max-width: 1200px; margin: 0 auto; animation: fadeIn 0.4s ease; }
+
+        .view { display: none; padding: 20px; max-width: 1000px; margin: 0 auto; }
         .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- GIG COUNTDOWN --- */
-        #gig-ticker {
-            background: var(--primary); color: #fff; padding: 12px; text-align: center;
-            font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px;
-            border-radius: 4px;
-        }
+        /* --- CONTENT COMPONENTS --- */
+        .card { background: var(--panel); border: 1px solid #222; border-left: 4px solid var(--primary); padding: 15px; margin-bottom: 15px; border-radius: 4px; }
+        .hero-img { width: 100%; height: 250px; background-size: cover; background-position: center; border-radius: 8px; margin-bottom: 20px; border: 1px solid #333; }
+        
+        /* Presenter Bios */
+        .crew-row { display: flex; flex-direction: column; gap: 20px; }
+        .dj-box { background: #111; border: 1px solid #222; border-radius: 8px; overflow: hidden; }
+        .dj-photo { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; border-bottom: 3px solid var(--primary); }
+        .dj-info { padding: 15px; }
+        .dj-info h3 { color: var(--primary); text-transform: uppercase; margin-bottom: 5px; }
+        .dj-info p { font-size: 0.9rem; line-height: 1.4; color: #bbb; }
 
-        /* --- PRESENTER / BIO PAGE STYLES --- */
-        .bio-card { 
-            background: #111; border: 1px solid #333; border-radius: 12px; 
-            margin-bottom: 30px; overflow: hidden; display: flex; flex-direction: column;
-        }
-        .bio-img { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; border-bottom: 4px solid var(--primary); }
-        .bio-text { padding: 25px; }
-        .bio-text h3 { color: var(--primary); text-transform: uppercase; font-size: 1.8rem; margin-bottom: 5px; }
-        .bio-text h4 { color: #888; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 15px; letter-spacing: 2px; }
-        .bio-text p { line-height: 1.6; color: #ccc; }
+        /* Form Styling */
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; border-radius: 4px; font-family: inherit; }
+        .btn-submit { background: var(--primary); color: #fff; border: none; padding: 15px; width: 100%; font-weight: 900; cursor: pointer; text-transform: uppercase; }
 
-        /* --- NEWS GRID --- */
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .news-card { background: var(--panel); border-left: 5px solid var(--primary); padding: 20px; border-radius: 4px; }
-
-        /* --- PLAYER --- */
+        /* --- FOOTER PLAYER --- */
         footer { 
-            position: fixed; bottom: 0; left: 0; width: 100%; background: #000; 
-            border-top: 4px solid var(--primary); padding: 15px 30px; 
-            display: flex; align-items: center; justify-content: space-between; z-index: 1000;
+            flex-shrink: 0;
+            background: #000; 
+            border-top: 3px solid var(--primary); 
+            padding: 15px 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            z-index: 100;
         }
-        #play-btn { background: var(--primary); border: none; color: #fff; padding: 12px 25px; font-weight: 900; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
+        #play-btn { background: var(--primary); border: none; color: #fff; padding: 10px 20px; font-weight: 900; cursor: pointer; border-radius: 4px; }
+        #ticker { font-size: 0.7rem; font-weight: bold; color: #555; text-transform: uppercase; }
 
-        /* --- RESPONSIVE ADAPTATION --- */
+        /* --- DESKTOP ENHANCEMENTS --- */
         @media (min-width: 1024px) {
-            .bio-card { flex-direction: row; height: 350px; }
-            .bio-img { width: 400px; height: 100%; aspect-ratio: auto; border-bottom: none; border-right: 4px solid var(--primary); }
-            nav button { font-size: 0.8rem; padding: 15px; }
-        }
-
-        @media (max-width: 768px) {
-            #logo { max-width: 280px; }
-            .neon-tagline { font-size: 1.1rem; letter-spacing: 3px; }
-            footer { flex-direction: column; gap: 10px; padding: 15px; }
-            #play-btn { width: 100%; }
+            header { padding: 40px; }
+            #logo { max-width: 700px; }
+            nav button { font-size: 0.85rem; padding: 15px; }
+            .hero-img { height: 400px; }
+            .crew-row { display: grid; grid-template-columns: 1fr 1fr; }
+            .dj-box { display: flex; }
+            .dj-photo { width: 200px; height: auto; border-bottom: none; border-right: 3px solid var(--primary); }
         }
     </style>
 </head>
 <body>
 
-<div id="app-shell">
+<div id="app-wrapper">
     <header>
         <img src="logo.png" alt="Sla-rock.scot" id="logo">
-        <span class="neon-tagline">Rockin' Scotland</span>
+        <span class="tagline">Rockin' Scotland</span>
     </header>
 
     <nav>
-        <button onclick="spa('onair')" id="nav-onair" class="active">On Air</button>
-        <button onclick="spa('news')" id="nav-news">News</button>
-        <button onclick="spa('crew')" id="nav-crew">Crew</button>
-        <button onclick="spa('radar')" id="nav-radar">Radar</button>
-        <button onclick="spa('ads')" id="nav-ads">Ads</button>
+        <button onclick="navigate('home')" id="btn-home" class="active">On Air</button>
+        <button onclick="navigate('news')" id="btn-news">News</button>
+        <button onclick="navigate('crew')" id="btn-crew">Crew</button>
+        <button onclick="navigate('radar')" id="btn-radar">Radar</button>
+        <button onclick="navigate('ads')" id="btn-ads">Ads</button>
     </nav>
 
-    <div id="main-view">
+    <div id="content-area">
         
-        <section id="view-onair" class="view active">
-            <div id="gig-ticker">NEXT GIG: <span id="countdown">--:--:--</span></div>
-            <div style="background-image: url('studio-main.jpg'); background-size:cover; height:300px; border-radius:12px; border:1px solid #333; margin-bottom:30px;"></div>
-            <h2 style="border-left:5px solid var(--primary); padding-left:15px; text-transform:uppercase;">Central Scotland's Loudest Feed</h2>
-            <p style="margin-top:15px; color:#aaa;">Broadcasting raw rock and metal across North Ayrshire, Inverclyde, and South Lanarkshire.</p>
+        <section id="view-home" class="view active">
+            <div id="countdown" style="background: var(--primary); color: #fff; text-align: center; padding: 10px; font-weight: 900; border-radius: 4px; margin-bottom: 20px;">
+                NEXT GIG IN: <span id="timer">00:00:00</span>
+            </div>
+            <div class="hero-img" style="background-image: url('studio-main.jpg');"></div>
+            <h2>Central Scotland's Rock Authority</h2>
+            <p style="margin-top:10px; color:#888;">Broadcasting live music, news, and regional updates from the heart of the belt.</p>
         </section>
 
         <section id="view-news" class="view">
-            <h2 style="margin-bottom:25px; border-left: 5px solid var(--primary); padding-left:15px; text-transform:uppercase;">Local Music Wire</h2>
-            <div class="news-grid">
-                <div class="news-card"><small style="color:var(--primary); font-weight:900;">INVERCLYDE</small><h3>Greenock Waterfront Gigs</h3><p>Local promoters announce a massive summer rock showcase for 2026.</p></div>
-                <div class="news-card"><small style="color:var(--primary); font-weight:900;">SOUTH LANARKSHIRE</small><h3>Hamilton Battle of the Bands</h3><p>Registration is now open for the regional heat at Hamilton Town Hall.</p></div>
-                <div class="news-card"><small style="color:var(--primary); font-weight:900;">NORTH AYRSHIRE</small><h3>Irvine Beach Park Metal</h3><p>New recording studio focusing on heavy genres opens its doors this month.</p></div>
-                <div class="news-card"><small style="color:var(--primary); font-weight:900;">CENTRAL SCOTLAND</small><h3>Regional Tour Roundup</h3><p>Full gig list updated for Stirling, Falkirk, and the surrounding belt.</p></div>
-            </div>
+            <h2 style="margin-bottom:20px; text-transform:uppercase;">Central Scotland Music Wire</h2>
+            <div class="card"><strong>INVERCLYDE:</strong><p>Greenock bands dominate the local chart this week.</p></div>
+            <div class="card"><strong>SOUTH LANARKSHIRE:</strong><p>Hamilton Town Hall confirms summer rock showcase.</p></div>
+            <div class="card"><strong>NORTH AYRSHIRE:</strong><p>New studio opening in the Irvine area for local metal bands.</p></div>
+            <div class="card"><strong>CENTRAL:</strong><p>Regional gig guide updated for Stirling and Falkirk venues.</p></div>
         </section>
 
         <section id="view-crew" class="view">
-            <h2 style="margin-bottom:30px; border-left: 5px solid var(--primary); padding-left:15px; text-transform:uppercase;">Meet The Team</h2>
-            
-            <div class="bio-card">
-                <div class="bio-img" style="background-image:url('dj_cal.jpg')"></div>
-                <div class="bio-text">
-                    <h3>CAL</h3>
-                    <h4>The Morning Chaos</h4>
-                    <p>Waking up the Central Belt with enough energy to power a steel mill. Cal brings the loudest tracks and the sharpest local wit every weekday morning. No coffee required when the riffs are this heavy.</p>
+            <h2 style="margin-bottom:20px; text-transform:uppercase;">The Presenters</h2>
+            <div class="crew-row">
+                <div class="dj-box">
+                    <div class="dj-photo" style="background-image: url('dj_cal.jpg');"></div>
+                    <div class="dj-info"><h3>Cal</h3><p>Morning Chaos. Loud, fast, and local.</p></div>
                 </div>
-            </div>
-
-            <div class="bio-card">
-                <div class="bio-img" style="background-image:url('Dj_alex.jpg')"></div>
-                <div class="bio-text">
-                    <h3>ALEX</h3>
-                    <h4>The Wall of Sound</h4>
-                    <p>A legend in the Inverclyde scene, Alex handles the afternoon drive with a mix of classic rock anthems and tech news. If it’s got a guitar and a circuit board, Alex is all over it.</p>
+                <div class="dj-box">
+                    <div class="dj-photo" style="background-image: url('Dj_alex.jpg');"></div>
+                    <div class="dj-info"><h3>Alex</h3><p>The Wall of Sound. Inverclyde's rock authority.</p></div>
                 </div>
-            </div>
-
-            <div class="bio-card">
-                <div class="bio-img" style="background-image:url('dj_andy.jpg')"></div>
-                <div class="bio-text">
-                    <h3>ANDY</h3>
-                    <h4>EK Rock Voyager</h4>
-                    <p>Broadcasting from the heart of Lanarkshire, Andy specializes in the "Deep Cuts." He digs through the archives to find the tracks other stations are too scared to play.</p>
+                <div class="dj-box">
+                    <div class="dj-photo" style="background-image: url('dj_andy.jpg');"></div>
+                    <div class="dj-info"><h3>Andy</h3><p>Rock Voyager. Deep cuts from the Central Belt.</p></div>
                 </div>
-            </div>
-
-            <div class="bio-card">
-                <div class="bio-img" style="background-image:url('dj_stevie.jpg')"></div>
-                <div class="bio-text">
-                    <h3>STEVIE</h3>
-                    <h4>Friday Night High</h4>
-                    <p>The weekend starts when Stevie says so. High-voltage rock, listener requests, and zero apologies. Stevie turns the Friday night airwaves into a virtual mosh pit.</p>
+                <div class="dj-box">
+                    <div class="dj-photo" style="background-image: url('dj_stevie.jpg');"></div>
+                    <div class="dj-info"><h3>Stevie</h3><p>Friday Night High. Starting the weekend with iron riffs.</p></div>
                 </div>
-            </div>
-
-            <div class="bio-card">
-                <div class="bio-img" style="background-image:url('dj_mhairi.jpg')"></div>
-                <div class="bio-text">
-                    <h3>MHAIRI</h3>
-                    <h4>Highland Hammer</h4>
-                    <p>Bringing the weight of the north down to the Central Belt. Mhairi hosts the Metal Hour, showcasing the absolute heaviest talent Scotland has to offer.</p>
+                <div class="dj-box">
+                    <div class="dj-photo" style="background-image: url('dj_mhairi.jpg');"></div>
+                    <div class="dj-info"><h3>Mhairi</h3><p>Highland Hammer. The heaviest hour in Scotland.</p></div>
                 </div>
             </div>
         </section>
 
         <section id="view-radar" class="view">
-            <h2 style="margin-bottom:20px; border-left:5px solid var(--primary); padding-left:15px;">ROCK RADAR</h2>
-            <div style="background-image: url('venue.png'); background-size:cover; height:200px; border-radius:12px; margin-bottom:30px;"></div>
-            <div style="background:#111; padding:25px; border-radius:12px; border:1px solid #333;">
-                <h3 style="color:var(--primary); margin-bottom:15px;">BAND SUBMISSION PORTAL</h3>
+            <div class="hero-img" style="background-image: url('venue.png');"></div>
+            <h2>Rock Radar Submissions</h2>
+            <div style="background:#111; padding:20px; border-radius:8px; border:1px solid #333;">
                 <input type="text" placeholder="Band Name">
-                <input type="text" placeholder="Hometown">
-                <input type="url" placeholder="Music Link (Spotify/Soundcloud)">
-                <textarea rows="3" placeholder="Tell us about your band..."></textarea>
-                <button onclick="alert('Sent!')" style="background:var(--primary); color:#fff; border:none; padding:15px; width:100%; font-weight:900; cursor:pointer;">SUBMIT TRACK</button>
+                <input type="text" placeholder="Base (e.g. Greenock, EK, Irvine)">
+                <input type="url" placeholder="Music Link">
+                <textarea rows="4" placeholder="Brief Band Bio"></textarea>
+                <button class="btn-submit" onclick="alert('Submission Sent!')">Submit for Airplay</button>
             </div>
         </section>
 
         <section id="view-ads" class="view">
-            <div style="background: url('guitaristsilhouette.jpg') center/cover; padding: 40px; border-radius: 12px; border: 1px solid #333;">
-                <div style="background: rgba(0,0,0,0.95); padding:25px; border-radius:12px; border:1px solid #333;">
-                    <h2 style="margin-top:0;">CAMPAIGN CALCULATOR</h2>
-                    <label style="font-size:0.7rem; color:var(--primary);">SELECT PACKAGE</label>
-                    <select id="p-air" onchange="calc()" style="width:100%; padding:12px; background:#000; color:#fff; border:1px solid #444; margin-bottom:15px;">
-                        <option value="299">Regional Airtime (£299)</option>
-                        <option value="449">Multi-Regional Airtime (£449)</option>
-                    </select>
-                    <label style="font-size:0.7rem; color:var(--primary);">PRODUCTION</label>
-                    <select id="p-prod" onchange="calc()" style="width:100%; padding:12px; background:#000; color:#fff; border:1px solid #444; margin-bottom:15px;">
-                        <option value="0">Client Provided Audio</option>
-                        <option value="195">Creative Production (£195)</option>
-                    </select>
-                    <div id="p-total" style="font-size: 3rem; color: var(--primary); font-weight: 900; margin: 15px 0;">£299</div>
-                    <p style="font-size: 0.7rem; color: #666;">*Not VAT Registered. Jan 2026 Policy.</p>
-                </div>
+            <div class="hero-img" style="background-image: url('guitaristsilhouette.jpg');"></div>
+            <div style="background:#111; padding:20px; border-radius:8px; border:1px solid #333;">
+                <h2 style="margin-bottom:15px;">Ad Calculator</h2>
+                <label>Region</label>
+                <select id="p-air" onchange="calc()">
+                    <option value="299">Regional Airtime (£299)</option>
+                    <option value="449">Multi-Regional Airtime (£449)</option>
+                </select>
+                <label>Production</label>
+                <select id="p-prod" onchange="calc()">
+                    <option value="0">Client Provided Audio</option>
+                    <option value="195">Creative Production (£195)</option>
+                </select>
+                <div id="p-total" style="font-size: 2.5rem; color: var(--primary); font-weight: 900; margin: 15px 0;">Total: £299</div>
+                <p style="font-size: 0.7rem; color: #666;">*Not VAT Registered (Jan 2026)</p>
             </div>
         </section>
     </div>
 
     <footer>
-        <button id="play-btn" onclick="toggleAudio()">LISTEN LIVE</button>
-        <div id="now-playing" style="font-weight:bold; color:#555; text-transform:uppercase; font-size:0.7rem;">SLA-ROCK.SCOT | THE MONSTER FEED</div>
+        <button id="play-btn" onclick="togglePlay()">LISTEN LIVE</button>
+        <div id="ticker">SLA-ROCK.SCOT | ROCKIN' SCOTLAND</div>
     </footer>
 </div>
 
 <script>
-    function spa(viewId) {
+    // SPA NAVIGATION ENGINE
+    function navigate(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-        document.getElementById('view-' + viewId).classList.add('active');
-        document.getElementById('nav-' + viewId).classList.add('active');
-        document.getElementById('main-view').scrollTop = 0;
+        document.getElementById('view-' + id).classList.add('active');
+        document.getElementById('btn-' + id).classList.add('active');
+        document.getElementById('content-area').scrollTop = 0; // Reset scroll on page change
     }
 
-    const audio = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
-    let isPlaying = false;
-
-    function toggleAudio() {
-        if(!isPlaying) { audio.play(); document.getElementById('play-btn').innerText = "STOP FEED"; isPlaying = true; }
-        else { audio.pause(); document.getElementById('play-btn').innerText = "LISTEN LIVE"; isPlaying = false; }
+    // CONTINUOUS AUDIO ENGINE
+    const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
+    let playing = false;
+    function togglePlay() {
+        if(!playing) {
+            stream.play();
+            document.getElementById('play-btn').innerText = "STOP FEED";
+            playing = true;
+        } else {
+            stream.pause();
+            document.getElementById('play-btn').innerText = "LISTEN LIVE";
+            playing = false;
+        }
     }
 
+    // GIG COUNTDOWN
     function startCountdown() {
-        const target = new Date("Jan 17, 2026 20:00:00").getTime();
+        const target = new Date("Jan 24, 2026 20:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const d = target - now;
             const h = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((d % (1000 * 60)) / 1000);
-            document.getElementById('countdown').innerText = h + "h " + m + "m " + s + "s";
+            document.getElementById('timer').innerText = h + "h " + m + "m " + s + "s";
         }, 1000);
     }
 
+    // PRICING CALCULATOR
     function calc() {
         const air = parseInt(document.getElementById('p-air').value);
         const prod = parseInt(document.getElementById('p-prod').value);
-        document.getElementById('p-total').innerText = "£" + (air + prod);
+        document.getElementById('p-total').innerText = "Total: £" + (air + prod);
     }
 
     window.onload = startCountdown;
 </script>
 </body>
-</html>
+    </html>
