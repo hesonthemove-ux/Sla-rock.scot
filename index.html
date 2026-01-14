@@ -6,35 +6,119 @@
     <title>Sla-rock.scot | Rockin' Scotland | Central Scotland Rock Radio</title>
     <style>
         :root { --primary: #ff3e00; --bg: #050505; --glass: rgba(255, 255, 255, 0.08); }
+        
+        /* Core Reset & Performance */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body, html { margin: 0; padding: 0; background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; }
+        
         #app-shell { display: flex; flex-direction: column; height: 100vh; }
         
-        header { background: #000; padding: 30px 20px; text-align: center; border-bottom: 4px solid var(--primary); flex-shrink: 0; position: relative; }
-        #logo { width: 100%; max-width: 550px; height: auto; transition: 0.3s; }
-        .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 8px; margin-top: 10px; }
-        #next-show-timer { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #fff; padding: 5px 15px; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; border-radius: 20px; z-index: 10; white-space: nowrap; }
-
-        nav { background: #0a0a0a; padding: 25px 15px 15px; text-align: center; border-bottom: 1px solid #222; flex-shrink: 0; overflow-x: auto; white-space: nowrap; }
-        nav a { color: #fff; margin: 0 10px; text-decoration: none; font-weight: 700; text-transform: uppercase; cursor: pointer; font-size: 0.7rem; letter-spacing: 1px; padding: 8px 10px; border-radius: 4px; }
-        nav a:hover { background: var(--glass); color: var(--primary); }
-
-        #content-window { flex-grow: 1; overflow-y: auto; padding: 40px; padding-bottom: 140px; }
-
-        /* ADVERTISING & PARTNER STYLES - Set to display:none by default */
-        .ad-unit { display: none; background: #111; border: 1px solid var(--primary); padding: 20px; margin: 20px 0; border-radius: 4px; text-align: center; }
-        .partner-bar { display: none; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center; padding: 20px; background: #000; border: 1px solid #222; margin-top: 20px; }
+        /* Header - Desktop Emphasis on Logo */
+        header { 
+            background: #000; 
+            padding: 40px 20px; 
+            text-align: center; 
+            border-bottom: 4px solid var(--primary); 
+            flex-shrink: 0; 
+            position: relative; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #logo { width: 100%; max-width: 600px; height: auto; transition: transform 0.3s ease; }
+        .tagline { font-size: 1.8rem; color: var(--primary); font-weight: 900; text-transform: uppercase; letter-spacing: 8px; margin-top: 15px; }
         
-        .price-card { background: var(--glass); border: 1px solid #222; padding: 25px; margin-bottom: 20px; border-top: 4px solid var(--primary); }
-        .price-tag { font-size: 2rem; font-weight: 900; color: var(--primary); display: block; margin: 10px 0; }
-        
-        footer#master-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 3px solid var(--primary); padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; z-index: 9999; }
-        .player-frame { width: 400px; height: 60px; border: none; }
+        /* Next Show Sticker */
+        #next-show-timer { 
+            position: absolute; 
+            bottom: -15px; 
+            background: var(--primary); 
+            color: #fff; 
+            padding: 6px 20px; 
+            font-size: 0.75rem; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            border-radius: 20px; 
+            z-index: 100; 
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
 
+        /* Refined Mobile-First Nav */
+        nav { 
+            background: #0a0a0a; 
+            padding: 20px 0 10px; 
+            text-align: center; 
+            border-bottom: 1px solid #222; 
+            flex-shrink: 0; 
+            overflow-x: auto; 
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Hide scrollbar Firefox */
+        }
+        nav::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+
+        nav a { 
+            display: inline-block;
+            color: #fff; 
+            margin: 0 12px; 
+            text-decoration: none; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            font-size: 0.8rem; 
+            letter-spacing: 1px; 
+            padding: 12px 16px; 
+            border-radius: 4px; 
+            transition: 0.2s;
+        }
+        nav a:hover, nav a.active { background: var(--glass); color: var(--primary); }
+
+        /* Main Content Window */
+        #content-window { 
+            flex-grow: 1; 
+            overflow-y: auto; 
+            padding: 40px 20px; 
+            padding-bottom: 160px; /* Space for fixed player */
+            scroll-behavior: smooth;
+        }
+
+        /* News & Card Styles */
+        .news-card { background: var(--glass); border-left: 4px solid #333; padding: 25px; margin-bottom: 20px; border-radius: 0 4px 4px 0; }
+        .news-tag { color: var(--primary); font-size: 0.7rem; font-weight: 900; text-transform: uppercase; }
+
+        /* Footer Player */
+        footer#master-player { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            background: #000; 
+            border-top: 3px solid var(--primary); 
+            padding: 15px 30px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            z-index: 9999; 
+        }
+        .player-frame { width: 420px; height: 65px; border: none; }
+
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            #logo { max-width: 240px; }
-            .tagline { font-size: 1rem; letter-spacing: 4px; }
-            footer#master-player { flex-direction: column; padding: 10px; }
-            .player-frame { width: 100%; }
+            header { padding: 25px 15px; }
+            #logo { max-width: 280px; }
+            .tagline { font-size: 1rem; letter-spacing: 4px; margin-top: 8px; }
+            #next-show-timer { font-size: 0.65rem; padding: 4px 12px; }
+            
+            nav a { font-size: 0.75rem; margin: 0 5px; padding: 10px 12px; }
+            
+            footer#master-player { 
+                flex-direction: column; 
+                padding: 10px; 
+                height: auto;
+            }
+            .player-frame { width: 100%; height: 80px; }
+            #track-info { margin: 10px 0 0 0 !important; font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -44,14 +128,14 @@
     <header>
         <img src="logo.png" alt="Sla-rock.scot" id="logo">
         <div class="tagline">Rockin' Scotland</div>
-        <div id="next-show-timer">Next Show: Syncing...</div>
+        <div id="next-show-timer">Syncing Stream...</div>
     </header>
 
-    <nav>
-        <a onclick="spa.load('home')">On Air</a>
-        <a onclick="spa.load('ads')">Advertise</a>
-        <a onclick="spa.load('venues')">Rock Radar</a>
-        <a onclick="spa.load('djs')">The Crew</a>
+    <nav id="main-nav">
+        <a onclick="spa.load('home')" id="nav-home">On Air</a>
+        <a onclick="spa.load('news')" id="nav-news">News</a>
+        <a onclick="spa.load('venues')" id="nav-venues">Rock Radar</a>
+        <a onclick="spa.load('ads')" id="nav-ads">Advertise</a>
     </nav>
 
     <div id="content-window">
@@ -60,15 +144,11 @@
 
     <footer id="master-player">
         <iframe class="player-frame" src="https://player.broadcast.radio/caledonia-tx-ltd" allow="autoplay"></iframe>
-        <div id="track-info" style="color:#888; font-weight:bold; font-size:0.8rem; margin-left:20px;">SLA-ROCK.SCOT | ROCKIN' SCOTLAND</div>
+        <div id="track-info" style="color:#888; font-weight:bold; font-size:0.8rem; margin-left:20px;">SLA-ROCK.SCOT | LIVE FROM CENTRAL SCOTLAND</div>
     </footer>
 </div>
 
 <script>
-    // --- CONTENT DATA (Update these to make them visible) ---
-    const activeAds = []; // Example: { title: "Vinyl Shop", img: "ad1.jpg" }
-    const activePartners = []; // Example: "Monster Energy", "Gibson"
-
     const schedule = [
         { hr: 7, name: "Morning Chaos", dj: "Cal" },
         { hr: 10, name: "The Wall of Sound", dj: "Alex" },
@@ -79,78 +159,23 @@
 
     const spa = {
         pages: {
-            home: `
-                <h2 style="text-transform:uppercase;">Central Scotland <span style="color:var(--primary)">Rock</span></h2>
-                <div id="dynamic-ad-container"></div>
-                <p>Welcome to Sla-Rock. Broadcasting pure energy across the Central Belt.</p>
-                <div id="dynamic-partner-container" class="partner-bar"></div>
+            home: `<h2 style="text-transform:uppercase; font-size:2rem;">Live <span style="color:var(--primary)">Now</span></h2><p>Broadcasting the heaviest rock selection across the Central Belt, Ayrshire, and Inverclyde.</p>`,
+            news: `
+                <h2 style="text-transform:uppercase;">Local <span style="color:var(--primary)">Wire</span></h2>
+                <div class="news-card"><span class="news-tag">Inverclyde</span><h3>Waterfront Festival Update</h3><p>Details emerging on the Greenock rock showcase.</p></div>
+                <div class="news-card"><span class="news-tag">South Lanarkshire</span><h3>Hamilton Venue News</h3><p>New rock nights announced for the spring season.</p></div>
             `,
-            ads: `
-                <h2 style="text-transform:uppercase;">Grow with <span style="color:var(--primary)">Sla-Rock</span></h2>
-                <p>Reach the most dedicated rock audience in the Central Belt.</p>
-                
-                <div class="price-card">
-                    <h3>Regional Airtime</h3>
-                    <span class="price-tag">£299</span>
-                    <small>SLA Compliant Broadcasting</small>
-                </div>
-
-                <div class="price-card">
-                    <h3>Multi-Regional Airtime</h3>
-                    <span class="price-tag">£449</span>
-                    <small>High Rotation Slots</small>
-                </div>
-
-                <div class="price-card">
-                    <h3>Creative Production</h3>
-                    <span class="price-tag">£195</span>
-                    <small>Industry Standard Engineering (No VAT)</small>
-                </div>
-            `,
-            venues: `<h2>Rock Radar</h2>`,
-            djs: `<h2>The Crew</h2>`
+            venues: `<h2 style="text-transform:uppercase;">Rock <span style="color:var(--primary)">Radar</span></h2><p>Your guide to the best stages in Central Scotland.</p>`,
+            ads: `<h2 style="text-transform:uppercase;">Ad <span style="color:var(--primary)">Rates</span></h2><p>Regional Airtime: £299<br>Multi-Regional: £449<br>Creative Production: £195</p>`
         },
         load: function(id) {
-            document.getElementById('page-content').innerHTML = this.pages[id] || this.pages['home'];
-            if (id === 'home' || !id) this.initDynamicContent();
-            window.location.hash = id;
-            document.getElementById('content-window').scrollTop = 0;
-        },
-        initDynamicContent: function() {
-            // Ad Logic
-            const adCont = document.getElementById('dynamic-ad-container');
-            if (activeAds.length > 0) {
-                adCont.style.display = "block";
-                adCont.className = "ad-unit";
-                adCont.innerHTML = activeAds.map(ad => `<h4>${ad.title}</h4>`).join('');
-            }
+            const pageId = id || 'home';
+            document.getElementById('page-content').innerHTML = this.pages[pageId];
+            
+            // UI Refinement: Update active state
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            const activeNav = document.getElementById('nav-' + pageId);
+            if(activeNav) activeNav.classList.add('active');
 
-            // Partner Logic
-            const partCont = document.getElementById('dynamic-partner-container');
-            if (activePartners.length > 0) {
-                partCont.style.display = "flex";
-                partCont.innerHTML = activePartners.map(p => `<div style="font-weight:900; color:#444;">${p}</div>`).join('');
-            }
-        }
-    };
-
-    function updateCountdown() {
-        const now = new Date();
-        const currentHr = now.getHours();
-        const currentMin = now.getMinutes();
-        const currentSec = now.getSeconds();
-        let nextShow = schedule.find(s => s.hr > currentHr) || schedule[0];
-        let targetHr = nextShow.hr <= currentHr ? nextShow.hr + 24 : nextShow.hr;
-        let diffSec = ((targetHr * 3600) - (currentHr * 3600 + currentMin * 60 + currentSec));
-        const h = Math.floor(diffSec / 3600), m = Math.floor((diffSec % 3600) / 60), s = diffSec % 60;
-        document.getElementById('next-show-timer').innerHTML = `Next: ${nextShow.name} in ${h}h ${m}m ${s}s`;
-    }
-
-    window.onload = () => {
-        spa.load(window.location.hash.replace('#', '') || 'home');
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-    };
-</script>
-</body>
-</html>
+            window.location
+    
