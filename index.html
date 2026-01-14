@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rock.scot | Rockin' Scotland | Central Scotland Music News</title>
-    <meta name="description" content="Central Scotland's loudest feed. Live rock music, regional news for Inverclyde, Lanarkshire, and Ayrshire. Rockin' Scotland.">
+    
+    <title>Rock.Scot | Rockin' Scotland | Central Scotland Music News</title>
+    <meta name="description" content="Rock.Scot - Central Scotland's loudest feed. Live rock music and regional news for the Central Belt. Rockin' Scotland.">
     
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "RadioStation",
-      "name": "Rock.scot",
+      "name": "Rock.Scot",
       "alternateName": "Rockin' Scotland",
       "url": "https://hesonthemove-ux.github.io/Sla-rock.scot/",
       "logo": "https://hesonthemove-ux.github.io/Sla-rock.scot/logo.png",
@@ -34,6 +35,7 @@
 
         #app-shell { display: flex; flex-direction: column; height: 100dvh; width: 100%; }
 
+        /* MAXIMIZED DESKTOP HEADER */
         header { flex-shrink: 0; background: #000; padding: 20px; text-align: center; border-bottom: 4px solid var(--primary); }
         #logo { width: 100%; max-width: 500px; height: auto; transition: transform 0.3s ease; }
 
@@ -41,6 +43,7 @@
         #ticker-move { display: inline-block; animation: ticker 40s linear infinite; padding-left: 100%; }
         @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
 
+        /* NAVIGATION */
         nav { 
             flex-shrink: 0; background: #0a0a0a; display: flex; justify-content: center; 
             padding: 10px; border-bottom: 1px solid #222; gap: 5px;
@@ -52,6 +55,7 @@
         }
         nav button.active { background: var(--primary); border-color: var(--primary); }
 
+        /* CONTENT AREA */
         #content-window { 
             flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; 
             padding-bottom: 120px; background: var(--bg);
@@ -60,16 +64,19 @@
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        /* DJ CARDS */
         .bio-card { background: #111; border: 1px solid #333; border-radius: 12px; margin-bottom: 25px; overflow: hidden; display: flex; flex-direction: column; }
         .bio-img { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; border-bottom: 4px solid var(--primary); }
         .bio-text { padding: 20px; }
         .bio-text h3 { color: var(--primary); text-transform: uppercase; font-size: 1.6rem; margin-bottom: 5px; }
         .bio-text p { color: #ccc; font-size: 0.9rem; line-height: 1.5; }
 
+        /* MODAL */
         #contact-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
         .modal-box { background: #111; border: 2px solid var(--primary); padding: 25px; width: 100%; max-width: 450px; border-radius: 12px; }
         input, textarea, select { width: 100%; padding: 12px; margin-bottom: 12px; background: #000; border: 1px solid #444; color: #fff; font-family: inherit; }
 
+        /* FOOTER BRANDING */
         footer { 
             position: fixed; bottom: 0; width: 100%; background: #000; border-top: 3px solid var(--primary); 
             padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 100;
@@ -87,7 +94,7 @@
 <body>
 
 <div id="app-shell">
-    <header><img src="logo.png" alt="Rock.scot Logo" id="logo"></header>
+    <header><img src="logo.png" alt="Rock.Scot Logo" id="logo"></header>
 
     <div id="ticker-wrap">
         <div id="ticker-move">
@@ -107,7 +114,7 @@
         <section id="p-onair" class="view active">
             <div style="background: var(--primary); color: #fff; text-align: center; padding: 10px; font-weight: 900; border-radius: 4px; margin-bottom: 20px;">NEXT GIG: <span id="timer">--:--:--</span></div>
             <div style="background-image: url('studio-main.jpg'); height: 280px; background-size: cover; border-radius: 8px; border: 1px solid #333;"></div>
-            <button onclick="toggleModal(true)" style="margin-top:20px; background:none; border:1px solid var(--primary); color:var(--primary); padding:15px; width:100%; cursor:pointer; font-weight:bold; text-transform:uppercase; letter-spacing:1px;">Contact the Studio</button>
+            <button onclick="toggleModal(true)" style="margin-top:20px; background:none; border:1px solid var(--primary); color:var(--primary); padding:15px; width:100%; cursor:pointer; font-weight:bold; text-transform:uppercase; letter-spacing:1px;">Contact Rock.Scot Studio</button>
         </section>
 
         <section id="p-news" class="view">
@@ -145,7 +152,7 @@
                     <option value="195">Creative Production (£195)</option>
                 </select><br>
                 <div id="p-total" style="font-size: 3rem; color: var(--primary); font-weight: 900; margin: 15px 0;">£299</div>
-                <p style="font-size: 0.7rem; color: #666;">Prices based on standard terms (Jan 2026).</p>
+                <p style="font-size: 0.7rem; color: #666;">Prices based on Jan 2026 rates. Not VAT registered.</p>
             </div>
         </section>
     </div>
@@ -174,7 +181,7 @@
         document.getElementById('p-' + id).classList.add('active');
         document.getElementById('b-' + id).classList.add('active');
         document.getElementById('content-window').scrollTop = 0;
-        document.title = title + " | Rock.scot | Rockin' Scotland";
+        document.title = title + " | Rock.Scot | Rockin' Scotland";
     }
 
     function toggleModal(state) {
