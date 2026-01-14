@@ -3,148 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rock.Scot | Central Scotland's Rock Authority</title>
     
-    <title>Rock.Scot | Rockin' Scotland | Central Scotland Music News</title>
-    <meta name="description" content="Rock.Scot - Central Scotland's loudest feed. Live rock music and regional news. Rockin' Scotland.">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=New+Rocker&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     
     <style>
-        :root { --primary: #ff3e00; --bg: #050505; --panel: #111; }
+        :root { 
+            --primary: #ff3e00; 
+            --bg: #050505; 
+            --surface: rgba(20, 20, 20, 0.9);
+            --border: #222;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        
-        html, body { 
-            background: var(--bg); color: #fff; font-family: 'Inter', -apple-system, sans-serif; 
-            height: 100%; width: 100%; overflow: hidden; 
+
+        body { 
+            background: var(--bg);
+            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            height: 100dvh; 
+            overflow: hidden; 
         }
 
-        #app-shell { display: flex; flex-direction: column; height: 100dvh; width: 100%; }
+        #app-shell { display: flex; flex-direction: column; height: 100%; }
 
-        header { flex-shrink: 0; background: #000; padding: 20px; text-align: center; border-bottom: 4px solid var(--primary); }
-        #logo { width: 100%; max-width: 500px; height: auto; }
-
-        #ticker-wrap { background: #1a1a1a; color: var(--primary); overflow: hidden; white-space: nowrap; padding: 8px 0; border-bottom: 1px solid #333; font-weight: 900; font-size: 0.75rem; text-transform: uppercase; }
-        #ticker-move { display: inline-block; animation: ticker 40s linear infinite; padding-left: 100%; }
-        @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
-
-        nav { flex-shrink: 0; background: #0a0a0a; display: flex; justify-content: center; padding: 10px; border-bottom: 1px solid #222; gap: 5px; }
-        nav button { background: #111; color: #fff; border: 1px solid #333; padding: 12px 2px; text-transform: uppercase; font-weight: 800; cursor: pointer; font-size: 0.65rem; flex: 1; max-width: 110px; }
-        nav button.active { background: var(--primary); border-color: var(--primary); }
-
-        #content-window { flex: 1; overflow-y: auto; padding-bottom: 120px; background: var(--bg); }
-        .view { display: none; padding: 20px; max-width: 1000px; margin: 0 auto; animation: fadeIn 0.3s ease; }
-        .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .bio-card { background: #111; border: 1px solid #333; border-radius: 12px; margin-bottom: 25px; overflow: hidden; display: flex; flex-direction: column; }
-        .bio-img { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; border-bottom: 4px solid var(--primary); }
-        .bio-text { padding: 20px; }
-        .bio-text h3 { color: var(--primary); text-transform: uppercase; font-size: 1.6rem; }
-
-        footer { 
-            position: fixed; bottom: 0; width: 100%; background: #000; border-top: 3px solid var(--primary); 
-            padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 100;
+        header { 
+            flex-shrink: 0;
+            padding: 40px 20px; 
+            background: linear-gradient(to bottom, #000, transparent);
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
         }
+        #logo { width: 100%; max-width: 650px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8)); }
 
-        /* PULSING GLOW TAGLINE */
-        .glow-text {
-            color: var(--primary);
-            font-weight: 900;
+        nav { 
+            flex-shrink: 0;
+            display: flex; 
+            background: #000; 
+            padding: 5px; 
+            gap: 2px;
+        }
+        nav button {
+            background: #111;
+            color: #555;
+            border: none;
+            padding: 15px 0;
+            font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
             font-size: 0.8rem;
             letter-spacing: 2px;
-            animation: pulse-glow 2s infinite ease-in-out;
+            flex: 1;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        nav button.active { 
+            color: #fff;
+            background: var(--primary);
+            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
         }
 
-        @keyframes pulse-glow {
-            0% { text-shadow: 0 0 5px var(--primary); opacity: 0.8; }
-            50% { text-shadow: 0 0 20px var(--primary), 0 0 30px #ff0000; opacity: 1; }
-            100% { text-shadow: 0 0 5px var(--primary); opacity: 0.8; }
+        #content-window { flex: 1; overflow-y: auto; padding: 20px 0 120px 0; -webkit-overflow-scrolling: touch; }
+        .view { display: none; padding: 0 20px; max-width: 1200px; margin: 0 auto; }
+        .view.active { display: block; animation: powerOn 0.3s ease-out; }
+
+        @keyframes powerOn {
+            0% { opacity: 0; filter: brightness(2); transform: translateY(5px); }
+            100% { opacity: 1; filter: brightness(1); transform: translateY(0); }
         }
 
-        #play-btn { background: var(--primary); border: none; color: #fff; padding: 10px 18px; font-weight: 900; cursor: pointer; border-radius: 4px; }
+        .pro-card {
+            background: var(--surface);
+            border-left: 4px solid var(--primary);
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .pro-card::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 0 40px 40px 0;
+            border-color: transparent var(--primary) transparent transparent;
+        }
+
+        .price-tag { font-family: 'Oswald'; font-size: 3rem; color: var(--primary); line-height: 1; margin: 10px 0; }
+
+        footer { 
+            position: fixed; bottom: 0; width: 100%; 
+            background: #000;
+            padding: 20px 30px; 
+            border-top: 4px solid var(--primary);
+            display: flex; align-items: center; justify-content: space-between;
+            z-index: 1000;
+        }
+
+        .neon-brand {
+            font-family: 'New Rocker', cursive;
+            color: #fff;
+            font-size: 1.4rem;
+            text-shadow: 0 0 10px var(--primary);
+            animation: flicker 4s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary); }
+            20%, 22%, 24%, 55% { opacity: 0.4; text-shadow: none; }
+        }
+
+        #play-btn {
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            padding: 12px 25px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background: #111;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
 
         @media (min-width: 1024px) {
-            header { padding: 40px; }
-            #logo { max-width: 700px; }
-            .bio-card { flex-direction: row; height: 320px; }
-            .bio-img { width: 350px; height: 100%; border-right: 4px solid var(--primary); }
+            header { padding: 60px 20px; }
+            #logo { max-width: 800px; }
+            .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         }
     </style>
 </head>
 <body>
 
 <div id="app-shell">
-    <header><img src="logo.png" alt="Rock.Scot Logo" id="logo"></header>
-
-    <div id="ticker-wrap"><div id="ticker-move">NEW RELEASES: Skillet - Revolution • Linkin Park - From Zero • Jerry Cantrell - I Want Blood • Myles Kennedy - The Art of Letting Go • Opeth - The Last Will and Testament • The Offspring - Supercharged • Starset - Brave New World • </div></div>
+    <header><img src="logo.png" alt="Rock.Scot" id="logo"></header>
 
     <nav>
-        <button onclick="show('onair', 'On Air')" id="b-onair" class="active">On Air</button>
-        <button onclick="show('news', 'News Wire')" id="b-news">News</button>
-        <button onclick="show('crew', 'The Crew')" id="b-crew">Crew</button>
-        <button onclick="show('radar', 'Rock Radar')" id="b-radar">Radar</button>
-        <button onclick="show('ads', 'Advertise')" id="b-ads">Ads</button>
+        <button onclick="show('onair')" id="b-onair" class="active">Live Feed</button>
+        <button onclick="show('news')" id="b-news">News Wire</button>
+        <button onclick="show('crew')" id="b-crew">The Crew</button>
+        <button onclick="show('ads')" id="b-ads">Advertise</button>
     </nav>
 
     <div id="content-window">
         <section id="p-onair" class="view active">
-            <div style="background: var(--primary); color: #fff; text-align: center; padding: 10px; font-weight: 900; border-radius: 4px; margin-bottom: 20px;">NEXT GIG: <span id="timer">--:--:--</span></div>
-            <div style="background-image: url('studio-main.jpg'); height: 280px; background-size: cover; border-radius: 8px; border: 1px solid #333;"></div>
-            <button onclick="toggleModal(true)" style="margin-top:20px; background:none; border:1px solid var(--primary); color:var(--primary); padding:15px; width:100%; cursor:pointer; font-weight:bold; text-transform:uppercase;">Contact Rock.Scot Studio</button>
+            <div style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('studio-main.jpg'); height: 450px; background-size: cover; border: 1px solid #333; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                <h2 style="font-family: 'Oswald'; font-size: 4rem; letter-spacing: -2px; line-height: 0.9;">STAY<br>LOUD</h2>
+                <div style="height: 4px; width: 80px; background: var(--primary); margin: 20px 0;"></div>
+                <p style="font-family: 'Oswald'; letter-spacing: 6px; color: #888; text-transform: uppercase;">Central Scotland Authority</p>
+            </div>
         </section>
 
         <section id="p-news" class="view">
-            <div style="border-left:5px solid var(--primary); padding-left:15px; margin-bottom:20px;"><h2>THE CENTRAL WIRE</h2></div>
-            <div id="news-feed" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:15px;">
+            <h2 style="font-family: 'Oswald'; margin-bottom: 25px; font-size: 2.5rem; font-style: italic; text-transform: uppercase;">The Wire</h2>
+            <div id="news-feed" class="news-grid">
                 </div>
         </section>
 
         <section id="p-crew" class="view">
-            <div class="bio-card"><div class="bio-img" style="background-image:url('dj_cal.jpg')"></div><div class="bio-text"><h3>CAL</h3><p>The Morning Chaos. Waking up the Central Belt with enough energy to power a steel mill.</p></div></div>
-            <div class="bio-card"><div class="bio-img" style="background-image:url('Dj_alex.jpg')"></div><div class="bio-text"><h3>ALEX</h3><p>The Wall of Sound. A legend in the Inverclyde scene, Alex handles the afternoon drive.</p></div></div>
-            <div class="bio-card"><div class="bio-img" style="background-image:url('dj_andy.jpg')"></div><div class="bio-text"><h3>ANDY</h3><p>EK Rock Voyager. Broadcasting from East Kilbride, Andy specializes in the "Deep Cuts."</p></div></div>
-            <div class="bio-card"><div class="bio-img" style="background-image:url('dj_stevie.jpg')"></div><div class="bio-text"><h3>STEVIE</h3><p>Friday Night High. The weekend starts when Stevie says so.</p></div></div>
-            <div class="bio-card"><div class="bio-img" style="background-image:url('dj_mhairi.jpg')"></div><div class="bio-text"><h3>MHAIRI</h3><p>Highland Hammer. Bringing the weight of the north down to the Central Belt.</p></div></div>
-        </section>
-
-        <section id="p-radar" class="view">
-            <div style="background:#111; padding:25px; border-radius:10px; border:1px solid #333;">
-                <h3 style="color:var(--primary); margin-bottom:15px;">ROCK RADAR SUBMISSION</h3>
-                <input type="text" placeholder="Band Name"><br>
-                <textarea rows="4" placeholder="Music Link & Brief Bio"></textarea><br>
-                <button onclick="alert('Submission Received!')" style="background:var(--primary); color:#fff; border:none; padding:15px; width:100%; font-weight:900;">SUBMIT TRACK</button>
+            <div class="pro-card">
+                <h3 style="font-family: 'Oswald'; font-size: 2rem;">CAL</h3>
+                <p style="color: #bbb; margin-top: 10px;">The Morning Chaos. Waking up the Central Belt with enough energy to power a steel mill.</p>
+            </div>
+            <div class="pro-card">
+                <h3 style="font-family: 'Oswald'; font-size: 2rem;">ALEX</h3>
+                <p style="color: #bbb; margin-top: 10px;">The Wall of Sound. Inverclyde legend handling the high-octane afternoon drive.</p>
+            </div>
+            <div class="pro-card">
+                <h3 style="font-family: 'Oswald'; font-size: 2rem;">ANDY</h3>
+                <p style="color: #bbb; margin-top: 10px;">EK Rock Voyager. Deep cuts and archive rarities live from East Kilbride.</p>
             </div>
         </section>
 
         <section id="p-ads" class="view">
-            <div style="background:#111; padding:25px; border-radius:10px; border:1px solid #333;">
-                <h2>ROCK.SCOT ADVERTISING</h2><br>
+            <h2 style="font-family: 'Oswald'; margin-bottom: 25px; font-size: 2.5rem; font-style: italic; text-transform: uppercase;">Media Kit</h2>
+            <div class="pro-card">
+                <label style="font-family:'Oswald'; display:block; margin-bottom:10px; color:#888;">AIRTIME PACKAGE</label>
                 <select id="p-air" onchange="calc()">
-                    <option value="299">Regional (£299)</option>
-                    <option value="449">Multi-Regional (£449)</option>
-                </select><br>
+                    <option value="299">REGIONAL - £299</option>
+                    <option value="449">MULTI-REGIONAL - £449</option>
+                </select>
+                
+                <label style="font-family:'Oswald'; display:block; margin-bottom:10px; color:#888; margin-top:10px;">CREATIVE</label>
                 <select id="p-prod" onchange="calc()">
-                    <option value="0">Own Audio Supplied</option>
-                    <option value="195">Creative Production (£195)</option>
-                </select><br>
-                <div id="p-total" style="font-size: 3rem; color: var(--primary); font-weight: 900; margin: 15px 0;">£299</div>
+                    <option value="0">AUDIO SUPPLIED (£0)</option>
+                    <option value="195">ROCK.SCOT PRODUCTION (£195)</option>
+                </select>
+
+                <div style="margin-top: 40px; border-top: 1px solid #333; padding-top: 20px;">
+                    <p style="font-family: 'Oswald'; font-size: 0.9rem; color: #666; letter-spacing: 2px;">ESTIMATED TOTAL</p>
+                    <div id="p-total" class="price-tag">£299</div>
+                    <p style="font-size: 0.7rem; color: #444;">Rates locked for 2026. Non-VAT.</p>
+                </div>
             </div>
         </section>
     </div>
 
     <footer>
         <button id="play-btn" onclick="toggle()">LISTEN LIVE</button>
-        <div class="glow-text">Rockin' Scotland</div>
+        <div class="neon-brand">Rockin' Scotland</div>
     </footer>
 </div>
 
 <script>
-    function show(id, title) {
+    function show(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
         document.getElementById('p-' + id).classList.add('active');
         document.getElementById('b-' + id).classList.add('active');
         document.getElementById('content-window').scrollTop = 0;
-        document.title = title + " | Rock.Scot";
     }
 
     const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
@@ -154,44 +233,22 @@
         else { stream.pause(); document.getElementById('play-btn').innerText = "LISTEN LIVE"; playing = false; }
     }
 
-    // ROBUST NEWS LOADER
     async function loadNews() {
-        const rssFeed = "https://www.theskinny.co.uk/rss/music";
         const proxyUrl = "https://api.rss2json.com/v1/api.json?rss_url=";
-        const feedContainer = document.getElementById('news-feed');
-        
+        const feed = "https://www.theskinny.co.uk/rss/music";
         try {
-            const response = await fetch(proxyUrl + encodeURIComponent(rssFeed));
-            const data = await response.json();
-            
-            if(data.status === 'ok') {
-                let html = '';
-                data.items.slice(0, 6).forEach(item => {
-                    html += `
-                        <div style="background:#111; padding:15px; border-radius:6px; border:1px solid #222;">
-                            <h3 style="font-size:1rem; color:var(--primary); margin-bottom:5px;">${item.title}</h3>
-                            <p style="font-size:0.8rem; color:#ccc;">${item.description.substring(0, 100).replace(/<[^>]*>?/gm, '')}...</p>
-                        </div>`;
-                });
-                feedContainer.innerHTML = html;
-            } else {
-                throw new Error();
-            }
-        } catch (e) {
-            feedContainer.innerHTML = '<p style="color:#666;">News Wire temporarily offline. Check back shortly for Central Scotland updates.</p>';
-        }
-    }
-
-    function timer() {
-        const target = new Date("Jan 24, 2026 20:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const d = target - now;
-            const h = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((d % (1000 * 60)) / 1000);
-            document.getElementById('timer').innerText = h + "h " + m + "m " + s + "s";
-        }, 1000);
+            const res = await fetch(proxyUrl + encodeURIComponent(feed));
+            const data = await res.json();
+            let html = '';
+            data.items.slice(0, 6).forEach(item => {
+                html += `
+                <div class="pro-card">
+                    <h4 style="font-family:'Oswald'; font-size:1.2rem; color:var(--primary); text-transform:uppercase;">${item.title}</h4>
+                    <p style="font-size:0.85rem; color:#888; margin-top:10px; line-height:1.4;">${item.description.substring(0, 120).replace(/<[^>]*>?/gm, '')}...</p>
+                </div>`;
+            });
+            document.getElementById('news-feed').innerHTML = html;
+        } catch(e) { document.getElementById('news-feed').innerHTML = '<div class="pro-card">Wire connection active. Refresh for latest Central news.</div>'; }
     }
 
     function calc() {
@@ -200,7 +257,7 @@
         document.getElementById('p-total').innerText = "£" + (a + p);
     }
 
-    window.onload = () => { timer(); loadNews(); };
+    window.onload = loadNews;
 </script>
 </body>
 </html>
