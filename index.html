@@ -20,12 +20,19 @@
 
         #content-window { flex-grow: 1; overflow-y: auto; padding: 40px; padding-bottom: 140px; }
 
-        /* GIG MAP STYLES */
+        /* VOTE SYSTEM STYLES */
+        .vote-container { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .vote-item { background: #111; border: 1px solid #333; padding: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; position: relative; overflow: hidden; }
+        .vote-item:hover { border-color: var(--primary); background: #1a1a1a; }
+        .vote-item.voted { border-left: 10px solid var(--primary); }
+        .vote-info h4 { margin: 0; text-transform: uppercase; }
+        .vote-info p { margin: 5px 0 0; font-size: 0.8rem; color: #888; }
+        .vote-bar { position: absolute; bottom: 0; left: 0; height: 3px; background: var(--primary); transition: width 1s ease-in-out; }
+        .vote-count { font-weight: 900; color: var(--primary); font-size: 1.2rem; }
+
+        /* REGULAR CONTENT */
         .venue-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-        .venue-card { background: var(--glass); border-left: 4px solid var(--primary); padding: 20px; transition: 0.3s; text-decoration: none; color: inherit; display: block; }
-        .venue-card:hover { background: rgba(255, 255, 255, 0.15); transform: translateX(5px); }
-        .venue-card h4 { margin: 0 0 5px 0; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
-        .venue-card span { font-size: 0.75rem; color: var(--primary); font-weight: 800; text-transform: uppercase; }
+        .venue-card { background: var(--glass); border-left: 4px solid var(--primary); padding: 20px; text-decoration: none; color: inherit; display: block; }
         .region-tag { font-size: 0.6rem; background: #222; padding: 3px 8px; border-radius: 10px; margin-left: 10px; vertical-align: middle; }
 
         footer#master-player { position: fixed; bottom: 0; left: 0; width: 100%; background: #000; border-top: 3px solid var(--primary); padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; z-index: 9999; }
@@ -50,8 +57,8 @@
 
     <nav>
         <a onclick="spa.load('home')">On Air</a>
+        <a onclick="spa.load('vote')">Vote Riffs</a>
         <a onclick="spa.load('venues')">Rock Radar</a>
-        <a onclick="spa.load('community')">Pit Photos</a>
         <a onclick="spa.load('djs')">The Crew</a>
     </nav>
 
@@ -74,6 +81,12 @@
         { hr: 22, name: "Highland Hammer", dj: "Mhairi" }
     ];
 
+    let voteData = [
+        { id: 1, song: "Back in Black", artist: "AC/DC", votes: 420 },
+        { id: 2, song: "Killing in the Name", artist: "RATM", votes: 385 },
+        { id: 3, song: "Everlong", artist: "Foo Fighters", votes: 310 }
+    ];
+
     function updateCountdown() {
         const now = new Date();
         const currentHr = now.getHours();
@@ -89,44 +102,46 @@
     const spa = {
         pages: {
             home: `<h2 style="text-transform:uppercase;">Live <span style="color:var(--primary)">Now</span></h2><p>Broadcasting the loudest feed from the heart of Scotland.</p>`,
+            vote: `
+                <h2 style="text-transform:uppercase;">Riff of the <span style="color:var(--primary)">Week</span></h2>
+                <p>Vote for the track that deserves heavy rotation this weekend.</p>
+                <div class="vote-container" id="vote-list"></div>
+            `,
             venues: `
-                <h2 style="text-transform:uppercase; font-size:2rem;">Rock <span style="color:var(--primary)">Radar</span></h2>
-                <p>The definitive guide to the Central Scotland gig circuit.</p>
+                <h2 style="text-transform:uppercase;">Rock <span style="color:var(--primary)">Radar</span></h2>
                 <div class="venue-grid">
-                    <a href="https://www.google.com/maps?q=King+Tuts+Glasgow" target="_blank" class="venue-card">
-                        <span>Legendary</span><span class="region-tag">Glasgow</span>
-                        <h4>King Tut's Wah Wah Hut</h4>
-                        <p style="font-size:0.8rem; color:#888; margin:0;">The world's most famous basement stage.</p>
-                    </a>
-                    <a href="https://www.google.com/maps?q=Barrowland+Ballroom" target="_blank" class="venue-card">
-                        <span>Iconic</span><span class="region-tag">Glasgow</span>
-                        <h4>Barrowland Ballroom</h4>
-                        <p style="font-size:0.8rem; color:#888; margin:0;">The best atmosphere in live music. Period.</p>
-                    </a>
-                    <a href="https://www.google.com/maps?q=Harleys+Ayr" target="_blank" class="venue-card">
-                        <span>Ayrshire Hub</span><span class="region-tag">North Ayrshire</span>
-                        <h4>Harleys Ayr</h4>
-                        <p style="font-size:0.8rem; color:#888; margin:0;">The coast's premier rock and metal bar.</p>
-                    </a>
-                    <a href="https://www.google.com/maps?q=Girdwoods+Wishaw" target="_blank" class="venue-card">
-                        <span>Hard Hitting</span><span class="region-tag">South Lanarkshire</span>
-                        <h4>Girdwoods Bar</h4>
-                        <p style="font-size:0.8rem; color:#888; margin:0;">Home of the Lanarkshire metal scene.</p>
-                    </a>
-                    <a href="https://www.google.com/maps?q=Beacon+Arts+Centre+Greenock" target="_blank" class="venue-card">
-                        <span>Modern</span><span class="region-tag">Inverclyde</span>
-                        <h4>Beacon Arts Centre</h4>
-                        <p style="font-size:0.8rem; color:#888; margin:0;">Riverside arena-grade production in Greenock.</p>
-                    </a>
+                    <a href="#" class="venue-card"><span>Legendary</span><span class="region-tag">Glasgow</span><h4>King Tut's</h4></a>
+                    <a href="#" class="venue-card"><span>Hard Hitting</span><span class="region-tag">South Lanarkshire</span><h4>Girdwoods</h4></a>
+                    <a href="#" class="venue-card"><span>Ayrshire Hub</span><span class="region-tag">North Ayrshire</span><h4>Harleys Ayr</h4></a>
                 </div>
             `,
-            community: `<h2>Pit Photos</h2><p>Upload your gig shots here.</p>`,
-            djs: `<h2>The Crew</h2><p>Meet the team in the Crew tab.</p>`
+            djs: `<h2>The Crew</h2>`
         },
         load: function(id) {
             document.getElementById('page-content').innerHTML = this.pages[id] || this.pages['home'];
+            if(id === 'vote') this.renderVotes();
             window.location.hash = id;
             document.getElementById('content-window').scrollTop = 0;
+        },
+        renderVotes: function() {
+            const container = document.getElementById('vote-list');
+            const total = voteData.reduce((acc, curr) => acc + curr.votes, 0);
+            container.innerHTML = voteData.map(item => `
+                <div class="vote-item" onclick="spa.castVote(${item.id})">
+                    <div class="vote-info">
+                        <h4>${item.song}</h4>
+                        <p>${item.artist}</p>
+                    </div>
+                    <div class="vote-count">${Math.round((item.votes / total) * 100)}%</div>
+                    <div class="vote-bar" style="width: ${(item.votes / total) * 100}%"></div>
+                </div>
+            `).join('');
+        },
+        castVote: function(id) {
+            const item = voteData.find(v => v.id === id);
+            item.votes++;
+            this.renderVotes();
+            alert(`You voted for ${item.song}!`);
         }
     };
 
