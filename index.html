@@ -2,233 +2,186 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <title>Rock.Scot | Central Scotland's Rock Authority | Live Radio</title>
-    <meta name="description" content="The definitive rock authority for Central Scotland. Streaming live across Inverclyde, South Lanarkshire, and North Ayrshire.">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=New+Rocker&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Rock.Scot | Central Scotland's Rock Authority</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=New+Rocker&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        :root { --primary: #ff3e00; --bg: #050505; --nav-h: 60px; --footer-h: 80px; --max-w: 1600px; }
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; height: 100dvh; display: grid; grid-template-rows: auto auto var(--nav-h) 1fr var(--footer-h); overflow: hidden; }
+        :root { 
+            --primary: #ff3e00; 
+            --bg: #050505; 
+            --nav-h: 65px; 
+            --footer-h: 95px; 
+            --glass-bg: rgba(12, 12, 12, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(25px) saturate(180%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        html, body { overflow: hidden; background: var(--bg); height: 100%; width: 100%; overscroll-behavior: none; }
+        body { display: grid; grid-template-rows: auto auto var(--nav-h) 1fr var(--footer-h); }
+
+        #loader {
+            position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.9);
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            display: none; align-items: center; justify-content: center; flex-direction: column;
+        }
+        .vinyl { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #111; background: repeating-radial-gradient(#222, #000 8px); animation: spin 0.8s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        header { background: #000; border-bottom: 4px solid var(--primary); display: flex; justify-content: center; padding: 25px; z-index: 10; }
+        .hdr-logo { width: 100%; max-width: 900px; max-height: 280px; object-fit: contain; filter: drop-shadow(0 0 20px rgba(255,62,0,0.4)); }
         
-        header { background: #000; border-bottom: 3px solid var(--primary); display: flex; justify-content: center; }
-        .hdr-logo { width: 100%; max-width: 1920px; height: 280px; object-fit: cover; display: block; }
-        
-        .ticker-wrap { background: #111; border-bottom: 1px solid var(--primary); overflow: hidden; height: 40px; display: flex; align-items: center; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 55s linear infinite; font-family: 'Oswald'; }
-        .ticker span { color: var(--primary); padding: 0 40px; text-transform: uppercase; font-size: 1rem; }
+        .ticker-wrap { background: #080808; border-bottom: 1px solid var(--glass-border); height: 35px; overflow: hidden; display: flex; align-items: center; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 80s linear infinite; font-family: 'Oswald'; color: var(--primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        nav { display: grid; grid-template-columns: repeat(5, 1fr); background: #000; height: var(--nav-h); width: 100%; max-width: 1920px; margin-inline: auto; }
-        .nav-btn { background: #111; border: none; color: #666; font-family: 'Oswald'; text-transform: uppercase; cursor: pointer; transition: 0.2s; font-size: 0.9rem; border-right: 1px solid #222; }
-        .nav-btn.active { color: #fff; background: #1a1a1a; box-shadow: inset 0 -4px 0 var(--primary); }
-
-        main { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--primary) #000; -webkit-overflow-scrolling: touch; }
-        .view { display: none; width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 60px 20px; animation: fadeIn 0.4s ease-out; }
-        .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* LIVE POWER SECTION */
-        .shout-box { 
-            position: relative; 
-            padding: 100px 20px; 
-            text-align: center; 
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('live_hero.jpg'); 
-            background-size: cover; 
-            background-position: center;
-            border: 1px solid #222;
-            margin-bottom: 60px;
+        nav { 
+            display: flex; overflow-x: auto; background: var(--glass-bg); 
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            height: var(--nav-h); z-index: 100; border-bottom: 1px solid var(--glass-border);
+            scrollbar-width: none;
         }
-        .shout-box h1 { font-family: 'New Rocker'; font-size: clamp(4rem, 15vw, 10rem); line-height: 0.8; color: var(--primary); text-transform: uppercase; text-shadow: 4px 4px 0px #000; }
-        .shout-box h2 { font-family: 'Oswald'; font-size: clamp(1.2rem, 4vw, 2.5rem); letter-spacing: 12px; color: #fff; text-transform: uppercase; margin-top: 10px; }
+        nav::-webkit-scrollbar { display: none; }
+        .nav-btn { 
+            flex: 0 0 auto; width: 130px; background: transparent; border: none; color: #555; 
+            font-family: 'Oswald'; text-transform: uppercase; cursor: pointer; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--glass-border);
+        }
+        .nav-btn.active { color: #fff; background: rgba(255, 62, 0, 0.1); box-shadow: inset 0 -4px 0 var(--primary); }
 
-        .mission-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; margin-top: 50px; }
-        .mission-text { border-left: 8px solid var(--primary); padding-left: 30px; }
-        .mission-text h3 { font-family: 'Oswald'; font-size: 2.2rem; color: var(--primary); margin-bottom: 15px; text-transform: uppercase; }
-        .mission-text p { font-size: 1.2rem; line-height: 1.6; color: #ccc; margin-bottom: 20px; }
+        main { overflow-y: auto; -webkit-overflow-scrolling: touch; background: radial-gradient(circle at center, #111 0%, #050505 100%); }
+        .view { display: none; padding: 40px 20px; max-width: 1400px; margin: 0 auto; animation: viewIn 0.3s ease-out; }
+        .view.active { display: block; }
 
-        .expansion-card { background: #111; border: 1px solid #333; padding: 0; overflow: hidden; }
-        .map-graphic { width: 100%; height: 200px; background: url('expansion_map.jpg'); background-size: cover; background-position: center; filter: grayscale(1) contrast(1.2) brightness(0.6); border-bottom: 2px solid var(--primary); }
-        .expansion-body { padding: 30px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .card { background: #0c0c0c; border: 1px solid #1a1a1a; border-bottom: 5px solid var(--primary); transition: 0.3s ease; cursor: pointer; overflow: hidden; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-8px); border-color: var(--primary); background: #111; }
+        .card-img-wrap { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-bottom: 1px solid #222; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card-body { padding: 20px; flex-grow: 1; }
+        .card h3 { font-family: 'Oswald'; font-size: 1.1rem; color: #fff; text-transform: uppercase; margin-bottom: 10px; }
+        .card-meta { font-family: 'Oswald'; font-size: 0.7rem; color: var(--primary); letter-spacing: 1px; }
 
-        .partner-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 40px 0; border-top: 1px solid #222; padding-top: 20px; }
-        .partner-card { background: #0a0a0a; border: 1px solid #222; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.3s; padding: 10px; text-align: center; }
-        .partner-card i { font-family: 'Oswald'; font-style: normal; font-size: 1.1rem; color: #fff; display: block; text-transform: uppercase; }
-        .partner-card span { font-size: 0.7rem; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+        /* CREW MODAL STYLE */
+        #bio-modal { position: fixed; inset: 0; z-index: 2000; display: none; background: rgba(0,0,0,0.95); backdrop-filter: blur(40px); }
+        .bio-container { display: grid; grid-template-columns: 1fr 1fr; width: 100%; height: 100%; max-width: 1600px; margin: 0 auto; }
+        .bio-left { background: #000; border-right: 2px solid var(--primary); }
+        .bio-left img { width: 100%; height: 100%; object-fit: cover; }
+        .bio-right { padding: 60px; overflow-y: auto; }
+        .mag-header { font-family: 'New Rocker'; font-size: 6rem; color: var(--primary); line-height: 0.8; margin-bottom: 20px; }
+        .close-btn { background: var(--primary); color: #fff; border: none; padding: 10px 30px; font-family: 'Oswald'; cursor: pointer; float: right; }
 
-        .crew-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding-bottom: 50px; }
-        .dj-card { background: #0a0a0a; border: 1px solid #222; padding: 40px 25px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .dj-card:hover { border-color: var(--primary); }
-        .dj-card img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); margin-bottom: 20px; }
-        
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #111; border: 2px solid var(--primary); max-width: 700px; width: 100%; padding: 50px; position: relative; max-height: 90vh; overflow-y: auto; }
-        .close-modal { position: absolute; top: 20px; right: 25px; color: var(--primary); font-size: 2.5rem; cursor: pointer; }
-        
-        .play-btn { background: var(--primary); color: #fff; font-family: 'Oswald'; padding: 15px 45px; border: none; cursor: pointer; font-weight: bold; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); transition: 0.2s; text-transform: uppercase; }
-        .play-btn:hover { background: #fff; color: var(--primary); }
+        footer { background: #000; border-top: 4px solid var(--primary); height: var(--footer-h); display: flex; align-items: center; justify-content: center; z-index: 100; }
+        .play-btn { 
+            background: var(--primary); color: #fff; font-family: 'Oswald'; padding: 18px 55px; 
+            border: none; cursor: pointer; clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%); 
+            text-transform: uppercase; font-size: 1.25rem; font-weight: 900;
+            display: flex; align-items: center; gap: 20px; transition: 0.2s;
+        }
+        .visualizer { display: none; align-items: flex-end; gap: 4px; height: 25px; }
+        .play-btn.playing .visualizer { display: flex; }
+        .bar { width: 4px; background: #fff; animation: eq 0.6s infinite alternate; }
+        @keyframes eq { 0% { height: 30%; } 100% { height: 100%; } }
 
-        footer { background: #000; border-top: 4px solid var(--primary); display: flex; align-items: center; justify-content: center; height: var(--footer-h); z-index: 100; }
-
-        @media (max-width: 900px) { .mission-grid { grid-template-columns: 1fr; } .shout-box { padding: 60px 20px; } }
-        @media (max-width: 768px) { nav { grid-template-columns: repeat(3, 1fr); height: auto; } .hdr-logo { height: 150px; } .partner-strip { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 900px) {
+            .hdr-logo { max-height: 120px; }
+            .bio-container { grid-template-columns: 1fr; }
+            .bio-left { height: 40vh; border-right: none; border-bottom: 2px solid var(--primary); }
+            .mag-header { font-size: 3rem; }
+        }
+        @keyframes viewIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<header><img src="top_banner.jpg" class="hdr-logo" alt="Rock.Scot"></header>
-<div class="ticker-wrap"><div class="ticker" id="ticker-content"><span>STABLISHING REGIONAL AUTHORITY DOMINANCE...</span></div></div>
+<div id="loader"><div class="vinyl"></div><p style="font-family:'Oswald'; color:var(--primary); margin-top:20px; letter-spacing:6px; font-size:0.8rem;">REFRESHING AUTHORITY...</p></div>
 
-<nav>
-    <button id="nav-radio" class="nav-btn active" onclick="tab('radio')">Live</button>
-    <button id="nav-wire" class="nav-btn" onclick="tab('wire')">Wire</button>
-    <button id="nav-crew" class="nav-btn" onclick="tab('crew')">Crew</button>
-    <button id="nav-sub" class="nav-btn" onclick="tab('sub')">Submits</button>
-    <button id="nav-ads" class="nav-btn" onclick="tab('ads')">Ads</button>
+<header><img src="logo.png" class="hdr-logo" alt="Rock.Scot Authority" onerror="this.src='studio.jpg'"></header>
+
+<div class="ticker-wrap">
+    <div class="ticker">ROCK AUTHORITY // INVERCLYDE BROADCAST // LANARKSHIRE BROADCAST // AYRSHIRE BROADCAST // CENTRAL SCOTLAND MUSIC NEWS //</div>
+</div>
+
+<nav id="nav-rail">
+    <button class="nav-btn" onclick="tab('radio', this)">Live</button>
+    <button class="nav-btn" onclick="tab('wire', this)">Wire</button>
+    <button class="nav-btn active" onclick="tab('crew', this)">Crew</button>
+    <button class="nav-btn" onclick="tab('sub', this)">Submits</button>
+    <button class="nav-btn" onclick="tab('ads', this)">Ads</button>
 </nav>
 
 <main>
-    <section id="v-radio" class="view active">
-        <div class="shout-box">
-            <h1>ROCKIN' SCOTLAND</h1>
-            <h2>WE ARE THE AUTHORITY</h2>
-        </div>
-
-        <div class="mission-grid">
-            <div class="mission-text">
-                <h3>PROUD TO SERVE</h3>
-                <p>Rock.Scot is the iron-clad voice of <strong>Inverclyde, South Lanarkshire, and North Ayrshire</strong>. We don't just play music; we represent the grit and spirit of the West of Scotland. From the shipyards of Greenock to the tech-hubs of Lanarkshire, we provide the ultimate soundtrack for the Central Belt.</p>
-                <p>Supporting local talent, driving regional business, and broadcasting the world's greatest rock anthems 24/7.</p>
-                <p style="margin-top:20px; font-style: italic; color: #888;">"Others broadcast. We dominate."</p>
-            </div>
-
-            <div class="expansion-card">
-                <div class="map-graphic" title="Expansion Coverage Map"></div>
-                <div class="expansion-body">
-                    <h4 style="font-family:'Oswald'; color:var(--primary); margin-bottom:10px;">EXPANSION PROTOCOL</h4>
-                    <p style="font-size:0.9rem; color:#aaa; margin-bottom:20px;">The network is growing. Stay tuned as we extend our coverage across the region.</p>
-                    <div style="font-family:'Oswald'; font-size:0.8rem; color:var(--primary); letter-spacing:2px;">NORTH AYRSHIRE | INVERCLYDE | LANARKSHIRE</div>
-                </div>
-            </div>
-        </div>
-
-        <h3 style="font-family:'Oswald'; color:#333; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 60px;">Regional Authority Partners</h3>
-        <div class="partner-strip">
-            <div class="partner-card"><i>VELO-ROCK CUSTOMS</i><span>Paisley</span></div>
-            <div class="partner-card"><i>GLASGOW GEARHEADS</i><span>West End</span></div>
-            <div class="partner-card"><i>COPPER-STILL ROCK</i><span>Motherwell</span></div>
-            <div class="partner-card"><i>INK-AUTHORITY</i><span>Hamilton</span></div>
-        </div>
+    <section id="v-crew" class="view active">
+        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:30px; text-transform:uppercase; letter-spacing:2px;">The Authority Crew</h2>
+        <div class="grid" id="crew-list"></div>
     </section>
 
-    <section id="v-wire" class="view"><div id="news-container">Syncing Central Scotland Authority wire...</div></section>
-    
-    <section id="v-crew" class="view"><div class="crew-grid" id="crew-rolodex"></div></section>
-    
-    <section id="v-sub" class="view">
-        <div style="background:#111; padding:80px; text-align:center; border:1px solid #333;">
-            <h2 style="font-family:'Oswald'; color:var(--primary); font-size: 3rem;">BAND GATEWAY</h2>
-            <p style="margin:20px 0; color:#888;">No middlemen. Just loud music. Submit your track for airplay today.</p>
-            <button class="play-btn" onclick="window.location.href='mailto:music@rock.scot?subject=Band Submission'">SUBMIT TRACK</button>
-        </div>
-    </section>
-
-    <section id="v-ads" class="view">
-        <div style="background:#111; border-left: 5px solid var(--primary); padding:30px; margin-bottom:40px;">
-            <h2 style="font-family:'Oswald'; color:var(--primary);">YOUR BRAND, AMPLIFIED</h2>
-            <p style="color:#888; margin-top:10px;">Reach <strong>Inverclyde, Lanarkshire, and Ayrshire</strong> with targeted regional airtime.</p>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-            <div class="dj-card" onclick="updateCalc('Regional', 299, 'c1')" id="c1"><h3>Regional</h3><div style="font-family:'Oswald'; font-size:3rem;">£299</div></div>
-            <div class="dj-card" onclick="updateCalc('Multi-Reg', 449, 'c2')" id="c2"><h3>Multi-Reg</h3><div style="font-family:'Oswald'; font-size:3rem;">£449</div></div>
-            <div class="dj-card" onclick="updateCalc('Creative', 195, 'c3')" id="c3"><h3>Creative</h3><div style="font-family:'Oswald'; font-size:3rem;">£195</div></div>
-        </div>
-        <div style="margin-top:40px; text-align:center; border: 1px solid var(--primary); padding: 40px; background: #111;">
-            <h4 style="font-family:'Oswald'; color:var(--primary);">TOTAL INVESTMENT: <span id="calc-display">£0</span></h4>
-            <button class="play-btn" style="width:100%; max-width: 400px; margin-top:25px;" onclick="sendInquiry()">REQUEST MEDIA KIT</button>
-        </div>
-    </section>
+    <section id="v-wire" class="view"><div class="grid" id="wire-list"></div></section>
 </main>
 
-<div class="modal" id="bio-modal"><div class="modal-content"><span class="close-modal" onclick="closeBio()">&times;</span><div id="bio-body"></div></div></div>
+<div id="bio-modal"><div class="bio-container" id="bio-target"></div></div>
 
-<footer><button class="play-btn" onclick="toggleStream()" id="play-trigger">LISTEN LIVE</button></footer>
+<footer>
+    <button class="play-btn" id="stream-trigger" onclick="toggleAudio()">
+        <span id="btn-text">Listen Live</span>
+        <div class="visualizer"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+    </button>
+</footer>
 
 <script>
-    const crewData = [
-        { name: "Andy", role: "Daytime Authority", loc: "East Kilbride", bio: "Andy is an East Kilbride local and former Nirvana-tribute drummer. He's the voice of Central Belt daytime rock." },
-        { name: "Alex", role: "Late Night Tech", loc: "Johnstone", bio: "Johnstone's own Alex specializes in Thrash Metal and technical riffs. Favourite artist: Metallica." },
-        { name: "Cal", role: "Punk & Grunge", loc: "Greenock", bio: "From Ohio to Greenock. Cal brings raw Punk energy and Green Day anthems to the West Coast." },
-        { name: "Jude", role: "The Mix", loc: "Hamilton", bio: "Hamilton resident and Classic Rock queen. Jude lives for AC/DC and stadium rock history." },
-        { name: "Mhairi", role: "Scene Hero", loc: "Motherwell", bio: "Motherwell native Mhairi is the authority on New Wave and New Order. She knows the local scene better than anyone." },
-        { name: "Chris", role: "Classic Rock", loc: "Paisley", bio: "A Paisley legend who roadied in the 80s. Favourite artist: Guns N' Roses." },
-        { name: "Blue", role: "New Wave", loc: "Dumbarton", bio: "Dumbarton-based synth specialist. Bringing a David Bowie edge to the Authority." }
+    const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
+    
+    // CREW DATA
+    const crew = [
+        { name: "Andy", role: "Daytime Authority", loc: "East Kilbride", bio: "The lead voice for Rock.Scot, bringing the heaviest hits to the Central Belt every afternoon." },
+        { name: "Inverclyde Boss", role: "Evening Authority", loc: "Greenock", bio: "Dominating the airwaves with pure Scottish rock heritage." }
     ];
 
-    function tab(id) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('v-' + id).classList.add('active');
-        document.getElementById('nav-' + id).classList.add('active');
-    }
-
     function initCrew() {
-        document.getElementById('crew-rolodex').innerHTML = crewData.map((dj, i) => `
-            <div class="dj-card" onclick="openBio(${i})">
-                <img src="dj_${dj.name.toLowerCase()}.jpg" onerror="this.src='venue.png'" alt="${dj.name}">
-                <h3>${dj.name}</h3><p style="color:#666; font-family:'Oswald'; font-size:0.8rem;">${dj.role}</p>
+        document.getElementById('crew-list').innerHTML = crew.map((dj, i) => `
+            <div class="card" onclick="openBio(${i})">
+                <div class="card-img-wrap"><img src="dj_${dj.name.toLowerCase().replace(' ', '_')}.jpg" onerror="this.src='studio.jpg'"></div>
+                <div class="card-body"><h3>${dj.name}</h3><div class="card-meta">${dj.role} // ${dj.loc}</div></div>
             </div>
         `).join('');
     }
 
     function openBio(i) {
-        const dj = crewData[i];
-        document.getElementById('bio-body').innerHTML = `<h2 style="font-family:'New Rocker'; color:var(--primary); font-size:3rem;">${dj.name}</h2><p style="color:#666; margin-bottom:20px;">Residence: ${dj.loc}</p><p style="line-height:1.8;">${dj.bio}</p>`;
-        document.getElementById('bio-modal').style.display = 'flex';
+        const dj = crew[i];
+        document.getElementById('bio-target').innerHTML = `
+            <div class="bio-left"><img src="dj_${dj.name.toLowerCase().replace(' ', '_')}.jpg" onerror="this.src='studio.jpg'"></div>
+            <div class="bio-right">
+                <button class="close-btn" onclick="closeBio()">CLOSE X</button>
+                <div class="mag-header">${dj.name}</div>
+                <p style="color:var(--primary); font-family:'Oswald'; font-size:1.2rem; margin-bottom:20px;">${dj.role} // ${dj.loc} AUTHORITY</p>
+                <p style="font-family:'Inter'; line-height:1.6; color:#ccc; font-size:1.1rem;">${dj.bio}</p>
+            </div>
+        `;
+        document.getElementById('bio-modal').style.display = 'block';
     }
 
     function closeBio() { document.getElementById('bio-modal').style.display = 'none'; }
 
-    let pP = 0, cP = 0, pN = "None";
-    function updateCalc(type, price, id) {
-        if(type === 'Creative') { cP = (cP === 0) ? 195 : 0; document.getElementById(id).style.borderColor = cP > 0 ? 'var(--primary)' : '#222'; }
-        else { pP = price; pN = type; document.querySelectorAll('.dj-card').forEach(c => { if(c.id.startsWith('c')) c.style.borderColor = '#222'; }); document.getElementById(id).style.borderColor = 'var(--primary)'; }
-        document.getElementById('calc-display').innerText = "£" + (pP + cP);
+    // SPA NAVIGATION & AUDIO Logic
+    function tab(id, btn) {
+        document.getElementById('loader').style.display = 'flex';
+        setTimeout(() => {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('v-' + id).classList.add('active');
+            btn.classList.add('active');
+            document.getElementById('loader').style.display = 'none';
+        }, 400);
     }
 
-    function sendInquiry() { if(pP === 0) return alert("Select a package."); window.location.href = `mailto:production@rock.scot?subject=Ad Booking&body=Package: ${pN}`; }
-
-    async function loadFeeds() {
-        const feeds = ["https://www.theskinny.co.uk/rss/music", "http://www.isthismusic.com/feed"];
-        let all = [];
-        for (const f of feeds) {
-            try {
-                const r = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(f)}`);
-                const d = await r.json();
-                if(d.status === 'ok') all = [...all, ...d.items];
-            } catch(e) {}
-        }
-        renderNews(all);
+    function toggleAudio() {
+        const btn = document.getElementById('stream-trigger');
+        if (stream.paused) { stream.play(); btn.classList.add('playing'); } 
+        else { stream.pause(); btn.classList.remove('playing'); }
     }
 
-    function renderNews(items) {
-        const cont = document.getElementById('news-container');
-        const tick = document.getElementById('ticker-content');
-        let h = '', t = '';
-        items.slice(0, 10).forEach(item => {
-            t += `<span> +++ ${item.title.toUpperCase()} </span>`;
-            h += `<div style="margin-bottom:25px; background:#111; padding:25px; border-left:4px solid var(--primary);"><h4>${item.title}</h4></div>`;
-        });
-        cont.innerHTML = h; tick.innerHTML = t + t;
-    }
-
-    const audio = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
-    function toggleStream() { audio.paused ? audio.play() : audio.pause(); }
-
-    window.onload = () => { initCrew(); loadFeeds(); };
+    window.onload = () => { initCrew(); };
 </script>
 </body>
-    </html>
+</html>
