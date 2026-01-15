@@ -17,7 +17,6 @@
     --border: rgba(255,62,0,0.25);
 }
 
-/* RESET & CORE */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
     background: var(--bg);
@@ -33,21 +32,22 @@ body {
     grid-template-rows: auto 40px var(--nav-h) 1fr var(--footer-h);
 }
 
-/* HEADER - LOGO EMPHASIS */
+/* HEADER - MAXIMIZED BANNER */
 header { 
     background: #000; 
-    padding: 20px 0; 
+    padding: 30px 10px; 
     display: flex; 
     justify-content: center; 
     align-items: center;
-    z-index: 100; 
+    border-bottom: 1px solid #111;
 }
 .hdr-banner { 
-    width: auto; 
-    max-width: 90%; 
-    height: 180px; /* Increased for desktop impact */
+    width: 100%; 
+    max-width: 1200px; 
+    height: auto; 
+    max-height: 250px;
     object-fit: contain;
-    filter: drop-shadow(0 0 15px rgba(255,62,0,0.3)); 
+    filter: drop-shadow(0 0 20px rgba(255,62,0,0.2)); 
 }
 
 /* TICKER */
@@ -58,89 +58,63 @@ header {
 /* NAV */
 nav { background: var(--glass); height: var(--nav-h); display: flex; border-bottom: 3px solid var(--primary); z-index: 150; backdrop-filter: blur(12px); }
 .nav-btn { flex: 1; background: transparent; border: none; color: #555; font-family: 'Bebas Neue'; font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
-.nav-btn.active { color: #fff; background: rgba(255,62,0,0.12); box-shadow: inset 0 -5px 0 var(--primary); text-shadow: 0 0 10px var(--primary); }
+.nav-btn.active { color: #fff; background: rgba(255,62,0,0.1); box-shadow: inset 0 -5px 0 var(--primary); }
 
 /* MAIN CONTENT */
 main { overflow-y: auto; padding: 40px 5%; background: radial-gradient(circle at 50% 0%, #1a0a08 0%, #030303 100%); }
-.view { display: none; max-width: 1400px; margin: 0 auto; animation: slideUp 0.4s ease-out; }
+.view { display: none; max-width: 1400px; margin: 0 auto; animation: fadeIn 0.4s ease-in-out; }
 .view.active { display: block; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* CREW CARDS - FIXED IMAGE FILENAMES */
-.crew-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
-.crew-card { background: #0a0a0a; border-bottom: 4px solid var(--primary); overflow: hidden; }
-.crew-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; filter: grayscale(20%); }
-.crew-body { padding: 20px; }
-.crew-body h3 { font-family: 'Bebas Neue'; font-size: 2.2rem; margin-bottom: 5px; }
-.crew-body p { color: var(--primary); font-family: 'Oswald'; font-size: 0.9rem; text-transform: uppercase; }
+h2 { font-family: 'Bebas Neue'; color: var(--primary); font-size: 3.5rem; margin-bottom: 30px; letter-spacing: 2px; }
 
-/* WIRE GRID */
-.wire-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
-.news-card { background: #0a0a0a; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: 0.3s; }
-.news-card:hover { border-color: var(--primary); transform: scale(1.02); }
-.news-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; filter: grayscale(100%); transition: 0.5s; }
-.news-card:hover img { filter: grayscale(0%); }
-.news-content { padding: 25px; border-top: 4px solid var(--primary); }
-.news-source { font-family: 'Oswald'; color: var(--primary); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
-.news-card h3 { font-family: 'Bebas Neue'; font-size: 2rem; margin: 10px 0; }
+/* LIVE VIEW */
+.live-container { display: grid; grid-template-columns: 1fr 350px; gap: 40px; }
+.now-playing-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 40px; text-align: center; }
+.eq-container { display: flex; justify-content: center; align-items: flex-end; height: 60px; gap: 5px; margin: 20px 0; }
+.eq-bar { width: 10px; background: var(--primary); animation: eq 0.8s infinite alternate; }
+@keyframes eq { 0% { height: 10px; } 100% { height: 60px; } }
 
-/* FOOTER PLAYER & FLICKER */
-footer { background: #000; border-top: 6px solid var(--primary); display: flex; justify-content: space-around; align-items: center; padding: 0 5%; }
-.on-air-status { font-family: 'Oswald'; color: var(--primary); font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; animation: neonFlicker 3.5s infinite; }
+/* PARTNERS/PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+.price-card { background: #0a0a0a; padding: 40px; border: 1px solid #222; text-align: center; position: relative; }
+.price-card.featured { border: 2px solid var(--primary); box-shadow: 0 0 20px rgba(255,62,0,0.1); }
+.price-title { font-family: 'Oswald'; font-size: 1.2rem; color: #888; }
+.price-val { font-family: 'Bebas Neue'; font-size: 4rem; color: var(--primary); margin: 20px 0; }
+.price-features { list-style: none; color: #ccc; line-height: 2; font-size: 0.9rem; margin-bottom: 30px; }
 
-@keyframes neonFlicker {
-    0%, 18%, 22%, 25%, 53%, 57%, 100% { text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary); opacity: 1; }
-    20%, 24%, 55% { text-shadow: none; opacity: 0.4; }
-}
+/* CREW */
+.crew-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+.crew-card { background: #0a0a0a; border-bottom: 4px solid var(--primary); }
+.crew-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+.crew-info { padding: 20px; }
 
-.player-unit { 
-    width: 320px; 
-    height: 70px; 
-    background: #111; 
-    border: 2px solid #222; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    cursor: pointer; 
-    position: relative;
-    overflow: hidden;
-}
-.play-label { 
-    background: var(--primary); 
-    font-family: 'Bebas Neue'; 
-    padding: 12px 40px; 
-    font-size: 1.8rem;
-    color: #fff; 
-    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); 
-    transition: 0.2s;
-}
-.player-unit:active .play-label { transform: scale(0.95); }
+/* FOOTER */
+footer { background: #000; border-top: 6px solid var(--primary); display: flex; justify-content: space-around; align-items: center; }
+.on-air-status { font-family: 'Oswald'; color: var(--primary); font-size: 1.2rem; animation: flicker 3s infinite; }
+@keyframes flicker { 0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 10px var(--primary); } 20%, 22%, 24%, 55% { opacity: 0.5; text-shadow: none; } }
 
-/* MOBILE ADJUSTMENTS */
+.player-unit { width: 300px; height: 70px; background: #111; border: 1px solid #333; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.play-label { background: var(--primary); font-family: 'Bebas Neue'; padding: 10px 30px; font-size: 1.5rem; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); }
+
 @media (max-width: 768px) {
-    .hdr-banner { height: 100px; }
+    .live-container { grid-template-columns: 1fr; }
+    .hdr-banner { max-height: 120px; }
     .on-air-status { display: none; }
-    .nav-btn { font-size: 1.1rem; }
-    .crew-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
-
 <body>
 
-<audio id="rockStream" src="https://stream.rock.scot/live" preload="none"></audio>
-
 <header>
-    <img src="rock.scot_vector_banner.png" class="hdr-banner" alt="Rock.Scot | Central Scotland's Rock Authority">
+    <img src="rock.scot_vector_banner.png" class="hdr-banner" alt="Rock.Scot">
 </header>
 
 <div class="ticker-wrap">
-    <div class="ticker">
-        // THE WIRE: CENTRAL SCOTLAND NEWS // THE SKINNY // IS THIS MUSIC? // RAVECHILD // REPEAT FANZINE // ROCK.SCOT //
-    </div>
+    <div class="ticker">// THE WIRE: CENTRAL SCOTLAND ROCK AUTHORITY // THE SKINNY // IS THIS MUSIC? // NOW ON AIR: DJ ANDY //</div>
 </div>
 
-<nav id="main-nav">
+<nav>
     <button class="nav-btn" data-view="live">Live</button>
     <button class="nav-btn active" data-view="wire">Wire</button>
     <button class="nav-btn" data-view="crew">Crew</button>
@@ -149,39 +123,86 @@ footer { background: #000; border-top: 6px solid var(--primary); display: flex; 
 </nav>
 
 <main>
+    <section id="live-view" class="view">
+        <h2>ON AIR NOW</h2>
+        <div class="live-container">
+            <div class="now-playing-box">
+                <p style="font-family:'Oswald'; color:var(--primary);">CURRENTLY CRANKING</p>
+                <h3 style="font-family:'Bebas Neue'; font-size: 3rem; margin: 10px 0;">AC/DC - BACK IN BLACK</h3>
+                <div class="eq-container">
+                    <div class="eq-bar" style="animation-delay: 0.1s"></div>
+                    <div class="eq-bar" style="animation-delay: 0.3s"></div>
+                    <div class="eq-bar" style="animation-delay: 0.2s"></div>
+                    <div class="eq-bar" style="animation-delay: 0.5s"></div>
+                </div>
+                <p>Broadcasting from the heart of Central Scotland.</p>
+            </div>
+            <div class="schedule-box">
+                <h4 style="font-family:'Oswald'; margin-bottom: 15px;">UP NEXT</h4>
+                <div style="border-left: 2px solid var(--primary); padding-left: 15px;">
+                    <p><strong>12:00</strong> - The Midday Metal Mash</p>
+                    <p><strong>14:00</strong> - DJ ALEX: Late Lunch Rock</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="partners-view" class="view">
+        <h2>PARTNER WITH THE AUTHORITY</h2>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <div class="price-title">REGIONAL</div>
+                <div class="price-val">£299</div>
+                <ul class="price-features">
+                    <li>Targeted Central Scotland Reach</li>
+                    <li>Ticker Placement</li>
+                    <li>Social Media Shoutouts</li>
+                </ul>
+                <button class="nav-btn active" style="width:100%; height: 50px;">CHOOSE PLAN</button>
+            </div>
+            <div class="price-card featured">
+                <div class="price-title">MULTI-REGIONAL</div>
+                <div class="price-val">£449</div>
+                <ul class="price-features">
+                    <li>Full Network Coverage</li>
+                    <li>Primary Wire Rotation</li>
+                    <li>On-Air Mentions</li>
+                </ul>
+                <button class="nav-btn active" style="width:100%; height: 50px;">CHOOSE PLAN</button>
+            </div>
+            <div class="price-card">
+                <div class="price-title">CREATIVE</div>
+                <div class="price-val">£195</div>
+                <ul class="price-features">
+                    <li>Bespoke Audio Production</li>
+                    <li>Graphic Design Support</li>
+                    <li>Brand Integration</li>
+                </ul>
+                <button class="nav-btn active" style="width:100%; height: 50px;">CHOOSE PLAN</button>
+            </div>
+        </div>
+    </section>
+
     <section id="wire-view" class="view active">
-        <h2 style="font-family:'Bebas Neue';color:var(--primary);font-size:3.5rem;margin-bottom:40px;">THE WIRE</h2>
+        <h2>THE WIRE</h2>
         <div class="wire-grid">
-            <article class="news-card" onclick="openNews('The Skinny', 'Scotland\'s Essential New Rock', 'The latest tracks coming out of Glasgow and Edinburgh this week.')">
+             <article class="news-card" onclick="alert('Opening The Skinny...')">
                 <img src="https://images.unsplash.com/photo-1511735111819-9a3f7709049c?w=800">
-                <div class="news-content"><span class="news-source">The Skinny</span><h3>Essential Tracks</h3><p>Noise from the underground...</p></div>
+                <div class="news-content"><span class="news-source">The Skinny</span><h3>Scotland's Best New Music</h3><p>Central Scotland's underground noise...</p></div>
             </article>
         </div>
     </section>
 
     <section id="crew-view" class="view">
-        <h2 style="font-family:'Bebas Neue';color:var(--primary);font-size:3.5rem;margin-bottom:40px;">THE CREW</h2>
+        <h2>THE CREW</h2>
         <div class="crew-grid">
-            <div class="crew-card">
-                <img src="dj_andy.jpg" alt="DJ Andy">
-                <div class="crew-body"><h3>DJ ANDY</h3><p>Rock Authority</p></div>
-            </div>
-            <div class="crew-card">
-                <img src="dj_alex.jpg" alt="Alex">
-                <div class="crew-body"><h3>ALEX</h3><p>Rock Authority</p></div>
-            </div>
-            <div class="crew-card">
-                <img src="dj_cal.jpg" alt="Cal">
-                <div class="crew-body"><h3>CAL</h3><p>Rock Authority</p></div>
-            </div>
-            <div class="crew-card">
-                <img src="dj_jude.jpg" alt="Jude">
-                <div class="crew-body"><h3>JUDE</h3><p>Rock Authority</p></div>
-            </div>
+            <div class="crew-card"><img src="dj_andy.jpg"><div class="crew-info"><h3>DJ ANDY</h3><p>Rock Authority</p></div></div>
+            <div class="crew-card"><img src="dj_alex.jpg"><div class="crew-info"><h3>ALEX</h3><p>Rock Authority</p></div></div>
+            <div class="crew-card"><img src="dj_cal.jpg"><div class="crew-info"><h3>CAL</h3><p>Rock Authority</p></div></div>
+            <div class="crew-card"><img src="dj_jude.jpg"><div class="crew-info"><h3>JUDE</h3><p>Rock Authority</p></div></div>
         </div>
     </section>
-
-    </main>
+</main>
 
 <footer>
     <div class="on-air-status">● LIVE ON AIR</div>
@@ -190,8 +211,9 @@ footer { background: #000; border-top: 6px solid var(--primary); display: flex; 
     </div>
 </footer>
 
+<audio id="rockStream" src="https://icecast.tegradon.com/rock" preload="none"></audio>
+
 <script>
-    // AUDIO LOGIC
     const stream = document.getElementById('rockStream');
     const playBtn = document.getElementById('playBtn');
     const playText = document.getElementById('playText');
@@ -199,37 +221,30 @@ footer { background: #000; border-top: 6px solid var(--primary); display: flex; 
 
     playBtn.addEventListener('click', () => {
         if (!isPlaying) {
+            stream.load(); // Fresh buffer
             stream.play().then(() => {
                 playText.innerText = "STOP PLAYER";
                 isPlaying = true;
-            }).catch(e => console.error("Stream failed", e));
+            }).catch(e => { alert("Stream currently offline. Check back soon!"); });
         } else {
             stream.pause();
-            stream.src = stream.src; // Reset stream buffer
             playText.innerText = "LISTEN LIVE";
             isPlaying = false;
         }
     });
 
-    // SPA NAVIGATION
     const navBtns = document.querySelectorAll('.nav-btn');
     const views = document.querySelectorAll('.view');
     navBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const target = btn.getAttribute('data-view');
+            if(!target) return;
             navBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             views.forEach(v => v.classList.remove('active'));
-            const targetView = document.getElementById(`${target}-view`);
-            if(targetView) targetView.classList.add('active');
+            document.getElementById(`${target}-view`).classList.add('active');
         });
     });
-
-    function openNews(source, title, text) {
-        // News Modal logic as before
-        alert(`${source}: ${title}\n\n${text}`);
-    }
 </script>
-
 </body>
-</html>
+        </html>
