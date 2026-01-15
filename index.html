@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Rock.Scot | Central Scotland's Rock Authority</title>
+    <title>Rock.Scot | Rockin' Scotland</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=New+Rocker&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -11,138 +11,75 @@
             --primary: #ff3e00; 
             --bg: #050505; 
             --nav-h: 75px; 
-            --footer-h: 100px; 
+            --footer-h: 125px; 
             --glass: rgba(15, 15, 15, 0.98);
             --border: rgba(255, 255, 255, 0.08);
             --glow: 0 0 25px rgba(255, 62, 0, 0.2);
         }
 
-        /* 1. CORE RESET & STRUCTURE */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-        html, body { 
-            background: var(--bg); 
-            height: 100%; width: 100%; 
-            overflow: hidden; 
-            font-family: 'Inter', sans-serif; 
-            color: #fff;
-        }
+        html, body { background: var(--bg); height: 100%; width: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: #fff; }
         body { display: grid; grid-template-rows: auto auto var(--nav-h) 1fr var(--footer-h); }
 
-        /* 2. HEADER: MAXIMUM BRANDING EMPHASIS */
-        header { 
-            background: #000; 
-            border-bottom: 5px solid var(--primary); 
-            display: flex; 
-            justify-content: center; 
-            padding: 40px 20px; 
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .hdr-logo { 
-            width: 100%; 
-            max-width: 1100px; /* Maximize Desktop Impact */
-            height: auto;
-            max-height: 280px; 
-            object-fit: contain; 
-            filter: drop-shadow(0 0 20px rgba(255,62,0,0.3));
-        }
-        
-        /* 3. ROBUST NEWS TICKER */
+        /* HEADER */
+        header { background: #000; border-bottom: 5px solid var(--primary); display: flex; justify-content: center; padding: 30px 20px; z-index: 100; }
+        .hdr-logo { width: 100%; max-width: 900px; height: auto; max-height: 220px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(255,62,0,0.4)); }
+
+        /* TICKER */
         .ticker-wrap { background: #0a0a0a; border-bottom: 1px solid var(--border); height: 40px; overflow: hidden; display: flex; align-items: center; }
-        .ticker { 
-            display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; 
-            font-family: 'Oswald'; color: var(--primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; 
-        }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 65s linear infinite; font-family: 'Oswald'; color: var(--primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* 4. NAVIGATION RAIL (Touch & Click Safe) */
-        nav { 
-            display: flex; background: var(--glass); height: var(--nav-h); 
-            border-bottom: 1px solid var(--border); overflow-x: auto; 
-            scrollbar-width: none; -webkit-overflow-scrolling: touch;
-            padding: 0 10px;
-        }
-        nav::-webkit-scrollbar { display: none; }
-        
-        .nav-btn { 
-            flex: 1; min-width: 130px; background: transparent; border: none; 
-            color: #444; font-family: 'Oswald'; text-transform: uppercase; 
-            cursor: pointer; transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            font-size: 1.1rem; letter-spacing: 1px;
-            border-right: 1px solid var(--border);
-        }
-        .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.02); }
-        .nav-btn.active { 
-            color: #fff; background: rgba(255, 62, 0, 0.1); 
-            box-shadow: inset 0 -4px 0 var(--primary);
-        }
+        /* NAV */
+        nav { display: flex; background: var(--glass); height: var(--nav-h); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        .nav-btn { flex: 1; min-width: 100px; background: transparent; border: none; color: #444; font-family: 'Oswald'; text-transform: uppercase; cursor: pointer; transition: 0.4s; font-size: 0.9rem; border-right: 1px solid var(--border); }
+        .nav-btn.active { color: #fff; background: rgba(255, 62, 0, 0.1); box-shadow: inset 0 -4px 0 var(--primary); }
 
-        /* 5. MAIN CONTENT AREA */
-        main { 
-            overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; 
-            padding: 50px 5%; 
-            background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 100%);
-        }
-        .view { display: none; max-width: 1600px; margin: 0 auto; animation: viewSlide 0.5s ease-out; }
+        /* VIEWS */
+        main { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 40px 5%; background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 100%); }
+        .view { display: none; max-width: 1400px; margin: 0 auto; animation: fadeUp 0.4s ease; }
         .view.active { display: block; }
-        @keyframes viewSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; } }
 
-        /* 6. GRID SYSTEM (Magazine Style) */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; }
-        
-        .card { 
-            background: #0d0d0d; border: 1px solid var(--border); 
-            transition: 0.3s; position: relative; overflow: hidden;
-            display: flex; flex-direction: column;
-            min-height: 450px; /* Ensures Uniformity */
+        /* CREW GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .card { background: #0d0d0d; border: 1px solid var(--border); transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .card-img-box { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #000; position: relative; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); }
+        .card-body { padding: 25px; flex-grow: 1; border-top: 4px solid var(--primary); }
+        .card h3 { font-family: 'New Rocker'; color: #fff; font-size: 1.8rem; margin-bottom: 5px; }
+        .card-role { font-family: 'Oswald'; color: var(--primary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+        .mag-bio { font-size: 0.85rem; line-height: 1.6; color: #ccc; }
+        .mag-q { color: var(--primary); font-weight: 900; margin-top: 10px; display: block; text-transform: uppercase; font-size: 0.7rem; }
+
+        /* CASSETTE FOOTER */
+        footer { background: #000; border-top: 5px solid var(--primary); height: var(--footer-h); display: flex; align-items: center; justify-content: center; }
+        .cassette {
+            width: 260px; height: 85px; background: #1a1a1a; border-radius: 8px; border: 3px solid #333;
+            display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer;
+            box-shadow: 0 6px 0 #000; transition: 0.1s;
         }
-        .card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: var(--glow); }
-        
-        .card-img-box { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #000; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; opacity: 0.9; }
-        .card:hover img { transform: scale(1.05); opacity: 1; }
-        
-        .card-overlay { 
-            position: absolute; top: 15px; left: 15px; 
-            background: var(--primary); color: #fff; font-family: 'Oswald';
-            padding: 5px 15px; font-size: 0.75rem; text-transform: uppercase;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
+        .cassette:active { transform: translateY(4px); box-shadow: 0 0 0 #000; }
+        .spool { width: 35px; height: 35px; background: #fff; border-radius: 50%; border: 6px solid #000; position: absolute; top: 25px; }
+        .spool.left { left: 25px; } .spool.right { right: 25px; }
+        .spool-inner { width: 10px; height: 10px; background: #000; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; }
+        .cassette.playing .spool { animation: spin 2s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .label { background: var(--primary); color: #fff; font-family: 'Oswald'; padding: 5px 25px; font-size: 1.1rem; z-index: 10; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); }
 
-        .card-body { padding: 30px; flex-grow: 1; border-top: 4px solid var(--primary); display: flex; flex-direction: column; }
-        .card h3 { font-family: 'New Rocker'; color: #fff; font-size: 2rem; margin-bottom: 10px; line-height: 1; }
-        .card-role { font-family: 'Oswald'; color: var(--primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
-        .card-bio { font-family: 'Inter'; font-size: 0.95rem; line-height: 1.6; color: #aaa; flex-grow: 1; }
+        /* FORMS & CALC */
+        .action-btn { background: var(--primary); color: #fff; width: 100%; padding: 15px; border: none; font-family: 'Oswald'; text-transform: uppercase; cursor: pointer; font-size: 1.1rem; }
+        input, select, textarea { width: 100%; padding: 15px; background: #000; border: 1px solid #444; color: #fff; margin-bottom: 10px; font-family: 'Inter'; }
 
-        /* 7. PRICING STYLES */
-        .price-card { text-align: center; padding: 50px 20px; min-height: auto; }
-        .price-val { font-family: 'Oswald'; font-size: 4.5rem; color: var(--primary); display: block; margin: 15px 0; font-weight: 900; }
-        .price-desc { font-family: 'Inter'; color: #ccc; font-size: 1.1rem; }
+        /* MODAL */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal.active { display: flex; }
+        .modal-box { background: #111; border: 1px solid var(--primary); max-width: 600px; width: 100%; padding: 30px; position: relative; }
 
-        /* 8. FOOTER & PLAYER */
-        footer { 
-            background: #000; border-top: 5px solid var(--primary); 
-            height: var(--footer-h); display: flex; align-items: center; justify-content: center;
-        }
-        .play-btn { 
-            background: var(--primary); color: #fff; font-family: 'Oswald'; 
-            padding: 20px 80px; border: none; cursor: pointer;
-            clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
-            font-size: 1.5rem; text-transform: uppercase; font-weight: 900;
-            transition: 0.3s;
-        }
-        .play-btn:hover { padding: 20px 100px; filter: brightness(1.2); }
-        .play-btn.playing { background: #fff; color: var(--primary); }
-
-        /* 9. MOBILE OPTIMIZATION */
         @media (max-width: 900px) {
-            header { padding: 20px; }
-            .hdr-logo { max-height: 140px; }
-            .grid { grid-template-columns: 1fr; } /* Stack cards on mobile */
-            .nav-btn { min-width: 100px; font-size: 0.85rem; }
-            main { padding: 30px 15px; }
-            .card { min-height: auto; } /* Let content dictate height on mobile */
-            .price-val { font-size: 3.5rem; }
+            .grid { grid-template-columns: 1fr; }
+            .hdr-logo { max-height: 120px; }
         }
     </style>
 </head>
@@ -151,195 +88,156 @@
 <header><img src="logo.png" class="hdr-logo" alt="Rock.Scot Authority" onerror="this.src='studio.jpg'"></header>
 
 <div class="ticker-wrap">
-    <div class="ticker">ROCK AUTHORITY // INVERCLYDE BROADCAST ACTIVE // LANARKSHIRE BROADCAST ACTIVE // AYRSHIRE BROADCAST ACTIVE // CENTRAL SCOTLAND NEWS // ROCK AUTHORITY //</div>
+    <div class="ticker">
+        ROCKIN' SCOTLAND // GLASGOW ROCK WIRE // AYRSHIRE BROADCAST ACTIVE // INVERCLYDE BROADCAST ACTIVE // LANARKSHIRE BROADCAST ACTIVE // THE AUTHORITY // ROCKIN' SCOTLAND // GLASGOW ROCK WIRE // AYRSHIRE BROADCAST ACTIVE // INVERCLYDE BROADCAST ACTIVE // LANARKSHIRE BROADCAST ACTIVE // THE AUTHORITY //
+    </div>
 </div>
 
-<nav id="nav-rail">
+<nav>
     <button class="nav-btn" onclick="showTab('radio', this)">Live</button>
-    <button class="nav-btn" onclick="showTab('wire', this)">The Wire</button>
-    <button class="nav-btn active" onclick="showTab('crew', this)">The Crew</button>
-    <button class="nav-btn" onclick="showTab('sub', this)">Submissions</button>
+    <button class="nav-btn" onclick="showTab('wire', this)">Wire</button>
+    <button class="nav-btn active" onclick="showTab('crew', this)">Crew</button>
+    <button class="nav-btn" onclick="showTab('sub', this)">Submit</button>
     <button class="nav-btn" onclick="showTab('ads', this)">Partners</button>
 </nav>
 
-<main id="content-area">
-
+<main>
     <section id="v-crew" class="view active">
-        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:40px; text-transform:uppercase; letter-spacing:4px; font-size:2rem;">The Authority Crew</h2>
-        <div class="grid" id="crew-grid">
-            </div>
+        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:20px;">THE CREW</h2>
+        <div class="grid" id="crew-grid"></div>
     </section>
 
     <section id="v-wire" class="view">
-        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:40px; text-transform:uppercase; letter-spacing:4px; font-size:2rem;">Regional Rock Wire</h2>
-        <div class="grid" id="wire-list">
-            <div class="card"><div class="card-body"><h3>Initializing Wire...</h3><p>Connecting to Global Rock Feeds.</p></div></div>
-        </div>
+        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:20px;">SCOTTISH ROCK WIRE</h2>
+        <div class="grid" id="wire-list"></div>
     </section>
 
     <section id="v-ads" class="view">
-        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:40px; text-transform:uppercase; letter-spacing:4px; font-size:2rem;">Broadcasting Partnership Authority</h2>
+        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:20px;">PARTNERSHIPS</h2>
+        <div class="card" style="margin-bottom:30px; border-color:#fff;">
+            <div class="card-body">
+                <h3>Rate Calculator</h3>
+                <select id="ad-select" onchange="document.getElementById('price-disp').innerText='£'+this.value">
+                    <option value="299">Regional Authority (£299)</option>
+                    <option value="449">Multi-Regional Authority (£449)</option>
+                    <option value="195">Creative Lab (£195)</option>
+                </select>
+                <div style="font-size:3rem; font-family:'Oswald'; color:var(--primary); text-align:center; margin:15px;" id="price-disp">£299</div>
+                <button class="action-btn" onclick="sendEnquiry()">Pre-fill Enquiry Email</button>
+            </div>
+        </div>
         <div class="grid">
-            <div class="card price-card">
-                <div class="card-role">Regional Authority</div>
-                <span class="price-val">£299</span>
-                <p class="price-desc">Localized impact across Central Scotland regions.</p>
-            </div>
-            <div class="card price-card">
-                <div class="card-role">Multi-Regional Authority</div>
-                <span class="price-val">£449</span>
-                <p class="price-desc">Dominant coverage across all Authority sectors.</p>
-            </div>
-            <div class="card price-card">
-                <div class="card-role">Creative Authority</div>
-                <span class="price-val">£195</span>
-                <p class="price-desc">Full production and identity consultation.</p>
-            </div>
+            <div class="card"><div class="card-body"><h3>Glasgow Axeworks</h3><div class="card-role">Local Partner</div><p class="mag-bio">The Authority's choice for custom setups and emergency string breaks.</p></div></div>
+            <div class="card"><div class="card-body"><h3>The Iron Grill</h3><div class="card-role">Local Partner</div><p class="mag-bio">Heavy Metal Burgers. Feed the beast before the show.</p></div></div>
         </div>
     </section>
 
     <section id="v-sub" class="view">
-        <div class="card" style="padding: 60px; text-align: center; align-items: center;">
-            <h2 style="font-family:'New Rocker'; font-size: 3rem; color: var(--primary);">OPEN FREQUENCY</h2>
-            <p style="margin: 20px 0; font-family:'Inter'; color:#999; max-width: 600px;">Bands, artists, and rockers. The Authority is listening. Use the secure portal to submit your tracks for airplay consideration.</p>
-            <button class="play-btn" onclick="window.location.href='submits.html'" style="margin-top:20px;">ENTER PORTAL</button>
-        </div>
+        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:20px;">BAND SUBMISSIONS</h2>
+        <div class="card"><div class="card-body">
+            <form action="mailto:andy@rock.scot" method="post" enctype="text/plain">
+                <input type="text" name="band" placeholder="Band Name" required>
+                <input type="text" name="link" placeholder="Music Link" required>
+                <textarea name="msg" rows="4" placeholder="Tell the Authority why you rock..."></textarea>
+                <button type="submit" class="action-btn">TRANSMIT</button>
+            </form>
+        </div></div>
     </section>
 
     <section id="v-radio" class="view">
-        <div style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('studio.jpg'); height: 500px; background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #222;">
-            <div style="width: 80px; height: 80px; border: 4px solid var(--primary); border-radius: 50%; margin-bottom: 20px; animation: pulse 2s infinite;"></div>
-            <h2 style="font-family:'New Rocker'; font-size: 4rem; color: var(--primary); text-align: center;">SIGNAL: ACTIVE</h2>
-            <p style="font-family:'Oswald'; letter-spacing: 5px; color: #fff;">100% ROCK NO POP</p>
+        <div style="height:350px; background:linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url('studio.jpg'); background-size:cover; display:flex; align-items:center; justify-content:center; flex-direction:column; border:1px solid #333;">
+            <h2 style="font-family:'New Rocker'; color:var(--primary); font-size:3rem;">SIGNAL ACTIVE</h2>
+            <p style="font-family:'Oswald'; letter-spacing:4px;">100% ROCK NO POP</p>
         </div>
     </section>
-
 </main>
 
 <footer>
-    <button class="play-btn" id="master-play" onclick="toggleStream()">Start Broadcast</button>
+    <div class="cassette" id="player" onclick="toggleStream()">
+        <div class="spool left"><div class="spool-inner"></div></div>
+        <div class="spool right"><div class="spool-inner"></div></div>
+        <div class="label" id="tape-label">LISTEN LIVE</div>
+    </div>
 </footer>
 
-<script>
-    // 1. AUDIO STREAM ENGINE
-    const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
-    
-    function toggleStream() {
-        const btn = document.getElementById('master-play');
-        if(stream.paused) {
-            stream.play().then(() => {
-                btn.innerText = "Stop Signal";
-                btn.classList.add('playing');
-            }).catch(e => {
-                alert("Playback blocked by browser. Please tap again.");
-            });
-        } else {
-            stream.pause();
-            btn.innerText = "Start Broadcast";
-            btn.classList.remove('playing');
-        }
-    }
+<div id="news-modal" class="modal">
+    <div class="modal-box">
+        <span style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:2rem;" onclick="this.parentElement.parentElement.classList.remove('active')">×</span>
+        <h2 id="m-title" style="font-family:'New Rocker'; color:var(--primary); margin-bottom:15px;"></h2>
+        <p id="m-desc" style="font-size:0.9rem; line-height:1.6; margin-bottom:20px;"></p>
+        <button class="action-btn" id="m-btn">Read Full Authority Report</button>
+    </div>
+</div>
 
-    // 2. CREW DATA & AI GENERATOR
+<script>
+    const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
+
     const crew = [
-        { name: "Andy", region: "Central Belt", shift: "Daytime Authority", tone: "High-Voltage", icon: "dj_andy.jpg" },
-        { name: "The Boss", region: "Inverclyde", shift: "Afternoon Command", tone: "Heritage Rock", icon: "dj_boss.jpg" },
-        { name: "Viking", region: "Lanarkshire", shift: "Nightshift Domination", tone: "Heavy Metal", icon: "dj_viking.jpg" }
+        { name: "DJ Andy", file: "dj_andy.jpg", q: "The Ritual?", a: "Black coffee and Zeppelin at 11." },
+        { name: "Chris", file: "dj_chris.jpg", q: "The Sound?", a: "Ayrshire's heaviest grunge imports." },
+        { name: "Alex", file: "dj_alex.jpg", q: "Late Night?", a: "Where the doom metal meets the stars." },
+        { name: "Jude", file: "dj_jude.jpg", q: "First Record?", a: "Sabbath. Changed my life at age six." },
+        { name: "Stevie", file: "dj_stevie.jpg", q: "The Vibe?", a: "Renfrewshire's weekend power-hour." },
+        { name: "Mhairi", file: "dj_mhairi.jpg", q: "The Authority?", a: "Glasgow's mid-morning rock invasion." },
+        { name: "Blue", file: "dj_blue.jpg", q: "Alternative?", a: "Stirling's home for the weird and heavy." },
+        { name: "Cal", file: "dj_cal.jpg", q: "Heritage?", a: "Falkirk's defender of the classic riffs." }
     ];
 
     function initCrew() {
-        const container = document.getElementById('crew-grid');
-        container.innerHTML = crew.map(dj => {
-            // Generates a robust bio string
-            const bio = `Commanding the ${dj.region} airwaves, ${dj.name} delivers a ${dj.tone} broadcast. As part of the Rock.Scot Authority, this shift is dedicated to pure, unadulterated rock heritage. No filler, no pop, just pure Scottish signal domination.`;
-            
-            return `
+        document.getElementById('crew-grid').innerHTML = crew.map(dj => `
             <div class="card">
-                <div class="card-img-box">
-                    <div class="card-overlay">LIVE AUTHORITY</div>
-                    <img src="${dj.icon}" onerror="this.src='studio.jpg'"> 
-                </div>
+                <div class="card-img-box"><img src="${dj.file}" onerror="this.src='studio.jpg'"></div>
                 <div class="card-body">
                     <h3>${dj.name}</h3>
-                    <div class="card-role">${dj.shift} // ${dj.region}</div>
-                    <p class="card-bio">${bio}</p>
+                    <div class="card-role">Rock Authority</div>
+                    <p class="mag-bio">
+                        <span class="mag-q">Q: ${dj.q}</span>
+                        "${dj.a}"
+                    </p>
                 </div>
-            </div>`;
-        }).join('');
+            </div>`).join('');
     }
 
-    // 3. NEWS MULTIPLEX ENGINE (REDUNDANT FETCHING)
     async function fetchNews() {
-        const sources = [
-            'https://loudwire.com/feed/', 
-            'https://www.loudersound.com/classic-rock/rss', 
-            'https://www.kerrang.com/feed'
-        ];
-        
-        const list = document.getElementById('wire-list');
-        let html = '';
-        let count = 0;
-
-        for (const url of sources) {
-            if(count >= 6) break; // Limit to 6 items max
-            try {
-                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`);
-                const data = await res.json();
-                
-                if (data.status === 'ok') {
-                    data.items.slice(0, 3).forEach(item => { // Take top 3 from each successful source
-                        // Clean title
-                        const cleanTitle = item.title.replace(/&amp;/g, '&').substring(0, 60) + '...';
-                        
-                        html += `
-                        <div class="card" onclick="window.open('${item.link}', '_blank')">
-                            <div class="card-img-box">
-                                <img src="${item.thumbnail || 'studio.jpg'}" onerror="this.src='studio.jpg'">
-                            </div>
-                            <div class="card-body">
-                                <h3>${cleanTitle}</h3>
-                                <div class="card-role">AUTHORITY WIRE</div>
-                            </div>
-                        </div>`;
-                    });
-                    count += 3;
-                }
-            } catch(e) {
-                console.warn("Source failed, switching to backup...");
-            }
-        }
-
-        if(html === '') {
-            html = `<div class="card"><div class="card-body"><h3>Wire Offline</h3><p>Global Rock Feeds are currently silent. Tune in to the live broadcast for updates.</p></div></div>`;
-        }
-        
-        list.innerHTML = html;
+        const feed = "https://news.google.com/rss/search?q=Rock+Music+Scotland+Glasgow&hl=en-GB&gl=GB&ceid=GB:en";
+        try {
+            const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed));
+            const data = await res.json();
+            document.getElementById('wire-list').innerHTML = data.items.slice(0,6).map((item, i) => {
+                window['n_'+i] = item;
+                return `<div class="card" onclick="openModal(${i})"><div class="card-body"><h3>${item.title.split('-')[0]}</h3><div class="card-role">SCOTTISH WIRE</div></div></div>`;
+            }).join('');
+        } catch(e) { document.getElementById('wire-list').innerHTML = "Signal Lost."; }
     }
 
-    // 4. SPA NAVIGATION LOGIC
+    function openModal(i) {
+        const item = window['n_'+i];
+        document.getElementById('m-title').innerText = item.title;
+        document.getElementById('m-desc').innerText = "Authority Report: Local rock activity detected. Full transmission available via the frequency link below.";
+        document.getElementById('m-btn').onclick = () => window.open(item.link, '_blank');
+        document.getElementById('news-modal').classList.add('active');
+    }
+
+    function sendEnquiry() {
+        const val = document.getElementById('ad-select').value;
+        window.location.href = `mailto:andy@rock.scot?subject=Partnership&body=Interested in the £${val} package.`;
+    }
+
     function showTab(id, btn) {
-        if(id === 'sub') { 
-            window.location.href='submits.html'; 
-            return; 
-        }
-        
-        // Hide all views
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        // Deactivate all buttons
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        
-        // Activate selected
         document.getElementById('v-' + id).classList.add('active');
         btn.classList.add('active');
-        
-        // Trigger specific logic
-        if (id === 'wire') fetchNews();
+        if(id === 'wire') fetchNews();
     }
 
-    // 5. INITIALIZATION
-    window.onload = () => {
-        initCrew();
-    };
+    function toggleStream() {
+        const p = document.getElementById('player');
+        if(stream.paused) { stream.play(); p.classList.add('playing'); document.getElementById('tape-label').innerText="SIGNAL ON"; }
+        else { stream.pause(); p.classList.remove('playing'); document.getElementById('tape-label').innerText="LISTEN LIVE"; }
+    }
+
+    window.onload = initCrew;
 </script>
 </body>
 </html>
