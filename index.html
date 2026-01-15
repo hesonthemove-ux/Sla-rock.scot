@@ -10,178 +10,336 @@
         :root { 
             --primary: #ff3e00; 
             --bg: #050505; 
-            --nav-h: 65px; 
-            --footer-h: 95px; 
-            --glass-bg: rgba(12, 12, 12, 0.9);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-blur: blur(25px) saturate(180%);
+            --nav-h: 75px; 
+            --footer-h: 100px; 
+            --glass: rgba(15, 15, 15, 0.98);
+            --border: rgba(255, 255, 255, 0.08);
+            --glow: 0 0 25px rgba(255, 62, 0, 0.2);
         }
 
+        /* 1. CORE RESET & STRUCTURE */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-        html, body { overflow: hidden; background: var(--bg); height: 100%; width: 100%; overscroll-behavior: none; }
+        html, body { 
+            background: var(--bg); 
+            height: 100%; width: 100%; 
+            overflow: hidden; 
+            font-family: 'Inter', sans-serif; 
+            color: #fff;
+        }
         body { display: grid; grid-template-rows: auto auto var(--nav-h) 1fr var(--footer-h); }
 
-        #loader {
-            position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.9);
-            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-            display: none; align-items: center; justify-content: center; flex-direction: column;
+        /* 2. HEADER: MAXIMUM BRANDING EMPHASIS */
+        header { 
+            background: #000; 
+            border-bottom: 5px solid var(--primary); 
+            display: flex; 
+            justify-content: center; 
+            padding: 40px 20px; 
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .vinyl { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #111; background: repeating-radial-gradient(#222, #000 8px); animation: spin 0.8s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        header { background: #000; border-bottom: 4px solid var(--primary); display: flex; justify-content: center; padding: 25px; z-index: 10; }
-        .hdr-logo { width: 100%; max-width: 900px; max-height: 280px; object-fit: contain; filter: drop-shadow(0 0 20px rgba(255,62,0,0.4)); }
+        .hdr-logo { 
+            width: 100%; 
+            max-width: 1100px; /* Maximize Desktop Impact */
+            height: auto;
+            max-height: 280px; 
+            object-fit: contain; 
+            filter: drop-shadow(0 0 20px rgba(255,62,0,0.3));
+        }
         
-        .ticker-wrap { background: #080808; border-bottom: 1px solid var(--glass-border); height: 35px; overflow: hidden; display: flex; align-items: center; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 80s linear infinite; font-family: 'Oswald'; color: var(--primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; }
+        /* 3. ROBUST NEWS TICKER */
+        .ticker-wrap { background: #0a0a0a; border-bottom: 1px solid var(--border); height: 40px; overflow: hidden; display: flex; align-items: center; }
+        .ticker { 
+            display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; 
+            font-family: 'Oswald'; color: var(--primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; 
+        }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+        /* 4. NAVIGATION RAIL (Touch & Click Safe) */
         nav { 
-            display: flex; overflow-x: auto; background: var(--glass-bg); 
-            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-            height: var(--nav-h); z-index: 100; border-bottom: 1px solid var(--glass-border);
-            scrollbar-width: none;
+            display: flex; background: var(--glass); height: var(--nav-h); 
+            border-bottom: 1px solid var(--border); overflow-x: auto; 
+            scrollbar-width: none; -webkit-overflow-scrolling: touch;
+            padding: 0 10px;
         }
         nav::-webkit-scrollbar { display: none; }
+        
         .nav-btn { 
-            flex: 0 0 auto; width: 130px; background: transparent; border: none; color: #555; 
-            font-family: 'Oswald'; text-transform: uppercase; cursor: pointer; transition: 0.2s;
-            display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--glass-border);
+            flex: 1; min-width: 130px; background: transparent; border: none; 
+            color: #444; font-family: 'Oswald'; text-transform: uppercase; 
+            cursor: pointer; transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            font-size: 1.1rem; letter-spacing: 1px;
+            border-right: 1px solid var(--border);
         }
-        .nav-btn.active { color: #fff; background: rgba(255, 62, 0, 0.1); box-shadow: inset 0 -4px 0 var(--primary); }
+        .nav-btn:hover { color: #fff; background: rgba(255,255,255,0.02); }
+        .nav-btn.active { 
+            color: #fff; background: rgba(255, 62, 0, 0.1); 
+            box-shadow: inset 0 -4px 0 var(--primary);
+        }
 
-        main { overflow-y: auto; -webkit-overflow-scrolling: touch; background: radial-gradient(circle at center, #111 0%, #050505 100%); }
-        .view { display: none; padding: 40px 20px; max-width: 1400px; margin: 0 auto; animation: viewIn 0.3s ease-out; }
+        /* 5. MAIN CONTENT AREA */
+        main { 
+            overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; 
+            padding: 50px 5%; 
+            background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 100%);
+        }
+        .view { display: none; max-width: 1600px; margin: 0 auto; animation: viewSlide 0.5s ease-out; }
         .view.active { display: block; }
+        @keyframes viewSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        .card { background: #0c0c0c; border: 1px solid #1a1a1a; border-bottom: 5px solid var(--primary); transition: 0.3s ease; cursor: pointer; overflow: hidden; display: flex; flex-direction: column; }
-        .card:hover { transform: translateY(-8px); border-color: var(--primary); background: #111; }
-        .card-img-wrap { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-bottom: 1px solid #222; }
-        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .card-body { padding: 20px; flex-grow: 1; }
-        .card h3 { font-family: 'Oswald'; font-size: 1.1rem; color: #fff; text-transform: uppercase; margin-bottom: 10px; }
-        .card-meta { font-family: 'Oswald'; font-size: 0.7rem; color: var(--primary); letter-spacing: 1px; }
+        /* 6. GRID SYSTEM (Magazine Style) */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 40px; }
+        
+        .card { 
+            background: #0d0d0d; border: 1px solid var(--border); 
+            transition: 0.3s; position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
+            min-height: 450px; /* Ensures Uniformity */
+        }
+        .card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: var(--glow); }
+        
+        .card-img-box { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #000; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; opacity: 0.9; }
+        .card:hover img { transform: scale(1.05); opacity: 1; }
+        
+        .card-overlay { 
+            position: absolute; top: 15px; left: 15px; 
+            background: var(--primary); color: #fff; font-family: 'Oswald';
+            padding: 5px 15px; font-size: 0.75rem; text-transform: uppercase;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
 
-        /* CREW MODAL STYLE */
-        #bio-modal { position: fixed; inset: 0; z-index: 2000; display: none; background: rgba(0,0,0,0.95); backdrop-filter: blur(40px); }
-        .bio-container { display: grid; grid-template-columns: 1fr 1fr; width: 100%; height: 100%; max-width: 1600px; margin: 0 auto; }
-        .bio-left { background: #000; border-right: 2px solid var(--primary); }
-        .bio-left img { width: 100%; height: 100%; object-fit: cover; }
-        .bio-right { padding: 60px; overflow-y: auto; }
-        .mag-header { font-family: 'New Rocker'; font-size: 6rem; color: var(--primary); line-height: 0.8; margin-bottom: 20px; }
-        .close-btn { background: var(--primary); color: #fff; border: none; padding: 10px 30px; font-family: 'Oswald'; cursor: pointer; float: right; }
+        .card-body { padding: 30px; flex-grow: 1; border-top: 4px solid var(--primary); display: flex; flex-direction: column; }
+        .card h3 { font-family: 'New Rocker'; color: #fff; font-size: 2rem; margin-bottom: 10px; line-height: 1; }
+        .card-role { font-family: 'Oswald'; color: var(--primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+        .card-bio { font-family: 'Inter'; font-size: 0.95rem; line-height: 1.6; color: #aaa; flex-grow: 1; }
 
-        footer { background: #000; border-top: 4px solid var(--primary); height: var(--footer-h); display: flex; align-items: center; justify-content: center; z-index: 100; }
+        /* 7. PRICING STYLES */
+        .price-card { text-align: center; padding: 50px 20px; min-height: auto; }
+        .price-val { font-family: 'Oswald'; font-size: 4.5rem; color: var(--primary); display: block; margin: 15px 0; font-weight: 900; }
+        .price-desc { font-family: 'Inter'; color: #ccc; font-size: 1.1rem; }
+
+        /* 8. FOOTER & PLAYER */
+        footer { 
+            background: #000; border-top: 5px solid var(--primary); 
+            height: var(--footer-h); display: flex; align-items: center; justify-content: center;
+        }
         .play-btn { 
-            background: var(--primary); color: #fff; font-family: 'Oswald'; padding: 18px 55px; 
-            border: none; cursor: pointer; clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%); 
-            text-transform: uppercase; font-size: 1.25rem; font-weight: 900;
-            display: flex; align-items: center; gap: 20px; transition: 0.2s;
+            background: var(--primary); color: #fff; font-family: 'Oswald'; 
+            padding: 20px 80px; border: none; cursor: pointer;
+            clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
+            font-size: 1.5rem; text-transform: uppercase; font-weight: 900;
+            transition: 0.3s;
         }
-        .visualizer { display: none; align-items: flex-end; gap: 4px; height: 25px; }
-        .play-btn.playing .visualizer { display: flex; }
-        .bar { width: 4px; background: #fff; animation: eq 0.6s infinite alternate; }
-        @keyframes eq { 0% { height: 30%; } 100% { height: 100%; } }
+        .play-btn:hover { padding: 20px 100px; filter: brightness(1.2); }
+        .play-btn.playing { background: #fff; color: var(--primary); }
 
+        /* 9. MOBILE OPTIMIZATION */
         @media (max-width: 900px) {
-            .hdr-logo { max-height: 120px; }
-            .bio-container { grid-template-columns: 1fr; }
-            .bio-left { height: 40vh; border-right: none; border-bottom: 2px solid var(--primary); }
-            .mag-header { font-size: 3rem; }
+            header { padding: 20px; }
+            .hdr-logo { max-height: 140px; }
+            .grid { grid-template-columns: 1fr; } /* Stack cards on mobile */
+            .nav-btn { min-width: 100px; font-size: 0.85rem; }
+            main { padding: 30px 15px; }
+            .card { min-height: auto; } /* Let content dictate height on mobile */
+            .price-val { font-size: 3.5rem; }
         }
-        @keyframes viewIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div id="loader"><div class="vinyl"></div><p style="font-family:'Oswald'; color:var(--primary); margin-top:20px; letter-spacing:6px; font-size:0.8rem;">REFRESHING AUTHORITY...</p></div>
-
 <header><img src="logo.png" class="hdr-logo" alt="Rock.Scot Authority" onerror="this.src='studio.jpg'"></header>
 
 <div class="ticker-wrap">
-    <div class="ticker">ROCK AUTHORITY // INVERCLYDE BROADCAST // LANARKSHIRE BROADCAST // AYRSHIRE BROADCAST // CENTRAL SCOTLAND MUSIC NEWS //</div>
+    <div class="ticker">ROCK AUTHORITY // INVERCLYDE BROADCAST ACTIVE // LANARKSHIRE BROADCAST ACTIVE // AYRSHIRE BROADCAST ACTIVE // CENTRAL SCOTLAND NEWS // ROCK AUTHORITY //</div>
 </div>
 
 <nav id="nav-rail">
-    <button class="nav-btn" onclick="tab('radio', this)">Live</button>
-    <button class="nav-btn" onclick="tab('wire', this)">Wire</button>
-    <button class="nav-btn active" onclick="tab('crew', this)">Crew</button>
-    <button class="nav-btn" onclick="tab('sub', this)">Submits</button>
-    <button class="nav-btn" onclick="tab('ads', this)">Ads</button>
+    <button class="nav-btn" onclick="showTab('radio', this)">Live</button>
+    <button class="nav-btn" onclick="showTab('wire', this)">The Wire</button>
+    <button class="nav-btn active" onclick="showTab('crew', this)">The Crew</button>
+    <button class="nav-btn" onclick="showTab('sub', this)">Submissions</button>
+    <button class="nav-btn" onclick="showTab('ads', this)">Partners</button>
 </nav>
 
-<main>
+<main id="content-area">
+
     <section id="v-crew" class="view active">
-        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:30px; text-transform:uppercase; letter-spacing:2px;">The Authority Crew</h2>
-        <div class="grid" id="crew-list"></div>
+        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:40px; text-transform:uppercase; letter-spacing:4px; font-size:2rem;">The Authority Crew</h2>
+        <div class="grid" id="crew-grid">
+            </div>
     </section>
 
-    <section id="v-wire" class="view"><div class="grid" id="wire-list"></div></section>
+    <section id="v-wire" class="view">
+        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:40px; text-transform:uppercase; letter-spacing:4px; font-size:2rem;">Regional Rock Wire</h2>
+        <div class="grid" id="wire-list">
+            <div class="card"><div class="card-body"><h3>Initializing Wire...</h3><p>Connecting to Global Rock Feeds.</p></div></div>
+        </div>
+    </section>
+
+    <section id="v-ads" class="view">
+        <h2 style="font-family:'Oswald'; color:var(--primary); margin-bottom:40px; text-transform:uppercase; letter-spacing:4px; font-size:2rem;">Broadcasting Partnership Authority</h2>
+        <div class="grid">
+            <div class="card price-card">
+                <div class="card-role">Regional Authority</div>
+                <span class="price-val">£299</span>
+                <p class="price-desc">Localized impact across Central Scotland regions.</p>
+            </div>
+            <div class="card price-card">
+                <div class="card-role">Multi-Regional Authority</div>
+                <span class="price-val">£449</span>
+                <p class="price-desc">Dominant coverage across all Authority sectors.</p>
+            </div>
+            <div class="card price-card">
+                <div class="card-role">Creative Authority</div>
+                <span class="price-val">£195</span>
+                <p class="price-desc">Full production and identity consultation.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="v-sub" class="view">
+        <div class="card" style="padding: 60px; text-align: center; align-items: center;">
+            <h2 style="font-family:'New Rocker'; font-size: 3rem; color: var(--primary);">OPEN FREQUENCY</h2>
+            <p style="margin: 20px 0; font-family:'Inter'; color:#999; max-width: 600px;">Bands, artists, and rockers. The Authority is listening. Use the secure portal to submit your tracks for airplay consideration.</p>
+            <button class="play-btn" onclick="window.location.href='submits.html'" style="margin-top:20px;">ENTER PORTAL</button>
+        </div>
+    </section>
+
+    <section id="v-radio" class="view">
+        <div style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('studio.jpg'); height: 500px; background-size: cover; background-position: center; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #222;">
+            <div style="width: 80px; height: 80px; border: 4px solid var(--primary); border-radius: 50%; margin-bottom: 20px; animation: pulse 2s infinite;"></div>
+            <h2 style="font-family:'New Rocker'; font-size: 4rem; color: var(--primary); text-align: center;">SIGNAL: ACTIVE</h2>
+            <p style="font-family:'Oswald'; letter-spacing: 5px; color: #fff;">100% ROCK NO POP</p>
+        </div>
+    </section>
+
 </main>
 
-<div id="bio-modal"><div class="bio-container" id="bio-target"></div></div>
-
 <footer>
-    <button class="play-btn" id="stream-trigger" onclick="toggleAudio()">
-        <span id="btn-text">Listen Live</span>
-        <div class="visualizer"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-    </button>
+    <button class="play-btn" id="master-play" onclick="toggleStream()">Start Broadcast</button>
 </footer>
 
 <script>
+    // 1. AUDIO STREAM ENGINE
     const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
     
-    // CREW DATA
+    function toggleStream() {
+        const btn = document.getElementById('master-play');
+        if(stream.paused) {
+            stream.play().then(() => {
+                btn.innerText = "Stop Signal";
+                btn.classList.add('playing');
+            }).catch(e => {
+                alert("Playback blocked by browser. Please tap again.");
+            });
+        } else {
+            stream.pause();
+            btn.innerText = "Start Broadcast";
+            btn.classList.remove('playing');
+        }
+    }
+
+    // 2. CREW DATA & AI GENERATOR
     const crew = [
-        { name: "Andy", role: "Daytime Authority", loc: "East Kilbride", bio: "The lead voice for Rock.Scot, bringing the heaviest hits to the Central Belt every afternoon." },
-        { name: "Inverclyde Boss", role: "Evening Authority", loc: "Greenock", bio: "Dominating the airwaves with pure Scottish rock heritage." }
+        { name: "Andy", region: "Central Belt", shift: "Daytime Authority", tone: "High-Voltage", icon: "dj_andy.jpg" },
+        { name: "The Boss", region: "Inverclyde", shift: "Afternoon Command", tone: "Heritage Rock", icon: "dj_boss.jpg" },
+        { name: "Viking", region: "Lanarkshire", shift: "Nightshift Domination", tone: "Heavy Metal", icon: "dj_viking.jpg" }
     ];
 
     function initCrew() {
-        document.getElementById('crew-list').innerHTML = crew.map((dj, i) => `
-            <div class="card" onclick="openBio(${i})">
-                <div class="card-img-wrap"><img src="dj_${dj.name.toLowerCase().replace(' ', '_')}.jpg" onerror="this.src='studio.jpg'"></div>
-                <div class="card-body"><h3>${dj.name}</h3><div class="card-meta">${dj.role} // ${dj.loc}</div></div>
-            </div>
-        `).join('');
+        const container = document.getElementById('crew-grid');
+        container.innerHTML = crew.map(dj => {
+            // Generates a robust bio string
+            const bio = `Commanding the ${dj.region} airwaves, ${dj.name} delivers a ${dj.tone} broadcast. As part of the Rock.Scot Authority, this shift is dedicated to pure, unadulterated rock heritage. No filler, no pop, just pure Scottish signal domination.`;
+            
+            return `
+            <div class="card">
+                <div class="card-img-box">
+                    <div class="card-overlay">LIVE AUTHORITY</div>
+                    <img src="${dj.icon}" onerror="this.src='studio.jpg'"> 
+                </div>
+                <div class="card-body">
+                    <h3>${dj.name}</h3>
+                    <div class="card-role">${dj.shift} // ${dj.region}</div>
+                    <p class="card-bio">${bio}</p>
+                </div>
+            </div>`;
+        }).join('');
     }
 
-    function openBio(i) {
-        const dj = crew[i];
-        document.getElementById('bio-target').innerHTML = `
-            <div class="bio-left"><img src="dj_${dj.name.toLowerCase().replace(' ', '_')}.jpg" onerror="this.src='studio.jpg'"></div>
-            <div class="bio-right">
-                <button class="close-btn" onclick="closeBio()">CLOSE X</button>
-                <div class="mag-header">${dj.name}</div>
-                <p style="color:var(--primary); font-family:'Oswald'; font-size:1.2rem; margin-bottom:20px;">${dj.role} // ${dj.loc} AUTHORITY</p>
-                <p style="font-family:'Inter'; line-height:1.6; color:#ccc; font-size:1.1rem;">${dj.bio}</p>
-            </div>
-        `;
-        document.getElementById('bio-modal').style.display = 'block';
+    // 3. NEWS MULTIPLEX ENGINE (REDUNDANT FETCHING)
+    async function fetchNews() {
+        const sources = [
+            'https://loudwire.com/feed/', 
+            'https://www.loudersound.com/classic-rock/rss', 
+            'https://www.kerrang.com/feed'
+        ];
+        
+        const list = document.getElementById('wire-list');
+        let html = '';
+        let count = 0;
+
+        for (const url of sources) {
+            if(count >= 6) break; // Limit to 6 items max
+            try {
+                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`);
+                const data = await res.json();
+                
+                if (data.status === 'ok') {
+                    data.items.slice(0, 3).forEach(item => { // Take top 3 from each successful source
+                        // Clean title
+                        const cleanTitle = item.title.replace(/&amp;/g, '&').substring(0, 60) + '...';
+                        
+                        html += `
+                        <div class="card" onclick="window.open('${item.link}', '_blank')">
+                            <div class="card-img-box">
+                                <img src="${item.thumbnail || 'studio.jpg'}" onerror="this.src='studio.jpg'">
+                            </div>
+                            <div class="card-body">
+                                <h3>${cleanTitle}</h3>
+                                <div class="card-role">AUTHORITY WIRE</div>
+                            </div>
+                        </div>`;
+                    });
+                    count += 3;
+                }
+            } catch(e) {
+                console.warn("Source failed, switching to backup...");
+            }
+        }
+
+        if(html === '') {
+            html = `<div class="card"><div class="card-body"><h3>Wire Offline</h3><p>Global Rock Feeds are currently silent. Tune in to the live broadcast for updates.</p></div></div>`;
+        }
+        
+        list.innerHTML = html;
     }
 
-    function closeBio() { document.getElementById('bio-modal').style.display = 'none'; }
-
-    // SPA NAVIGATION & AUDIO Logic
-    function tab(id, btn) {
-        document.getElementById('loader').style.display = 'flex';
-        setTimeout(() => {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('v-' + id).classList.add('active');
-            btn.classList.add('active');
-            document.getElementById('loader').style.display = 'none';
-        }, 400);
+    // 4. SPA NAVIGATION LOGIC
+    function showTab(id, btn) {
+        if(id === 'sub') { 
+            window.location.href='submits.html'; 
+            return; 
+        }
+        
+        // Hide all views
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        // Deactivate all buttons
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        
+        // Activate selected
+        document.getElementById('v-' + id).classList.add('active');
+        btn.classList.add('active');
+        
+        // Trigger specific logic
+        if (id === 'wire') fetchNews();
     }
 
-    function toggleAudio() {
-        const btn = document.getElementById('stream-trigger');
-        if (stream.paused) { stream.play(); btn.classList.add('playing'); } 
-        else { stream.pause(); btn.classList.remove('playing'); }
-    }
-
-    window.onload = () => { initCrew(); };
+    // 5. INITIALIZATION
+    window.onload = () => {
+        initCrew();
+    };
 </script>
 </body>
 </html>
