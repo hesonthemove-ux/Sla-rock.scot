@@ -1,237 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Rock.Scot | Central Scotland's Rock Authority</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Bebas+Neue&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <style>
-        :root { 
-            --primary: #ff3e00; 
-            --bg: #050505; 
-            --nav-h: 75px; 
-            --footer-h: 125px; 
-            --glass: rgba(15, 15, 15, 0.98);
-            --border: rgba(255, 255, 255, 0.08);
-            --glow: 0 0 25px rgba(255, 62, 0, 0.2);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Rock.Scot | Central Scotland's Rock Authority</title>
 
-        /* RESET & STRUCTURE */
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-        html, body { background: var(--bg); height: 100%; width: 100%; overflow: hidden; font-family: 'Inter', sans-serif; color: #fff; }
-        body { display: grid; grid-template-rows: auto auto var(--nav-h) 1fr var(--footer-h); }
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Bebas+Neue&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
-        /* HEADER: 85% BANNER */
-        header { background: #000; border-bottom: 5px solid var(--primary); display: flex; justify-content: center; padding: 20px 0; z-index: 100; }
-        .hdr-banner { width: 85%; height: auto; max-height: 250px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(255,62,0,0.3)); }
+<style>
+:root {
+    --primary: #ff3e00;
+    --bg: #050505;
+    --nav-h: 75px;
+    --footer-h: 125px;
+    --glass: rgba(15,15,15,0.98);
+    --border: rgba(255,255,255,0.08);
+}
 
-        /* TICKER */
-        .ticker-wrap { background: #0a0a0a; border-bottom: 1px solid var(--border); height: 40px; overflow: hidden; display: flex; align-items: center; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 80s linear infinite; font-family: 'Oswald'; color: var(--primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+/* RESET */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+    background: var(--bg);
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+}
 
-        /* NAVIGATION */
-        nav { display: flex; background: var(--glass); height: var(--nav-h); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-        .nav-btn { flex: 1; min-width: 110px; background: transparent; border: none; color: #444; font-family: 'Bebas Neue'; text-transform: uppercase; cursor: pointer; transition: 0.4s; font-size: 1.3rem; letter-spacing: 1px; border-right: 1px solid var(--border); }
-        .nav-btn.active { color: #fff; background: rgba(255, 62, 0, 0.1); box-shadow: inset 0 -4px 0 var(--primary); }
+body {
+    display: grid;
+    grid-template-rows: auto auto auto 1fr var(--footer-h);
+}
 
-        /* CONTENT */
-        main { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 40px 5%; background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 100%); }
-        .view { display: none; max-width: 1400px; margin: 0 auto; animation: fadeUp 0.4s ease; }
-        .view.active { display: block; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; } }
+/* HEADER - THE NEW BANNER */
+header {
+    position: relative;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 20px 0;
+}
 
-        /* GRID */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        .card { background: #0d0d0d; border: 1px solid var(--border); transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; }
-        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        .card-img-box { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #000; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .card-body { padding: 25px; flex-grow: 1; border-top: 4px solid var(--primary); }
-        .card h3 { font-family: 'Bebas Neue'; color: #fff; font-size: 2.2rem; margin-bottom: 5px; letter-spacing: 1px; line-height: 1; }
-        .card-role { font-family: 'Oswald'; color: var(--primary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
-        .mag-bio { font-size: 0.9rem; line-height: 1.6; color: #ccc; font-family: 'Inter'; }
-        .mag-q { color: var(--primary); font-weight: 900; margin-top: 10px; display: block; text-transform: uppercase; font-size: 0.75rem; }
+.hdr-banner {
+    width: 100%;
+    max-width: 1600px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 0 25px rgba(255,62,0,0.4));
+}
 
-        /* CASSETTE */
-        footer { background: #000; border-top: 5px solid var(--primary); height: var(--footer-h); display: flex; align-items: center; justify-content: center; }
-        .cassette {
-            width: 260px; height: 85px; background: #1a1a1a; border-radius: 8px; border: 3px solid #333;
-            display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer;
-            box-shadow: 0 6px 0 #000; transition: 0.1s;
-        }
-        .cassette:active { transform: translateY(4px); box-shadow: 0 0 0 #000; }
-        .spool { width: 35px; height: 35px; background: #fff; border-radius: 50%; border: 6px solid #000; position: absolute; top: 25px; }
-        .spool.left { left: 25px; } .spool.right { right: 25px; }
-        .spool-inner { width: 10px; height: 10px; background: #000; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; }
-        .cassette.playing .spool { animation: spin 2s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        .label { background: var(--primary); color: #fff; font-family: 'Oswald'; padding: 5px 25px; font-size: 1.1rem; z-index: 10; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); }
+/* TICKER - CENTRAL SCOTLAND NEWS */
+.ticker-wrap {
+    background: #0a0a0a;
+    height: 40px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
 
-        /* MODAL */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal.active { display: flex; }
-        .modal-box { background: #111; border: 1px solid var(--primary); max-width: 600px; width: 100%; padding: 40px; position: relative; }
-        .action-btn { background: var(--primary); color: #fff; width: 100%; padding: 18px; border: none; font-family: 'Bebas Neue'; text-transform: uppercase; cursor: pointer; font-size: 1.4rem; letter-spacing: 1px; }
-        input, select, textarea { width: 100%; padding: 15px; background: #000; border: 1px solid #333; color: #fff; margin-bottom: 10px; font-family: 'Inter'; }
+.ticker {
+    white-space: nowrap;
+    animation: ticker 60s linear infinite;
+    font-family: 'Oswald';
+    color: var(--primary);
+    font-size: 1rem;
+    letter-spacing: 3px;
+}
 
-        @media (max-width: 900px) {
-            .grid { grid-template-columns: 1fr; }
-            header { padding: 10px 0; }
-            .hdr-banner { width: 95%; }
-        }
-    </style>
+@keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* NAV - OVERLAPPING IMAGE */
+nav {
+    position: relative;
+    margin-top: -30px;
+    display: flex;
+    background: var(--glass);
+    height: var(--nav-h);
+    border-bottom: 1px solid var(--border);
+    z-index: 150;
+    backdrop-filter: blur(10px);
+}
+
+.nav-btn {
+    flex: 1;
+    min-width: 80px;
+    background: transparent;
+    border: none;
+    color: #666;
+    font-family: 'Bebas Neue';
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-right: 1px solid var(--border);
+    transition: 0.3s;
+}
+
+.nav-btn.active {
+    color: #fff;
+    background: rgba(255,62,0,0.15);
+    box-shadow: inset 0 -5px 0 var(--primary);
+}
+
+/* MAIN VIEWPORT */
+main {
+    overflow-y: auto;
+    padding: 40px 5%;
+    background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 100%);
+}
+
+.view { display: none; max-width: 1400px; margin: 0 auto; }
+.view.active { display: block; }
+
+/* CREW GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: #0d0d0d;
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease;
+}
+
+.card:hover { transform: translateY(-5px); }
+
+.card-img-box {
+    aspect-ratio: 1 / 1;
+    background: #000;
+    overflow: hidden;
+}
+
+.card-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 25px;
+    border-top: 4px solid var(--primary);
+}
+
+.card h3 {
+    font-family: 'Bebas Neue';
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.card-role {
+    font-family: 'Oswald';
+    color: var(--primary);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.mag-bio {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #ccc;
+    font-style: italic;
+}
+
+/* PRICING STYLES */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.price-card {
+    background: #111;
+    padding: 40px;
+    text-align: center;
+    border: 1px solid var(--border);
+}
+
+.price-card.featured {
+    border: 2px solid var(--primary);
+    background: #1a0f0d;
+}
+
+.price-card h3 { font-family: 'Bebas Neue'; font-size: 2rem; }
+.cost { font-size: 3rem; color: var(--primary); font-weight: 900; margin: 20px 0; }
+
+/* FOOTER PLAYER */
+footer {
+    background: #000;
+    border-top: 5px solid var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.cassette {
+    width: 280px;
+    height: 90px;
+    background: #151515;
+    border-radius: 10px;
+    border: 3px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.label {
+    background: var(--primary);
+    font-family: 'Oswald';
+    padding: 8px 30px;
+    color: #fff;
+    z-index: 2;
+    clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .hdr-banner { width: 100%; }
+    nav { margin-top: 0; }
+    .grid { grid-template-columns: 1fr; }
+    .nav-btn { font-size: 1rem; }
+}
+</style>
 </head>
+
 <body>
 
-<header><img src="top_banner.jpg" class="hdr-banner" alt="Rock.Scot" onerror="this.src='logo.png'"></header>
+<header>
+    <img src="top_banner_new.png" class="hdr-banner" alt="Rock.Scot | Rockin' Scotland">
+</header>
 
-<div class="ticker-wrap"><div class="ticker" id="live-ticker">INITIALIZING BROADCAST... // INITIALIZING BROADCAST...</div></div>
+<div class="ticker-wrap">
+    <div class="ticker">
+        // CENTRAL SCOTLAND MUSIC NEWS // GLASGOW BANDS SWEEP REGIONAL AWARDS // EDINBURGH INDIE SCENE SEES RECORD TURNOUT // STIRLING LIVE SCENE EXPLODES // SUPPORT LOCAL MUSIC // ROCKIN' SCOTLAND //
+    </div>
+</div>
 
-<nav>
-    <button class="nav-btn" onclick="showTab('radio', this)">Live</button>
-    <button class="nav-btn" onclick="showTab('wire', this)">Wire</button>
-    <button class="nav-btn active" onclick="showTab('crew', this)">Crew</button>
-    <button class="nav-btn" onclick="showTab('sub', this)">Submit</button>
-    <button class="nav-btn" onclick="showTab('ads', this)">Partners</button>
+<nav id="main-nav">
+    <button class="nav-btn" data-view="live">Live</button>
+    <button class="nav-btn" data-view="wire">Wire</button>
+    <button class="nav-btn active" data-view="crew">Crew</button>
+    <button class="nav-btn" data-view="submit">Submit</button>
+    <button class="nav-btn" data-view="partners">Partners</button>
 </nav>
 
 <main>
-    <section id="v-crew" class="view active">
-        <h2 style="font-family:'Bebas Neue'; color:var(--primary); margin-bottom:20px; font-size:2.5rem;">THE AUTHORITY CREW</h2>
-        <div class="grid" id="crew-grid"></div>
-    </section>
-
-    <section id="v-wire" class="view">
-        <h2 style="font-family:'Bebas Neue'; color:var(--primary); margin-bottom:20px; font-size:2.5rem;">SCOTTISH ROCK WIRE</h2>
-        <div class="grid" id="wire-list"></div>
-    </section>
-
-    <section id="v-ads" class="view">
-        <h2 style="font-family:'Bebas Neue'; color:var(--primary); margin-bottom:20px; font-size:2.5rem;">PARTNERSHIPS</h2>
-        <div class="card" style="margin-bottom:30px; border-color:#fff;">
-            <div class="card-body">
-                <h3>Rate Calculator</h3>
-                <select id="ad-select" onchange="document.getElementById('price-disp').innerText='£'+this.value">
-                    <option value="299">Regional Authority (£299)</option>
-                    <option value="449">Multi-Regional Authority (£449)</option>
-                    <option value="195">Creative Lab (£195)</option>
-                </select>
-                <div style="font-size:4rem; font-family:'Bebas Neue'; color:var(--primary); text-align:center; margin:15px;" id="price-disp">£299</div>
-                <button class="action-btn" onclick="sendEnquiry()">Pre-fill Enquiry Email</button>
+    <section id="crew-view" class="view active">
+        <h2 style="font-family:'Bebas Neue';color:var(--primary);font-size:3rem;margin-bottom:30px;">THE AUTHORITY CREW</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-img-box"><img src="dj-andy.jpg" alt="DJ Andy"></div>
+                <div class="card-body">
+                    <p class="card-role">ROCK AUTHORITY</p>
+                    <h3>DJ ANDY</h3>
+                    <p class="mag-bio">"Black coffee, vinyl selection, and Zeppelin at 11."</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-box"><img src="chris.jpg" alt="Chris"></div>
+                <div class="card-body">
+                    <p class="card-role">ROCK AUTHORITY</p>
+                    <h3>CHRIS</h3>
+                    <p class="mag-bio">"Ayrshire's heaviest grunge and post-punk imports."</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-box"><img src="alex.jpg" alt="Alex"></div>
+                <div class="card-body">
+                    <p class="card-role">ROCK AUTHORITY</p>
+                    <h3>ALEX</h3>
+                    <p class="mag-bio">"Where the doom metal meets the stars. Pure atmosphere."</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-box"><img src="jude.jpg" alt="Jude"></div>
+                <div class="card-body">
+                    <p class="card-role">ROCK AUTHORITY</p>
+                    <h3>JUDE</h3>
+                    <p class="mag-bio">"Sabbath. Changed my life at age six. No turning back."</p>
+                </div>
             </div>
         </div>
-        <div class="grid">
-            <div class="card"><div class="card-body"><h3>Glasgow Axeworks</h3><div class="card-role">Local Partner</div><p class="mag-bio">Central Scotland's primary choice for custom setups and hardware repair.</p></div></div>
-            <div class="card"><div class="card-body"><h3>The Iron Grill</h3><div class="card-role">Local Partner</div><p class="mag-bio">The only burger joint in Paisley officially endorsed by the Authority.</p></div></div>
-        </div>
     </section>
 
-    <section id="v-sub" class="view">
-        <h2 style="font-family:'Bebas Neue'; color:var(--primary); margin-bottom:20px; font-size:2.5rem;">BAND SUBMISSIONS</h2>
-        <div class="card"><div class="card-body">
-            <form action="mailto:andy@rock.scot" method="post" enctype="text/plain">
-                <input type="text" name="band" placeholder="Band Name" required>
-                <input type="text" name="link" placeholder="Music Link" required>
-                <textarea name="msg" rows="4" placeholder="Pitch your sound to the Authority..."></textarea>
-                <button type="submit" class="action-btn">TRANSMIT</button>
-            </form>
-        </div></div>
-    </section>
-
-    <section id="v-radio" class="view">
-        <div style="height:450px; background:linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url('studio1.jpg'); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; flex-direction:column; border:1px solid #333;">
-            <h2 style="font-family:'Bebas Neue'; color:var(--primary); font-size:4rem;">SIGNAL ACTIVE</h2>
-            <p style="font-family:'Oswald'; letter-spacing:4px; font-size:1.2rem;">100% ROCK NO POP</p>
+    <section id="partners-view" class="view">
+        <h2 style="font-family:'Bebas Neue';color:var(--primary);font-size:3rem;margin-bottom:30px;">ADVERTISING</h2>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>REGIONAL</h3>
+                <div class="cost">£299</div>
+                <p>Central Scotland Targeted Reach</p>
+            </div>
+            <div class="price-card featured">
+                <h3>MULTI</h3>
+                <div class="cost">£449</div>
+                <p>Full Network Promotion</p>
+            </div>
+            <div class="price-card">
+                <h3>CREATIVE</h3>
+                <div class="cost">£195</div>
+                <p>Production & Graphic Design</p>
+            </div>
         </div>
     </section>
 </main>
 
 <footer>
-    <div class="cassette" id="player" onclick="toggleStream()">
-        <div class="spool left"><div class="spool-inner"></div></div>
-        <div class="spool right"><div class="spool-inner"></div></div>
-        <div class="label" id="tape-label">LISTEN LIVE</div>
+    <div class="cassette">
+        <div class="label">LISTEN LIVE</div>
     </div>
 </footer>
 
-<div id="news-modal" class="modal">
-    <div class="modal-box">
-        <span style="position:absolute; right:20px; top:15px; cursor:pointer; font-size:3rem; font-family:'Bebas Neue';" onclick="this.parentElement.parentElement.classList.remove('active')">×</span>
-        <h2 id="m-title" style="font-family:'Bebas Neue'; color:var(--primary); margin-bottom:20px; font-size:2.5rem;"></h2>
-        <p id="m-desc" style="font-size:1.1rem; line-height:1.7; margin-bottom:25px; color:#ccc;"></p>
-        <button class="action-btn" id="m-btn">Full Authority Report</button>
-    </div>
-</div>
-
 <script>
-    const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
+    // VIEW SWITCHER LOGIC
+    const btns = document.querySelectorAll('.nav-btn');
+    const views = document.querySelectorAll('.view');
 
-    const crew = [
-        { name: "DJ Andy", file: "dj_andy.jpg", q: "THE RITUAL?", a: "Black coffee, vinyl selection, and Zeppelin at 11." },
-        { name: "Chris", file: "dj_chris.jpg", q: "THE SOUND?", a: "Ayrshire's heaviest grunge and post-punk imports." },
-        { name: "Alex", file: "dj_alex.jpg", q: "LATE NIGHT?", a: "Where the doom metal meets the stars. Pure atmosphere." },
-        { name: "Jude", file: "dj_jude.jpg", q: "FIRST RECORD?", a: "Sabbath. Changed my life at age six. No turning back." },
-        { name: "Stevie", file: "dj_stevie.jpg", q: "THE VIBE?", a: "Renfrewshire's weekend power-hour. High energy only." },
-        { name: "Mhairi", file: "dj_mhairi.jpg", q: "THE AUTHORITY?", a: "Glasgow's mid-morning rock invasion. Pure signal." },
-        { name: "Blue", file: "dj_blue.jpg", q: "ALTERNATIVE?", a: "Stirling's home for the weird, heavy, and progressive." },
-        { name: "Cal", file: "dj_cal.jpg", q: "HERITAGE?", a: "Falkirk's defender of the classic riffs and legends." }
-    ];
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-view');
+            
+            // UI Update
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-    function initCrew() {
-        document.getElementById('crew-grid').innerHTML = crew.map(dj => `
-            <div class="card">
-                <div class="card-img-box"><img src="${dj.file}" onerror="this.src='studio1.jpg'"></div>
-                <div class="card-body">
-                    <h3>${dj.name}</h3>
-                    <div class="card-role">Rock Authority</div>
-                    <div class="mag-bio"><span class="mag-q">Q: ${dj.q}</span>"${dj.a}"</div>
-                </div>
-            </div>`).join('');
-    }
-
-    async function fetchNews() {
-        const feed = "https://news.google.com/rss/search?q=Rock+Music+Scotland+Glasgow&hl=en-GB&gl=GB&ceid=GB:en";
-        try {
-            const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed));
-            const data = await res.json();
-            const tickerText = data.items.map(i => i.title.split(' - ')[0]).join(' // ') + ' // ';
-            document.getElementById('live-ticker').innerText = tickerText + tickerText;
-            document.getElementById('wire-list').innerHTML = data.items.slice(0,6).map((item, i) => {
-                window['n_'+i] = item;
-                return `<div class="card" onclick="openModal(${i})"><div class="card-body"><h3>${item.title.split(' - ')[0]}</h3><div class="card-role">SCOTTISH WIRE</div></div></div>`;
-            }).join('');
-        } catch(e) { console.warn("Feed error"); }
-    }
-
-    function openModal(i) {
-        const item = window['n_'+i];
-        document.getElementById('m-title').innerText = item.title.split(' - ')[0];
-        document.getElementById('m-desc').innerText = "AUTHORITY NEWS REPORT: Rock activity detected in the Scotland region. Source identifies this as high-priority interest.";
-        document.getElementById('m-btn').onclick = () => window.open(item.link, '_blank');
-        document.getElementById('news-modal').classList.add('active');
-    }
-
-    function sendEnquiry() {
-        const val = document.getElementById('ad-select').value;
-        window.location.href = `mailto:andy@rock.scot?subject=Partnership&body=Interested in the £${val} package.`;
-    }
-
-    function showTab(id, btn) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('v-' + id).classList.add('active');
-        btn.classList.add('active');
-    }
-
-    function toggleStream() {
-        const p = document.getElementById('player');
-        if(stream.paused) { stream.play(); p.classList.add('playing'); document.getElementById('tape-label').innerText="SIGNAL ON"; }
-        else { stream.pause(); p.classList.remove('playing'); document.getElementById('tape-label').innerText="LISTEN LIVE"; }
-    }
-
-    window.onload = () => { initCrew(); fetchNews(); };
+            // View Update
+            views.forEach(v => v.classList.remove('active'));
+            const targetView = document.getElementById(`${target}-view`);
+            if(targetView) targetView.classList.add('active');
+        });
+    });
 </script>
+
 </body>
-</html>
+    </html>
