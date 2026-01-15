@@ -10,14 +10,14 @@
 <style>
 :root {
     --primary: #ff3e00;
-    --bg: #050505;
+    --bg: #030303;
     --nav-h: 75px;
-    --footer-h: 125px;
-    --glass: rgba(15,15,15,0.98);
-    --border: rgba(255,255,255,0.08);
+    --footer-h: 110px;
+    --glass: rgba(15,15,15,0.96);
+    --border: rgba(255,62,0,0.25);
 }
 
-/* RESET */
+/* RESET & CORE */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
     background: var(--bg);
@@ -30,209 +30,86 @@ html, body {
 
 body {
     display: grid;
-    grid-template-rows: auto auto auto 1fr var(--footer-h);
+    grid-template-rows: auto 40px var(--nav-h) 1fr var(--footer-h);
 }
 
-/* HEADER - THE NEW BANNER */
-header {
-    position: relative;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    padding: 20px 0;
-}
+/* HEADER & TICKER */
+header { background: #000; padding: 10px 0; display: flex; justify-content: center; z-index: 100; }
+.hdr-banner { width: 95%; max-width: 1400px; height: auto; filter: drop-shadow(0 0 20px rgba(255,62,0,0.4)); }
 
-.hdr-banner {
-    width: 100%;
-    max-width: 1600px;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    filter: drop-shadow(0 0 25px rgba(255,62,0,0.4));
-}
+.ticker-wrap { background: #0a0a0a; height: 40px; overflow: hidden; display: flex; align-items: center; border-bottom: 1px solid var(--border); }
+.ticker { white-space: nowrap; animation: ticker 45s linear infinite; font-family: 'Oswald'; color: var(--primary); font-size: 0.95rem; letter-spacing: 2px; }
+@keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-/* TICKER - CENTRAL SCOTLAND NEWS */
-.ticker-wrap {
-    background: #0a0a0a;
-    height: 40px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-}
+/* NAV */
+nav { background: var(--glass); height: var(--nav-h); display: flex; border-bottom: 3px solid var(--primary); z-index: 150; backdrop-filter: blur(12px); }
+.nav-btn { flex: 1; background: transparent; border: none; color: #555; font-family: 'Bebas Neue'; font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
+.nav-btn.active { color: #fff; background: rgba(255,62,0,0.12); box-shadow: inset 0 -5px 0 var(--primary); text-shadow: 0 0 10px var(--primary); }
 
-.ticker {
-    white-space: nowrap;
-    animation: ticker 60s linear infinite;
-    font-family: 'Oswald';
-    color: var(--primary);
-    font-size: 1rem;
-    letter-spacing: 3px;
-}
-
-@keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-/* NAV - OVERLAPPING IMAGE */
-nav {
-    position: relative;
-    margin-top: -30px;
-    display: flex;
-    background: var(--glass);
-    height: var(--nav-h);
-    border-bottom: 1px solid var(--border);
-    z-index: 150;
-    backdrop-filter: blur(10px);
-}
-
-.nav-btn {
-    flex: 1;
-    min-width: 80px;
-    background: transparent;
-    border: none;
-    color: #666;
-    font-family: 'Bebas Neue';
-    font-size: 1.4rem;
-    letter-spacing: 1px;
-    cursor: pointer;
-    border-right: 1px solid var(--border);
-    transition: 0.3s;
-}
-
-.nav-btn.active {
-    color: #fff;
-    background: rgba(255,62,0,0.15);
-    box-shadow: inset 0 -5px 0 var(--primary);
-}
-
-/* MAIN VIEWPORT */
-main {
-    overflow-y: auto;
-    padding: 40px 5%;
-    background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 100%);
-}
-
-.view { display: none; max-width: 1400px; margin: 0 auto; }
+/* MAIN CONTENT */
+main { overflow-y: auto; padding: 40px 5%; background: radial-gradient(circle at 50% 0%, #1a0a08 0%, #030303 100%); }
+.view { display: none; max-width: 1400px; margin: 0 auto; animation: slideUp 0.4s ease-out; }
 .view.active { display: block; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* CREW GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-}
+/* THE WIRE GRID */
+.wire-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
+.news-card { background: #0a0a0a; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: 0.3s; }
+.news-card:hover { border-color: var(--primary); transform: scale(1.02); }
+.news-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; filter: grayscale(100%); transition: 0.5s; }
+.news-card:hover img { filter: grayscale(0%); }
+.news-content { padding: 25px; border-top: 4px solid var(--primary); }
+.news-source { font-family: 'Oswald'; color: var(--primary); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; }
+.news-card h3 { font-family: 'Bebas Neue'; font-size: 2rem; margin: 10px 0; }
 
-.card {
-    background: #0d0d0d;
-    border: 1px solid var(--border);
-    transition: transform 0.3s ease;
-}
+/* SUBMIT FORM */
+.submit-container { max-width: 700px; margin: 0 auto; background: #0a0a0a; padding: 50px; border: 1px solid var(--border); }
+.form-group { margin-bottom: 25px; }
+.form-group label { display: block; font-family: 'Oswald'; color: var(--primary); margin-bottom: 8px; font-size: 0.8rem; }
+.form-group input, .form-group textarea { width: 100%; background: #111; border: 1px solid #333; padding: 15px; color: #fff; }
+.rock-submit-btn { width: 100%; background: var(--primary); border: none; padding: 20px; font-family: 'Bebas Neue'; font-size: 2rem; color: #fff; cursor: pointer; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%); }
 
-.card:hover { transform: translateY(-5px); }
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.price-card { background: #0a0a0a; padding: 50px 30px; border: 1px solid #222; text-align: center; }
+.price-card.featured { border: 2px solid var(--primary); background: #150a08; transform: scale(1.05); }
+.cost { font-size: 3.5rem; color: var(--primary); font-family: 'Bebas Neue'; margin: 25px 0; }
 
-.card-img-box {
-    aspect-ratio: 1 / 1;
-    background: #000;
-    overflow: hidden;
-}
+/* FOOTER PLAYER & FLICKER */
+footer { background: #000; border-top: 6px solid var(--primary); display: flex; justify-content: space-around; align-items: center; padding: 0 5%; }
 
-.card-img-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.card-body {
-    padding: 25px;
-    border-top: 4px solid var(--primary);
-}
-
-.card h3 {
-    font-family: 'Bebas Neue';
-    font-size: 2.5rem;
-    margin-bottom: 5px;
-}
-
-.card-role {
+.on-air-status {
     font-family: 'Oswald';
     color: var(--primary);
-    font-size: 0.85rem;
+    font-size: 1.2rem;
     letter-spacing: 2px;
-    margin-bottom: 15px;
+    text-transform: uppercase;
+    animation: neonFlicker 3s infinite;
 }
 
-.mag-bio {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #ccc;
-    font-style: italic;
+@keyframes neonFlicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+        opacity: 1;
+    }
+    20%, 24%, 55% {
+        text-shadow: none;
+        opacity: 0.4;
+    }
 }
 
-/* PRICING STYLES */
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
+.player-unit { width: 300px; height: 75px; background: #111; border: 2px solid #222; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.play-label { background: var(--primary); font-family: 'Oswald'; padding: 10px 30px; color: #fff; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); }
 
-.price-card {
-    background: #111;
-    padding: 40px;
-    text-align: center;
-    border: 1px solid var(--border);
-}
+/* MODAL */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 1000; padding: 20px; justify-content: center; align-items: center; }
+.modal.active { display: flex; }
+.modal-content { background: #0d0d0d; border: 1px solid var(--primary); max-width: 800px; width: 100%; padding: 50px; position: relative; }
+.close-modal { position: absolute; top: 20px; right: 30px; font-family: 'Bebas Neue'; color: var(--primary); font-size: 2.5rem; cursor: pointer; }
 
-.price-card.featured {
-    border: 2px solid var(--primary);
-    background: #1a0f0d;
-}
-
-.price-card h3 { font-family: 'Bebas Neue'; font-size: 2rem; }
-.cost { font-size: 3rem; color: var(--primary); font-weight: 900; margin: 20px 0; }
-
-/* FOOTER PLAYER */
-footer {
-    background: #000;
-    border-top: 5px solid var(--primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 200;
-}
-
-.cassette {
-    width: 280px;
-    height: 90px;
-    background: #151515;
-    border-radius: 10px;
-    border: 3px solid #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-}
-
-.label {
-    background: var(--primary);
-    font-family: 'Oswald';
-    padding: 8px 30px;
-    color: #fff;
-    z-index: 2;
-    clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-    .hdr-banner { width: 100%; }
-    nav { margin-top: 0; }
-    .grid { grid-template-columns: 1fr; }
-    .nav-btn { font-size: 1rem; }
+@media (max-width: 768px) {
+    .on-air-status { display: none; } /* Hide on small mobile to save space */
+    .nav-btn { font-size: 1.1rem; }
 }
 </style>
 </head>
@@ -240,110 +117,117 @@ footer {
 <body>
 
 <header>
-    <img src="top_banner_new.png" class="hdr-banner" alt="Rock.Scot | Rockin' Scotland">
+    <img src="top_banner_new.png" class="hdr-banner" alt="Rock.Scot">
 </header>
 
 <div class="ticker-wrap">
     <div class="ticker">
-        // CENTRAL SCOTLAND MUSIC NEWS // GLASGOW BANDS SWEEP REGIONAL AWARDS // EDINBURGH INDIE SCENE SEES RECORD TURNOUT // STIRLING LIVE SCENE EXPLODES // SUPPORT LOCAL MUSIC // ROCKIN' SCOTLAND //
+        // THE WIRE: CENTRAL SCOTLAND NEWS FEED // THE SKINNY // IS THIS MUSIC? // RAVECHILD // REPEAT FANZINE // THE NATIONAL // SCOTSMAN SESSIONS // ROCK.SCOT //
     </div>
 </div>
 
 <nav id="main-nav">
     <button class="nav-btn" data-view="live">Live</button>
-    <button class="nav-btn" data-view="wire">Wire</button>
-    <button class="nav-btn active" data-view="crew">Crew</button>
+    <button class="nav-btn active" data-view="wire">Wire</button>
+    <button class="nav-btn" data-view="crew">Crew</button>
     <button class="nav-btn" data-view="submit">Submit</button>
     <button class="nav-btn" data-view="partners">Partners</button>
 </nav>
 
 <main>
-    <section id="crew-view" class="view active">
-        <h2 style="font-family:'Bebas Neue';color:var(--primary);font-size:3rem;margin-bottom:30px;">THE AUTHORITY CREW</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="card-img-box"><img src="dj-andy.jpg" alt="DJ Andy"></div>
-                <div class="card-body">
-                    <p class="card-role">ROCK AUTHORITY</p>
-                    <h3>DJ ANDY</h3>
-                    <p class="mag-bio">"Black coffee, vinyl selection, and Zeppelin at 11."</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-img-box"><img src="chris.jpg" alt="Chris"></div>
-                <div class="card-body">
-                    <p class="card-role">ROCK AUTHORITY</p>
-                    <h3>CHRIS</h3>
-                    <p class="mag-bio">"Ayrshire's heaviest grunge and post-punk imports."</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-img-box"><img src="alex.jpg" alt="Alex"></div>
-                <div class="card-body">
-                    <p class="card-role">ROCK AUTHORITY</p>
-                    <h3>ALEX</h3>
-                    <p class="mag-bio">"Where the doom metal meets the stars. Pure atmosphere."</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-img-box"><img src="jude.jpg" alt="Jude"></div>
-                <div class="card-body">
-                    <p class="card-role">ROCK AUTHORITY</p>
-                    <h3>JUDE</h3>
-                    <p class="mag-bio">"Sabbath. Changed my life at age six. No turning back."</p>
-                </div>
-            </div>
+    <section id="wire-view" class="view active">
+        <h2 style="font-family:'Bebas Neue';color:var(--primary);font-size:3.5rem;margin-bottom:40px;">THE WIRE</h2>
+        <div class="wire-grid">
+            <article class="news-card" onclick="openNews('The Skinny', 'Scotland\'s Essential New Rock', 'The latest tracks coming out of Glasgow and Edinburgh this week.')">
+                <img src="https://images.unsplash.com/photo-1511735111819-9a3f7709049c?w=800">
+                <div class="news-content"><span class="news-source">The Skinny</span><h3>Essential Tracks</h3><p>Noise from the underground...</p></div>
+            </article>
+            <article class="news-card" onclick="openNews('Is This Music?', 'Kingdom of Fife Revival', 'How Fife is reclaiming its heavy rock heritage.')">
+                <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=800">
+                <div class="news-content"><span class="news-source">Is This Music?</span><h3>Fife Rock Revival</h3><p>High voltage energy from across the water...</p></div>
+            </article>
+        </div>
+    </section>
+
+    <section id="submit-view" class="view">
+        <h2 style="font-family:'Bebas Neue';color:var(--primary);font-size:3.5rem;margin-bottom:40px;">SUBMIT YOUR MUSIC</h2>
+        <div class="submit-container" id="form-box">
+            <div class="form-group"><label>BAND NAME</label><input type="text" placeholder="..."></div>
+            <div class="form-group"><label>TRACK LINK</label><input type="text" placeholder="https://..."></div>
+            <div class="form-group"><label>THE VIBE</label><textarea rows="4"></textarea></div>
+            <button class="rock-submit-btn" onclick="processSubmission()">TRANSMIT TRACK</button>
+        </div>
+        <div id="success-msg" style="display:none; text-align:center; padding: 50px;">
+            <h2 style="font-family:'Bebas Neue'; font-size: 4rem; color: var(--primary);">SIGNAL RECEIVED</h2>
+            <p>Stand by for the airwaves.</p>
+        </div>
+    </section>
+
+    <section id="crew-view" class="view">
+        <h2 style="font-family:'Bebas Neue';color:var(--primary);font-size:3.5rem;margin-bottom:40px;">THE CREW</h2>
+        <div class="wire-grid">
+            <div class="news-card"><img src="dj-andy.jpg"><div class="news-content"><h3>DJ ANDY</h3><p>Rock Authority</p></div></div>
+            <div class="news-card"><img src="chris.jpg"><div class="news-content"><h3>CHRIS</h3><p>Rock Authority</p></div></div>
+            <div class="news-card"><img src="alex.jpg"><div class="news-content"><h3>ALEX</h3><p>Rock Authority</p></div></div>
+            <div class="news-card"><img src="jude.jpg"><div class="news-content"><h3>JUDE</h3><p>Rock Authority</p></div></div>
         </div>
     </section>
 
     <section id="partners-view" class="view">
-        <h2 style="font-family:'Bebas Neue';color:var(--primary);font-size:3rem;margin-bottom:30px;">ADVERTISING</h2>
+        <h2 style="font-family:'Bebas Neue';color:var(--primary);font-size:3.5rem;margin-bottom:40px;">ADVERTISING</h2>
         <div class="pricing-grid">
-            <div class="price-card">
-                <h3>REGIONAL</h3>
-                <div class="cost">£299</div>
-                <p>Central Scotland Targeted Reach</p>
-            </div>
-            <div class="price-card featured">
-                <h3>MULTI</h3>
-                <div class="cost">£449</div>
-                <p>Full Network Promotion</p>
-            </div>
-            <div class="price-card">
-                <h3>CREATIVE</h3>
-                <div class="cost">£195</div>
-                <p>Production & Graphic Design</p>
-            </div>
+            <div class="price-card"><h3>REGIONAL</h3><div class="cost">£299</div></div>
+            <div class="price-card featured"><h3>MULTI</h3><div class="cost">£449</div></div>
+            <div class="price-card"><h3>CREATIVE</h3><div class="cost">£195</div></div>
         </div>
     </section>
 </main>
 
 <footer>
-    <div class="cassette">
-        <div class="label">LISTEN LIVE</div>
+    <div class="on-air-status">● LIVE ON AIR</div>
+    <div class="player-unit">
+        <div class="play-label">LISTEN LIVE</div>
     </div>
 </footer>
 
+<div class="modal" id="news-modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeNews()">&times;</span>
+        <span id="modal-source" class="news-source">SOURCE</span>
+        <h2 id="modal-title" style="font-family:'Bebas Neue'; font-size: 3.5rem; margin: 20px 0;">TITLE</h2>
+        <p id="modal-text" style="line-height: 1.8; color: #ccc; font-size: 1.2rem;">CONTENT</p>
+    </div>
+</div>
+
 <script>
-    // VIEW SWITCHER LOGIC
+    // NAVIGATION
     const btns = document.querySelectorAll('.nav-btn');
     const views = document.querySelectorAll('.view');
-
     btns.forEach(btn => {
         btn.addEventListener('click', () => {
             const target = btn.getAttribute('data-view');
-            
-            // UI Update
             btns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-
-            // View Update
             views.forEach(v => v.classList.remove('active'));
-            const targetView = document.getElementById(`${target}-view`);
-            if(targetView) targetView.classList.add('active');
+            document.getElementById(`${target}-view`).classList.add('active');
         });
     });
+
+    // NEWS LOGIC
+    function openNews(source, title, text) {
+        document.getElementById('modal-source').innerText = source;
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-text').innerText = text;
+        document.getElementById('news-modal').classList.add('active');
+    }
+    function closeNews() { document.getElementById('news-modal').classList.remove('active'); }
+
+    // FORM LOGIC
+    function processSubmission() {
+        document.getElementById('form-box').style.display = 'none';
+        document.getElementById('success-msg').style.display = 'block';
+    }
 </script>
 
 </body>
-    </html>
+        </html>
