@@ -12,115 +12,98 @@
             --fire-glow: rgba(255, 34, 0, 0.6);
             --panel-bg: #0a0a0a;
             --bezel: #1a1a1a;
-            --scroll-speed: 10s;
+            --scroll-speed: 12s;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; transition: 0.5s; }
-        
-        /* GRIT MODE GLOBAL OVERRIDE */
-        body.grit-mode { --scroll-speed: 4s; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body.grit-mode { --scroll-speed: 5s; }
 
-        /* HEADER & PULSE */
-        header { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 2px 0; background: #000; }
-        .hdr-banner { width: 100%; max-width: 1000px; height: auto; display: block; transition: 0.5s; }
+        /* HEADER & TOP WIRE POSITIONING */
+        header { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; background: #000; }
+        .hdr-banner { width: 100%; max-width: 1000px; height: auto; display: block; transition: 0.5s; z-index: 2; }
         
         @keyframes firePulse {
-            0% { filter: drop-shadow(0 0 5px var(--authority-orange)); transform: scale(1); }
+            0% { filter: drop-shadow(0 0 5px var(--authority-orange)); }
             50% { filter: drop-shadow(0 0 25px #ff2200); transform: scale(1.01); }
-            100% { filter: drop-shadow(0 0 5px var(--authority-orange)); transform: scale(1); }
+            100% { filter: drop-shadow(0 0 5px var(--authority-orange)); }
         }
         .playing-pulse { animation: firePulse 2s infinite ease-in-out; }
 
-        .grit-switch-box { position: absolute; top: 8px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 8px; font-family: 'Bebas Neue'; color: #444; font-size: 0.8rem; }
-        .switch { width: 36px; height: 18px; position: relative; display: inline-block; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #111; transition: .4s; border-radius: 20px; border: 1px solid #333; }
-        .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 2px; bottom: 2px; background: var(--authority-orange); transition: .4s; border-radius: 50%; }
-        input:checked + .slider:before { transform: translateX(18px); box-shadow: 0 0 10px var(--authority-orange); }
-
-        /* THE WIRE */
         .authority-wire { 
-            background: #000; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; 
-            padding: 12px 0; overflow: hidden; white-space: nowrap; 
+            width: 100%; background: #000; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; 
+            padding: 10px 0; overflow: hidden; white-space: nowrap; 
             font-family: 'Oswald'; font-size: 0.85rem; color: var(--authority-orange);
-            text-transform: uppercase; letter-spacing: 1px; transition: 0.5s;
+            text-transform: uppercase; letter-spacing: 1px; z-index: 1;
         }
         .wire-content { display: inline-block; padding-left: 100%; animation: wireScroll 40s linear infinite; }
         @keyframes wireScroll { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
         .grit-mode .authority-wire { text-shadow: 0 0 15px var(--authority-orange); border-color: var(--authority-orange); }
 
-        /* NAV */
+        /* NAVIGATION */
         nav { display: flex; justify-content: center; width: 100%; background: #050505; border-bottom: 1px solid #1a1a1a; }
-        .nav-btn { flex: 1; min-width: 80px; padding: 18px 5px; background: transparent; border: none; color: #555; font-family: 'Bebas Neue'; font-size: 1.2rem; letter-spacing: 2px; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-        .nav-btn.active { color: #fff; background: linear-gradient(to bottom, #111, #000); box-shadow: inset 0 -3px 0 var(--authority-orange); }
+        .nav-btn { flex: 1; padding: 18px 5px; background: transparent; border: none; color: #555; font-family: 'Bebas Neue'; font-size: 1.3rem; cursor: pointer; text-transform: uppercase; transition: 0.3s; letter-spacing: 1px; }
+        .nav-btn.active { color: #fff; box-shadow: inset 0 -3px 0 var(--authority-orange); background: linear-gradient(to bottom, #111, #000); }
 
-        /* METADATA SCROLLER */
-        .track-container { width: 100%; overflow: hidden; white-space: nowrap; background: #000; padding: 10px 0; border: 1px solid #222; border-radius: 4px; }
-        .track-scroller { display: inline-block; font-family: 'Bebas Neue'; font-size: 3rem; color: var(--authority-orange); padding-left: 100%; animation: trackScroll var(--scroll-speed) linear infinite; }
-        @keyframes trackScroll { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-
-        /* CREW DOSSIERS */
-        .crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; justify-items: center; }
-        .dossier-card { background: #080808; border: 1px solid #1a1a1a; padding: 20px; width: 100%; max-width: 400px; display: flex; gap: 15px; align-items: flex-start; transition: 0.3s; }
-        .dj-thumb { width: 100px; height: 100px; flex-shrink: 0; object-fit: cover; filter: grayscale(100%); border: 1px solid #222; transition: 0.4s; }
-        .dj-name { font-family: 'Bebas Neue'; font-size: 1.8rem; line-height: 1; transition: 0.3s; }
+        /* CREW DOSSIERS - FILE NAME FIX */
+        .crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .dossier-card { background: #080808; border: 1px solid #1a1a1a; padding: 20px; display: flex; gap: 15px; align-items: center; transition: 0.3s; }
+        .dj-thumb { width: 100px; height: 100px; flex-shrink: 0; object-fit: cover; filter: grayscale(100%); border: 1px solid #333; transition: 0.4s; }
+        .dj-name { font-family: 'Bebas Neue'; font-size: 2rem; line-height: 1; }
+        
         .dossier-card:hover { border-color: var(--authority-orange); transform: translateY(-5px); }
         .dossier-card:hover .dj-thumb { filter: grayscale(0%); border-color: var(--authority-orange); box-shadow: 0 0 15px var(--fire-glow); }
         .dossier-card:hover .dj-name { color: var(--authority-orange); text-shadow: 0 0 10px var(--fire-glow); }
 
-        /* CONSOLE & SUBMIT */
-        .console-unit { max-width: 900px; margin: 20px auto; background: var(--panel-bg); border: 2px solid var(--bezel); border-radius: 4px; padding: 25px; box-shadow: 0 30px 60px rgba(0,0,0,0.9); }
-        .freq-bar { width: 6px; background: #222; height: 3px; border-radius: 1px; }
-        .playing .freq-bar { background: var(--authority-orange); box-shadow: 0 0 8px var(--fire-glow); }
-        
-        .submit-wrap { background: url('band_submission_sil.png') center/cover no-repeat; min-height: 600px; display: flex; justify-content: center; align-items: center; padding: 20px; border-radius: 8px; }
+        /* CALCULATOR ENGINE */
+        .calc-box { background: var(--panel-bg); border: 2px solid var(--bezel); padding: 30px; border-radius: 4px; font-family: 'Oswald'; box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+        .calc-input { width: 100%; padding: 14px; background: #000; border: 1px solid #333; color: #fff; margin-bottom: 15px; border-radius: 4px; font-family: 'Inter'; }
+        .calc-result { font-size: 2.5rem; color: var(--authority-orange); font-family: 'Bebas Neue'; text-align: center; margin: 20px 0; border-top: 1px solid #222; padding-top: 20px; letter-spacing: 2px; }
+
+        .btn-master { width: 100%; padding: 18px; background: linear-gradient(180deg, #ff6600, #992200); border: 1px solid #cc4400; color: #fff; font-family: 'Bebas Neue'; font-size: 1.6rem; cursor: pointer; border-radius: 4px; text-transform: uppercase; margin-bottom: 10px; transition: 0.2s; }
+        .btn-master:active { transform: scale(0.98); }
+        .btn-secondary { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #888; font-family: 'Oswald'; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
+
+        /* SUBMISSION GLASS */
+        .submit-wrap { background: url('band_submission_sil.png') center/cover no-repeat; min-height: 600px; display: flex; justify-content: center; align-items: center; padding: 20px; }
         .glass-terminal { background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; width: 100%; max-width: 500px; border-radius: 15px; text-align: center; }
 
-        .btn-master { width: 100%; padding: 18px; background: linear-gradient(180deg, #ff6600, #992200); border: 1px solid #cc4400; color: #fff; font-family: 'Bebas Neue'; font-size: 1.5rem; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
+        /* GRIT SWITCH */
+        .grit-toggle { position: absolute; top: 10px; right: 20px; z-index: 100; font-family: 'Bebas Neue'; display: flex; align-items: center; gap: 8px; color: #333; }
 
         @media (max-width: 600px) {
-            .dossier-card { flex-direction: column; align-items: center; text-align: center; }
-            .nav-btn { font-size: 0.9rem; }
-            .track-scroller { font-size: 2rem; }
+            .dossier-card { flex-direction: column; text-align: center; }
+            .nav-btn { font-size: 1rem; }
         }
     </style>
 </head>
-<body>
+<body class="grit-mode">
 
 <header>
-    <div class="grit-switch-box">
-        <span>GRIT MODE</span>
-        <label class="switch">
-            <input type="checkbox" onchange="document.body.classList.toggle('grit-mode')">
-            <span class="slider"></span>
-        </label>
+    <div class="grit-toggle">
+        <label>GRIT MODE</label>
+        <input type="checkbox" checked onchange="document.body.classList.toggle('grit-mode')">
     </div>
     <img src="top_banner.png" id="main-logo" class="hdr-banner" alt="Rock.Scot Authority">
+    <div class="authority-wire">
+        <div class="wire-content" id="wire-ticker">AUTHORITY WIRE: // LOADING CENTRAL SCOTLAND ROCK INTEL... // SIGNAL ACQUIRED...</div>
+    </div>
 </header>
-
-<div class="authority-wire">
-    <div class="wire-content" id="wire-ticker">AUTHORITY WIRE: // LOADING ROCK INTEL... // CENTRAL SCOTLAND'S ROCK AUTHORITY...</div>
-</div>
 
 <nav>
     <button class="nav-btn active" onclick="showTab('live', this)">LIVE COMMAND</button>
-    <button class="nav-btn" onclick="showTab('crew', this)">CREW DOSSIERS</button>
-    <button class="nav-btn" onclick="showTab('submit', this)">SUBMIT SIGNAL</button>
-    <button class="nav-btn" onclick="showTab('partners', this)">RATE CALC</button>
+    <button class="nav-btn" onclick="showTab('crew', this)">CREW</button>
+    <button class="nav-btn" onclick="showTab('submit', this)">SUBMIT</button>
+    <button class="nav-btn" onclick="showTab('partners', this)">ADVERTISE</button>
 </nav>
 
 <main style="padding: 10px;">
     <section id="v-live" class="view active">
-        <div class="console-unit" id="master-console">
-            <div class="track-container">
-                <div id="track-display" class="track-scroller">SIGNAL STANDBY - ROCK.SCOT AUTHORITY ACTIVE</div>
+        <div class="console-unit" style="max-width:900px; margin:20px auto; background:#0a0a0a; border:2px solid #1a1a1a; padding:25px;">
+            <div style="background:#000; padding:25px; border:1px solid #222; overflow:hidden; text-align:center;">
+                <div id="track-display" style="font-family:'Bebas Neue'; font-size: 3rem; color: var(--authority-orange); white-space:nowrap;">SIGNAL STANDBY</div>
             </div>
-            <div class="freq-grid" id="viz-grid" style="display:flex; align-items:flex-end; justify-content:center; gap:3px; height:60px; margin-top:15px;"></div>
-            <div style="margin-top: 25px; display: grid; gap: 15px;">
-                <input type="range" min="0" max="1" step="0.01" value="0.8" oninput="stream.volume=this.value" style="width:100%; accent-color:var(--authority-orange);">
-                <button class="btn-master" onclick="toggleAudio()" id="play-btn">ENGAGE SIGNAL</button>
-            </div>
+            <button class="btn-master" style="margin-top:20px;" onclick="toggleAudio()" id="play-btn">ENGAGE SIGNAL</button>
         </div>
     </section>
 
@@ -128,103 +111,118 @@
         <div class="crew-grid" id="crew-list"></div>
     </section>
 
+    <section id="v-partners" class="view" style="display:none;">
+        <div class="calc-box" style="max-width:550px; margin:20px auto;">
+            <h2 style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange); letter-spacing:1px;">CAMPAIGN CALCULATOR</h2>
+            <p style="font-size:0.8rem; color:#666; margin-bottom:20px; text-transform:uppercase;">Standard Cycle: 28 Days. Surcharge applies to custom durations.</p>
+            
+            <select id="calc-region" class="calc-input" onchange="calculateRate()">
+                <option value="299">Regional Airtime (£299/28 days)</option>
+                <option value="449">Multi-Regional Airtime (£449/28 days)</option>
+            </select>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div><label style="font-size:0.7rem; font-family:'Oswald';">CAMPAIGN START</label><input type="date" id="date-start" class="calc-input" onchange="calculateRate()"></div>
+                <div><label style="font-size:0.7rem; font-family:'Oswald';">CAMPAIGN END</label><input type="date" id="date-end" class="calc-input" onchange="calculateRate()"></div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:12px; margin:15px 0; font-family:'Oswald'; font-size:0.9rem;">
+                <input type="checkbox" id="creative-add" onchange="calculateRate()" style="width:18px; height:18px;">
+                <label>ADD CREATIVE PRODUCTION (£195 FLAT)</label>
+            </div>
+
+            <div class="calc-result" id="total-price">TOTAL: £0.00</div>
+            <div id="calc-summary" style="text-align:center; font-size:0.85rem; color:#888; margin-bottom:25px; line-height:1.6;">Select dates to initialize calculation.</div>
+            
+            <button class="btn-master" onclick="alert('Signal Request Sent.')">SECURE AIRTIME</button>
+            <button class="btn-secondary" onclick="printQuote()">GENERATE QUOTE .TXT</button>
+        </div>
+    </section>
+
     <section id="v-submit" class="view" style="display:none;">
         <div class="submit-wrap">
             <div class="glass-terminal">
                 <h2 style="font-family:'Bebas Neue'; font-size:2.8rem; color:var(--authority-orange);">TRANSMIT TRACK</h2>
-                <input type="text" placeholder="BAND NAME" style="width:100%; padding:15px; background:rgba(0,0,0,0.7); border:1px solid #444; color:#fff; margin-bottom:12px; font-family:'Oswald';">
-                <input type="text" placeholder="TRACK LINK" style="width:100%; padding:15px; background:rgba(0,0,0,0.7); border:1px solid #444; color:#fff; margin-bottom:12px; font-family:'Oswald';">
-                <textarea placeholder="STUDIO PITCH..." style="width:100%; height:80px; padding:15px; background:rgba(0,0,0,0.7); border:1px solid #444; color:#fff; margin-bottom:20px; font-family:'Oswald';"></textarea>
-                <button class="btn-master">INITIALIZE UPLOAD</button>
+                <input type="text" placeholder="BAND / ARTIST NAME" class="calc-input">
+                <textarea placeholder="PITCH YOUR SIGNAL..." class="calc-input" style="height:120px;"></textarea>
+                <button class="btn-master">UPLOAD TO AUTHORITY</button>
             </div>
-        </div>
-    </section>
-
-    <section id="v-partners" class="view" style="display:none;">
-        <div class="console-unit" style="max-width:500px;">
-            <h2 style="font-family:'Bebas Neue'; border-bottom:1px solid #222; padding-bottom:10px;">PARTNER RATES</h2>
-            <div style="font-family:'Oswald'; line-height:2.5;">
-                <div style="display:flex; justify-content:space-between;"><span>REGIONAL</span><span style="color:var(--authority-orange);">£299</span></div>
-                <div style="display:flex; justify-content:space-between;"><span>MULTI-REGIONAL</span><span style="color:var(--authority-orange);">£449</span></div>
-                <div style="display:flex; justify-content:space-between;"><span>CREATIVE</span><span style="color:var(--authority-orange);">£195</span></div>
-            </div>
-            <button class="btn-master" style="margin-top:20px;">MEDIA PACK REQUEST</button>
         </div>
     </section>
 </main>
 
 <script>
     const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
-    let isPlaying = false;
-
+    
+    // Corrected DJ ID format: dj_name.jpg
     const crewData = [
-        { id: "andy", name: "Andy", role: "Rock Rebel", bio: "East Kilbride native. High-octane mix of local legends and emerging Glasgow talent.", fact: "Lost a shoe in a kilt mosh pit." },
-        { id: "alex", name: "Alex", role: "Vinyl Viking", bio: "Johnstone-born encyclopedia of Scottish rock history and Nazareth deep cuts.", fact: "Owns signed Nazareth vinyl from 1987." },
-        { id: "stevie", name: "Stevie", role: "Headbanger", bio: "Port Glasgow industrial energy. Bringing the belt's hardest riffs.", fact: "High-fived Angus Young at the SEC." },
-        { id: "mhairi", name: "Mhairi", role: "Hard Rock Queen", bio: "Hamilton powerhouse supporting female-fronted rock acts with sharp wit.", fact: "Licensed tattoo artist." },
-        { id: "jude", name: "Jude", role: "Indie Icon", bio: "Irvine melodic indie-rock blended with the grit of the alternative scene.", fact: "Hitchhiked to the Barrowlands." },
-        { id: "chris", name: "Chris", role: "Guitar Guru", bio: "Greenock native breaking down the genius of Scotland's iconic guitar solos.", fact: "Owns every Big Country cassette." },
-        { id: "cal", name: "Cal", role: "Classic Rocker", bio: "Kilmarnock hero keeping the flame of stadium anthems alive.", fact: "Air guitar champion of Ayrshire." },
-        { id: "blue", name: "Blue", role: "Bluesy Maverick", bio: "Gourock’s seaside soul focusing on the gritty landscape of Scottish rock.", fact: "Natural blue hair streak." }
+        { id: "dj_andy", name: "Andy", role: "Rock Rebel" },
+        { id: "dj_alex", name: "Alex", role: "Vinyl Viking" },
+        { id: "dj_stevie", name: "Stevie", role: "Headbanger" },
+        { id: "dj_mhairi", name: "Mhairi", role: "Hard Rock Queen" },
+        { id: "dj_jude", name: "Jude", role: "Indie Icon" },
+        { id: "dj_chris", name: "Chris", role: "Guitar Guru" },
+        { id: "dj_cal", name: "Cal", role: "Classic Rocker" },
+        { id: "dj_blue", name: "Blue", role: "Bluesy Maverick" }
     ];
 
-    async function fetchWire() {
-        try {
-            const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=Rock+Music+Scotland+Glasgow+Edinburgh");
-            const data = await res.json();
-            const newsString = data.items.map(i => i.title.toUpperCase()).join(" // WIRE: // ");
-            document.getElementById('wire-ticker').innerText = "AUTHORITY WIRE: // " + newsString;
-        } catch(e) { console.error("Signal lost."); }
+    function calculateRate() {
+        const baseRate = parseFloat(document.getElementById('calc-region').value);
+        const start = new Date(document.getElementById('date-start').value);
+        const end = new Date(document.getElementById('date-end').value);
+        const creative = document.getElementById('creative-add').checked ? 195 : 0;
+        
+        if (isNaN(start) || isNaN(end) || end <= start) return;
+
+        const diffDays = Math.ceil(Math.abs(end - start) / (1000 * 60 * 60 * 24));
+        let airtimeTotal = 0;
+        let pricingModel = "";
+
+        if (diffDays % 28 === 0) {
+            airtimeTotal = (diffDays / 28) * baseRate;
+            pricingModel = "Standard Monthly Multiplier Applied";
+        } else {
+            // Formula: (((package/28) * days) * 1.3)
+            airtimeTotal = ((baseRate / 28) * diffDays) * 1.3;
+            pricingModel = "Pro-Rata Rate + 30% Custom Duration Surcharge";
+        }
+
+        const grandTotal = airtimeTotal + creative;
+        document.getElementById('total-price').innerText = `TOTAL: £${grandTotal.toFixed(2)}`;
+        document.getElementById('calc-summary').innerHTML = `<strong>${diffDays} Days</strong> | Airtime: £${airtimeTotal.toFixed(2)}<br>${pricingModel}`;
+    }
+
+    function printQuote() {
+        const summary = document.getElementById('calc-summary').innerText;
+        const total = document.getElementById('total-price').innerText;
+        const text = `ROCK.SCOT AUTHORITY - ADVERTISING QUOTE\n====================================\nSummary: ${summary.replace('<br>', ' ')}\nFinal Quote: ${total}\n====================================\nThis is an automated pro-rata calculation.`;
+        const blob = new Blob([text], {type: "text/plain"});
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "RockScot_Authority_Quote.txt";
+        link.click();
     }
 
     function init() {
-        fetchWire();
-        const grid = document.getElementById('viz-grid');
-        for(let i=0; i<35; i++) {
-            let b = document.createElement('div');
-            b.className = 'freq-bar';
-            grid.appendChild(b);
-        }
         document.getElementById('crew-list').innerHTML = crewData.map(dj => `
             <div class="dossier-card">
                 <img src="${dj.id}.jpg" class="dj-thumb" alt="${dj.name}">
                 <div>
-                    <div style="color:var(--authority-orange); font-family:'Oswald'; font-size:0.7rem; text-transform:uppercase;">${dj.role}</div>
+                    <div style="color:var(--authority-orange); font-family:'Oswald'; font-size:0.75rem; text-transform:uppercase;">${dj.role}</div>
                     <div class="dj-name">${dj.name}</div>
-                    <p style="font-size:0.8rem; color:#888; margin:8px 0; line-height:1.4;">${dj.bio}</p>
-                    <div style="font-size:0.6rem; color:#444; font-family:'Oswald'; border-top:1px solid #222; padding-top:5px;">FACT: ${dj.fact.toUpperCase()}</div>
                 </div>
             </div>
         `).join('');
+        fetchWire();
     }
 
-    function toggleAudio() {
-        const btn = document.getElementById('play-btn');
-        const display = document.getElementById('track-display');
-        const logo = document.getElementById('main-logo');
-        if(stream.paused) { 
-            stream.play(); isPlaying = true; 
-            btn.innerText = "TERMINATE SIGNAL"; 
-            display.innerText = "AUTHORITY LIVE BROADCAST // CENTRAL SCOTLAND'S ROCK AUTHORITY // ROCK.SCOT";
-            logo.classList.add('playing-pulse');
-            document.getElementById('master-console').classList.add('playing');
-            animateViz();
-        } else { 
-            stream.pause(); isPlaying = false; 
-            btn.innerText = "ENGAGE SIGNAL"; 
-            display.innerText = "SIGNAL STANDBY - ROCK.SCOT AUTHORITY ACTIVE";
-            logo.classList.remove('playing-pulse');
-            document.getElementById('master-console').classList.remove('playing');
-        }
-    }
-
-    function animateViz() {
-        if(!isPlaying) return;
-        document.querySelectorAll('.freq-bar').forEach(b => {
-            let h = Math.random() * 50 + 5;
-            b.style.height = h + 'px';
-        });
-        setTimeout(animateViz, 80);
+    async function fetchWire() {
+        try {
+            const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=Rock+Music+Central+Scotland");
+            const data = await res.json();
+            const newsString = data.items.slice(0, 10).map(i => i.title.toUpperCase()).join(" // WIRE: // ");
+            document.getElementById('wire-ticker').innerText = "AUTHORITY WIRE: // " + newsString;
+        } catch(e) { document.getElementById('wire-ticker').innerText = "AUTHORITY WIRE: // SIGNAL INTERFERENCE - LOCAL ROCK INTEL PENDING..."; }
     }
 
     function showTab(id, btn) {
@@ -234,7 +232,22 @@
         btn.classList.add('active');
     }
 
+    function toggleAudio() {
+        const btn = document.getElementById('play-btn');
+        const logo = document.getElementById('main-logo');
+        const display = document.getElementById('track-display');
+        if(stream.paused) { 
+            stream.play(); btn.innerText = "TERMINATE SIGNAL"; 
+            logo.classList.add('playing-pulse');
+            display.innerText = "AUTHORITY LIVE BROADCAST // CENTRAL SCOTLAND'S ROCK AUTHORITY";
+        } else { 
+            stream.pause(); btn.innerText = "ENGAGE SIGNAL"; 
+            logo.classList.remove('playing-pulse');
+            display.innerText = "SIGNAL STANDBY";
+        }
+    }
+
     window.onload = init;
 </script>
 </body>
-                    </html>
+</html>
