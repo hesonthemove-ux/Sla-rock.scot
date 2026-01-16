@@ -8,7 +8,7 @@
   <title>Rock.Scot | Central Scotland’s Rock Authority</title>
   <meta name="color-scheme" content="dark light">
 
-  <!-- Fonts (fixed: valid href, rel, closed tag) -->
+  <!-- Fonts -->
   https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Bebas+Neue&family=Inter:wght@300;400;700;900&display=swap
 
   <style>
@@ -91,7 +91,7 @@
     .news-actions{display:flex;gap:10px;margin-top:12px}
     .news-actions a{color:#fff;text-decoration:none;border:1px solid var(--line);padding:8px 12px;background:#121212}
 
-    /* Theme toggle (optional) */
+    /* Theme toggle */
     .theme-toggle{position:fixed;right:14px;bottom:14px;background:#111;border:1px solid var(--line);padding:8px 12px;border-radius:6px;font-family:var(--head);cursor:pointer}
   </style>
 </head>
@@ -99,7 +99,7 @@
 
   <!-- HEADER -->
   <header>
-    <!-- Fixed: show an actual image, with fallback sequence -->
+    <!-- Use PNG as requested; fallbacks to JPG then placeholder -->
     <img id="topBanner"
          class="hdr"
          src="top_banner.png"
@@ -226,7 +226,7 @@
   const $$ = sel => Array.from(document.querySelectorAll(sel));
   const htmlEsc = s => String(s||"").replace(/[&<>\"']/g,c=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;" }[c]));
 
-  /* ---------- Tabs (no inline onclick) ---------- */
+  /* ---------- Tabs ---------- */
   const nav = $('#nav');
   nav.addEventListener('click', e=>{
     const btn = e.target.closest('button[data-tab]'); if(!btn) return;
@@ -238,7 +238,7 @@
     window.scrollTo(0,0);
   });
 
-  /* ---------- Stream player (lightweight) ---------- */
+  /* ---------- Stream player ---------- */
   const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
   stream.crossOrigin = "anonymous";
   let ctx, analyser, dataArray, raf;
@@ -289,7 +289,7 @@
   });
   vol.addEventListener('input', () => stream.volume = Number(vol.value));
 
-  /* ---------- Crew ---------- */
+  /* ---------- Crew (use .jpg first, then .png fallback) ---------- */
   const crew = [
     {id:"dj_andy",name:"Andy",role:"Rock Rebel",bio:"High‑energy playlists across Inverclyde and beyond.",band:"Biffy Clyro",venue:"King Tut’s",fact:"Crowd‑surfed in a kilt."},
     {id:"dj_alex",name:"Alex",role:"Vinyl Viking",bio:"Nazareth deep cuts and Renfrewshire shout‑outs.",band:"Nazareth",venue:"Barrowland Ballroom",fact:"Rare Deacon Blue pressing."},
@@ -499,4 +499,3 @@
   </script>
 </body>
 </html>
-
