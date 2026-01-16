@@ -1,314 +1,361 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Rock.Scot | Central Scotland's Rock Authority</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock.Scot | Central Scotland’s Rock Authority</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Bebas+Neue&family=Inter:wght@400;700;900&display=swap"   :root {
-      --authority-orange: #ff5500;
-      --fire-glow: rgba(255, 34, 0, 0.6);
-      --panel-bg: #0a0a0a;
-      --bezel: #1a1a1a;
-      --scroll-speed: 12s;
-    }
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Bebas+Neue&family=Inter:wght@300;400;700;900&displayBASE STYLES -->
+<style>
+:root {
+  --rock-orange: #ff4d00;
+  --rock-bg: #000;
+  --rock-panel: #0a0a0a;
+  --rock-light: #ffffff;
+  --rock-dark: #000000;
+}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+/* DARK MODE (AUTO + MANUAL) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --rock-bg: #fafafa;
+    --rock-light: #000;
+   rock-light);
+  font-family: 'Inter', sans-serif;
+}
 
-    /* GRIT MODE */
-    body.grit-mode { --scroll-speed: 4s; }
-    body.grit-mode .authority-wire { text-shadow: 0 0 15px var(--authority-orange); border-color: var(--authority-orange); }
+/* HEADER */
+header {
+  text-align: center;
+  padding-top: 20px;
+}
+header img {
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+}
 
-    /* HEADER (NO OVERLAP) */
-    header { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; background: #000; z-index: 200; }
-    .hdr-banner { width: 100%; max-width: 1100px; height: auto; display: block; position: relative; z-index: 10; margin-bottom: 10px; }
+/* TICKER */
+#ticker {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--rock-dark);
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+  padding: 10px 0;
+  font-family: 'Oswald';
+  color: var(--rock-orange);
+}
+#ticker span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: tickmove 22s linear infinite;
+}
+@keyframes tickmove { from {transform: translateX(0);} to {transform: translateX(-100%);} }
 
-    /* TICKER (T1) */
-    .authority-wire {
-      width: 100%; background: #000; border-top: 1px solid #222; border-bottom: 1px solid #222;
-      padding: 10px 0; overflow: hidden; white-space: nowrap;
-      font-family: 'Oswald'; font-size: 0.85rem; color: var(--authority-orange);
-      text-transform: uppercase; letter-spacing: 1.5px; z-index: 5;
-    }
-    .wire-content { display: inline-block; padding-left: 100%; animation: wireScroll var(--scroll-speed) linear infinite; }
-    @keyframes wireScroll { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+/* NAV */
+nav {
+  display: flex;
+  background: #050505;
+  border-bottom: 3px solid var(--rock-orange);
+}
+nav button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-family: 'Bebas Neue';
+  font-size: 1.4rem;
+  padding: 16px 0;
+  cursor: pointer;
+}
+nav .active {
+  color: var(--rock-orange);
+  background: rgba(255,80,0,0.1);
+}
 
-    /* GRIT TOGGLE */
-    .grit-control { position: absolute; top: 15px; right: 20px; z-index: 300; text-align: right; }
-    .grit-label { font-family: 'Bebas Neue'; font-size: 0.8rem; color: #555; margin-bottom: 4px; }
-    .toggle-switch { width: 50px; height: 24px; appearance: none; background: #111; border: 1px solid #333; border-radius: 12px; position: relative; cursor: pointer; outline: none; transition: 0.3s; }
-    .toggle-switch:checked { background: var(--authority-orange); box-shadow: 0 0 15px var(--fire-glow); }
-    .toggle-switch::before { content: ''; position: absolute; width: 18px; height: 18px; background: #333; border-radius: 50%; top: 2px; left: 2px; transition: 0.3s; }
-    .toggle-switch:checked::before { left: 28px; background: #fff; }
+/* SECTIONS */
+section { display: none; padding: 25px 10px; max-width: 1100px; margin: auto; }
+section.active { display: block; }
 
-    /* NAV (below ticker; no overlap) */
-    nav { display: flex; justify-content: center; width: 100%; background: #050505; border-bottom: 1px solid #1a1a1a; margin-top: 0; }
-    .nav-btn { flex: 1; padding: 20px 5px; background: transparent; border: none; color: #666; font-family: 'Bebas Neue'; font-size: 1.25rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.25s; }
-    .nav-btn.active { color: #fff; background: #0a0a0a; box-shadow: inset 0 -4px 0 var(--authority-orange); }
+/* LIVE PANEL */
+.live-box {
+  background: var(--rock-panel);
+  border: 2px solid #222;
+  padding: 40px;
+  text-align: center;
+}
+#track-title {
+  font-family: 'Bebas Neue';
+  font-size: 3rem;
+  color: var(--rock-orange);
+  margin-bottom: 30px;
+}
 
-    /* MAIN */
-    main { padding: 10px; }
+/* DJ GRID */
+.dj-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+@media(max-width:700px){
+  .dj-grid { grid-template-columns: 1fr; }
+}
+.dj-card {
+  position: relative;
+  border: 1px solid #333;
+  background: #111;
+  overflow: hidden;
+  cursor: pointer;
+}
+.dj-card img {
+  width: 100%; height: 300px; object-fit: cover;
+  filter: grayscale(100%); transition: .4s;
+}
+.dj-card:hover img {
+  filter: grayscale(0%) brightness(1.1);
+  transform: scale(1.05);
+}
+.dj-name {
+  position: absolute; bottom: 0; width: 100%;
+  background: linear-gradient(0deg, #000, transparent);
+  padding: 20px;
+  font-family: 'Bebas Neue';
+  font-size: 2rem;
+  color: var(--rock-light);
+}
 
-    /* CREW GRID (Dossier Cascade) */
-    .crew-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; max-width: 1200px; margin: 0 auto; }
-    .dossier-card { position: relative; background: #0a0a0a; border: 1px solid #1a1a1a; overflow: hidden; cursor: pointer; aspect-ratio: 1/1.1; display: flex; align-items: flex-end; transition: 0.4s; }
-    .dj-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.6s; }
-    .dj-label { position: relative; z-index: 2; width: 100%; padding: 25px; background: linear-gradient(0deg, #000 0%, transparent 100%); }
-    .dossier-card:hover .dj-photo { filter: grayscale(0%) brightness(1.05); transform: scale(1.05); }
-    .dossier-card:hover { border-color: var(--authority-orange); box-shadow: 0 0 20px rgba(255,85,0,0.3); }
+/* MODAL */
+.modal-bg {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.8);
+  display: none; justify-content: center; align-items: center;
+}
+.modal {
+  width: 90%; max-width: 600px;
+  background: #111;
+  padding: 30px;
+  border-left: 5px solid var(--rock-orange);
+}
+.close-modal {
+  float:right; font-size:2rem; cursor:pointer;
+}
 
-    /* BIO MODAL */
-    #bio-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.96); display: none; justify-content: center; align-items: center; z-index: 5000; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); }
-    .bio-modal { width: 92%; max-width: 700px; max-height: 90vh; overflow-y: auto; background: #080808; border: 1px solid #222; border-radius: 4px; padding: 40px; text-align: center; position: relative; }
-    .close-bio { position: absolute; top: 15px; right: 20px; font-family: 'Bebas Neue'; color: #555; font-size: 2.6rem; cursor: pointer; }
-    .bio-stat { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 25px; background: #111; padding: 20px; border-left: 3px solid var(--authority-orange); }
+/* CALCULATOR */
+.calc-panel {
+  background: #111; padding: 20px;
+  border-left: 4px solid var(--rock-orange);
+}
 
-    /* CALCULATOR & BUTTONS */
-    .calc-box { background: #0a0a0a; border: 2px solid #1a1a1a; padding: 35px; max-width: 650px; margin: 25px auto; }
-    .calc-input { width: 100%; padding: 15px; background: #000; border: 1px solid #333; color: #fff; margin-bottom: 15px; font-family: 'Oswald'; }
-    .btn-master { width: 100%; padding: 20px; background: linear-gradient(180deg, #ff6600, #992200); border: 1px solid #cc4400; color: #fff; font-family: 'Bebas Neue'; font-size: 1.6rem; cursor: pointer; text-transform: uppercase; }
+/* CONTACT FORM */
+.contact-box {
+  background:#111; padding:20px; border-left:4px solid var(--rock-orange);
+}
+.contact-box input, .contact-box textarea {
+  width:100%; padding:12px; margin-bottom:10px;
+  background:#000; border:1px solid #333; color:#fff;
+}
 
-    /* RESPONSIVE */
-    @media (max-width: 600px) {
-      .crew-grid { grid-template-columns: 1fr; }
-      .bio-modal { padding: 25px; }
-      header { padding-top: 45px; }
-      nav { flex-direction: column; }
-      .nav-btn { padding: 15px; font-size: 1.2rem; }
-    }
-  </style>
+/* BUTTON */
+.btn-rock {
+  background: linear-gradient(180deg, var(--rock-orange), #992200);
+  border: none;
+  padding: 14px 20px;
+  font-family: 'Bebas Neue';
+  font-size: 1.4rem;
+  width: 100%;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* DARK MODE TOGGLE */
+#dark-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #111;
+  border: 1px solid #666;
+  padding: 10px 15px;
+  color: #fff;
+  font-family:'Bebas Neue';
+  cursor:pointer;
+}
+</style>
 </head>
-<body class="grit-mode">
-  <!-- BIO OVERLAY -->
-  <div id="bio-overlay" onclick="closeBio()">
-    <div class="bio-modal" onclick="event.stopPropagation()">
-      <span class="close-bio" onclick="closeBio()">&times;</span>
-      <img id="bio-img" src="" alt="DJ portrait" style="width:140px; height:140px; border-radius:50%; border:3px solid var(--authority-orange); object-fit:cover; margin-bottom:20px;">
-      <h2 id="bio-name" style="font-family:'Bebas Neue'; font-size:3.2rem; color:var(--authority-orange);"></h2>
-      <div id="bio-role" style="font-family:'Oswald'; letter-spacing:3px; color:#888; margin-bottom:18px; text-transform:uppercase;"></div>
-      <p id="bio-text" style="color:#ccc; line-height:1.7; font-size:1.05rem; margin-bottom:20px;"></p>
-      <div class="bio-stat">
-        <p><strong style="color:var(--authority-orange);">FAVOURITE BAND:</strong> <span id="bio-band" style="color:#fff;"></span></p>
-        <p><strong style="color:var(--authority-orange);">BEST GIG:</strong> <span id="bio-gig" style="color:#fff;"></span></p>
-        <p><strong style="color:var(--authority-orange);">DREAM VENUE:</strong> <span id="bio-venue" style="color:#fff;"></span></p>
-        <p><strong style="color:var(--authority-orange);">FACT:</strong> <span id="bio-fact" style="color:#fff;"></span></p>
-      </div>
-    </div>
+
+<body>
+
+<header>
+  top_banner.png
+</header>
+
+<div id="ticker">
+  <span>AUTHORITY WIRE // SCANNING CENTRAL SCOTLAND // INITIALIZING LIVE ROCK FEED // STANDBY...</span>
+</div>
+
+<nav>
+  <button class="active" onclick="showPage('live', this)">LIVE</button>
+  <button onclick="showPage('crew', this)">CREW</button>
+  <button onclick="showPage('submit', this)">SUBMIT</button>
+  <button onclick="showPage('advertise', this)">ADVERTISE</button>
+  <button onclick="showPage('contact', this)">CONTACT</button>
+</nav>
+
+<!-- LIVE -->
+<section id="live" class="active">
+  <div class="live-box">
+    <div id="track-title">SIGNAL STANDBY</div>
+    <button class="btn-rock" onclick="toggleStream()" id="stream-btn">ENGAGE SIGNAL</button>
   </div>
+</section>
 
-  <!-- HEADER -->
-  <header>
-    <div class="grit-control">
-      <span class="grit-label">SYSTEM GRIT</span>
-      <input type="checkbox" class="toggle-switch" checked aria-label="Toggle grit mode" onchange="document.body.classList.toggle('grit-mode')">
-    </div>
+<!-- CREW -->
+<section id="crew">
+  <div class="dj-grid" id="djGrid"></div>
+</section>
 
-    <img src="top_banner.png" id="main-logo" class="hdr-banner" alt="Rock.Scot Authority Bannericker">AUTHORITY WIRE: // SCANNING CENTRAL SCOTLAND... // INITIALIZING LIVE ROCK INTEL...</div>
-    </div>
-  </header>
+<!-- SUBMIT -->
+<section id="submit">
+  <div class="contact-box">
+    <h2 style="font-family:'Bebas Neue'; font-size:2.4rem;">SUBMIT YOUR TRACK</h2>
+    <input type="text" placeholder="Band Name">
+    <input type="text" placeholder="Streaming Link">
+    <textarea placeholder="Tell us about your track..." rows="4"></textarea>
+    <button class="btn-rock">TRANSMIT</button>
+  </div>
+</section>
 
-  <!-- NAVIGATION -->
-  <nav>
-    <button class="nav-btn active" onclick="showTab('live', this)">LIVE COMMAND</button>
-    <button class="nav-btn" onclick="showTab('crew', this)">WORLD CLASS CREW</button>
-    <button class="nav-btn" onclick="showTab('submit', this)">SUBMIT SIGNAL</button>
-    <button class="nav-btn" onclick="showTab('partners', this)">ADVERTISE</button>
-  </nav>
+<!-- ADVERTISE -->
+<section id="advertise">
+  <div class="calc-panel">
+    <h2 style="font-family:'Bebas Neue'; font-size:2.4rem;">ADVERTISING CALCULATOR</h2>
+    <select id="pkg" class="calc-input">
+      <option value="299">Regional (£299/28 days)</option>
+      <option value="449">Multi-Regional (£449/28 days)</option>
+    </select>
+    <input type="date" id="start">
+    <input type="date" id="end">
+    <button class="btn-rock" onclick="calc()">CALCULATE</button>
+    <p id="result" style="margin-top:10px; font-weight:bold;"></p>
+  </div>
+</section>
 
-  <!-- MAIN -->
-  <main>
-    <!-- LIVE -->
-    <section id="v-live" class="view" style="display:block;">
-      <div style="max-width:900px; margin:20px auto; background:#0a0a0a; border:2px solid #1a1a1a; padding:30px; text-align:center;">
-        <div style="background:#000; padding:50px; border:1px solid #222;">
-          <div id="track-display" style="font-family:'Bebas Neue'; font-size: 3.2rem; color: var(--authority-orange);">SIGNAL STANDBY</div>
-        </div>
-        <button class="btn-master" style="margin-top:25px;" onclick="toggleAudio()" id="play-btn">ENGAGE SIGNAL</button>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-box">
+    <h2 style="font-family:'Bebas Neue'; font-size:2.4rem;">CONTACT STUDIO</h2>
+    <input id="cname" type="text" placeholder="Your Name">
+    <input id="cemail" type="email" placeholder="Your Email">
+    <textarea id="cmsg" placeholder="Message..." rows="4"></textarea>
+    <button class="btn-rock" onclick="sendContact()">SEND MESSAGE</button>
+    <p id="cresponse" style="margin-top:10px;"></p>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-bg" id="bioModal">
+  <div class="modal">
+    <div class="close-modal" onclick="closeBio()">×</div>
+    <h2 id="bioName" style="font-family:'Bebas Neue';"></h2>
+    <p id="bioRole"></p>
+    <p id="bioText"></p>
+    <p><strong>BAND:</strong> <span id="bioBand"></span></p>
+    <p><strong>VENUE:</strong> <span id="bioVenue"></span></p>
+    <p><strong>FACT:</strong> <span id="bioFact"></span></p>
+  </div>
+</div>
+
+<!-- DARK MODE TOGGLE -->
+<div id="dark-toggle" onclick="toggleDark()">🌙 MODE</div>
+
+<script>
+// NAVIGATION
+function showPage(id, btn){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  window.scrollTo(0,0);
+}
+
+// STREAM
+const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
+function toggleStream(){
+  const t=document.getElementById("track-title");
+  const b=document.getElementById("stream-btn");
+  if(stream.paused){
+    stream.play();
+    t.innerText="LIVE: CENTRAL SCOTLAND’S ROCK";
+    b.innerText="TERMINATE SIGNAL";
+  } else {
+    stream.pause();
+    t.innerText="SIGNAL STANDBY";
+    b.innerText="ENGAGE SIGNAL";
+  }
+}
+
+// CREW
+const crew = [
+  {id:"dj_andy", name:"Andy", role:"Rock Rebel", bio:"High‑energy playlists", band:"Biffy Clyro", venue:"King Tuts", fact:"Once crowd‑surfed in a kilt."},
+  {id:"dj_blue", name:"Blue", role:"Blues Maverick", bio:"Coastal riffs expert", band:"Nazareth", venue:"Coats Paisley", fact:"Mistaken for a Mogwai roadie."},
+  {id:"dj_mhairi", name:"Mhairi", role:"Hard Rock Queen", bio:"Champion of Scottish indie", band:"JAMC", venue:"Kilmarnock Grand Hall", fact:"Tattoo artist."},
+  {id:"dj_stevie", name:"Stevie", role:"Headbanger", bio:"AC/DC purist", band:"Big Country", venue:"Beacon Arts Centre", fact:"High‑fived Angus Young."}
+];
+
+function loadCrew(){
+  let html="";
+  crew.forEach(c=>{
+    html+=`
+      <div class="dj-card" onclick="openBio('${c.id}')">
+        ${c.id}.jpg
+        <div class="dj-name">${c.name}</div>
       </div>
-    </section>
+    `;
+  });
+  document.getElementById("djGrid").innerHTML = html;
+}
 
-    <!-- CREW -->
-    <section id="v-crew" class="view" style="display:none;">
-      <div class="crew-grid" id="crew-list"></div>
-    </section>
+// BIO MODAL
+function openBio(id){
+  const c = crew.find(x=>x.id===id);
+  document.getElementById("bioName").innerText=c.name;
+  document.getElementById("bioRole").innerText=c.role;
+  document.getElementById("bioText").innerText=c.bio;
+  document.getElementById("bioBand").innerText=c.band;
+  document.getElementById("bioVenue").innerText=c.venue;
+  document.getElementById("bioFact").innerText=c.fact;
+  document.getElementById("bioModal").style.display="flex";
+}
+function closeBio(){ document.getElementById("bioModal").style.display="none"; }
 
-    <!-- ADVERTISE -->
-    <section id="v-partners" class="view" style="display:none;">
-      <div class="calc-box">
-        <h2 style="font-family:'Bebas Neue'; font-size:2.6rem; color:var(--authority-orange); margin-bottom:10px;">CAMPAIGN CALCULATOR</h2>
-        <select id="calc-region" class="calc-input" onchange="calculateRate()" aria-label="Airtime Package">
-          <option value="299">Regional Airtime (£299 / 28 days)</option>
-          <option value="449">Multi-Regional Airtime (£449 / 28 days)</option>
-        </select>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-          <input type="date" id="date-start" class="calc-input" onchange="calculateRate()" aria-label="Start date">
-          <input type="date" id="date-end" class="calc-input" onchange="calculateRate()" aria-label="End date">
-        </div>
-        <div style="display:flex; align-items:center; gap:12px; margin:15px 0; font-family:'Oswald';">
-          <input type="checkbox" id="creative-add" onchange="calculateRate()" style="width:20px; height:20px;" aria-label="Add creative production">
-          <label for="creative-add">ADD CREATIVE PRODUCTION (£195 FLAT)</label>
-        </div>
-        <div id="total-price" style="font-family:'Bebas Neue'; font-size:2.6rem; color:var(--authority-orange); text-align:center; border-top:1px solid #222; padding:16px 0;">TOTAL: £0.00</div>
-        <div id="calc-summary" style="text-align:center; color:#888; margin-bottom:18px; font-size:0.95rem;"></div>
-        <button class="btn-master" onclick="printQuote()">GENERATE QUOTE SUMMARY</button>
-      </div>
-    </section>
+// CALCULATOR
+function calc(){
+  const base=parseFloat(document.getElementById("pkg").value);
+  const s=new Date(document.getElementById("start").value);
+  const e=new Date(document.getElementById("end").value);
+  if(e<=s){document.getElementById("result").innerText="Invalid dates.";return;}
+  const days=(e-s)/(1000*60*60*24);
+  let cost=(base/28)*days;
+  if(days<28) cost*=1.3;
+  document.getElementById("result").innerText="£"+cost.toFixed(2);
+}
 
-    <!-- SUBMIT -->
-    <section id="v-submit" class="view" style="display:none;">
-      <div style="background: url('band_submission_sil.png') center/cover no-repeat; min-height: 520px; display: flex; justify-content: center; align-items: center;">
-        <div style="background: rgba(0,0,0,0.45); backdrop-filter: blur(14px); padding: 40px; width: 92%; max-width: 560px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); text-align:center;">
-          <h2 style="font-family:'Bebas Neue'; font-size:2.6rem; color:var(--authority-orange); margin-bottom:10px;">TRANSMIT TRACK</h2>
-          <input id="submit-artist" type="text" placeholder="BAND NAME" class="calc-input" aria-label="Band name">
-          <textarea id="submit-pitch" placeholder="STUDIO PITCH..." class="calc-input" style="height:120px;" aria-label="Studio pitch"></textarea>
-          <button class="btn-master" onclick="alert('Upload endpoint coming soon');">UPLOAD TO AUTHORITY</button>
-        </div>
-      </div>
-    </section>
-  </main>
+// CONTACT
+function sendContact(){
+  document.getElementById("cresponse").innerText="Message sent! We’ll be in touch.";
+}
 
-  <script>
-  // AUDIO STREAM
-  const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
+// DARK MODE
+function toggleDark(){
+  document.body.classList.toggle("dark-mode");
+}
 
-  // CREW DATA
-  const crewData = [
-    { id: "dj_andy", name: "Andy", role: "Rock Rebel",
-      bio: "Hailing from East Kilbride, Andy grew up blasting Biffy Clyro anthems. He started pirate radio in his garage before landing at Rock.Scot, bringing high-energy playlists to Inverclyde and beyond.",
-      band: "Biffy Clyro", gig: "Franz Ferdinand at the Barrowlands", venue: "King Tut's Wah Wah Hut",
-      fact: "Lost a shoe crowd-surfing in a kilt at a Big Country tribute night." },
-    { id: "dj_alex", name: "Alex", role: "Vinyl Viking",
-      bio: "Born in Johnstone, Alex discovered rock via Nazareth deep cuts. Now he spins rock classics with local shout-outs for Renfrewshire and the central belt.",
-      band: "Nazareth", gig: "Texas at the SEC Armadillo", venue: "Barrowland Ballroom",
-      fact: "Prized possession is a signed Deacon Blue vinyl from a Paisley afterparty." },
-    { id: "dj_stevie", name: "Stevie", role: "Headbanger",
-      bio: "From the shipbuilding heart of Port Glasgow, Stevie was raised on AC/DC. His late-night shows keep Inverclyde headbanging from Greenock to Gourock.",
-      band: "Big Country", gig: "Mogwai at Òran Mór", venue: "Beacon Arts Centre",
-      fact: "Claims he high-fived Angus Young at a secret pub gig." },
-    { id: "dj_mhairi", name: "Mhairi", role: "Hard Rock Queen",
-      bio: "Hamilton's own powerhouse. Mhairi champions female-fronted rock and local indie legends with sharp wit and heavy distortion.",
-      band: "The Jesus and Mary Chain", gig: "Teenage Fanclub at King Tut's", venue: "The Grand Hall, Kilmarnock",
-      fact: "Professional tattoo artist specialising in rock band logos." },
-    { id: "dj_jude", name: "Jude", role: "Indie Rock Icon",
-      bio: "North Ayrshire's Irvine is Jude's stomping ground. She champions emerging Scottish acts alongside the classics.",
-      band: "Travis", gig: "Idlewild at the Barrowland", venue: "Harbour Arts Centre, Irvine",
-      fact: "Hitchhiked to a Franz Ferdinand gig and ended up backstage." },
-    { id: "dj_chris", name: "Chris", role: "Guitar Guru",
-      bio: "Greenock bred Chris on Primal Scream. Starting as a pub DJ, he now blasts rock across the Firth of Clyde.",
-      band: "Primal Scream", gig: "Simple Minds at the OVO Hydro", venue: "Cathouse Rock Club",
-      fact: "Can play 'In a Big Country' perfectly on air guitar." },
-    { id: "dj_cal", name: "Cal", role: "Classic Rocker",
-      bio: "Straight out of Kilmarnock, Cal grew up on fellow Killie lads Biffy Clyro. He's the voice of timeless rock in Ayrshire.",
-      band: "Biffy Clyro", gig: "The Fratellis at The Grand Hall", venue: "Palace Theatre, Kilmarnock",
-      fact: "Won a major air guitar contest at an Ayrshire festival." },
-    { id: "dj_blue", name: "Blue", role: "Bluesy Maverick",
-      bio: "From the seaside charm of Gourock, Blue blends bluesy riffs with pure rock energy for the coastal central belt.",
-      band: "Nazareth", gig: "Texas at Paisley Arts Centre", venue: "Coats Paisley",
-      fact: "Once mistaken for a Mogwai roadie because of his blue hair." }
-  ];
+// INIT
+loadCrew();
+</script>
 
-  // Populate Crew
-  function initCrew() {
-    const list = document.getElementById("crew-list");
-    list.innerHTML = crewData.map(dj => `
-      <div class="dossier-card" onclick="openBio('${dj.id}')">
-        <img.id}.jpg
-        <div class="dj-label">
-          <div style="color:var(--authority-orange); font-family:'Oswald'; font-size:0.75rem;">${dj.role}</div>
-          <div style="font-family:'Bebas Neue'; font-size:2.4rem; letter-spacing:1px;">${dj.name}</div>
-        </div>
-      </div>
-    `).join("");
-  }
-
-  // Bio Modal
-  function openBio(id) {
-    const dj = crewData.find(x => x.id === id);
-    if (!dj) return;
-    document.getElementById("bio-img").src = `${dj.id}.jpg`;
-    document.getElementById("bio-name").innerText = dj.name;
-    document.getElementById("bio-role").innerText = dj.role;
-    document.getElementById("bio-text").innerText = dj.bio;
-    document.getElementById("bio-band").innerText = dj.band;
-    document.getElementById("bio-gig").innerText = dj.gig;
-    document.getElementById("bio-venue").innerText = dj.venue;
-    document.getElementById("bio-fact").innerText = dj.fact.toUpperCase();
-    document.getElementById("bio-overlay").style.display = "flex";
-  }
-  function closeBio() { document.getElementById("bio-overlay").style.display = "none"; }
-
-  // Tabs
-  function showTab(id, btn) {
-    document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('v-' + id).style.display = 'block';
-    btn.classList.add('active');
-    window.scrollTo(0,0);
-  }
-
-  // Audio Toggle
-  function toggleAudio() {
-    const btn = document.getElementById('play-btn');
-    const logo = document.getElementById('main-logo');
-    const display = document.getElementById('track-display');
-    if (stream.paused) {
-      stream.play(); btn.innerText = 'TERMINATE SIGNAL';
-      logo.classList.add('playing-pulse');
-      display.innerText = "AUTHORITY LIVE BROADCAST // CENTRAL SCOTLAND'S ROCK AUTHORITY";
-    } else {
-      stream.pause(); btn.innerText = 'ENGAGE SIGNAL';
-      logo.classList.remove('playing-pulse');
-      display.innerText = 'SIGNAL STANDBY';
-    }
-  }
-
-  // Ticker (RSS)
-  async function fetchWire() {
-    try {
-      const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss/search?q=Rock+Music+Scotland");
-      const data = await res.json();
-      const newsString = data.items.slice(0, 10).map(i => i.title.toUpperCase()).join(" // WIRE: // ");
-      document.getElementById('wire-ticker').innerText = "AUTHORITY WIRE: // " + newsString;
-    } catch (e) { console.log('Ticker fetch failed'); }
-  }
-
-  // Calculator
-  function calculateRate() {
-    const base = parseFloat(document.getElementById('calc-region').value);
-    const start = new Date(document.getElementById('date-start').value);
-    const end = new Date(document.getElementById('date-end').value);
-    const creative = document.getElementById('creative-add').checked ? 195 : 0;
-    if (isNaN(start) || isNaN(end) || end <= start) return;
-    const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-    let airtimeTotal, note;
-    if (days < 28) { airtimeTotal = ((base / 28) * days) * 1.3; note = '30% Short-Stay Surcharge Applied'; }
-    else { airtimeTotal = (base / 28) * days; note = 'Standard Package Rate Applied'; }
-    const total = airtimeTotal + creative;
-    document.getElementById('total-price').innerText = `TOTAL: £${total.toFixed(2)}`;
-    document.getElementById('calc-summary').innerHTML = `${days} Days | Airtime: £${airtimeTotal.toFixed(2)} | Creative: £${creative}<br><em>${note}</em>`;
-  }
-
-  // Quote Export
-  function printQuote() {
-    const summary = document.getElementById('calc-summary').innerText;
-    const total = document.getElementById('total-price').innerText;
-    const text = `ROCK.SCOT AUTHORITY QUOTE
--------------------------------------
-${summary}
-Final Price: ${total}
--------------------------------------
-Valid for 7 days.`;
-    const blob = new Blob([text], { type: 'text/plain' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'RockScot_Quote.txt';
-    link.click();
-  }
-
-  // Init
-  window.onload = () => { initCrew(); fetchWire(); };
-  </script>
 </body>
 </html>
