@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +6,7 @@
 <title>Rock.Scot | Central Scotland’s Rock Authority</title>
 <link://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Bebas+Neue&family=Inter:wght@300;400;700;900&display=swap
 <meta name="color-scheme" content="dark light">
+top_banner.png
 
 <style>
 :root{
@@ -78,7 +78,7 @@ small.muted{color:var(--muted)}
 .wizz-card small{color:var(--muted)}
 .news-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:30}
 .news-sheet{width:92%;max-width:900px;max-height:85vh;overflow:auto;background:rgba(10,10,10,.86);border:1px solid var(--line);padding:22px}
-.news-sheet h2{font-family:var(--head);color:var(--orange);margin:0 0 10px}
+.news-sheet h2{font-family:var(--head);color:#ff4d00;margin:0 0 10px}
 .news-close{float:right;font-size:2rem;font-family:var(--head);cursor:pointer;color:#9aa}
 .news-sheet img.hero{width:100%;height:260px;object-fit:cover;border:1px solid var(--line);margin:10px 0 14px}
 .news-sheet .content{line-height:1.6}
@@ -283,19 +283,22 @@ const crew=[
   {id:"dj_cal",name:"Cal",role:"Classic Rocker",bio:"Timeless rock voice from Kilmarnock.",band:"Biffy Clyro",venue:"Palace Theatre",fact:"Won a major air‑guitar contest."},
   {id:"dj_blue",name:"Blue",role:"Bluesy Maverick",bio:"Coastal grooves with bite.",band:"Nazareth",venue:"Coats Paisley",fact:"Mistaken for a Mogwai roadie."}
 ];
+
 function renderCrew(){
   const el=document.getElementById('crewGrid'); if(!el) return;
-  el.innerHTML=crew.map(d=>`
-    <div class="card" onclick="openBio('${d.id}')">
-      ${d.id}.jpg
-      <div class="label">${htmlEsc(d.name)}</div>
-    </div>
-  `).join('');
-}
-function openBio(id){
-  const d=crew.find(x=>x.id===id); if(!d) return;
-  document.getElementById('mName').textContent=d.name;
-  document.getElementById('mRole').textContent=d.role;
+  el.innerHTML=crew.map(d=>{
+    const jpg = `${d.id}.jpg`;
+    const png = `${d.id}.png`;
+    return `
+      <div class="card" onclick="openBio('${d.id}')">
+        <img src="${jpg}" alt="${htmlEsc(d.name)}"
+             onerror="
+               if(!this.dataset.alt){
+                 this.dataset.alt='1';
+                 this.src='${png}';
+               }else{
+                 this.onerror=null; this.src='top_banner.png';
+              
   document.getElementById('mBio').textContent=d.bio;
   document.getElementById('mBand').textContent=d.band;
   document.getElementById('mVenue').textContent=d.venue;
@@ -358,14 +361,15 @@ const WIZZ_FEEDS = [
   // Newspapers’ music
   "https://www.thenational.scot/culture/music/rss/",
   "https://news.google.com/rss/search?q=site:thenational.scot+music&hl=en-GB&gl=GB&ceid=GB:en",
-  "https://news.google.com/rss/search?q=site:glasgowtimes.co.uk+music&hl=en-GB&gl=GB:en&ceid=GB:en",
+  "https://news.google.com/rss/search?q=site:glasgowtimes.co.uk+music&hl=en-GB&gl=GB&ceid=GB:en",
   "https://news.google.com/rss/search?q=site:pressandjournal.co.uk+music&hl=en-GB&gl=GB&ceid=GB:en",
 
   // Community
   "https://www.reddit.com/r/scottishmusic/.rss"
 ];
 
-const WIZZ_MAX_ITEMS = 18;
+// show only 6 news items at any one time
+const WIZZ_MAX_ITEMS = 6;
 const WIZZ_KEYWORDS = /(rock|music|gig|gigs|venue|venues|Barrowland|Tut'?s|Hydro|SWG3|King Tut)/i;
 
 const WIZZ_HARDCODED = [{
@@ -382,7 +386,7 @@ async function loadWizz(){
 
   const cacheKey = "wizz.cache.v1";
   const cached = safeJSON(localStorage.getItem(cacheKey)) || [];
-  if (cached.length) renderWizz(cached, true);
+  if (cached.length) renderWizz(cached);
 
   try{
     const results = await Promise.allSettled(WIZZ_FEEDS.map(f => fetchFeedRobust(f)));
@@ -400,10 +404,10 @@ async function loadWizz(){
       finalList = fallback.length ? fallback : (cached.length ? cached : WIZZ_HARDCODED);
     }
 
-    renderWizz(finalList, false);
+    renderWizz(finalList);
     try { localStorage.setItem(cacheKey, JSON.stringify(finalList)); } catch(e){}
   } catch(e){
-    if (!cached.length) renderWizz(WIZZ_HARDCODED, false);
+    if (!cached.length) renderWizz(WIZZ_HARDCODED);
   }
 }
 
@@ -498,7 +502,7 @@ function cardHTML(s){
   const when = new Date(s.pubDate||Date.now()).toLocaleString();
   return `
     <div class="wizz-card" data-link="${htmlEsc(s.link)}" data-title="${htmlEsc(s.title)}" data-img="${htmlEsc(img)}">
-      <img srcc(img)}
+      ${htmlEsc(img)}
       <div class="w">
         <h3>${htmlEsc(s.title)}</h3>
         <small>${htmlEsc(s.source||"")}${s.source?" • ":""}${when}</small>
@@ -538,6 +542,3 @@ function htmlLog(){/* quiet */} // placeholder to avoid accidental console noise
 </script>
 </body>
 </html>
-``
-
-
