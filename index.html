@@ -9,12 +9,13 @@
     <style>
         :root { 
             --authority-orange: #ff5500; 
-            --phantom-glass: rgba(0, 0, 0, 0.45); 
-            --glass-border: rgba(255, 255, 255, 0.25);
+            --phantom-glass: rgba(0, 0, 0, 0.4); 
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; min-height: 100vh; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
         header { 
             position: sticky; top: 0; z-index: 9999; 
@@ -25,6 +26,7 @@
         .hdr-logo { 
             width: 100%; max-width: 450px; height: auto; 
             padding: 15px 0; display: block;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.8));
         }
 
         .nav-strip { 
@@ -39,7 +41,6 @@
         .view { 
             display: none; min-height: 100vh; width: 100%; padding: 40px 20px; 
             background-size: cover; background-position: center; background-attachment: fixed;
-            background-color: #000;
         }
         .view.active { display: flex; flex-direction: column; align-items: center; }
 
@@ -48,67 +49,74 @@
             background: var(--phantom-glass);
             border: 1px solid var(--glass-border); 
             display: flex; flex-direction: column;
-            justify-content: center; align-items: center; padding: 25px; text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            justify-content: center; align-items: center; padding: 20px; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
             position: relative;
         }
 
-        /* 3D Archive */
         .archive-viewport {
             perspective: 1200px; width: 100%; height: 600px;
-            display: flex; align-items: center; overflow-x: auto; overflow-y: hidden;
+            display: flex; align-items: center;
+            overflow-x: auto; overflow-y: hidden;
             scrollbar-width: none; -webkit-overflow-scrolling: touch;
         }
+        .archive-viewport::-webkit-scrollbar { display: none; }
         .crew-track { display: flex; align-items: center; padding: 0 100px; }
+
         .crew-card-3d {
             min-width: 280px; height: 420px; margin: 0 -40px;
-            background: rgba(0,0,0,0.6); border: 1px solid var(--glass-border);
+            background: rgba(0,0,0,0.5); 
+            border: 1px solid var(--glass-border); position: relative;
             transform-style: preserve-3d; will-change: transform;
-            filter: grayscale(100%) brightness(0.4); transition: 0.5s;
+            filter: grayscale(100%) brightness(0.4); transition: filter 0.5s;
+            -webkit-box-reflect: below 2px linear-gradient(transparent, rgba(0,0,0,0.1));
         }
         .crew-card-3d.focus { filter: grayscale(0%) brightness(1.1); z-index: 100; border-color: var(--authority-orange); }
-        .crew-label-3d { position: absolute; bottom: 0; width: 100%; padding: 25px; background: linear-gradient(transparent, #000); font-family: 'Bebas Neue'; font-size: 2.2rem; }
+        .crew-label-3d { position: absolute; bottom: 0; width: 100%; padding: 25px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); font-family: 'Bebas Neue'; font-size: 2.2rem; text-align: center; text-shadow: var(--text-shadow); }
 
         #rss-feed { display: grid; grid-template-columns: repeat(auto-fill, 320px); gap: 25px; width:100%; justify-content: center; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: none; padding: 20px; align-items: center; justify-content: center; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; display: none; padding: 20px; align-items: center; justify-content: center; }
+        .modal-overlay.open { display: flex; }
         .mag-layout { max-width: 550px; border: 8px solid #fff; padding: 30px; background: #000; width: 95%; max-height: 85vh; overflow-y: auto; }
 
         .btn-authority { width: 100%; padding: 18px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.6rem; cursor: pointer; }
         .std-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
         .std-label { display: block; font-family: 'Oswald'; font-size: 0.8rem; color: #888; text-transform: uppercase; margin-bottom: 5px; }
         
-        /* SEO Formatting */
-        .bio-text { font-family: 'Inter'; font-size: 1rem; line-height: 1.6; color: #ddd; text-align: left; }
-        .bio-highlight { background: rgba(255,85,0,0.1); border-left: 4px solid var(--authority-orange); padding: 15px; margin: 15px 0; font-size: 0.9rem; }
+        /* SEO Bio Formatting */
+        .bio-text { text-align: left; font-size: 0.95rem; line-height: 1.6; color: #ccc; }
+        .bio-text b { color: var(--authority-orange); font-family: 'Oswald'; text-transform: uppercase; letter-spacing: 1px; }
+        .bio-block { margin-top: 15px; padding-top: 15px; border-top: 1px solid #333; }
     </style>
 </head>
 <body>
 
-    <div id="mag-modal" class="modal-overlay" onclick="this.style.display='none'">
+    <div id="mag-modal" class="modal-overlay" onclick="this.classList.remove('open')">
         <div class="mag-layout" onclick="event.stopPropagation()">
-            <h2 id="mag-name" style="font-family:'Oswald'; font-size:2.8rem; text-transform:uppercase;"></h2>
+            <div id="mag-tag" style="font-family:'Bebas Neue'; color:var(--authority-orange); letter-spacing:2px; font-size:1.1rem;">AUTHORITY DOSSIER</div>
+            <h2 id="mag-name" style="font-family:'Oswald'; font-size:2.8rem; text-transform:uppercase; line-height:1;"></h2>
             <div id="mag-content"></div>
         </div>
     </div>
 
     <header>
-        <img src="logo.png" class="hdr-logo" alt="Rock.Scot Authority">
+        <img src="logo.png" class="hdr-logo" alt="Rock.Scot">
         <nav class="nav-strip">
-            <button class="nav-btn active" onclick="showTab('live', this)">LIVE</button>
-            <button class="nav-btn" onclick="showTab('wire', this)">WIRE</button>
-            <button class="nav-btn" onclick="showTab('crew', this)">CREW</button>
-            <button class="nav-btn" onclick="showTab('rates', this)">RATES</button>
-            <button class="nav-btn" onclick="showTab('submit', this)">SUBMIT</button>
+            <button class="nav-btn active" onclick="showTab('live')">LIVE</button>
+            <button class="nav-btn" onclick="showTab('wire')">WIRE</button>
+            <button class="nav-btn" onclick="showTab('crew')">CREW</button>
+            <button class="nav-btn" onclick="showTab('rates')">RATES</button>
+            <button class="nav-btn" onclick="showTab('submit')">SUBMIT</button>
         </nav>
     </header>
 
     <main>
         <section id="v-live" class="view active">
             <div class="uniform-card">
-                <div id="live-clock" style="font-family:'Bebas Neue'; font-size:4.5rem;">00:00:00</div>
-                <div style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:5px;">CENTRAL SCOTLAND</div>
-                <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:260px; border:none; margin-top:15px;" allow="autoplay" allowtransparency="true"></iframe>
+                <div id="live-clock" style="font-family:'Bebas Neue'; font-size:4.5rem; line-height:0.9;">00:00</div>
+                <div style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:5px; margin-bottom:15px;">CENTRAL SCOTLAND</div>
+                <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:260px; border:none; background:transparent;" allow="autoplay" allowtransparency="true"></iframe>
             </div>
         </section>
 
@@ -122,129 +130,198 @@
             </div>
         </section>
 
-        <section id="v-rates" class="view"><div class="uniform-card"><h2 style="font-family:'Bebas Neue'; font-size:3.5rem; color:var(--authority-orange);">RATES</h2><button class="btn-authority" onclick="openRates()">AD PORTAL</button></div></section>
-        <section id="v-submit" class="view"><div class="uniform-card" id="submit-card-content"><h2 style="font-family:'Bebas Neue'; font-size:3.5rem; color:var(--authority-orange);">SUBMIT</h2><button class="btn-authority" onclick="openSubmit()">SEND TRACK</button></div></section>
+        <section id="v-rates" class="view">
+            <div class="uniform-card">
+                <h2 style="font-family:'Bebas Neue'; font-size:3.5rem; color:var(--authority-orange);">RATES</h2>
+                <button class="btn-authority" onclick="openRates()">AD PORTAL</button>
+            </div>
+        </section>
+
+        <section id="v-submit" class="view">
+            <div class="uniform-card" id="submit-card-content">
+                <h2 style="font-family:'Bebas Neue'; font-size:3.5rem; color:var(--authority-orange);">SUBMIT</h2>
+                <button class="btn-authority" onclick="openSubmit()">SEND TRACK</button>
+            </div>
+        </section>
     </main>
 
 <script>
     const crewData = [
-        { id: "andy", name: "ANDY", tagline: "East Kilbride's Rock Rebel", bio: "Hailing from East Kilbride in South Lanarkshire, Andy grew up blasting Biffy Clyro anthems from his bedroom in the new town suburbs. His dad dragged him to his first gig at a local pub, where a cover band nailed Simple Minds' \"Don't You (Forget About Me)\", and that was it—rock hooked him for life. He started pirate radio in his garage before landing at Rock.Scot, bringing high-energy playlists to listeners across Inverclyde, South Lanarkshire, and North Ayrshire.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands", venue: "King Tut's", fact: "Lost a shoe crowd-surfing in Hamilton.", img: "dj_andy.jpg" },
-        { id: "alex", name: "ALEX", tagline: "Johnstone's Vinyl Viking", bio: "Born and bred in Johnstone, Alex discovered rock digging through his uncle's record collection—Nazareth's \"Hair of the Dog\" changed everything. He spent his teens sneaking into gigs in nearby Paisley and Glasgow, then built his own decks to spin rock classics. Now he rocks the airwaves on Rock.Scot with deep cuts and local shout-outs.", band: "Nazareth", gig: "Texas @ SEC", venue: "Barrowland Ballroom", fact: "Owns signed Deacon Blue vinyl.", img: "dj_alex.jpg" },
-        { id: "stevie", name: "STEVIE", tagline: "Port Glasgow's Headbanger", bio: "From the shipbuilding heart of Port Glasgow in Inverclyde, Stevie was raised on tales of Clyde rockers and first fell for rock hearing AC/DC (via Bon Scott's Scottish roots) at a family barbecue. He formed a garage band in his teens, playing covers at local pubs before switching to DJing. His late-night shows on Rock.Scot keep Inverclyde headbanging from Greenock to Gourock.", band: "Big Country", gig: "Mogwai @ Òran Mór", venue: "Beacon Arts Centre", fact: "Claims he high-fived Angus Young.", img: "dj_stevie.jpg" },
-        { id: "mhairi", name: "MHAIRI", tagline: "Hamilton's Hard Rock Queen", bio: "Hamilton in South Lanarkshire gave Mhairi her first taste of live rock at a school battle of the bands featuring The Jesus and Mary Chain covers. She was instantly obsessed, trading pop for distortion pedals and building a massive CD collection. Her witty banter and killer playlists now light up Rock.Scot for listeners in Hamilton, East Kilbride, and beyond.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tut's", venue: "Grand Hall Kilmarnock", fact: "Specialises in rock band tattoos.", img: "dj_mhairi.jpg" },
-        { id: "jude", name: "JUDE", tagline: "Irvine's Indie Rock Icon", bio: "North Ayrshire's Irvine is Jude's stomping ground, where beach walks with Travis on headphones sparked a lifelong love for melodic rock. She volunteered at local open mics, then climbed the ranks to Rock.Scot, championing emerging Scottish acts alongside classics.", band: "Travis", gig: "Idlewild @ Barrowland", venue: "Harbour Arts Centre", fact: "Hitchhiked to a Franz Ferdinand gig.", img: "dj_jude.jpg" },
-        { id: "chris", name: "CHRIS", tagline: "Greenock's Guitar Guru", bio: "Greenock in Inverclyde bred Chris on tales of shipyard workers rocking out to Primal Scream. His first gig was Biffy Clyro in Glasgow, and he never looked back—starting as a pub DJ before joining Rock.Scot to blast rock across the Firth of Clyde.", band: "Primal Scream", gig: "Simple Minds @ OVO Hydro", venue: "Cathouse Rock Club", fact: "Owns every Big Country album on vinyl.", img: "dj_chris.jpg" },
-        { id: "cal", name: "CAL", tagline: "Kilmarnock's Classic Rocker", bio: "Straight out of Kilmarnock in the Ayrshire heartlands, Cal grew up on Biffy Clyro (fellow Killie lads) and The Sensational Alex Harvey Band. He DJ'd school discos before going pro, now delivering timeless rock to Rock.Scot fans in Kilmarnock, Irvine, and North Ayrshire.", band: "Biffy Clyro", gig: "The Fratellis @ Grand Hall", venue: "Palace Theatre", fact: "Won an air guitar contest.", img: "dj_cal.jpg" },
-        { id: "blue", name: "BLUE", tagline: "Gourock's Bluesy Rock Maverick", bio: "From the seaside charm of Gourock in Inverclyde, Blue got into rock via his grandad's Nazareth and Gerry Rafferty records. He blended bluesy riffs with rock energy, DJing beach parties before hitting Rock.Scot waves for listeners from Gourock to Wemyss Bay.", band: "Nazareth", gig: "Texas @ Paisley Arts", venue: "Coats Paisley", fact: "Mistaken for a roadie at Mogwai.", img: "dj_blue.jpg" }
+        { 
+            id: "andy", name: "ANDY", title: "East Kilbride's Rock Rebel",
+            bio: "Hailing from East Kilbride in South Lanarkshire, Andy grew up blasting Biffy Clyro anthems from his bedroom in the new town suburbs. His dad dragged him to his first gig at a local pub, where a cover band nailed Simple Minds' \"Don't You (Forget About Me)\", and that was it—rock hooked him for life. He started pirate radio in his garage before landing at Rock.Scot, bringing high-energy playlists to listeners across Inverclyde, South Lanarkshire, and North Ayrshire.",
+            band: "Biffy Clyro—those riffs hit harder than a Lanarkshire monsoon.",
+            gig: "Franz Ferdinand at the Barrowland Ballroom—pure chaos in the best way.",
+            venue: "King Tut's Wah Wah Hut—legendary spot for breaking Scottish talent.",
+            fact: "Andy once crowd-surfed at a Big Country tribute night in Hamilton and lost a shoe—still blames the kilt.",
+            img: "dj_andy.jpg" 
+        },
+        { 
+            id: "alex", name: "ALEX", title: "Johnstone's Vinyl Viking",
+            bio: "Born and bred in Johnstone, Alex discovered rock digging through his uncle's record collection—Nazareth's \"Hair of the Dog\" changed everything. He spent his teens sneaking into gigs in nearby Paisley and Glasgow, then built his own decks to spin rock classics. Now he rocks the airwaves on Rock.Scot with deep cuts and local shout-outs.",
+            band: "Nazareth—raw, loud, and unapologetic.",
+            gig: "Texas at the SEC Armadillo—Sharleen Spiteri's voice live is unreal.",
+            venue: "Barrowland Ballroom—nothing beats that sprung floor bounce.",
+            fact: "Alex's prized possession is a scratched vinyl of Deacon Blue signed after he DJ'd a secret afterparty in Paisley.",
+            img: "dj_alex.jpg" 
+        },
+        { 
+            id: "stevie", name: "STEVIE", title: "Port Glasgow's Headbanger",
+            bio: "From the shipbuilding heart of Port Glasgow in Inverclyde, Stevie was raised on tales of Clyde rockers and first fell for rock hearing AC/DC (via Bon Scott's Scottish roots) at a family barbecue. He formed a garage band in his teens, playing covers at local pubs before switching to DJing. His late-night shows on Rock.Scot keep Inverclyde headbanging from Greenock to Gourock.",
+            band: "Big Country—those guitar anthems scream Scottish pride.",
+            gig: "Mogwai at Òran Mór—post-rock heaven in Glasgow.",
+            venue: "Beacon Arts Centre in Greenock—local legend for intimate rock nights.",
+            fact: "Stevie claims he once high-fived Angus Young at a secret pub gig (no proof, but we believe him).",
+            img: "dj_stevie.jpg" 
+        },
+        { 
+            id: "mhairi", name: "MHAIRI", title: "Hamilton's Hard Rock Queen",
+            bio: "Hamilton in South Lanarkshire gave Mhairi her first taste of live rock at a school battle of the bands featuring The Jesus and Mary Chain covers. She was instantly obsessed, trading pop for distortion pedals and building a massive CD collection. Her witty banter and killer playlists now light up Rock.Scot for listeners in Hamilton, East Kilbride, and beyond.",
+            band: "The Jesus and Mary Chain—feedback never sounded so sweet.",
+            gig: "Teenage Fanclub at King Tut's—pure harmony bliss.",
+            venue: "The Grand Hall in Kilmarnock—epic for big rock energy.",
+            fact: "Mhairi moonlights as a tattoo artist specialising in rock band logos—her arm is a Scottish rock hall of fame.",
+            img: "dj_mhairi.jpg" 
+        },
+        { 
+            id: "jude", name: "JUDE", title: "Irvine's Indie Rock Icon",
+            bio: "North Ayrshire's Irvine is Jude's stomping ground, where beach walks with Travis on headphones sparked a lifelong love for melodic rock. She volunteered at local open mics, then climbed the ranks to Rock.Scot, championing emerging Scottish acts alongside classics.",
+            band: "Travis—those choruses are pure emotion.",
+            gig: "Idlewild at the Barrowland—sweaty, poetic perfection.",
+            venue: "Harbour Arts Centre in Irvine—cosy spot for killer local gigs.",
+            fact: "Jude once hitchhiked to a Franz Ferdinand gig in Glasgow and ended up backstage (long story involving free Irn-Bru).",
+            img: "dj_jude.jpg" 
+        },
+        { 
+            id: "chris", name: "CHRIS", title: "Greenock's Guitar Guru",
+            bio: "Greenock in Inverclyde bred Chris on tales of shipyard workers rocking out to Primal Scream. His first gig was Biffy Clyro in Glasgow, and he never looked back—starting as a pub DJ before joining Rock.Scot to blast rock across the Firth of Clyde.",
+            band: "Primal Scream—Screamadelica changed the game.",
+            gig: "Simple Minds at the OVO Hydro—epic homecoming vibes.",
+            venue: "Cathouse Rock Club in Glasgow—metal and rock heaven.",
+            fact: "Chris owns every Big Country album on vinyl and can play \"In a Big Country\" on air guitar flawlessly.",
+            img: "dj_chris.jpg" 
+        },
+        { 
+            id: "cal", name: "CAL", title: "Kilmarnock's Classic Rocker",
+            bio: "Straight out of Kilmarnock in the Ayrshire heartlands, Cal grew up on Biffy Clyro (fellow Killie lads) and The Sensational Alex Harvey Band. He DJ'd school discos before going pro, now delivering timeless rock to Rock.Scot fans in Kilmarnock, Irvine, and North Ayrshire.",
+            band: "Biffy Clyro—local heroes done good.",
+            gig: "The Fratellis at The Grand Hall Kilmarnock—pure party.",
+            venue: "Palace Theatre and Grand Hall in Kilmarnock—hometown pride.",
+            fact: "Cal's nickname \"Cal the Rocker\" started after he won a air guitar contest at a local Ayrshire festival.",
+            img: "dj_cal.jpg" 
+        },
+        { 
+            id: "blue", name: "BLUE", title: "Gourock's Bluesy Rock Maverick",
+            bio: "From the seaside charm of Gourock in Inverclyde, Blue got into rock via his grandad's Nazareth and Gerry Rafferty records. He blended bluesy riffs with rock energy, DJing beach parties before hitting Rock.Scot waves for listeners from Gourock to Wemyss Bay.",
+            band: "Nazareth—those growls are timeless.",
+            gig: "Texas at Paisley Arts Centre—intimate and electric.",
+            venue: "Coats Paisley or Beacon Arts Centre—perfect for rock vibes.",
+            fact: "Blue's blue hair (hence the name) once got him mistaken for a roadie at a Mogwai gig—he played along.",
+            img: "dj_blue.jpg" 
+        }
     ];
 
-    let spinInterval, isInteracting = false;
+    let spinInterval, isInteracting = false, interactionTimer;
 
-    function showTab(name, btn) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    function showTab(name) {
+        document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        const active = document.getElementById('v-' + name);
-        active.classList.add('active');
-        btn.classList.add('active');
-        
-        // Background Cycle Fix
-        const bgNum = Math.floor(Math.random() * 7) + 1;
-        active.style.backgroundImage = `url('news${bgNum}.jpg')`;
-
+        const activeView = document.getElementById('v-' + name);
+        activeView.style.display = 'flex';
+        activeView.style.backgroundImage = `url('news${Math.floor(Math.random()*7)+1}.jpg')`;
+        event.currentTarget.classList.add('active');
         if(name === 'crew') { initInfiniteCrew(); startAutoSpin(); } 
-        else if(name === 'wire') { fetchWire(); }
+        else if(name === 'wire') { fetchWire(); stopAutoSpin(); }
+        else { stopAutoSpin(); }
     }
-
-    function updateClock() {
-        const el = document.getElementById('live-clock');
-        if(el) el.innerText = new Date().toLocaleTimeString('en-GB');
-    }
-    setInterval(updateClock, 1000);
 
     async function fetchWire() {
-        const container = document.getElementById('rss-feed');
-        container.innerHTML = '<div class="uniform-card"><h3>SCANNING WIRE...</h3></div>';
+        const feedContainer = document.getElementById('rss-feed');
+        feedContainer.innerHTML = '<div class="uniform-card"><h3>SCANNING WIRE...</h3></div>';
         try {
             const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.theskinny.co.uk/rss/music')}`);
             const data = await res.json();
-            container.innerHTML = data.items.map(item => `
-                <div class="uniform-card">
-                    <h3 style="font-family:'Oswald'; color:var(--authority-orange);">${item.title.toUpperCase()}</h3>
-                    <p style="font-size:0.8rem; margin:15px 0;">${item.description.replace(/<[^>]*>?/gm, '').substring(0,100)}...</p>
-                    <button class="btn-authority" style="font-size:1rem; padding:10px;" onclick="window.open('${item.link}')">READ WIRE</button>
-                </div>`).join('');
+            if (data.status === 'ok') {
+                feedContainer.innerHTML = data.items.map(item => `
+                    <div class="uniform-card">
+                        <h3 style="font-family:'Oswald'; color:var(--authority-orange);">${item.title.toUpperCase()}</h3>
+                        <p style="font-size:0.8rem; margin:15px 0;">${item.description.replace(/<[^>]*>?/gm, '').substring(0,100)}...</p>
+                        <button class="btn-authority" style="font-size:1rem; padding:10px;" onclick="window.open('${item.link}')">READ WIRE</button>
+                    </div>`).join('');
+            } else throw new Error();
         } catch (e) {
-            container.innerHTML = Array.from({length:4}).map(() => `<div class="uniform-card"><h3>WIRE SIGNAL WEAK</h3><p>Sync in progress.</p></div>`).join('');
+            feedContainer.innerHTML = `<div class="uniform-card"><h3>WIRE OFFLINE</h3><p>Sync in progress.</p></div>`;
         }
     }
 
     function initInfiniteCrew() {
         const track = document.getElementById('crew-track');
-        const triple = [...crewData, ...crewData, ...crewData];
-        track.innerHTML = triple.map(dj => `
+        const wrap = document.getElementById('crew-3d-wrap');
+        const tripleData = [...crewData, ...crewData, ...crewData];
+        track.innerHTML = tripleData.map(dj => `
             <div class="crew-card-3d" onclick="handle3DClick(this, '${dj.id}')">
                 <img src="${dj.img}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='logo.png'">
                 <div class="crew-label-3d">${dj.name}</div>
             </div>`).join('');
-        document.getElementById('crew-3d-wrap').scrollLeft = track.scrollWidth / 3;
+        wrap.scrollLeft = track.scrollWidth / 3;
         animate3D();
+        wrap.onmousedown = wrap.ontouchstart = () => { isInteracting = true; stopAutoSpin(); };
+        wrap.onmouseup = wrap.ontouchend = () => { clearTimeout(interactionTimer); interactionTimer = setTimeout(() => { isInteracting = false; startAutoSpin(); }, 3000); };
     }
 
     function startAutoSpin() {
-        if(spinInterval) clearInterval(spinInterval);
-        spinInterval = setInterval(() => { if(!isInteracting) document.getElementById('crew-3d-wrap').scrollLeft += 1; }, 20);
+        if (spinInterval) clearInterval(spinInterval);
+        spinInterval = setInterval(() => { if (!isInteracting) document.getElementById('crew-3d-wrap').scrollLeft += 1.2; }, 16);
     }
+    function stopAutoSpin() { clearInterval(spinInterval); spinInterval = null; }
 
     function handleInfiniteScroll() {
         const wrap = document.getElementById('crew-3d-wrap');
         const sw = document.getElementById('crew-track').scrollWidth / 3;
-        if(wrap.scrollLeft <= 0) wrap.scrollLeft = sw;
-        if(wrap.scrollLeft >= sw * 2) wrap.scrollLeft = sw;
-        animate3D();
+        if (wrap.scrollLeft <= 0) wrap.scrollLeft = sw;
+        else if (wrap.scrollLeft >= sw * 2) wrap.scrollLeft = sw;
+        requestAnimationFrame(animate3D);
     }
 
     function animate3D() {
         const wrap = document.getElementById('crew-3d-wrap');
+        const cards = document.querySelectorAll('.crew-card-3d');
         const centerX = wrap.scrollLeft + (wrap.offsetWidth / 2);
-        document.querySelectorAll('.crew-card-3d').forEach(card => {
+        cards.forEach(card => {
             const dist = (card.offsetLeft + (card.offsetWidth / 2)) - centerX;
             const abs = Math.abs(dist);
-            card.style.transform = `rotateY(${dist/20}deg) translateZ(${-abs/3}px)`;
+            card.style.transform = `rotateY(${dist/20}deg) translateZ(${-abs/2.5}px)`;
             card.classList.toggle('focus', abs < 80);
         });
     }
 
     function handle3DClick(el, id) {
         const dj = crewData.find(d => d.id === id);
-        if(!el.classList.contains('focus')) { el.scrollIntoView({ behavior: 'smooth', inline: 'center' }); return; }
+        if(!el.classList.contains('focus')) { el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); return; }
         document.getElementById('mag-name').innerText = dj.name;
         document.getElementById('mag-content').innerHTML = `
             <div class="bio-text">
-                <p style="color:var(--authority-orange); font-family:'Oswald'; margin-bottom:10px;">${dj.tagline}</p>
+                <p style="color:var(--authority-orange); font-family:'Oswald'; margin-bottom:10px;">${dj.title.toUpperCase()}</p>
                 <p>${dj.bio}</p>
-                <div class="bio-highlight">
-                    <p><b>BAND:</b> ${dj.band} | <b>GIG:</b> ${dj.gig}</p>
-                    <p><b>VENUE:</b> ${dj.venue}</p>
+                <div class="bio-block">
+                    <p><b>FAVOURITE BAND:</b> ${dj.band}</p>
+                    <p><b>BEST GIG:</b> ${dj.gig}</p>
+                    <p><b>DREAM VENUE:</b> ${dj.venue}</p>
+                    <p><b>FUN FACT:</b> ${dj.fact}</p>
                 </div>
-                <p><b>FACT:</b> ${dj.fact}</p>
             </div>`;
-        document.getElementById('mag-modal').style.display = 'flex';
+        document.getElementById('mag-modal').classList.add('open');
     }
 
-    // Rates/Submit
+    /* RATES ENGINE */
+    const baseRates = { regional: 299, multi: 449 };
+    const creativeFee = 195;
     function openRates() {
         document.getElementById('mag-name').innerText = "AD PORTAL";
-        document.getElementById('mag-content').innerHTML = `<p>Booking portal for regional rock advertising.</p><button class="btn-authority" onclick="window.location.href='mailto:sales@rock.scot'">EMAIL SALES</button>`;
-        document.getElementById('mag-modal').style.display = 'flex';
-    }
-
-    function openSubmit() {
-        document.getElementById('mag-name').innerText = "TRANSMIT";
-        document.getElementById('mag-content').innerHTML = `<input type="text" class="std-input" placeholder="BAND NAME"><button class="btn-authority" onclick="document.getElementById('mag-modal').style.display='none'">SEND</button>`;
-        document.getElementById('mag-modal').style.display = 'flex';
-    }
-
-    window.onload = () => { updateClock(); showTab('live', document.querySelector('.nav-btn')); };
-</script>
-</body>
-</html>
+        document.getElementById('mag-content').innerHTML = `
+            <select id="rate-select" class="std-input" onchange="updateCalc()">
+                <option value="regional">REGIONAL (£299)</option>
+                <option value="multi">MULTI-REGIONAL (£449)</option>
+            </select>
+            <div style="background:#111; padding:15px; border:1px solid #333; margin-bottom:10px;">
+                <input type="checkbox" id="creative-chk" onchange="updateCalc()"> <label class="std-label" style="display:inline;">ADD CREATIVE PACK
