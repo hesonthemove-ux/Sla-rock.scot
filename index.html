@@ -9,13 +9,14 @@
     <style>
         :root { 
             --authority-orange: #ff5500; 
-            --phantom-glass: rgba(0, 0, 0, 0.08); /* RESTORED TRANSPARENCY */
+            --phantom-glass: rgba(0, 0, 0, 0.08); /* Extreme Transparency */
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* FIXED HEADER */
+        /* FIXED HEADER - Solid to ensure legibility of branding */
         header { 
             position: sticky; top: 0; z-index: 9999; 
             background: #000; width: 100%;
@@ -37,26 +38,38 @@
         .nav-btn { flex: 1; background: transparent; border: none; color: #777; font-family: 'Bebas Neue'; font-size: 1.2rem; cursor: pointer; }
         .nav-btn.active { color: var(--authority-orange); background: rgba(255,85,0,0.1); }
 
-        /* PHANTOM GLASS VIEWS */
-        .view { display: none; min-height: 100vh; width: 100%; padding: 40px 20px; background-size: cover; background-position: center; background-attachment: fixed; }
+        /* ATMOSPHERIC BACKGROUNDS */
+        .view { 
+            display: none; min-height: 100vh; width: 100%; padding: 40px 20px; 
+            background-size: cover; background-position: center; background-attachment: fixed;
+            transition: background-image 0.5s ease-in-out;
+        }
         .view.active { display: flex; flex-direction: column; align-items: center; }
 
+        /* PHANTOM GLASS OVERLAYS - Let the news.jpg images be seen */
         .uniform-card { 
             width: 320px; height: 480px; 
-            background: var(--phantom-glass); /* TRANSPARENCY APPLIED */
-            backdrop-filter: blur(80px); -webkit-backdrop-filter: blur(80px);
-            border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column;
+            background: var(--phantom-glass);
+            backdrop-filter: blur(60px); -webkit-backdrop-filter: blur(60px);
+            border: 1px solid var(--glass-border); 
+            display: flex; flex-direction: column;
             justify-content: center; align-items: center; padding: 30px; text-align: center;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.9);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5); /* Lighter shadow for transparency */
         }
 
-        /* WIRE GRID */
+        /* WIRE GRID (Center Aligned) */
         #rss-feed { 
             display: grid; grid-template-columns: repeat(auto-fill, 320px); gap: 25px; 
             width: 100%; max-width: 1400px; padding: 40px; justify-content: center; 
         }
+        .wire-item {
+            background: rgba(0,0,0,0.4); /* Transparent enough to see news.jpg behind it */
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+        }
 
-        /* CREW ALIGNMENT RESTORED */
+        /* CREW ALIGNMENT */
         .crew-container { 
             display: flex; gap: 20px; overflow-x: auto; width: 100%; 
             padding: 20px 50px; scrollbar-width: none; 
@@ -66,10 +79,14 @@
         .crew-card.active-color { filter: grayscale(0%); border: 3px solid var(--authority-orange); transform: scale(1.05); z-index: 5; }
         .crew-label { position: absolute; bottom: 0; width: 100%; background: linear-gradient(0deg, #000 20%, transparent 100%); padding: 30px; font-family: 'Bebas Neue'; font-size: 2.2rem; text-align: center; }
 
-        /* MODAL ONE PAGE RULE */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10000; display: none; padding: 20px; align-items: center; justify-content: center; }
+        /* MODAL (ONE PAGE RULE + TRANSPARENCY) */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; display: none; padding: 20px; align-items: center; justify-content: center; }
         .modal-overlay.open { display: flex; }
-        .mag-layout { max-width: 500px; border: 10px solid #fff; padding: 30px; background: #000; width: 95%; max-height: 85vh; overflow-y: auto; }
+        .mag-layout { 
+            max-width: 500px; border: 10px solid #fff; padding: 30px; 
+            background: rgba(0,0,0,0.9); /* Darker for content reading */
+            width: 95%; max-height: 85vh; overflow-y: auto; 
+        }
         .mag-inner h2 { font-family: 'Oswald'; font-size: 2.2rem; line-height: 1; text-transform: uppercase; margin-bottom: 15px; }
 
         .std-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
@@ -148,7 +165,11 @@
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         const activeView = document.getElementById('v-' + name);
         activeView.style.display = 'flex';
-        activeView.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('news${Math.floor(Math.random()*7)+1}.jpg')`;
+        
+        // Ensure background images (news1-7) are visible as atmospheric backdrops
+        const randomBg = `news${Math.floor(Math.random()*7)+1}.jpg`;
+        activeView.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${randomBg}')`;
+        
         event.currentTarget.classList.add('active');
         if(name === 'wire') fetchMultiRSS();
         if(name === 'crew') renderCrew();
@@ -168,7 +189,7 @@
         allItems.sort(() => Math.random() - 0.5);
         container.innerHTML = allItems.slice(0,12).map(item => {
             let thumb = item.thumbnail || item.enclosure.link || (item.description.match(/<img[^>]+src="([^">]+)"/) ? item.description.match(/<img[^>]+src="([^">]+)"/)[1] : "logo.png");
-            return `<div style="background:rgba(0,0,0,0.95); border:1px solid #333; cursor:pointer;" onclick="window.open('${item.link}')">
+            return `<div class="wire-item" onclick="window.open('${item.link}')">
                 <img src="${thumb}" style="width:100%; height:200px; object-fit:cover; border-bottom:1px solid #222;" onerror="this.src='logo.png'">
                 <div style="padding:15px;"><h3 style="font-family:'Oswald'; font-size:1rem; line-height:1.2;">${item.title}</h3></div>
             </div>`;
@@ -234,4 +255,4 @@
     window.onload = updateLiveUI;
 </script>
 </body>
-    </html>
+</html>
