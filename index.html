@@ -73,6 +73,7 @@
         }
         .wire-item { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); cursor: pointer; text-shadow: var(--text-shadow); }
 
+        /* CREW STYLES RESTORED */
         .crew-container { 
             display: flex; gap: 20px; overflow-x: auto; width: 100%; 
             padding: 20px 50px; scrollbar-width: none; 
@@ -150,6 +151,18 @@
 
 <script>
     const feeds = ["https://www.theskinny.co.uk/rss/music", "https://podcart.co/feed/", "https://discoverymusicscotland.com/feed/", "https://jockrock.org/feed/"];
+    
+    /* CREW DATA RESTORED */
+    const crewData = [
+        { id: "andy", name: "ANDY", bio: "Hailing from East Kilbride. Biffy Clyro fanatic.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands", venue: "King Tut's", fact: "Lost a shoe crowd-surfing.", img: "dj_andy.jpg", clicks: 0 },
+        { id: "alex", name: "ALEX", bio: "Johnstone spirit. Nazareth collector.", band: "Nazareth", gig: "Texas @ SEC Armadillo", venue: "Barrowland", fact: "Has a signed Deacon Blue vinyl.", img: "dj_alex.jpg", clicks: 0 },
+        { id: "stevie", name: "STEVIE", bio: "Port Glasgow shipbuilding heart.", band: "Big Country", gig: "Mogwai @ Òran Mór", venue: "Beacon Arts", fact: "High-fived Angus Young.", img: "dj_stevie.jpg", clicks: 0 },
+        { id: "mhairi", name: "MHAIRI", bio: "Hamilton born and bred. Pedal obsessed.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tut's", venue: "Grand Hall", fact: "Qualified tattoo artist.", img: "dj_mhairi.jpg", clicks: 0 },
+        { id: "jude", name: "JUDE", bio: "North Ayrshire stomp.", band: "Travis", gig: "Idlewild @ Barrowlands", venue: "Harbour Arts", fact: "Hitchhiked for Franz Ferdinand.", img: "dj_jude.jpg", clicks: 0 },
+        { id: "chris", name: "CHRIS", bio: "Greenock bred on Primal Scream.", band: "Primal Scream", gig: "Simple Minds @ OVO Hydro", venue: "Cathouse", fact: "Owns every Big Country album.", img: "dj_chris.jpg", clicks: 0 },
+        { id: "cal", name: "CAL", bio: "Kilmarnock heartlands specialist.", band: "Biffy Clyro", gig: "The Fratellis @ Grand Hall", venue: "Palace Theatre", fact: "Air guitar champion 2018.", img: "dj_cal.jpg", clicks: 0 },
+        { id: "blue", name: "BLUE", bio: "Gourock seaside charm.", band: "Nazareth", gig: "Texas @ Paisley Arts", venue: "Coats Paisley", fact: "Once mistaken for a roadie.", img: "dj_blue.jpg", clicks: 0 }
+    ];
 
     function showTab(name) {
         document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
@@ -183,9 +196,36 @@
         }).join('');
     }
 
-    // --- RATES & BOOKING LOGIC ---
-    const pricing = { regional: 299, multi: 449, creative: 195 };
+    /* CREW LOGIC RESTORED */
+    function renderCrew() {
+        const container = document.getElementById('crew-rolodex');
+        container.innerHTML = crewData.map(dj => `
+            <div class="crew-card" id="card-${dj.id}" onclick="handleCrewClick('${dj.id}')">
+                <img src="${dj.img}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='logo.png'">
+                <div class="crew-label">${dj.name}</div>
+            </div>`).join('');
+    }
 
+    function handleCrewClick(id) {
+        const dj = crewData.find(d => d.id === id);
+        dj.clicks++;
+        const card = document.getElementById('card-' + id);
+        if(dj.clicks === 1) {
+            document.querySelectorAll('.crew-card').forEach(c => c.classList.remove('active-color'));
+            card.classList.add('active-color');
+            setTimeout(() => { if(dj.clicks === 1) dj.clicks = 0; }, 2500);
+        } else if(dj.clicks === 2) {
+            document.getElementById('mag-name').innerText = dj.name;
+            document.getElementById('mag-content').innerHTML = `<p style="color:#ccc;">${dj.bio}</p>
+                <div style="margin-top:15px; font-family:Oswald; color:var(--authority-orange); text-transform:uppercase; font-size:0.9rem;">
+                <p>BAND: ${dj.band}</p><p>GIG: ${dj.gig}</p><p>VENUE: ${dj.venue}</p><p>FACT: ${dj.fact}</p></div>`;
+            document.getElementById('mag-modal').classList.add('open');
+            dj.clicks = 0; card.classList.remove('active-color');
+        }
+    }
+
+    /* RATES & SUBMIT LOGIC MAINTAINED */
+    const pricing = { regional: 299, multi: 449, creative: 195 };
     function openRates() {
         document.getElementById('mag-name').innerText = "ADVERTISING PORTAL";
         document.getElementById('mag-content').innerHTML = `
@@ -197,38 +237,27 @@
                     <option value="creative">CREATIVE (£195)</option>
                 </select>
                 <div style="display:flex; gap:10px;">
-                    <div style="flex:1;">
-                        <label class="std-label">Start Date</label>
-                        <input type="date" id="rate-date" class="std-input">
-                    </div>
-                    <div style="flex:1;">
-                        <label class="std-label">Weeks</label>
-                        <input type="number" id="rate-weeks" class="std-input" value="1" min="1" onchange="updateCalc()">
-                    </div>
+                    <div style="flex:1;"><label class="std-label">Start Date</label><input type="date" id="rate-date" class="std-input"></div>
+                    <div style="flex:1;"><label class="std-label">Weeks</label><input type="number" id="rate-weeks" class="std-input" value="1" min="1" onchange="updateCalc()"></div>
                 </div>
             </div>
-
             <div style="margin-bottom:20px;">
                 <label class="std-label">Your Details</label>
                 <input type="text" id="rate-cust-name" placeholder="CONTACT NAME" class="std-input">
                 <input type="email" id="rate-cust-email" placeholder="EMAIL ADDRESS" class="std-input">
             </div>
-
             <div style="background:rgba(255,85,0,0.1); padding:15px; border:1px solid var(--authority-orange); margin-bottom:20px; text-align:right;">
                 <span style="font-family:'Bebas Neue'; color:#888;">TOTAL ESTIMATE:</span>
                 <h3 id="calc-total" style="font-family:'Oswald'; font-size:2rem; color:var(--authority-orange);">£299</h3>
             </div>
-
-            <button class="btn-authority" onclick="sendSalesSignal()">SEND BOOKING SIGNAL</button>
-        `;
+            <button class="btn-authority" onclick="sendSalesSignal()">SEND BOOKING SIGNAL</button>`;
         document.getElementById('mag-modal').classList.add('open');
     }
 
     function updateCalc() {
         const type = document.getElementById('rate-select').value;
         const weeks = document.getElementById('rate-weeks').value || 1;
-        const total = pricing[type] * weeks;
-        document.getElementById('calc-total').innerText = `£${total}`;
+        document.getElementById('calc-total').innerText = `£${pricing[type] * weeks}`;
     }
 
     function sendSalesSignal() {
@@ -236,22 +265,12 @@
         const email = document.getElementById('rate-cust-email').value;
         const date = document.getElementById('rate-date').value;
         const weeks = document.getElementById('rate-weeks').value;
-        const type = document.getElementById('rate-select').options[document.getElementById('rate-select').selectedIndex].text;
         const total = document.getElementById('calc-total').innerText;
-
-        if(!name || !email || !date) {
-            alert("All signal parameters (Name, Email, Date) must be entered.");
-            return;
-        }
-
-        const subject = encodeURIComponent(`Ad Booking: ${name}`);
-        const body = encodeURIComponent(`BOOKING SIGNAL RECEIVED\n\nClient: ${name}\nEmail: ${email}\nPackage: ${type}\nStart Date: ${date}\nDuration: ${weeks} week(s)\nEstimated Total: ${total}\n\nPlease confirm availability.`);
-        
-        window.location.href = `mailto:sales@rock.scot?subject=${subject}&body=${body}`;
+        if(!name || !email || !date) { alert("All signal parameters must be entered."); return; }
+        window.location.href = `mailto:sales@rock.scot?subject=Ad Booking: ${name}&body=Client: ${name}%0AEmail: ${email}%0ADate: ${date}%0ADuration: ${weeks}w%0ATotal: ${total}`;
         document.getElementById('mag-modal').classList.remove('open');
     }
 
-    // --- SUBMIT LOGIC ---
     function openSubmit() {
         document.getElementById('mag-name').innerText = "TRANSMIT";
         document.getElementById('mag-content').innerHTML = `
@@ -263,15 +282,12 @@
     }
 
     function handleSubmission() {
-        const nameVal = document.getElementById('sub-name').value;
-        const linkVal = document.getElementById('sub-link').value;
-        if(!nameVal || !linkVal) { alert("Authority requires Band Name and Track Link."); return; }
+        const n = document.getElementById('sub-name').value;
+        const l = document.getElementById('sub-link').value;
+        if(!n || !l) { alert("Required data missing."); return; }
         document.getElementById('mag-modal').classList.remove('open');
         document.getElementById('submit-card-content').innerHTML = `
-            <div style="animation: pulse 1s infinite;">
-                <h2 style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);">SIGNAL RECEIVED</h2>
-                <p style="font-family:'Oswald'; color:#fff; letter-spacing:2px;">REVIEW IN PROGRESS</p>
-            </div>
+            <div style="animation: pulse 1s infinite;"><h2 style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);">SIGNAL RECEIVED</h2></div>
             <button class="btn-authority" style="margin-top:20px; font-size:1rem;" onclick="location.reload()">SEND ANOTHER</button>`;
     }
 
@@ -279,7 +295,6 @@
         const now = new Date();
         document.getElementById('live-clock').innerText = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
     }
-
     setInterval(updateLiveUI, 5000);
     window.onload = updateLiveUI;
 </script>
