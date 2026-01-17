@@ -189,7 +189,7 @@
 
             // Randomize and display
             container.innerHTML = allItems.sort(() => 0.5 - Math.random()).map(item => {
-                const img = item.thumbnail || item.enclosure.link || 'top_banner.png';
+                const img = item.thumbnail || (item.enclosure && item.enclosure.link) || 'top_banner.png';
                 return `
                     <div class="wire-card" onclick="openWire('${item.title.replace(/'/g, "")}', '${item.authoritySource}', '${item.link}')">
                         <img src="${img}" class="wire-img" onerror="this.src='top_banner.png'">
