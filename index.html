@@ -38,7 +38,6 @@
         .nav-btn { flex: 1; background: transparent; border: none; color: #777; font-family: 'Bebas Neue'; font-size: 1.2rem; cursor: pointer; }
         .nav-btn.active { color: var(--authority-orange); background: rgba(255,85,0,0.1); }
 
-        /* CINEMATIC BACKGROUND FADE */
         .view { 
             display: none; min-height: 100vh; width: 100%; padding: 40px 20px; 
             background-size: cover; background-position: center; background-attachment: fixed;
@@ -57,7 +56,6 @@
             text-shadow: var(--text-shadow);
         }
 
-        /* PULSING ON-AIR LIGHT */
         .on-air {
             display: inline-block; width: 10px; height: 10px;
             background: #ff0000; border-radius: 50%;
@@ -67,7 +65,11 @@
         }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        .player-portal { width: 100%; height: 260px; border: none; background: transparent; margin-top: 10px; }
+        .player-portal { 
+            width: 100%; height: 260px; border: none; 
+            background: transparent !important; 
+            margin-top: 10px; 
+        }
 
         #rss-feed { 
             display: grid; grid-template-columns: repeat(auto-fill, 320px); gap: 25px; 
@@ -109,7 +111,7 @@
             <button class="nav-btn" onclick="showTab('wire')">WIRE</button>
             <button class="nav-btn" onclick="showTab('crew')">CREW</button>
             <button class="nav-btn" onclick="showTab('rates')">RATES</button>
-            <button class="nav-btn" onclick="showTab('submit') (+ 2 and 3)">SUBMIT</button>
+            <button class="nav-btn" onclick="showTab('submit')">SUBMIT</button>
         </nav>
     </header>
 
@@ -120,7 +122,7 @@
                 <div id="clock-tag" style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:5px; margin-bottom:15px;">
                     <span class="on-air"></span>ROCKIN' SCOTLAND
                 </div>
-                <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" class="player-portal" allow="autoplay"></iframe>
+                <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" class="player-portal" allow="autoplay" allowtransparency="true"></iframe>
                 <p style="font-family:'Oswald'; font-size:0.8rem; margin-top:10px; color:#aaa; letter-spacing:1px;">AUTHORITY SIGNAL ACTIVE</p>
             </div>
         </section>
@@ -244,12 +246,14 @@
     }
 
     function handleSubmission() {
-        const name = document.getElementById('sub-name').value;
-        const link = document.getElementById('sub-link').value;
-        if(!name || !link) {
+        const nameVal = document.getElementById('sub-name').value;
+        const linkVal = document.getElementById('sub-link').value;
+        
+        if(!nameVal || !linkVal) {
             alert("Authority requires Band Name and Track Link.");
             return;
         }
+        
         document.getElementById('mag-modal').classList.remove('open');
         const submitViewContent = document.getElementById('submit-card-content');
         submitViewContent.innerHTML = `
