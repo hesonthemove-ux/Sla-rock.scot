@@ -9,7 +9,7 @@
     <style>
         :root { 
             --authority-orange: #ff5500; 
-            --phantom-glass: rgba(0, 0, 0, 0.08); 
+            --phantom-glass: rgba(255, 255, 255, 0.05); 
             --glass-border: rgba(255, 255, 255, 0.15);
             --text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
@@ -47,15 +47,67 @@
 
         .uniform-card { 
             width: 320px; height: 480px; 
-            background: var(--phantom-glass);
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border); 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center; padding: 20px; text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             position: relative;
+        }
+
+        /* 3D ARCHIVE VIEWPORT */
+        .archive-viewport {
+            perspective: 1500px;
+            width: 100%;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0 35%;
+            scrollbar-width: none;
+        }
+        .archive-viewport::-webkit-scrollbar { display: none; }
+
+        .crew-card-3d {
+            min-width: 280px;
+            height: 420px;
+            margin: 0 -50px;
+            background: var(--phantom-glass);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), filter 0.5s;
+            filter: grayscale(100%) brightness(0.4);
+            cursor: pointer;
+            -webkit-box-reflect: below 2px linear-gradient(transparent, rgba(0,0,0,0.15));
+        }
+
+        .crew-card-3d.focus {
+            filter: grayscale(0%) brightness(1.2);
+            transform: translateZ(150px) rotateY(0deg) !important;
+            z-index: 100;
+            border-color: var(--authority-orange);
+            box-shadow: 0 0 30px rgba(255,85,0,0.3);
+        }
+
+        .crew-label-3d {
+            position: absolute; bottom: 0; width: 100%;
+            padding: 25px; background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            font-family: 'Bebas Neue'; font-size: 2.2rem; text-align: center;
             text-shadow: var(--text-shadow);
         }
 
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; display: none; padding: 20px; align-items: center; justify-content: center; }
+        .modal-overlay.open { display: flex; }
+        .mag-layout { max-width: 500px; border: 8px solid #fff; padding: 30px; background: #000; width: 95%; max-height: 85vh; overflow-y: auto; }
+
+        .btn-authority { width: 100%; padding: 18px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.6rem; cursor: pointer; }
+        .std-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
+        .std-label { display: block; font-family: 'Oswald'; font-size: 0.8rem; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+        
         .on-air {
             display: inline-block; width: 10px; height: 10px;
             background: #ff0000; border-radius: 50%;
@@ -64,34 +116,6 @@
             animation: pulse 1.5s infinite;
         }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-
-        .player-portal { width: 100%; height: 260px; border: none; background: transparent !important; margin-top: 10px; }
-
-        #rss-feed { 
-            display: grid; grid-template-columns: repeat(auto-fill, 320px); gap: 25px; 
-            width: 100%; max-width: 1400px; padding: 40px; justify-content: center; 
-        }
-        .wire-item { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); cursor: pointer; text-shadow: var(--text-shadow); }
-
-        .crew-container { 
-            display: flex; gap: 20px; overflow-x: auto; width: 100%; 
-            padding: 20px 50px; scrollbar-width: none; 
-            -webkit-overflow-scrolling: touch;
-        }
-        .crew-card { min-width: 320px; height: 480px; background: #000; border: 1px solid #222; position: relative; cursor: pointer; filter: grayscale(100%); transition: 0.5s; }
-        .crew-card.active-color { filter: grayscale(0%); border: 3px solid var(--authority-orange); transform: scale(1.05); z-index: 5; }
-        .crew-label { position: absolute; bottom: 0; width: 100%; background: linear-gradient(0deg, #000 20%, transparent 100%); padding: 30px; font-family: 'Bebas Neue'; font-size: 2.2rem; text-align: center; text-shadow: var(--text-shadow); }
-
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; display: none; padding: 20px; align-items: center; justify-content: center; }
-        .modal-overlay.open { display: flex; }
-        .mag-layout { max-width: 500px; border: 10px solid #fff; padding: 30px; background: rgba(0,0,0,0.95); width: 95%; max-height: 85vh; overflow-y: auto; text-shadow: none; }
-
-        .btn-authority { width: 100%; padding: 18px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.6rem; cursor: pointer; text-shadow: none; }
-        .std-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
-        .std-label { display: block; font-family: 'Oswald'; font-size: 0.8rem; color: #888; text-transform: uppercase; margin-bottom: 5px; }
-        
-        .addon-box { display: flex; align-items: center; gap: 10px; background: #222; padding: 10px; margin-bottom: 10px; border: 1px solid #444; }
-        .addon-box input { width: 20px; height: 20px; }
     </style>
 </head>
 <body>
@@ -99,8 +123,8 @@
     <div id="mag-modal" class="modal-overlay" onclick="this.classList.remove('open')">
         <div class="mag-layout" onclick="event.stopPropagation()">
             <div style="font-family:'Bebas Neue'; color:var(--authority-orange); letter-spacing:2px;">AUTHORITY DOSSIER</div>
-            <h2 id="mag-name" style="font-family:'Oswald'; font-size:2.2rem; text-transform:uppercase;"></h2>
-            <div id="mag-content" style="border-top:1px solid #333; padding-top:15px; word-wrap: break-word;"></div>
+            <h2 id="mag-name" style="font-family:'Oswald'; font-size:2.5rem; text-transform:uppercase;"></h2>
+            <div id="mag-content" style="border-top:1px solid #333; padding-top:15px; font-family:'Inter'; line-height:1.6; color:#ccc;"></div>
         </div>
     </div>
 
@@ -122,46 +146,44 @@
                 <div id="clock-tag" style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:5px; margin-bottom:15px;">
                     <span class="on-air"></span>ROCKIN' SCOTLAND
                 </div>
-                <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" class="player-portal" allow="autoplay" allowtransparency="true"></iframe>
-                <p style="font-family:'Oswald'; font-size:0.8rem; margin-top:10px; color:#aaa; letter-spacing:1px;">AUTHORITY SIGNAL ACTIVE</p>
+                <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:260px; border:none; background:transparent;" allow="autoplay" allowtransparency="true"></iframe>
             </div>
         </section>
 
         <section id="v-wire" class="view">
-            <div id="rss-feed"></div>
+            <div id="rss-feed" style="display: grid; grid-template-columns: repeat(auto-fill, 320px); gap: 25px; width:100%; justify-content: center;"></div>
         </section>
 
         <section id="v-crew" class="view">
-            <div class="crew-container" id="crew-rolodex"></div>
+            <div class="archive-viewport" id="crew-3d-wrap" onscroll="animate3D()"></div>
         </section>
 
         <section id="v-rates" class="view">
             <div class="uniform-card">
                 <h2 style="font-family:'Bebas Neue'; font-size:3.5rem; color:var(--authority-orange);">RATES</h2>
-                <p style="font-family:'Oswald'; letter-spacing:1px; margin-bottom:20px;">ADVERTISING DOSSIER</p>
-                <button class="btn-authority" onclick="openRates()">VIEW PACKS</button>
+                <p style="font-family:'Oswald'; letter-spacing:1px; margin-bottom:20px; color:#888;">ADVERTISING PORTAL</p>
+                <button class="btn-authority" onclick="openRates()">OPEN AD PORTAL</button>
             </div>
         </section>
 
         <section id="v-submit" class="view">
             <div class="uniform-card" id="submit-card-content">
                 <h2 style="font-family:'Bebas Neue'; font-size:3.5rem; color:var(--authority-orange);">SUBMIT</h2>
-                <button class="btn-authority" onclick="openSubmit()">OPEN PORTAL</button>
+                <button class="btn-authority" onclick="openSubmit()">SEND SIGNAL</button>
             </div>
         </section>
     </main>
 
 <script>
-    const feeds = ["https://www.theskinny.co.uk/rss/music", "https://podcart.co/feed/", "https://discoverymusicscotland.com/feed/", "https://jockrock.org/feed/"];
     const crewData = [
-        { id: "andy", name: "ANDY", bio: "Hailing from East Kilbride. Biffy Clyro fanatic.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands", venue: "King Tut's", fact: "Lost a shoe crowd-surfing.", img: "dj_andy.jpg", clicks: 0 },
-        { id: "alex", name: "ALEX", bio: "Johnstone spirit. Nazareth collector.", band: "Nazareth", gig: "Texas @ SEC Armadillo", venue: "Barrowland", fact: "Has a signed Deacon Blue vinyl.", img: "dj_alex.jpg", clicks: 0 },
-        { id: "stevie", name: "STEVIE", bio: "Port Glasgow shipbuilding heart.", band: "Big Country", gig: "Mogwai @ Òran Mór", venue: "Beacon Arts", fact: "High-fived Angus Young.", img: "dj_stevie.jpg", clicks: 0 },
-        { id: "mhairi", name: "MHAIRI", bio: "Hamilton born and bred. Pedal obsessed.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tut's", venue: "Grand Hall", fact: "Qualified tattoo artist.", img: "dj_mhairi.jpg", clicks: 0 },
-        { id: "jude", name: "JUDE", bio: "North Ayrshire stomp.", band: "Travis", gig: "Idlewild @ Barrowlands", venue: "Harbour Arts", fact: "Hitchhiked for Franz Ferdinand.", img: "dj_jude.jpg", clicks: 0 },
-        { id: "chris", name: "CHRIS", bio: "Greenock bred on Primal Scream.", band: "Primal Scream", gig: "Simple Minds @ OVO Hydro", venue: "Cathouse", fact: "Owns every Big Country album.", img: "dj_chris.jpg", clicks: 0 },
-        { id: "cal", name: "CAL", bio: "Kilmarnock heartlands specialist.", band: "Biffy Clyro", gig: "The Fratellis @ Grand Hall", venue: "Palace Theatre", fact: "Air guitar champion 2018.", img: "dj_cal.jpg", clicks: 0 },
-        { id: "blue", name: "BLUE", bio: "Gourock seaside charm.", band: "Nazareth", gig: "Texas @ Paisley Arts", venue: "Coats Paisley", fact: "Once mistaken for a roadie.", img: "dj_blue.jpg", clicks: 0 }
+        { id: "andy", name: "ANDY", bio: "Hailing from East Kilbride. Biffy Clyro fanatic.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands", img: "dj_andy.jpg" },
+        { id: "alex", name: "ALEX", bio: "Johnstone spirit. Nazareth collector.", band: "Nazareth", gig: "Texas @ SEC Armadillo", img: "dj_alex.jpg" },
+        { id: "stevie", name: "STEVIE", bio: "Port Glasgow shipbuilding heart.", band: "Big Country", gig: "Mogwai @ Òran Mór", img: "dj_stevie.jpg" },
+        { id: "mhairi", name: "MHAIRI", bio: "Hamilton born and bred. Pedal obsessed.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tut's", img: "dj_mhairi.jpg" },
+        { id: "jude", name: "JUDE", bio: "North Ayrshire stomp.", band: "Travis", gig: "Idlewild @ Barrowlands", img: "dj_jude.jpg" },
+        { id: "chris", name: "CHRIS", bio: "Greenock bred on Primal Scream.", band: "Primal Scream", gig: "Simple Minds @ OVO Hydro", img: "dj_chris.jpg" },
+        { id: "cal", name: "CAL", bio: "Kilmarnock heartlands specialist.", band: "Biffy Clyro", gig: "The Fratellis @ Grand Hall", img: "dj_cal.jpg" },
+        { id: "blue", name: "BLUE", bio: "Gourock seaside charm.", band: "Nazareth", gig: "Texas @ Paisley Arts", img: "dj_blue.jpg" }
     ];
 
     function showTab(name) {
@@ -171,157 +193,117 @@
         activeView.style.display = 'flex';
         activeView.style.backgroundImage = `url('news${Math.floor(Math.random()*7)+1}.jpg')`;
         event.currentTarget.classList.add('active');
-        if(name === 'wire') fetchMultiRSS();
-        if(name === 'crew') renderCrew();
+        if(name === 'crew') { render3DCrew(); setTimeout(animate3D, 100); }
     }
 
-    async function fetchMultiRSS() {
-        const container = document.getElementById('rss-feed');
-        container.innerHTML = "<p>SYNCING WIRE...</p>";
-        let allItems = [];
-        for (const url of feeds) {
-            try {
-                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&t=${Date.now()}`);
-                const data = await res.json();
-                if(data.items) allItems = [...allItems, ...data.items];
-            } catch(e) {}
-        }
-        allItems.sort(() => Math.random() - 0.5);
-        container.innerHTML = allItems.slice(0,12).map(item => {
-            let thumb = item.thumbnail || item.enclosure.link || (item.description.match(/<img[^>]+src="([^">]+)"/) ? item.description.match(/<img[^>]+src="([^">]+)"/)[1] : "logo.png");
-            return `<div class="wire-item" onclick="window.open('${item.link}')">
-                <img src="${thumb}" style="width:100%; height:200px; object-fit:cover; border-bottom:1px solid #222;" onerror="this.src='logo.png'">
-                <div style="padding:15px;"><h3 style="font-family:'Oswald'; font-size:1rem; line-height:1.2;">${item.title}</h3></div>
-            </div>`;
-        }).join('');
-    }
-
-    function renderCrew() {
-        const container = document.getElementById('crew-rolodex');
-        container.innerHTML = crewData.map(dj => `
-            <div class="crew-card" id="card-${dj.id}" onclick="handleCrewClick('${dj.id}')">
+    function render3DCrew() {
+        const wrap = document.getElementById('crew-3d-wrap');
+        wrap.innerHTML = crewData.map(dj => `
+            <div class="crew-card-3d" id="c3d-${dj.id}" onclick="handle3DClick('${dj.id}')">
                 <img src="${dj.img}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='logo.png'">
-                <div class="crew-label">${dj.name}</div>
+                <div class="crew-label-3d">${dj.name}</div>
             </div>`).join('');
     }
 
-    function handleCrewClick(id) {
-        const dj = crewData.find(d => d.id === id);
-        dj.clicks++;
-        const card = document.getElementById('card-' + id);
-        if(dj.clicks === 1) {
-            document.querySelectorAll('.crew-card').forEach(c => c.classList.remove('active-color'));
-            card.classList.add('active-color');
-            setTimeout(() => { if(dj.clicks === 1) dj.clicks = 0; }, 2500);
-        } else if(dj.clicks === 2) {
-            document.getElementById('mag-name').innerText = dj.name;
-            document.getElementById('mag-content').innerHTML = `<p style="color:#ccc;">${dj.bio}</p>
-                <div style="margin-top:15px; font-family:Oswald; color:var(--authority-orange); text-transform:uppercase; font-size:0.9rem;">
-                <p>BAND: ${dj.band}</p><p>GIG: ${dj.gig}</p><p>VENUE: ${dj.venue}</p><p>FACT: ${dj.fact}</p></div>`;
-            document.getElementById('mag-modal').classList.add('open');
-            dj.clicks = 0; card.classList.remove('active-color');
-        }
+    function animate3D() {
+        const wrap = document.getElementById('crew-3d-wrap');
+        const cards = document.querySelectorAll('.crew-card-3d');
+        const centerX = wrap.scrollLeft + (wrap.offsetWidth / 2);
+
+        cards.forEach(card => {
+            const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+            const distance = cardCenter - centerX;
+            const angle = distance / 12;
+            const absDist = Math.abs(distance);
+            
+            card.style.transform = `rotateY(${angle}deg) translateZ(${-absDist/1.5}px)`;
+            card.classList.toggle('focus', absDist < 100);
+        });
     }
 
-    /* AD PORTAL LOGIC UPDATED */
+    function handle3DClick(id) {
+        const dj = crewData.find(d => d.id === id);
+        const card = document.getElementById('c3d-' + id);
+        if(!card.classList.contains('focus')) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            return;
+        }
+        document.getElementById('mag-name').innerText = dj.name;
+        document.getElementById('mag-content').innerHTML = `
+            <p style="margin-bottom:15px;">${dj.bio}</p>
+            <div style="font-family:Oswald; text-transform:uppercase; color:var(--authority-orange);">
+                <p>ULTIMATE BAND: ${dj.band}</p>
+                <p>BEST GIG: ${dj.gig}</p>
+            </div>`;
+        document.getElementById('mag-modal').classList.add('open');
+    }
+
+    /* AD ENGINE - LOCKED LOGIC */
     const baseRates = { regional: 299, multi: 449 };
     const CREATIVE_FEE = 195;
 
     function openRates() {
         document.getElementById('mag-name').innerText = "ADVERTISING PORTAL";
         document.getElementById('mag-content').innerHTML = `
-            <div style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:15px;">
-                <label class="std-label">Select Base Package</label>
-                <select id="rate-select" class="std-input" onchange="updateCalc()">
-                    <option value="regional">REGIONAL (£299 / 28 days)</option>
-                    <option value="multi">MULTI-REGIONAL (£449 / 28 days)</option>
-                </select>
-                
-                <div style="display:flex; gap:10px;">
-                    <div style="flex:1;"><label class="std-label">Start Date</label><input type="date" id="rate-date" class="std-input"></div>
-                    <div style="flex:1;"><label class="std-label">Days Total</label><input type="number" id="rate-days" class="std-input" value="28" min="1" onchange="updateCalc()"></div>
-                </div>
-
-                <div class="addon-box">
-                    <input type="checkbox" id="creative-addon" onchange="updateCalc()">
-                    <label style="font-family:'Oswald'; font-size:0.9rem;">ADD CREATIVE PACKAGE (+£195 one-time)</label>
-                </div>
+            <select id="rate-select" class="std-input" onchange="updateCalc()">
+                <option value="regional">REGIONAL (£299 / 28 days)</option>
+                <option value="multi">MULTI-REGIONAL (£449 / 28 days)</option>
+            </select>
+            <div style="display:flex; gap:10px;">
+                <div style="flex:1;"><label class="std-label">Start Date</label><input type="date" id="rate-date" class="std-input"></div>
+                <div style="flex:1;"><label class="std-label">Days Total</label><input type="number" id="rate-days" class="std-input" value="28" onchange="updateCalc()"></div>
             </div>
-
-            <div style="margin-bottom:20px;">
-                <label class="std-label">Your Details</label>
-                <input type="text" id="rate-cust-name" placeholder="CONTACT NAME" class="std-input">
-                <input type="email" id="rate-cust-email" placeholder="EMAIL ADDRESS" class="std-input">
+            <div style="background:#111; padding:10px; border:1px solid #333; margin-bottom:10px; display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="creative-addon" onchange="updateCalc()">
+                <label class="std-label" style="margin:0;">ADD CREATIVE PACKAGE (+£195)</label>
             </div>
-
-            <div style="background:rgba(255,85,0,0.1); padding:15px; border:1px solid var(--authority-orange); margin-bottom:20px; text-align:right;">
-                <div id="surcharge-note" style="color:var(--authority-orange); font-size:0.7rem; font-family:Oswald; margin-bottom:5px; display:none;">30% SHORT-TERM SURCHARGE APPLIED</div>
-                <span style="font-family:'Bebas Neue'; color:#888;">TOTAL ESTIMATE:</span>
-                <h3 id="calc-total" style="font-family:'Oswald'; font-size:2rem; color:var(--authority-orange);">£299</h3>
+            <div style="background:#050505; padding:20px; border:1px solid var(--authority-orange); text-align:right;">
+                <div id="surcharge-msg" style="color:var(--authority-orange); font-size:0.75rem; font-family:Oswald; margin-bottom:5px; display:none;">+30% SHORT-TERM SURCHARGE APPLIED</div>
+                <h3 id="calc-total" style="font-family:'Oswald'; font-size:2.2rem; color:var(--authority-orange);">£299</h3>
             </div>
-
-            <button class="btn-authority" onclick="sendSalesSignal()">SEND BOOKING SIGNAL</button>`;
+            <button class="btn-authority" style="margin-top:10px;" onclick="sendSignal()">SEND BOOKING SIGNAL</button>`;
         document.getElementById('mag-modal').classList.add('open');
     }
 
     function updateCalc() {
         const type = document.getElementById('rate-select').value;
         const days = parseInt(document.getElementById('rate-days').value) || 0;
-        const creativeSelected = document.getElementById('creative-addon').checked;
-        const note = document.getElementById('surcharge-note');
-        
-        // Base calculation (normalized to per-day based on the 28-day standard)
-        let basePrice = (baseRates[type] / 28) * days;
-        
-        // Surcharge logic
+        const creative = document.getElementById('creative-addon').checked;
+        let base = (baseRates[type] / 28) * days;
         if (days < 28 && days > 0) {
-            basePrice = basePrice * 1.30;
-            note.style.display = 'block';
+            base *= 1.30;
+            document.getElementById('surcharge-msg').style.display = 'block';
         } else {
-            note.style.display = 'none';
+            document.getElementById('surcharge-msg').style.display = 'none';
         }
-
-        // One-time Creative Add-on logic
-        const total = basePrice + (creativeSelected ? CREATIVE_FEE : 0);
-        
-        document.getElementById('calc-total').innerText = `£${Math.round(total)}`;
+        document.getElementById('calc-total').innerText = `£${Math.round(base + (creative ? CREATIVE_FEE : 0))}`;
     }
 
-    function sendSalesSignal() {
-        const name = document.getElementById('rate-cust-name').value;
-        const email = document.getElementById('rate-cust-email').value;
-        const days = document.getElementById('rate-days').value;
-        const type = document.getElementById('rate-select').value;
-        const creative = document.getElementById('creative-addon').checked ? "YES" : "NO";
+    function sendSignal() {
         const total = document.getElementById('calc-total').innerText;
-        if(!name || !email) { alert("Contact data missing."); return; }
-        window.location.href = `mailto:sales@rock.scot?subject=Ad Booking: ${name}&body=Client: ${name}%0AEmail: ${email}%0ADays: ${days}%0ABase: ${type}%0ACreative Addon: ${creative}%0ATotal: ${total}`;
+        window.location.href = `mailto:sales@rock.scot?subject=Booking Signal&body=Total Quote: ${total}`;
     }
 
     function openSubmit() {
-        document.getElementById('mag-name').innerText = "TRANSMIT";
+        document.getElementById('mag-name').innerText = "TRANSMIT TRACK";
         document.getElementById('mag-content').innerHTML = `
             <input type="text" id="sub-name" placeholder="BAND NAME" class="std-input">
             <input type="text" id="sub-link" placeholder="TRACK LINK" class="std-input">
-            <textarea id="sub-pitch" placeholder="PITCH..." class="std-input" style="height:100px;"></textarea>
             <button class="btn-authority" onclick="handleSubmission()">SEND SIGNAL</button>`;
         document.getElementById('mag-modal').classList.add('open');
     }
 
     function handleSubmission() {
-        const n = document.getElementById('sub-name').value;
-        const l = document.getElementById('sub-link').value;
-        if(!n || !l) { alert("Required data missing."); return; }
         document.getElementById('mag-modal').classList.remove('open');
         document.getElementById('submit-card-content').innerHTML = `<h2 style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);">SIGNAL RECEIVED</h2>`;
     }
 
-    function updateLiveUI() {
+    function updateClock() {
         const now = new Date();
         document.getElementById('live-clock').innerText = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
     }
-    setInterval(updateLiveUI, 5000);
-    window.onload = updateLiveUI;
+    setInterval(updateClock, 5000);
+    window.onload = updateClock;
 </script>
 </body>
 </html>
