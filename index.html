@@ -73,7 +73,6 @@
         }
         .wire-item { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); cursor: pointer; text-shadow: var(--text-shadow); }
 
-        /* CREW STYLES RESTORED */
         .crew-container { 
             display: flex; gap: 20px; overflow-x: auto; width: 100%; 
             padding: 20px 50px; scrollbar-width: none; 
@@ -90,6 +89,9 @@
         .btn-authority { width: 100%; padding: 18px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.6rem; cursor: pointer; text-shadow: none; }
         .std-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
         .std-label { display: block; font-family: 'Oswald'; font-size: 0.8rem; color: #888; text-transform: uppercase; margin-bottom: 5px; }
+        
+        .addon-box { display: flex; align-items: center; gap: 10px; background: #222; padding: 10px; margin-bottom: 10px; border: 1px solid #444; }
+        .addon-box input { width: 20px; height: 20px; }
     </style>
 </head>
 <body>
@@ -151,8 +153,6 @@
 
 <script>
     const feeds = ["https://www.theskinny.co.uk/rss/music", "https://podcart.co/feed/", "https://discoverymusicscotland.com/feed/", "https://jockrock.org/feed/"];
-    
-    /* CREW DATA RESTORED */
     const crewData = [
         { id: "andy", name: "ANDY", bio: "Hailing from East Kilbride. Biffy Clyro fanatic.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands", venue: "King Tut's", fact: "Lost a shoe crowd-surfing.", img: "dj_andy.jpg", clicks: 0 },
         { id: "alex", name: "ALEX", bio: "Johnstone spirit. Nazareth collector.", band: "Nazareth", gig: "Texas @ SEC Armadillo", venue: "Barrowland", fact: "Has a signed Deacon Blue vinyl.", img: "dj_alex.jpg", clicks: 0 },
@@ -196,7 +196,6 @@
         }).join('');
     }
 
-    /* CREW LOGIC RESTORED */
     function renderCrew() {
         const container = document.getElementById('crew-rolodex');
         container.innerHTML = crewData.map(dj => `
@@ -224,51 +223,79 @@
         }
     }
 
-    /* RATES & SUBMIT LOGIC MAINTAINED */
-    const pricing = { regional: 299, multi: 449, creative: 195 };
+    /* AD PORTAL LOGIC UPDATED */
+    const baseRates = { regional: 299, multi: 449 };
+    const CREATIVE_FEE = 195;
+
     function openRates() {
         document.getElementById('mag-name').innerText = "ADVERTISING PORTAL";
         document.getElementById('mag-content').innerHTML = `
             <div style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:15px;">
-                <label class="std-label">Select Package</label>
+                <label class="std-label">Select Base Package</label>
                 <select id="rate-select" class="std-input" onchange="updateCalc()">
-                    <option value="regional">REGIONAL (£299)</option>
-                    <option value="multi">MULTI-REGIONAL (£449)</option>
-                    <option value="creative">CREATIVE (£195)</option>
+                    <option value="regional">REGIONAL (£299 / 28 days)</option>
+                    <option value="multi">MULTI-REGIONAL (£449 / 28 days)</option>
                 </select>
+                
                 <div style="display:flex; gap:10px;">
                     <div style="flex:1;"><label class="std-label">Start Date</label><input type="date" id="rate-date" class="std-input"></div>
-                    <div style="flex:1;"><label class="std-label">Weeks</label><input type="number" id="rate-weeks" class="std-input" value="1" min="1" onchange="updateCalc()"></div>
+                    <div style="flex:1;"><label class="std-label">Days Total</label><input type="number" id="rate-days" class="std-input" value="28" min="1" onchange="updateCalc()"></div>
+                </div>
+
+                <div class="addon-box">
+                    <input type="checkbox" id="creative-addon" onchange="updateCalc()">
+                    <label style="font-family:'Oswald'; font-size:0.9rem;">ADD CREATIVE PACKAGE (+£195 one-time)</label>
                 </div>
             </div>
+
             <div style="margin-bottom:20px;">
                 <label class="std-label">Your Details</label>
                 <input type="text" id="rate-cust-name" placeholder="CONTACT NAME" class="std-input">
                 <input type="email" id="rate-cust-email" placeholder="EMAIL ADDRESS" class="std-input">
             </div>
+
             <div style="background:rgba(255,85,0,0.1); padding:15px; border:1px solid var(--authority-orange); margin-bottom:20px; text-align:right;">
+                <div id="surcharge-note" style="color:var(--authority-orange); font-size:0.7rem; font-family:Oswald; margin-bottom:5px; display:none;">30% SHORT-TERM SURCHARGE APPLIED</div>
                 <span style="font-family:'Bebas Neue'; color:#888;">TOTAL ESTIMATE:</span>
                 <h3 id="calc-total" style="font-family:'Oswald'; font-size:2rem; color:var(--authority-orange);">£299</h3>
             </div>
+
             <button class="btn-authority" onclick="sendSalesSignal()">SEND BOOKING SIGNAL</button>`;
         document.getElementById('mag-modal').classList.add('open');
     }
 
     function updateCalc() {
         const type = document.getElementById('rate-select').value;
-        const weeks = document.getElementById('rate-weeks').value || 1;
-        document.getElementById('calc-total').innerText = `£${pricing[type] * weeks}`;
+        const days = parseInt(document.getElementById('rate-days').value) || 0;
+        const creativeSelected = document.getElementById('creative-addon').checked;
+        const note = document.getElementById('surcharge-note');
+        
+        // Base calculation (normalized to per-day based on the 28-day standard)
+        let basePrice = (baseRates[type] / 28) * days;
+        
+        // Surcharge logic
+        if (days < 28 && days > 0) {
+            basePrice = basePrice * 1.30;
+            note.style.display = 'block';
+        } else {
+            note.style.display = 'none';
+        }
+
+        // One-time Creative Add-on logic
+        const total = basePrice + (creativeSelected ? CREATIVE_FEE : 0);
+        
+        document.getElementById('calc-total').innerText = `£${Math.round(total)}`;
     }
 
     function sendSalesSignal() {
         const name = document.getElementById('rate-cust-name').value;
         const email = document.getElementById('rate-cust-email').value;
-        const date = document.getElementById('rate-date').value;
-        const weeks = document.getElementById('rate-weeks').value;
+        const days = document.getElementById('rate-days').value;
+        const type = document.getElementById('rate-select').value;
+        const creative = document.getElementById('creative-addon').checked ? "YES" : "NO";
         const total = document.getElementById('calc-total').innerText;
-        if(!name || !email || !date) { alert("All signal parameters must be entered."); return; }
-        window.location.href = `mailto:sales@rock.scot?subject=Ad Booking: ${name}&body=Client: ${name}%0AEmail: ${email}%0ADate: ${date}%0ADuration: ${weeks}w%0ATotal: ${total}`;
-        document.getElementById('mag-modal').classList.remove('open');
+        if(!name || !email) { alert("Contact data missing."); return; }
+        window.location.href = `mailto:sales@rock.scot?subject=Ad Booking: ${name}&body=Client: ${name}%0AEmail: ${email}%0ADays: ${days}%0ABase: ${type}%0ACreative Addon: ${creative}%0ATotal: ${total}`;
     }
 
     function openSubmit() {
@@ -286,9 +313,7 @@
         const l = document.getElementById('sub-link').value;
         if(!n || !l) { alert("Required data missing."); return; }
         document.getElementById('mag-modal').classList.remove('open');
-        document.getElementById('submit-card-content').innerHTML = `
-            <div style="animation: pulse 1s infinite;"><h2 style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);">SIGNAL RECEIVED</h2></div>
-            <button class="btn-authority" style="margin-top:20px; font-size:1rem;" onclick="location.reload()">SEND ANOTHER</button>`;
+        document.getElementById('submit-card-content').innerHTML = `<h2 style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);">SIGNAL RECEIVED</h2>`;
     }
 
     function updateLiveUI() {
