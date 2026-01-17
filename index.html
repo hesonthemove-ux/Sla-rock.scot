@@ -9,14 +9,14 @@
     <style>
         :root { 
             --authority-orange: #ff5500; 
-            --phantom-glass: rgba(0, 0, 0, 0.08); /* Extreme Transparency Rule */
+            --phantom-glass: rgba(0, 0, 0, 0.08); /* Transparent Rule */
             --glass-border: rgba(255, 255, 255, 0.15);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* HEADER */
+        /* HEADER - Desktop emphasis on logo.png */
         header { 
             position: sticky; top: 0; z-index: 9999; 
             background: #000; width: 100%;
@@ -35,39 +35,41 @@
             display: flex; height: 60px;
         }
 
-        .nav-btn { flex: 1; background: transparent; border: none; color: #777; font-family: 'Bebas Neue'; font-size: 1.2rem; cursor: pointer; }
+        .nav-btn { flex: 1; background: transparent; border: none; color: #777; font-family: 'Bebas Neue'; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
         .nav-btn.active { color: var(--authority-orange); background: rgba(255,85,0,0.1); }
 
-        /* ATMOSPHERIC BACKGROUNDS */
+        /* VIEW BASICS */
         .view { 
             display: none; min-height: 100vh; width: 100%; padding: 40px 20px; 
             background-size: cover; background-position: center; background-attachment: fixed;
         }
         .view.active { display: flex; flex-direction: column; align-items: center; }
 
-        /* REMOVED FROSTED EFFECT - PURE TRANSPARENCY */
+        /* UNIFORM CARD - 320x480 Rule */
         .uniform-card { 
             width: 320px; height: 480px; 
             background: var(--phantom-glass);
-            backdrop-filter: none; -webkit-backdrop-filter: none; /* Frosted effect removed */
+            backdrop-filter: none; -webkit-backdrop-filter: none;
             border: 1px solid var(--glass-border); 
             display: flex; flex-direction: column;
-            justify-content: center; align-items: center; padding: 30px; text-align: center;
+            justify-content: center; align-items: center; padding: 20px; text-align: center;
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
 
-        /* WIRE GRID (Center Aligned) */
+        /* LIVE PLAYER EMBED */
+        .player-portal {
+            width: 100%; height: 260px; border: none;
+            background: transparent; margin-top: 10px;
+        }
+
+        /* WIRE GRID */
         #rss-feed { 
             display: grid; grid-template-columns: repeat(auto-fill, 320px); gap: 25px; 
             width: 100%; max-width: 1400px; padding: 40px; justify-content: center; 
         }
-        .wire-item {
-            background: rgba(0,0,0,0.2); /* Transparent to show news.jpg */
-            border: 1px solid var(--glass-border);
-            cursor: pointer;
-        }
+        .wire-item { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); cursor: pointer; }
 
-        /* CREW ALIGNMENT */
+        /* CREW ROLODEX - Restored 3rd Last Build Alignment */
         .crew-container { 
             display: flex; gap: 20px; overflow-x: auto; width: 100%; 
             padding: 20px 50px; scrollbar-width: none; 
@@ -77,18 +79,13 @@
         .crew-card.active-color { filter: grayscale(0%); border: 3px solid var(--authority-orange); transform: scale(1.05); z-index: 5; }
         .crew-label { position: absolute; bottom: 0; width: 100%; background: linear-gradient(0deg, #000 20%, transparent 100%); padding: 30px; font-family: 'Bebas Neue'; font-size: 2.2rem; text-align: center; }
 
-        /* MODAL (ONE PAGE RULE + TRANSPARENCY) */
+        /* MODAL ONE PAGE RULE */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; display: none; padding: 20px; align-items: center; justify-content: center; }
         .modal-overlay.open { display: flex; }
-        .mag-layout { 
-            max-width: 500px; border: 10px solid #fff; padding: 30px; 
-            background: rgba(0,0,0,0.92); 
-            width: 95%; max-height: 85vh; overflow-y: auto; 
-        }
-        .mag-inner h2 { font-family: 'Oswald'; font-size: 2.2rem; line-height: 1; text-transform: uppercase; margin-bottom: 15px; }
+        .mag-layout { max-width: 500px; border: 10px solid #fff; padding: 30px; background: rgba(0,0,0,0.92); width: 95%; max-height: 85vh; overflow-y: auto; }
 
-        .std-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
         .btn-authority { width: 100%; padding: 18px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.6rem; cursor: pointer; }
+        .std-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -96,7 +93,7 @@
     <div id="mag-modal" class="modal-overlay" onclick="this.classList.remove('open')">
         <div class="mag-layout" onclick="event.stopPropagation()">
             <div style="font-family:'Bebas Neue'; color:var(--authority-orange); letter-spacing:2px;">AUTHORITY DOSSIER</div>
-            <h2 id="mag-name"></h2>
+            <h2 id="mag-name" style="font-family:'Oswald'; font-size:2.2rem; text-transform:uppercase;"></h2>
             <div id="mag-content" style="border-top:1px solid #333; padding-top:15px; word-wrap: break-word;"></div>
         </div>
     </div>
@@ -115,9 +112,12 @@
     <main>
         <section id="v-live" class="view active">
             <div class="uniform-card">
-                <div id="live-clock" style="font-family:'Bebas Neue'; font-size:5.5rem; line-height:0.9;">00:00</div>
-                <div id="clock-tag" style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:5px; margin-bottom:15px;">ROCKIN' SCOTLAND</div>
-                <button class="btn-authority" onclick="window.open('https://player.broadcast.radio/caledonia-tx-ltd')">ENGAGE SIGNAL</button>
+                <div id="live-clock" style="font-family:'Bebas Neue'; font-size:4.5rem; line-height:0.9;">00:00</div>
+                <div id="clock-tag" style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:5px; margin-bottom:5px;">ROCKIN' SCOTLAND</div>
+                
+                <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" class="player-portal" allow="autoplay"></iframe>
+                
+                <p style="font-family:'Oswald'; font-size:0.8rem; margin-top:10px; color:#aaa; letter-spacing:1px;">AUTHORITY SIGNAL ACTIVE</p>
             </div>
         </section>
 
@@ -152,7 +152,7 @@
         { id: "alex", name: "ALEX", bio: "Johnstone spirit. Alex discovered rock via his dad's Nazareth collection and spent years hunting for rare vinyl in Glasgow.", band: "Nazareth", gig: "Texas @ SEC Armadillo", venue: "Barrowland", fact: "Has a signed Deacon Blue vinyl.", img: "dj_alex.jpg", clicks: 0 },
         { id: "stevie", name: "STEVIE", bio: "Port Glasgow shipbuilding heart. Stevie was raised on Clyde rockers and believes rock music is the only true Scottish export.", band: "Big Country", gig: "Mogwai @ Òran Mór", venue: "Beacon Arts", fact: "High-fived Angus Young.", img: "dj_stevie.jpg", clicks: 0 },
         { id: "mhairi", name: "MHAIRI", bio: "Hamilton born and bred. Mhairi is obsessed with distortion pedals and finding the loudest tracks in Central Scotland.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tut's", venue: "Grand Hall", fact: "Qualified tattoo artist.", img: "dj_mhairi.jpg", clicks: 0 },
-        { id: "jude", name: "JUDE", bio: "North Ayrshire stomp. Jude climbed the ranks from local open mics to championing the newest acts on the Scottish rock scene.", band: "Travis", gig: "Idlewild @ Barrowlands", venue: "Harbour Arts", fact: "Hitchhiked for Franz Ferdinand.", img: "dj_jude.jpg", clicks: 0 },
+        { id: "jude", name: "JUDE", bio: "North Ayrshire stomp. Jude climbed the ranks from local open mics to championing the newest acts on the Scottish rock scene.", band: "Travis", gig: "Idlewild @ Barrowlands", venue: "Harbour Arts", fact: "Hitchhiked to see Franz Ferdinand.", img: "dj_jude.jpg", clicks: 0 },
         { id: "chris", name: "CHRIS", bio: "Greenock bred on Primal Scream. Chris joined Rock.Scot to bring pure, unfiltered energy to the West Coast airwaves.", band: "Primal Scream", gig: "Simple Minds @ OVO Hydro", venue: "Cathouse", fact: "Owns every Big Country album.", img: "dj_chris.jpg", clicks: 0 },
         { id: "cal", name: "CAL", bio: "Kilmarnock heartlands specialist. Cal lives for the sound of a roaring crowd and the smell of a muddy festival field.", band: "Biffy Clyro", gig: "The Fratellis @ Grand Hall", venue: "Palace Theatre", fact: "Air guitar champion 2018.", img: "dj_cal.jpg", clicks: 0 },
         { id: "blue", name: "BLUE", bio: "Gourock seaside charm. Blue blends bluesy riffs with modern rock energy for the perfect evening drive.", band: "Nazareth", gig: "Texas @ Paisley Arts", venue: "Coats Paisley", fact: "Once mistaken for a roadie.", img: "dj_blue.jpg", clicks: 0 }
@@ -163,11 +163,7 @@
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         const activeView = document.getElementById('v-' + name);
         activeView.style.display = 'flex';
-        
-        const randomBg = `news${Math.floor(Math.random()*7)+1}.jpg`;
-        // Removed heavy dark gradient to maximize atmospheric visibility
-        activeView.style.backgroundImage = `url('${randomBg}')`;
-        
+        activeView.style.backgroundImage = `url('news${Math.floor(Math.random()*7)+1}.jpg')`;
         event.currentTarget.classList.add('active');
         if(name === 'wire') fetchMultiRSS();
         if(name === 'crew') renderCrew();
