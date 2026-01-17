@@ -9,9 +9,8 @@
     <style>
         :root { 
             --authority-orange: #ff5500; 
-            --phantom-glass: rgba(255, 255, 255, 0.05); 
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -24,107 +23,95 @@
         }
         
         .hdr-logo { 
-            width: 100%; max-width: 450px; height: auto; 
-            padding: 15px 0; display: block;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.8));
+            width: 100%; max-width: 400px; height: auto; 
+            padding: 10px 0; display: block;
         }
 
         .nav-strip { 
-            width: 100%; background: rgba(0,0,0,0.95); 
-            border-bottom: 4px solid var(--authority-orange);
-            display: flex; height: 60px;
+            width: 100%; background: #000; 
+            border-bottom: 3px solid var(--authority-orange);
+            display: flex; height: 50px;
         }
 
-        .nav-btn { flex: 1; background: transparent; border: none; color: #777; font-family: 'Bebas Neue'; font-size: 1.2rem; cursor: pointer; }
-        .nav-btn.active { color: var(--authority-orange); background: rgba(255,85,0,0.1); }
+        .nav-btn { flex: 1; background: transparent; border: none; color: #666; font-family: 'Bebas Neue'; font-size: 1.1rem; cursor: pointer; }
+        .nav-btn.active { color: var(--authority-orange); }
 
         .view { 
-            display: none; min-height: 100vh; width: 100%; padding: 40px 20px; 
+            display: none; min-height: calc(100vh - 100px); width: 100%; padding: 20px; 
             background-size: cover; background-position: center; background-attachment: fixed;
-            transition: background-image 0.8s ease-in-out;
         }
         .view.active { display: flex; flex-direction: column; align-items: center; }
 
         .uniform-card { 
             width: 320px; height: 480px; 
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.7);
             border: 1px solid var(--glass-border); 
             display: flex; flex-direction: column;
-            justify-content: center; align-items: center; padding: 20px; text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
+            justify-content: center; align-items: center; padding: 25px; text-align: center;
         }
 
-        /* 3D ARCHIVE VIEWPORT */
+        /* INFINITE 3D VIEWPORT */
         .archive-viewport {
-            perspective: 1500px;
+            perspective: 1000px;
             width: 100%;
-            height: 600px;
+            height: 550px;
             display: flex;
             align-items: center;
             overflow-x: auto;
             overflow-y: hidden;
-            padding: 0 35%;
             scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
         .archive-viewport::-webkit-scrollbar { display: none; }
 
+        .crew-track {
+            display: flex;
+            align-items: center;
+            padding: 0 100px;
+        }
+
         .crew-card-3d {
-            min-width: 280px;
-            height: 420px;
-            margin: 0 -50px;
-            background: var(--phantom-glass);
-            backdrop-filter: blur(8px);
+            min-width: 260px;
+            height: 380px;
+            margin: 0 -20px;
+            background: rgba(20,20,20,0.9);
             border: 1px solid var(--glass-border);
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), filter 0.5s;
+            will-change: transform;
             filter: grayscale(100%) brightness(0.4);
+            transition: filter 0.4s ease;
             cursor: pointer;
-            -webkit-box-reflect: below 2px linear-gradient(transparent, rgba(0,0,0,0.15));
         }
 
         .crew-card-3d.focus {
-            filter: grayscale(0%) brightness(1.2);
-            transform: translateZ(150px) rotateY(0deg) !important;
+            filter: grayscale(0%) brightness(1);
             z-index: 100;
             border-color: var(--authority-orange);
-            box-shadow: 0 0 30px rgba(255,85,0,0.3);
         }
 
         .crew-label-3d {
             position: absolute; bottom: 0; width: 100%;
-            padding: 25px; background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            font-family: 'Bebas Neue'; font-size: 2.2rem; text-align: center;
-            text-shadow: var(--text-shadow);
+            padding: 20px; background: linear-gradient(transparent, #000);
+            font-family: 'Bebas Neue'; font-size: 1.8rem; text-align: center;
         }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; display: none; padding: 20px; align-items: center; justify-content: center; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; display: none; padding: 20px; align-items: center; justify-content: center; }
         .modal-overlay.open { display: flex; }
-        .mag-layout { max-width: 500px; border: 8px solid #fff; padding: 30px; background: #000; width: 95%; max-height: 85vh; overflow-y: auto; }
+        .mag-layout { max-width: 450px; border: 6px solid #fff; padding: 25px; background: #000; width: 95%; max-height: 80vh; overflow-y: auto; }
 
-        .btn-authority { width: 100%; padding: 18px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.6rem; cursor: pointer; }
-        .std-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
-        .std-label { display: block; font-family: 'Oswald'; font-size: 0.8rem; color: #888; text-transform: uppercase; margin-bottom: 5px; }
-        
-        .on-air {
-            display: inline-block; width: 10px; height: 10px;
-            background: #ff0000; border-radius: 50%;
-            margin-right: 8px; vertical-align: middle;
-            box-shadow: 0 0 10px #ff0000;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .btn-authority { width: 100%; padding: 15px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.4rem; cursor: pointer; margin-top: 10px; }
+        .std-input { width: 100%; padding: 10px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
+        .std-label { display: block; font-family: 'Oswald'; font-size: 0.75rem; color: #888; text-transform: uppercase; margin-bottom: 4px; }
     </style>
 </head>
 <body>
 
     <div id="mag-modal" class="modal-overlay" onclick="this.classList.remove('open')">
         <div class="mag-layout" onclick="event.stopPropagation()">
-            <div style="font-family:'Bebas Neue'; color:var(--authority-orange); letter-spacing:2px;">AUTHORITY DOSSIER</div>
-            <h2 id="mag-name" style="font-family:'Oswald'; font-size:2.5rem; text-transform:uppercase;"></h2>
-            <div id="mag-content" style="border-top:1px solid #333; padding-top:15px; font-family:'Inter'; line-height:1.6; color:#ccc;"></div>
+            <div style="font-family:'Bebas Neue'; color:var(--authority-orange); letter-spacing:1px;">AUTHORITY DOSSIER</div>
+            <h2 id="mag-name" style="font-family:'Oswald'; font-size:2.2rem; text-transform:uppercase;"></h2>
+            <div id="mag-content" style="border-top:1px solid #333; padding-top:10px; font-family:'Inter'; font-size:0.9rem; line-height:1.4;"></div>
         </div>
     </div>
 
@@ -142,49 +129,52 @@
     <main>
         <section id="v-live" class="view active">
             <div class="uniform-card">
-                <div id="live-clock" style="font-family:'Bebas Neue'; font-size:4.5rem; line-height:0.9;">00:00</div>
-                <div id="clock-tag" style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:5px; margin-bottom:15px;">
-                    <span class="on-air"></span>ROCKIN' SCOTLAND
-                </div>
+                <div id="live-clock" style="font-family:'Bebas Neue'; font-size:4rem; line-height:1;">00:00</div>
+                <div style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:3px; margin-bottom:15px;">ROCKIN' SCOTLAND</div>
                 <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:260px; border:none; background:transparent;" allow="autoplay" allowtransparency="true"></iframe>
             </div>
         </section>
 
         <section id="v-wire" class="view">
-            <div id="rss-feed" style="display: grid; grid-template-columns: repeat(auto-fill, 320px); gap: 25px; width:100%; justify-content: center;"></div>
+            <div id="rss-feed" style="display: grid; grid-template-columns: repeat(auto-fill, 300px); gap: 20px; width:100%; justify-content: center;"></div>
         </section>
 
         <section id="v-crew" class="view">
-            <div class="archive-viewport" id="crew-3d-wrap" onscroll="animate3D()"></div>
+            <div class="archive-viewport" id="crew-3d-wrap" onscroll="handleInfiniteScroll()">
+                <div class="crew-track" id="crew-track"></div>
+            </div>
         </section>
 
         <section id="v-rates" class="view">
             <div class="uniform-card">
-                <h2 style="font-family:'Bebas Neue'; font-size:3.5rem; color:var(--authority-orange);">RATES</h2>
-                <p style="font-family:'Oswald'; letter-spacing:1px; margin-bottom:20px; color:#888;">ADVERTISING PORTAL</p>
-                <button class="btn-authority" onclick="openRates()">OPEN AD PORTAL</button>
+                <h2 style="font-family:'Bebas Neue'; font-size:3rem; color:var(--authority-orange);">RATES</h2>
+                <button class="btn-authority" onclick="openRates()">AD PORTAL</button>
             </div>
         </section>
 
         <section id="v-submit" class="view">
             <div class="uniform-card" id="submit-card-content">
-                <h2 style="font-family:'Bebas Neue'; font-size:3.5rem; color:var(--authority-orange);">SUBMIT</h2>
-                <button class="btn-authority" onclick="openSubmit()">SEND SIGNAL</button>
+                <h2 style="font-family:'Bebas Neue'; font-size:3rem; color:var(--authority-orange);">SUBMIT</h2>
+                <button class="btn-authority" onclick="openSubmit()">SEND TRACK</button>
             </div>
         </section>
     </main>
 
 <script>
     const crewData = [
-        { id: "andy", name: "ANDY", bio: "Hailing from East Kilbride. Biffy Clyro fanatic.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands", img: "dj_andy.jpg" },
-        { id: "alex", name: "ALEX", bio: "Johnstone spirit. Nazareth collector.", band: "Nazareth", gig: "Texas @ SEC Armadillo", img: "dj_alex.jpg" },
-        { id: "stevie", name: "STEVIE", bio: "Port Glasgow shipbuilding heart.", band: "Big Country", gig: "Mogwai @ Òran Mór", img: "dj_stevie.jpg" },
-        { id: "mhairi", name: "MHAIRI", bio: "Hamilton born and bred. Pedal obsessed.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tut's", img: "dj_mhairi.jpg" },
-        { id: "jude", name: "JUDE", bio: "North Ayrshire stomp.", band: "Travis", gig: "Idlewild @ Barrowlands", img: "dj_jude.jpg" },
-        { id: "chris", name: "CHRIS", bio: "Greenock bred on Primal Scream.", band: "Primal Scream", gig: "Simple Minds @ OVO Hydro", img: "dj_chris.jpg" },
-        { id: "cal", name: "CAL", bio: "Kilmarnock heartlands specialist.", band: "Biffy Clyro", gig: "The Fratellis @ Grand Hall", img: "dj_cal.jpg" },
-        { id: "blue", name: "BLUE", bio: "Gourock seaside charm.", band: "Nazareth", gig: "Texas @ Paisley Arts", img: "dj_blue.jpg" }
+        { id: "andy", name: "ANDY", bio: "East Kilbride spirit.", band: "Biffy Clyro", gig: "Franz Ferdinand", img: "dj_andy.jpg" },
+        { id: "alex", name: "ALEX", bio: "Johnstone's rock authority.", band: "Nazareth", gig: "Texas", img: "dj_alex.jpg" },
+        { id: "stevie", name: "STEVIE", bio: "Port Glasgow shipbuilding heart.", band: "Big Country", gig: "Mogwai", img: "dj_stevie.jpg" },
+        { id: "mhairi", name: "MHAIRI", bio: "Hamilton born and bred.", band: "Mary Chain", gig: "Teenage Fanclub", img: "dj_mhairi.jpg" },
+        { id: "jude", name: "JUDE", bio: "North Ayrshire stomp.", band: "Travis", gig: "Idlewild", img: "dj_jude.jpg" },
+        { id: "chris", name: "CHRIS", bio: "Greenock bred.", band: "Primal Scream", gig: "Simple Minds", img: "dj_chris.jpg" },
+        { id: "cal", name: "CAL", bio: "Kilmarnock specialist.", band: "Biffy Clyro", gig: "The Fratellis", img: "dj_cal.jpg" },
+        { id: "blue", name: "BLUE", bio: "Gourock charm.", band: "Nazareth", gig: "Texas", img: "dj_blue.jpg" }
     ];
+
+    let spinInterval;
+    let isInteracting = false;
+    let interactionTimer;
 
     function showTab(name) {
         document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
@@ -193,75 +183,124 @@
         activeView.style.display = 'flex';
         activeView.style.backgroundImage = `url('news${Math.floor(Math.random()*7)+1}.jpg')`;
         event.currentTarget.classList.add('active');
-        if(name === 'crew') { render3DCrew(); setTimeout(animate3D, 100); }
+        if(name === 'crew') { 
+            initInfiniteCrew(); 
+            startAutoSpin();
+        } else {
+            stopAutoSpin();
+        }
     }
 
-    function render3DCrew() {
+    function initInfiniteCrew() {
+        const track = document.getElementById('crew-track');
         const wrap = document.getElementById('crew-3d-wrap');
-        wrap.innerHTML = crewData.map(dj => `
-            <div class="crew-card-3d" id="c3d-${dj.id}" onclick="handle3DClick('${dj.id}')">
+        const tripleData = [...crewData, ...crewData, ...crewData];
+        
+        track.innerHTML = tripleData.map((dj, index) => `
+            <div class="crew-card-3d" data-id="${dj.id}" onclick="handle3DClick(this, '${dj.id}')">
                 <img src="${dj.img}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='logo.png'">
                 <div class="crew-label-3d">${dj.name}</div>
             </div>`).join('');
+
+        const singleSetWidth = (track.scrollWidth / 3);
+        wrap.scrollLeft = singleSetWidth;
+        animate3D();
+
+        wrap.addEventListener('touchstart', () => { isInteracting = true; stopAutoSpin(); });
+        wrap.addEventListener('mousedown', () => { isInteracting = true; stopAutoSpin(); });
+        wrap.addEventListener('touchend', resumeInteractionTimer);
+        wrap.addEventListener('mouseup', resumeInteractionTimer);
+    }
+
+    function startAutoSpin() {
+        if (spinInterval) clearInterval(spinInterval);
+        spinInterval = setInterval(() => {
+            if (!isInteracting) {
+                const wrap = document.getElementById('crew-3d-wrap');
+                wrap.scrollLeft += 1.5; // Auto-spin speed
+            }
+        }, 16);
+    }
+
+    function stopAutoSpin() {
+        clearInterval(spinInterval);
+        spinInterval = null;
+    }
+
+    function resumeInteractionTimer() {
+        clearTimeout(interactionTimer);
+        interactionTimer = setTimeout(() => {
+            isInteracting = false;
+            startAutoSpin();
+        }, 3000); // Resume auto-spin after 3 seconds of no activity
+    }
+
+    function handleInfiniteScroll() {
+        const wrap = document.getElementById('crew-3d-wrap');
+        const track = document.getElementById('crew-track');
+        if(!track) return;
+        const singleSetWidth = (track.scrollWidth / 3);
+
+        if (wrap.scrollLeft <= 0) {
+            wrap.scrollLeft = singleSetWidth;
+        } else if (wrap.scrollLeft >= singleSetWidth * 2) {
+            wrap.scrollLeft = singleSetWidth;
+        }
+        
+        requestAnimationFrame(animate3D);
     }
 
     function animate3D() {
         const wrap = document.getElementById('crew-3d-wrap');
+        if(!wrap) return;
         const cards = document.querySelectorAll('.crew-card-3d');
         const centerX = wrap.scrollLeft + (wrap.offsetWidth / 2);
 
         cards.forEach(card => {
             const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
             const distance = cardCenter - centerX;
-            const angle = distance / 12;
             const absDist = Math.abs(distance);
+            const angle = distance / 20;
             
-            card.style.transform = `rotateY(${angle}deg) translateZ(${-absDist/1.5}px)`;
-            card.classList.toggle('focus', absDist < 100);
+            card.style.transform = `rotateY(${angle}deg) translateZ(${-absDist/2.5}px)`;
+            card.classList.toggle('focus', absDist < 70);
         });
     }
 
-    function handle3DClick(id) {
+    function handle3DClick(el, id) {
         const dj = crewData.find(d => d.id === id);
-        const card = document.getElementById('c3d-' + id);
-        if(!card.classList.contains('focus')) {
-            card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        if(!el.classList.contains('focus')) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             return;
         }
         document.getElementById('mag-name').innerText = dj.name;
-        document.getElementById('mag-content').innerHTML = `
-            <p style="margin-bottom:15px;">${dj.bio}</p>
-            <div style="font-family:Oswald; text-transform:uppercase; color:var(--authority-orange);">
-                <p>ULTIMATE BAND: ${dj.band}</p>
-                <p>BEST GIG: ${dj.gig}</p>
-            </div>`;
+        document.getElementById('mag-content').innerHTML = `<p>${dj.bio}</p><br><p>BAND: ${dj.band}</p><p>GIG: ${dj.gig}</p>`;
         document.getElementById('mag-modal').classList.add('open');
     }
 
-    /* AD ENGINE - LOCKED LOGIC */
+    /* AD PRICING LOGIC - 30% SURCHARGE & CREATIVE ADD-ON */
     const baseRates = { regional: 299, multi: 449 };
     const CREATIVE_FEE = 195;
 
     function openRates() {
-        document.getElementById('mag-name').innerText = "ADVERTISING PORTAL";
+        document.getElementById('mag-name').innerText = "AD PORTAL";
         document.getElementById('mag-content').innerHTML = `
             <select id="rate-select" class="std-input" onchange="updateCalc()">
-                <option value="regional">REGIONAL (£299 / 28 days)</option>
-                <option value="multi">MULTI-REGIONAL (£449 / 28 days)</option>
+                <option value="regional">REGIONAL (£299 / 28d)</option>
+                <option value="multi">MULTI (£449 / 28d)</option>
             </select>
             <div style="display:flex; gap:10px;">
-                <div style="flex:1;"><label class="std-label">Start Date</label><input type="date" id="rate-date" class="std-input"></div>
-                <div style="flex:1;"><label class="std-label">Days Total</label><input type="number" id="rate-days" class="std-input" value="28" onchange="updateCalc()"></div>
+                <div style="flex:1;"><label class="std-label">Days</label><input type="number" id="rate-days" class="std-input" value="28" onchange="updateCalc()"></div>
             </div>
-            <div style="background:#111; padding:10px; border:1px solid #333; margin-bottom:10px; display:flex; align-items:center; gap:10px;">
+            <div style="background:#111; padding:10px; border:1px solid #333; display:flex; align-items:center; gap:10px;">
                 <input type="checkbox" id="creative-addon" onchange="updateCalc()">
-                <label class="std-label" style="margin:0;">ADD CREATIVE PACKAGE (+£195)</label>
+                <label class="std-label" style="margin:0;">ADD CREATIVE (+£195)</label>
             </div>
-            <div style="background:#050505; padding:20px; border:1px solid var(--authority-orange); text-align:right;">
-                <div id="surcharge-msg" style="color:var(--authority-orange); font-size:0.75rem; font-family:Oswald; margin-bottom:5px; display:none;">+30% SHORT-TERM SURCHARGE APPLIED</div>
-                <h3 id="calc-total" style="font-family:'Oswald'; font-size:2.2rem; color:var(--authority-orange);">£299</h3>
+            <div style="background:#000; padding:15px; border:1px solid var(--authority-orange); text-align:right; margin-top:10px;">
+                <div id="surcharge-msg" style="color:var(--authority-orange); font-size:0.7rem; display:none;">+30% SHORT-TERM SURCHARGE</div>
+                <h3 id="calc-total" style="font-family:'Oswald'; font-size:2rem; color:var(--authority-orange);">£299</h3>
             </div>
-            <button class="btn-authority" style="margin-top:10px;" onclick="sendSignal()">SEND BOOKING SIGNAL</button>`;
+            <button class="btn-authority" onclick="sendSignal()">SEND SIGNAL</button>`;
         document.getElementById('mag-modal').classList.add('open');
     }
 
@@ -281,29 +320,29 @@
 
     function sendSignal() {
         const total = document.getElementById('calc-total').innerText;
-        window.location.href = `mailto:sales@rock.scot?subject=Booking Signal&body=Total Quote: ${total}`;
+        window.location.href = `mailto:sales@rock.scot?subject=Ad Quote&body=Total: ${total}`;
     }
 
     function openSubmit() {
-        document.getElementById('mag-name').innerText = "TRANSMIT TRACK";
+        document.getElementById('mag-name').innerText = "TRANSMIT";
         document.getElementById('mag-content').innerHTML = `
-            <input type="text" id="sub-name" placeholder="BAND NAME" class="std-input">
-            <input type="text" id="sub-link" placeholder="TRACK LINK" class="std-input">
-            <button class="btn-authority" onclick="handleSubmission()">SEND SIGNAL</button>`;
+            <input type="text" id="sub-name" placeholder="BAND" class="std-input">
+            <input type="text" id="sub-link" placeholder="LINK" class="std-input">
+            <button class="btn-authority" onclick="handleSubmission()">SEND</button>`;
         document.getElementById('mag-modal').classList.add('open');
     }
 
     function handleSubmission() {
         document.getElementById('mag-modal').classList.remove('open');
-        document.getElementById('submit-card-content').innerHTML = `<h2 style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);">SIGNAL RECEIVED</h2>`;
+        document.getElementById('submit-card-content').innerHTML = `<h2 style="color:var(--authority-orange);">RECEIVED</h2>`;
     }
 
     function updateClock() {
         const now = new Date();
         document.getElementById('live-clock').innerText = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
     }
-    setInterval(updateClock, 5000);
+    setInterval(updateClock, 10000);
     window.onload = updateClock;
 </script>
 </body>
-</html>
+    </html>
