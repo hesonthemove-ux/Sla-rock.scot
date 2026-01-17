@@ -9,83 +9,81 @@
     <style>
         :root { 
             --authority-orange: #ff5500; 
-            --ultra-glass: rgba(0, 0, 0, 0.3); /* Ultra-transparent for background visibility */
+            --ultra-glass: rgba(0, 0, 0, 0.25); 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* HEADER & OVERLAP LOGIC */
+        /* HEADER & OVERLAP - MOVED DOWN TWO LINES */
         header { position: sticky; top: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; }
         
         .hdr-logo { 
-            width: 85%; max-width: 480px; height: auto; 
-            margin-bottom: -40px; /* Force overlap on menu */
+            width: 90%; max-width: 520px; height: auto; 
+            margin-bottom: -80px; /* Lowered by two lines worth of spacing */
             z-index: 1020; position: relative;
-            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.9));
+            filter: drop-shadow(0 20px 20px rgba(0,0,0,0.9));
         }
 
         .nav-strip { 
-            width: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px);
-            border-bottom: 3px solid var(--authority-orange);
-            display: flex; height: 70px; padding-top: 25px; /* Offset for overlap */
+            width: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(20px);
+            border-bottom: 4px solid var(--authority-orange);
+            display: flex; height: 90px; padding-top: 45px; /* Deeper buffer for the logo overlap */
             z-index: 1010; position: relative;
         }
 
-        .nav-btn { flex: 1; background: transparent; border: none; color: #666; font-family: 'Bebas Neue'; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
-        .nav-btn.active { color: var(--authority-orange); background: rgba(255,85,0,0.1); }
+        .nav-btn { flex: 1; background: transparent; border: none; color: #555; font-family: 'Bebas Neue'; font-size: 1.3rem; cursor: pointer; transition: 0.3s; }
+        .nav-btn.active { color: var(--authority-orange); background: rgba(255,85,0,0.15); }
 
         /* ULTRA-TRANSPARENT PANELS */
         .glass-panel { 
-            background: var(--ultra-glass); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            padding: 40px; width: 95%; max-width: 650px; border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6); margin-top: 40px;
+            background: var(--ultra-glass); backdrop-filter: blur(50px); -webkit-backdrop-filter: blur(50px);
+            padding: 50px; width: 95%; max-width: 700px; border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8); margin-top: 60px;
         }
 
         /* VIEW ENGINE */
-        .view { display: none; min-height: 100vh; width: 100%; padding: 100px 20px 60px 20px; background-size: cover; background-position: center; background-attachment: fixed; }
+        .view { display: none; min-height: 100vh; width: 100%; padding: 120px 20px 80px 20px; background-size: cover; background-position: center; background-attachment: fixed; }
         .view.active { display: flex; flex-direction: column; align-items: center; }
 
-        /* CREW ROLODEX interaction */
-        .crew-container { display: flex; gap: 20px; overflow-x: auto; width: 100%; padding: 40px 20px; scroll-snap-type: x mandatory; }
+        /* CREW ROLODEX (Expanded for 8 DJs) */
+        .crew-container { display: flex; gap: 25px; overflow-x: auto; width: 100%; padding: 60px 40px; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .crew-card {
-            min-width: 280px; height: 420px; background: #111; border: 1px solid #333;
+            min-width: 320px; height: 480px; background: #0a0a0a; border: 1px solid #222;
             scroll-snap-align: center; position: relative; cursor: pointer;
-            filter: grayscale(100%); transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+            filter: grayscale(100%); transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .crew-card.active-color { filter: grayscale(0%); border: 3px solid var(--authority-orange); transform: scale(1.05); }
+        .crew-card.active-color { filter: grayscale(0%); border: 4px solid var(--authority-orange); transform: scale(1.08) translateY(-10px); }
         .crew-img { width: 100%; height: 100%; object-fit: cover; }
-        .crew-label { position: absolute; bottom: 0; width: 100%; background: linear-gradient(0deg, #000 0%, transparent 100%); padding: 25px; font-family: 'Bebas Neue'; font-size: 2.2rem; text-align: center; }
+        .crew-label { position: absolute; bottom: 0; width: 100%; background: linear-gradient(0deg, #000 20%, transparent 100%); padding: 30px; font-family: 'Bebas Neue'; font-size: 2.5rem; text-align: center; line-height: 1; }
 
-        /* MAGAZINE MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 5000; display: none; overflow-y: auto; padding: 40px 20px; }
+        /* MAG MODAL */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.99); z-index: 5000; display: none; overflow-y: auto; padding: 20px; }
         .modal-overlay.open { display: flex; align-items: center; justify-content: center; }
-        .mag-layout { max-width: 700px; border: 12px solid #fff; padding: 60px; background: #000; position: relative; }
+        .mag-layout { max-width: 800px; border: 15px solid #fff; padding: 60px; background: #000; position: relative; width: 100%; }
 
-        /* INPUTS */
-        .std-input { width: 100%; padding: 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: 'Oswald'; margin-bottom: 15px; border-radius: 4px; }
-        .btn-authority { width: 100%; padding: 20px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.8rem; cursor: pointer; transition: 0.2s; }
-        .btn-authority:hover { background: #ff7722; }
+        .btn-authority { width: 100%; padding: 25px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 2rem; cursor: pointer; }
 
-        /* TICKER */
-        .ticker-wrap { width: 100%; background: #fff; color: #000; overflow: hidden; white-space: nowrap; padding: 10px 0; font-family: 'Oswald'; font-weight: 900; border-bottom: 3px solid var(--authority-orange); position: absolute; top: 0; left: 0; }
-        .ticker-move { display: inline-block; animation: ticker 40s linear infinite; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        /* NEWS WIRE FEED */
+        .news-item { background: rgba(0,0,0,0.9); border: 1px solid #222; transition: 0.3s; position: relative; overflow: hidden; }
+        .news-item:hover { border-color: var(--authority-orange); }
+        .news-art { width: 100%; height: 220px; object-fit: cover; background: #111; }
+        .news-no-img { height: 220px; display: flex; align-items: center; justify-content: center; background: #111; color: #333; font-family: 'Bebas Neue'; font-size: 2rem; border-bottom: 2px solid #222; }
     </style>
 </head>
 <body>
 
     <div id="mag-modal" class="modal-overlay" onclick="this.classList.remove('open')">
         <div class="mag-layout" onclick="event.stopPropagation()">
-            <div style="font-family:'Bebas Neue'; color:var(--authority-orange); letter-spacing:3px;">THE AUTHORITY DOSSIER</div>
-            <h2 id="mag-name" style="font-family:'Oswald'; font-size:5rem; line-height:0.85; margin:25px 0; text-transform:uppercase;"></h2>
-            <p id="mag-text" style="font-size:1.2rem; line-height:1.8; color:#eee; border-top:1px solid #333; padding-top:25px;"></p>
-            <div style="margin-top:40px; font-family:'Bebas Neue'; font-size:1.4rem;">STATUS: <span id="mag-stats" style="color:var(--authority-orange);"></span></div>
+            <div style="font-family:'Bebas Neue'; color:var(--authority-orange); font-size:1.5rem;">ROCK.SCOT EXCLUSIVE ISSUE</div>
+            <h2 id="mag-name" style="font-family:'Oswald'; font-size:5.5rem; line-height:0.8; margin:30px 0; text-transform:uppercase;"></h2>
+            <p id="mag-text" style="font-size:1.3rem; line-height:1.8; color:#ccc; border-top:1px solid #444; padding-top:30px; font-weight:300;"></p>
+            <div style="margin-top:50px; font-family:'Bebas Neue'; font-size:1.8rem;">DOSS_ROLE: <span id="mag-stats" style="color:var(--authority-orange);"></span></div>
         </div>
     </div>
 
     <header>
-        <img src="top_banner.png" class="hdr-logo" alt="Rock.Scot">
+        <img src="top_banner.png" class="hdr-logo" alt="Rock.Scot Authority">
         <nav class="nav-strip">
             <button class="nav-btn active" onclick="showTab('live')">LIVE</button>
             <button class="nav-btn" onclick="showTab('wire')">WIRE</button>
@@ -98,41 +96,38 @@
     <main>
         <section id="v-live" class="view active">
             <div class="glass-panel" style="text-align:center;">
-                <div id="live-clock" style="font-family:'Bebas Neue'; font-size:6rem; line-height:0.9;">00:00</div>
-                <div id="clock-tag" style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:4px; margin-bottom:10px;">ROCKIN' SCOTLAND</div>
-                <div id="power-statement" style="font-family:'Oswald'; font-size:0.9rem; color:#888; height:40px; margin-bottom:30px; text-transform:uppercase;">CENTRAL SCOTLAND AUTHORITY</div>
+                <div id="live-clock" style="font-family:'Bebas Neue'; font-size:7rem; line-height:0.85;">00:00</div>
+                <div id="clock-tag" style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:6px; margin-bottom:15px; font-weight:900;">ROCKIN' SCOTLAND</div>
+                <div id="power-statement" style="font-family:'Oswald'; font-size:1.1rem; color:#666; height:50px; margin-bottom:30px; text-transform:uppercase;">CENTRAL SCOTLAND AUTHORITY</div>
                 <button class="btn-authority" onclick="toggleAudio()" id="play-btn">ENGAGE SIGNAL</button>
             </div>
         </section>
 
         <section id="v-wire" class="view">
-            <div class="ticker-wrap"><div class="ticker-move" id="album-ticker">LOADING ROCK INTEL...</div></div>
-            <div id="rss-feed" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:25px; width:100%; max-width:1200px; padding-top:40px;"></div>
+            <div id="rss-feed" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:30px; width:100%; max-width:1300px;"></div>
         </section>
 
         <section id="v-crew" class="view">
-            <div style="text-align:center;"><h2 style="font-family:'Bebas Neue'; font-size:3.5rem;">THE CREW</h2><p style="font-family:'Oswald'; color:var(--authority-orange);">DOUBLE TAP FOR DOSSIER</p></div>
             <div class="crew-container" id="crew-rolodex"></div>
         </section>
 
         <section id="v-rates" class="view">
             <div class="glass-panel">
-                <h2 style="font-family:'Bebas Neue'; font-size:3rem; color:var(--authority-orange);">ADVERTISING</h2>
-                <select id="calc-package" class="std-input" onchange="calc()">
-                    <option value="299">Regional (£299/28d)</option>
-                    <option value="449">Multi-Regional (£449/28d)</option>
-                </select>
-                <div id="total-price" style="font-family:'Bebas Neue'; font-size:4rem; text-align:center;">£299.00</div>
-                <button class="btn-authority">BOOK TRANSMISSION</button>
+                <h2 style="font-family:'Bebas Neue'; font-size:4rem; color:var(--authority-orange);">CAMPAIGN RATES</h2>
+                <div style="margin:30px 0; font-family:'Oswald'; font-size:1.5rem;">
+                    <p style="margin-bottom:15px;">REGIONAL: <span style="color:var(--authority-orange);">£299/28D</span></p>
+                    <p>MULTI-REGIONAL: <span style="color:var(--authority-orange);">£449/28D</span></p>
+                </div>
+                <button class="btn-authority">REQUEST INTEL</button>
             </div>
         </section>
 
         <section id="v-submit" class="view">
             <div class="glass-panel">
-                <h2 style="font-family:'Bebas Neue'; font-size:3rem; color:var(--authority-orange);">TRANSMIT TRACK</h2>
-                <input type="text" placeholder="BAND" class="std-input">
-                <textarea placeholder="PITCH..." class="std-input" style="height:120px;"></textarea>
-                <button class="btn-authority">SUBMIT TO AUTHORITY</button>
+                <h2 style="font-family:'Bebas Neue'; font-size:4rem; color:var(--authority-orange);">TRANSMIT MUSIC</h2>
+                <input type="text" placeholder="BAND NAME" class="std-input">
+                <textarea placeholder="PITCH THE SIGNAL..." class="std-input" style="height:150px;"></textarea>
+                <button class="btn-authority">SEND TO AUTHORITY</button>
             </div>
         </section>
     </main>
@@ -140,15 +135,19 @@
 <script>
     const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
     
+    // FULL CREW - 8 DJs RETAINED
     const crewData = [
-        { id: "andy", name: "ANDY", role: "Rock Rebel", bio: "From the heart of EK, Andy brings the heaviest riffs and local knowledge.", img: "dj_andy.jpg", clicks: 0 },
-        { id: "alex", name: "ALEX", role: "Vinyl Viking", bio: "Johnstone's finest record collector. If it's on vinyl, Alex has the story.", img: "dj_alex.jpg", clicks: 0 },
-        { id: "mhairi", name: "MHAIRI", role: "Hard Rock Queen", bio: "Tattoo artist and rock authority. She knows the scene inside out.", img: "dj_mhairi.jpg", clicks: 0 }
+        { id: "andy", name: "ANDY", role: "Rock Rebel", bio: "Hailing from East Kilbride, Andy brings the heaviest riffs and Lanarkshire grit.", img: "dj_andy.jpg", clicks: 0 },
+        { id: "alex", name: "ALEX", role: "Vinyl Viking", bio: "Johnstone's primary collector. If it's rare and loud, Alex spins it.", img: "dj_alex.jpg", clicks: 0 },
+        { id: "mhairi", name: "MHAIRI", role: "Hard Rock Queen", bio: "Tattoo artist and rock authority. Knows the scene from the inside out.", img: "dj_mhairi.jpg", clicks: 0 },
+        { id: "stevie", name: "STEVIE", role: "Headbanger", bio: "Port Glasgow shipbuilding spirit. Loud, proud, and 100% Rock and Roll.", img: "dj_stevie.jpg", clicks: 0 },
+        { id: "jude", name: "JUDE", role: "Indie Icon", bio: "Irvine's melodic rock expert. Bridging the gap between indie and metal.", img: "dj_jude.jpg", clicks: 0 },
+        { id: "chris", name: "CHRIS", role: "Guitar Guru", bio: "Greenock born master of the fretboard and the airwaves.", img: "dj_chris.jpg", clicks: 0 },
+        { id: "lewis", name: "LEWIS", role: "Grunge King", bio: "90s Seattle sound by way of Paisley. The grunge specialist.", img: "dj_lewis.jpg", clicks: 0 },
+        { id: "sarah", name: "SARAH", role: "Metal Maiden", bio: "Power metal authority. Bringing the thunder to Central Scotland.", img: "dj_sarah.jpg", clicks: 0 }
     ];
 
-    const powerStatements = [
-        "SCOTLAND'S ROCK AUTHORITY", "CENTRAL SCOTLAND'S LOUDEST SIGNAL", "24/7 INDUSTRIAL ROCK INTELLIGENCE", "UNFILTERED SCOTTISH ROCK", "THE AUTHORITY IN INDEPENDENT SOUND"
-    ];
+    const powerStatements = ["SCOTLAND'S ROCK AUTHORITY", "CENTRAL SCOTLAND'S LOUDEST SIGNAL", "24/7 INDUSTRIAL ROCK INTELLIGENCE", "UNFILTERED SCOTTISH ROCK"];
 
     function showTab(name) {
         document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display = 'none'; });
@@ -156,41 +155,38 @@
         const activeView = document.getElementById('v-' + name);
         activeView.style.display = 'flex';
         activeView.classList.add('active');
-        activeView.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('news${Math.floor(Math.random()*7)+1}.jpg')`;
+        activeView.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('news${Math.floor(Math.random()*7)+1}.jpg')`;
         event.currentTarget.classList.add('active');
         if(name === 'wire') fetchRSS();
         if(name === 'crew') renderCrew();
     }
 
-    // HYBRID NEWS ENGINE
+    // HIGH-BUFFER RSS ENGINE (NO LOCAL FALLBACKS FOR ARTWORK)
     async function fetchRSS() {
         const feedContainer = document.getElementById('rss-feed');
-        feedContainer.innerHTML = "<p style='grid-column:1/-1; text-align:center;'>SCANNING FREQUENCIES...</p>";
+        feedContainer.innerHTML = "<p style='grid-column:1/-1; text-align:center;'>CONNECTING TO WIRE...</p>";
         try {
-            const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.theskinny.co.uk/rss/music');
+            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.theskinny.co.uk/rss/music&t=${Date.now()}`);
             const data = await res.json();
-            feedContainer.innerHTML = data.items.slice(0,9).map((item, idx) => {
-                const thumb = (item.enclosure && item.enclosure.link) ? item.enclosure.link : `news${(idx % 7) + 1}.jpg`;
+            feedContainer.innerHTML = data.items.map(item => {
+                const img = item.enclosure.link || (item.description.match(/<img[^>]+src="([^">]+)"/) ? item.description.match(/<img[^>]+src="([^">]+)"/)[1] : null);
                 return `
-                    <div style="background:rgba(0,0,0,0.85); border:1px solid #333; cursor:pointer;" onclick="window.open('${item.link}')">
-                        <img src="${thumb}" style="width:100%; height:180px; object-fit:cover;" onerror="this.src='news${(idx % 7) + 1}.jpg'">
-                        <div style="padding:15px;"><h3 style="font-family:'Oswald'; font-size:1rem;">${item.title}</h3></div>
+                    <div class="news-item" onclick="window.open('${item.link}')">
+                        ${img ? `<img src="${img}" class="news-art">` : `<div class="news-no-img">SIGNAL LOST</div>`}
+                        <div style="padding:20px;">
+                            <h3 style="font-family:'Oswald'; font-size:1.1rem; line-height:1.2;">${item.title}</h3>
+                            <div style="color:var(--authority-orange); font-family:'Bebas Neue'; margin-top:10px;">SOURCE: THE SKINNY WIRE</div>
+                        </div>
                     </div>`;
             }).join('');
-        } catch(e) {
-            feedContainer.innerHTML = Array.from({length:6}, (_, i) => `
-                <div style="background:rgba(0,0,0,0.85); border:1px solid #333;">
-                    <img src="news${(i%7)+1}.jpg" style="width:100%; height:180px; object-fit:cover;">
-                    <div style="padding:15px;"><h3 style="font-family:'Oswald';">SIGNAL RECOVERY: Authority Rock Update #${i+100}</h3></div>
-                </div>`).join('');
-        }
+        } catch(e) { feedContainer.innerHTML = "<p style='text-align:center;'>SIGNAL INTERFERENCE: RELOADING...</p>"; }
     }
 
     function renderCrew() {
         const container = document.getElementById('crew-rolodex');
         container.innerHTML = crewData.map(dj => `
             <div class="crew-card" id="card-${dj.id}" onclick="handleCrewClick('${dj.id}')">
-                <img src="${dj.img}" class="crew-img" onerror="this.src='news1.jpg'">
+                <img src="${dj.img}" class="crew-img">
                 <div class="crew-label">${dj.name}</div>
             </div>`).join('');
     }
@@ -202,7 +198,7 @@
         if(dj.clicks === 1) {
             document.querySelectorAll('.crew-card').forEach(c => c.classList.remove('active-color'));
             card.classList.add('active-color');
-            setTimeout(() => { if(dj.clicks === 1) dj.clicks = 0; }, 2000);
+            setTimeout(() => { if(dj.clicks === 1) dj.clicks = 0; }, 3000);
         } else if(dj.clicks === 2) {
             document.getElementById('mag-name').innerText = dj.name;
             document.getElementById('mag-text').innerText = dj.bio;
@@ -213,40 +209,26 @@
         }
     }
 
-    function calc() {
-        const val = document.getElementById('calc-package').value;
-        document.getElementById('total-price').innerText = `£${val}.00`;
-    }
-
     function updateLiveUI() {
         const now = new Date();
         const hrs = now.getHours();
         document.getElementById('live-clock').innerText = hrs.toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
-        
         let tag = "ROCKIN' SCOTLAND";
         if(hrs >= 6 && hrs < 12) tag = "MORNING ROCKIN'";
         else if(hrs >= 12 && hrs < 18) tag = "AFTERNOON ROCKIN'";
         else if(hrs >= 18 && hrs < 24) tag = "EVENING ROCKIN'";
         else tag = "LATE NIGHT ROCKIN'";
         document.getElementById('clock-tag').innerText = tag;
-    }
-
-    setInterval(() => {
-        updateLiveUI();
         document.getElementById('power-statement').innerText = powerStatements[Math.floor(Math.random() * powerStatements.length)];
-    }, 5000);
+    }
 
     function toggleAudio() {
         if(stream.paused) { stream.play(); document.getElementById('play-btn').innerText = "DISENGAGE SIGNAL"; }
         else { stream.pause(); document.getElementById('play-btn').innerText = "ENGAGE SIGNAL"; }
     }
 
-    window.onload = () => {
-        updateLiveUI();
-        document.getElementById('v-live').style.backgroundImage = "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('news1.jpg')";
-        const launches = ["BIFFY CLYRO - NEW SINGLE OUT", "THE SNUTS - GLASGOW TICKETS LIVE", "MOGWAI - TOUR STARTING", "FRANZ FERDINAND - FEB 12 RELEASE"];
-        document.getElementById('album-ticker').innerText = launches.join(" • ") + " • " + launches.join(" • ");
-    };
+    setInterval(updateLiveUI, 5000);
+    window.onload = updateLiveUI;
 </script>
 </body>
 </html>
