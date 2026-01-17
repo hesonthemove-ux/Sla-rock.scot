@@ -9,74 +9,60 @@
     <style>
         :root { 
             --authority-orange: #ff5500; 
-            --ultra-ghost: rgba(0, 0, 0, 0.15); /* Highest level of transparency */
+            --phantom-glass: rgba(0, 0, 0, 0.08); /* Ultimate Transparency */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* HEADER - MOVED DOWN 7 ROWS TOTAL */
+        /* HEADER CLEARANCE (7 ROWS) */
         header { position: sticky; top: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; }
-        .hdr-logo { 
-            width: 95%; max-width: 550px; height: auto; 
-            margin-bottom: -150px; z-index: 1020; position: relative;
-            filter: drop-shadow(0 25px 25px rgba(0,0,0,1));
-        }
-        .nav-strip { 
-            width: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(25px);
-            border-bottom: 5px solid var(--authority-orange);
-            display: flex; height: 220px; padding-top: 155px; /* Deep clearance for 7 rows */
-            z-index: 1010; position: relative;
-        }
-        .nav-btn { flex: 1; background: transparent; border: none; color: #555; font-family: 'Bebas Neue'; font-size: 1.4rem; cursor: pointer; transition: 0.3s; }
-        .nav-btn.active { color: var(--authority-orange); background: rgba(255,85,0,0.2); }
+        .hdr-logo { width: 95%; max-width: 550px; height: auto; margin-bottom: -150px; z-index: 1020; position: relative; filter: drop-shadow(0 25px 25px #000); }
+        .nav-strip { width: 100%; background: rgba(0,0,0,0.98); border-bottom: 5px solid var(--authority-orange); display: flex; height: 220px; padding-top: 155px; z-index: 1010; position: relative; }
+        .nav-btn { flex: 1; background: transparent; border: none; color: #444; font-family: 'Bebas Neue'; font-size: 1.4rem; cursor: pointer; transition: 0.3s; }
+        .nav-btn.active { color: var(--authority-orange); background: rgba(255,85,0,0.15); }
 
-        /* UNIFORM HEIGHT & ALIGNMENT */
-        .view { 
-            display: none; min-height: 100vh; width: 100%; 
-            padding-top: 5vh; /* Uniform start point for all content */
-            background-size: cover; background-position: center; background-attachment: fixed; 
-        }
+        /* UNIFIED GRID SYSTEM (All content matches DJ Card dimensions) */
+        .view { display: none; min-height: 100vh; width: 100%; padding-top: 5vh; background-size: cover; background-position: center; background-attachment: fixed; }
         .view.active { display: flex; flex-direction: column; align-items: center; }
 
-        /* GHOST GLASS PANELS */
-        .glass-panel { 
-            background: var(--ultra-ghost); backdrop-filter: blur(60px); -webkit-backdrop-filter: blur(60px);
-            padding: 50px; width: 95%; max-width: 750px; border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
-            margin-top: 20px; /* Aligns content baseline */
+        .uniform-card { 
+            width: 320px; height: 480px; /* Locked to DJ card size */
+            background: var(--phantom-glass); backdrop-filter: blur(80px); -webkit-backdrop-filter: blur(80px);
+            border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 30px; text-align: center;
+            position: relative; box-shadow: 0 40px 100px rgba(0,0,0,0.8);
         }
 
-        /* TICKER TAPE */
+        /* TICKER */
         .ticker-wrap { width: 100%; background: #fff; color: #000; overflow: hidden; white-space: nowrap; padding: 15px 0; font-family: 'Oswald'; font-weight: 900; border-bottom: 4px solid var(--authority-orange); }
         .ticker-move { display: inline-block; animation: ticker 45s linear infinite; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* CREW ROLODEX */
-        .crew-container { display: flex; gap: 25px; overflow-x: auto; width: 100%; padding: 20px 40px; scroll-snap-type: x mandatory; scrollbar-width: none; }
-        .crew-card { min-width: 320px; height: 500px; background: #000; border: 1px solid #222; scroll-snap-align: center; position: relative; cursor: pointer; filter: grayscale(100%); transition: 0.6s cubic-bezier(0.1, 1, 0.1, 1); }
-        .crew-card.active-color { filter: grayscale(0%); border: 4px solid var(--authority-orange); transform: scale(1.08); z-index: 5; }
+        .crew-container { display: flex; gap: 20px; overflow-x: auto; width: 100%; padding: 20px 40px; scrollbar-width: none; }
+        .crew-card { min-width: 320px; height: 480px; background: #000; border: 1px solid #222; position: relative; cursor: pointer; filter: grayscale(100%); transition: 0.5s; }
+        .crew-card.active-color { filter: grayscale(0%); border: 3px solid var(--authority-orange); transform: scale(1.05); z-index: 5; }
         .crew-img { width: 100%; height: 100%; object-fit: cover; }
-        .crew-label { position: absolute; bottom: 0; width: 100%; background: linear-gradient(0deg, #000 20%, transparent 100%); padding: 30px; font-family: 'Bebas Neue'; font-size: 2.5rem; text-align: center; }
+        .crew-label { position: absolute; bottom: 0; width: 100%; background: linear-gradient(0deg, #000 20%, transparent 100%); padding: 30px; font-family: 'Bebas Neue'; font-size: 2.2rem; }
 
-        /* INPUTS */
-        .std-input { width: 100%; padding: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Oswald'; margin-bottom: 20px; font-size: 1.1rem; }
-        .btn-authority { width: 100%; padding: 25px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 2.2rem; cursor: pointer; transition: 0.2s; }
-        
-        /* MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.99); z-index: 5000; display: none; overflow-y: auto; }
+        /* INPUTS & BUTTONS */
+        .std-input { width: 100%; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-family: 'Oswald'; margin-bottom: 15px; }
+        .btn-authority { width: 100%; padding: 20px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.8rem; cursor: pointer; }
+
+        /* MODAL POP-OUTS */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.99); z-index: 5000; display: none; padding: 20px; }
         .modal-overlay.open { display: flex; align-items: center; justify-content: center; }
-        .mag-layout { max-width: 850px; border: 15px solid #fff; padding: 60px; background: #000; position: relative; width: 95%; }
+        .mag-layout { max-width: 800px; border: 12px solid #fff; padding: 50px; background: #000; position: relative; width: 100%; }
     </style>
 </head>
 <body>
 
     <div id="mag-modal" class="modal-overlay" onclick="this.classList.remove('open')">
         <div class="mag-layout" onclick="event.stopPropagation()">
-            <div style="font-family:'Bebas Neue'; color:var(--authority-orange); font-size:1.5rem; letter-spacing:4px;">OFFICIAL AUTHORITY DOSSIER</div>
-            <h2 id="mag-name" style="font-family:'Oswald'; font-size:6rem; line-height:0.8; margin:30px 0; text-transform:uppercase;"></h2>
-            <div id="mag-text" style="font-size:1.3rem; line-height:1.8; color:#ccc; border-top:1px solid #444; padding-top:30px; font-weight:300;"></div>
-            <div id="mag-stats" style="margin-top:40px; display:grid; grid-template-columns: 1fr 1fr; gap:15px; font-family:'Oswald'; font-size:1.1rem; color:var(--authority-orange); text-transform:uppercase;"></div>
+            <div id="mag-tag" style="font-family:'Bebas Neue'; color:var(--authority-orange); font-size:1.5rem; letter-spacing:4px;">OFFICIAL AUTHORITY DOSSIER</div>
+            <h2 id="mag-name" style="font-family:'Oswald'; font-size:5rem; line-height:0.85; margin:20px 0; text-transform:uppercase;"></h2>
+            <div id="mag-content" style="border-top:1px solid #333; padding-top:20px;"></div>
         </div>
     </div>
 
@@ -93,17 +79,17 @@
 
     <main>
         <section id="v-live" class="view active">
-            <div class="glass-panel" style="text-align:center;">
-                <div id="live-clock" style="font-family:'Bebas Neue'; font-size:8rem; line-height:0.85;">00:00</div>
-                <div id="clock-tag" style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:8px; margin-bottom:15px; font-weight:900;">ROCKIN' SCOTLAND</div>
-                <div id="power-statement" style="font-family:'Oswald'; font-size:1.1rem; color:#666; height:50px; margin-bottom:30px; text-transform:uppercase;">CENTRAL SCOTLAND AUTHORITY</div>
+            <div class="uniform-card">
+                <div id="live-clock" style="font-family:'Bebas Neue'; font-size:5.5rem; line-height:0.9;">00:00</div>
+                <div id="clock-tag" style="font-family:'Oswald'; color:var(--authority-orange); letter-spacing:5px; margin-bottom:10px;">ROCKIN' SCOTLAND</div>
+                <div id="power-statement" style="font-family:'Oswald'; font-size:0.9rem; color:#666; height:60px; margin-bottom:30px; text-transform:uppercase;">CENTRAL SCOTLAND AUTHORITY</div>
                 <button class="btn-authority" onclick="toggleAudio()" id="play-btn">ENGAGE SIGNAL</button>
             </div>
         </section>
 
         <section id="v-wire" class="view">
-            <div class="ticker-wrap"><div class="ticker-move" id="album-ticker">LOADING ROCK INTEL...</div></div>
-            <div id="rss-feed" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:30px; width:100%; max-width:1300px; padding:40px;"></div>
+            <div class="ticker-wrap"><div class="ticker-move" id="album-ticker">LOADING SCOTTISH ROCK WIRE...</div></div>
+            <div id="rss-feed" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:25px; width:100%; max-width:1300px; padding:40px;"></div>
         </section>
 
         <section id="v-crew" class="view">
@@ -111,23 +97,18 @@
         </section>
 
         <section id="v-rates" class="view">
-            <div class="glass-panel">
-                <h2 style="font-family:'Bebas Neue'; font-size:4.5rem; color:var(--authority-orange); line-height:1;">CAMPAIGN RATES</h2>
-                <div style="margin:40px 0; font-family:'Oswald'; font-size:1.8rem; letter-spacing:1px;">
-                    <p style="margin-bottom:20px;">REGIONAL: <span style="color:var(--authority-orange);">£299 / 28D</span></p>
-                    <p style="margin-bottom:20px;">MULTI-REGIONAL: <span style="color:var(--authority-orange);">£449 / 28D</span></p>
-                    <p>CREATIVE PROD: <span style="color:var(--authority-orange);">£195</span></p>
-                </div>
-                <button class="btn-authority">BOOK TRANSMISSION</button>
+            <div class="uniform-card">
+                <h2 style="font-family:'Bebas Neue'; font-size:3.5rem; color:var(--authority-orange);">RATES</h2>
+                <p style="font-family:'Oswald'; margin-bottom:20px;">FROM £299 / 28D</p>
+                <button class="btn-authority" onclick="openRates()">VIEW PACKS</button>
             </div>
         </section>
 
         <section id="v-submit" class="view">
-            <div class="glass-panel">
-                <h2 style="font-family:'Bebas Neue'; font-size:4.5rem; color:var(--authority-orange);">TRANSMIT MUSIC</h2>
-                <input type="text" placeholder="BAND NAME" class="std-input">
-                <textarea placeholder="PITCH THE SIGNAL..." class="std-input" style="height:180px;"></textarea>
-                <button class="btn-authority">SEND TO AUTHORITY</button>
+            <div class="uniform-card">
+                <h2 style="font-family:'Bebas Neue'; font-size:3.5rem; color:var(--authority-orange);">TRANSMIT</h2>
+                <p style="font-family:'Oswald'; margin-bottom:20px;">SEND YOUR TRACK</p>
+                <button class="btn-authority" onclick="openSubmit()">OPEN PORTAL</button>
             </div>
         </section>
     </main>
@@ -135,16 +116,24 @@
 <script>
     const stream = new Audio("https://uksoutha.streaming.broadcast.radio/stream/16641/caledonia-tx-ltd");
     
-    // VERIFIED CREW ROSTER
+    // MULTI-SOURCE FEED LIST
+    const feeds = [
+        "https://www.theskinny.co.uk/rss/music",
+        "https://podcart.co/feed/",
+        "https://discoverymusicscotland.com/feed/",
+        "https://jockrock.org/feed/",
+        "https://lovemusiclovelife.com/feed/"
+    ];
+
     const crewData = [
-        { id: "andy", name: "ANDY", role: "Rock Rebel", bio: "Hailing from East Kilbride, Andy grew up blasting Biffy Clyro anthems. He started pirate radio in his garage before landing at Rock.Scot.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands", venue: "King Tut's", fact: "Lost a shoe crowd-surfing in Hamilton.", img: "dj_andy.jpg", clicks: 0 },
-        { id: "alex", name: "ALEX", role: "Vinyl Viking", bio: "Johnstone's spirit. Alex discovered rock via Nazareth and built his own decks to spin rock classics across the airwaves.", band: "Nazareth", gig: "Texas @ SEC Armadillo", venue: "Barrowland Ballroom", fact: "Has a signed Deacon Blue vinyl.", img: "dj_alex.jpg", clicks: 0 },
-        { id: "stevie", name: "STEVIE", role: "Headbanger", bio: "Port Glasgow shipbuilding heart. Stevie was raised on tales of Clyde rockers and keeps Inverclyde headbanging.", band: "Big Country", gig: "Mogwai @ Òran Mór", venue: "Beacon Arts Centre", fact: "High-fived Angus Young (allegedly).", img: "dj_stevie.jpg", clicks: 0 },
-        { id: "mhairi", name: "MHAIRI", role: "Hard Rock Queen", bio: "Hamilton born and bred. Instantly obsessed with distortion pedals and killer playlists for South Lanarkshire.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tut's", venue: "Grand Hall Kilmarnock", fact: "Moonlights as a tattoo artist.", img: "dj_mhairi.jpg", clicks: 0 },
-        { id: "jude", name: "JUDE", role: "Indie Icon", bio: "North Ayrshire stomp. Jude climbed the ranks from local open mics to championing emerging Scottish acts.", band: "Travis", gig: "Idlewild @ Barrowlands", venue: "Harbour Arts Irvine", fact: "Hitchhiked to a Franz Ferdinand gig.", img: "dj_jude.jpg", clicks: 0 },
-        { id: "chris", name: "CHRIS", role: "Guitar Guru", bio: "Greenock bred on Primal Scream. Chris joined Rock.Scot to blast the Firth of Clyde with pure rock energy.", band: "Primal Scream", gig: "Simple Minds @ OVO Hydro", venue: "Cathouse Rock Club", fact: "Owns every Big Country album.", img: "dj_chris.jpg", clicks: 0 },
-        { id: "cal", name: "CAL", role: "Classic Rocker", bio: "Kilmarnock heartlands specialist. Delivers timeless rock to fans across Irvine and North Ayrshire.", band: "Biffy Clyro", gig: "The Fratellis @ Grand Hall", venue: "Palace Theatre Killie", fact: "Won an air guitar contest.", img: "dj_cal.jpg", clicks: 0 },
-        { id: "blue", name: "BLUE", role: "Bluesy Maverick", bio: "Gourock seaside charm. Blue blends bluesy riffs with rock energy for listeners from Gourock to Wemyss Bay.", band: "Nazareth", gig: "Texas @ Paisley Arts", venue: "Coats Paisley", fact: "Mistaken for a roadie at Mogwai.", img: "dj_blue.jpg", clicks: 0 }
+        { id: "andy", name: "ANDY", role: "Rock Rebel", bio: "Hailing from East Kilbride, Andy grew up blasting Biffy Clyro anthems...", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands", venue: "King Tut's", fact: "Lost a shoe crowd-surfing.", img: "dj_andy.jpg", clicks: 0 },
+        { id: "alex", name: "ALEX", role: "Vinyl Viking", bio: "Johnstone's spirit. Alex discovered rock via Nazareth...", band: "Nazareth", gig: "Texas @ SEC Armadillo", venue: "Barrowland", fact: "Has a signed Deacon Blue vinyl.", img: "dj_alex.jpg", clicks: 0 },
+        { id: "stevie", name: "STEVIE", role: "Headbanger", bio: "Port Glasgow shipbuilding heart. Stevie was raised on Clyde rockers...", band: "Big Country", gig: "Mogwai @ Òran Mór", venue: "Beacon Arts", fact: "High-fived Angus Young.", img: "dj_stevie.jpg", clicks: 0 },
+        { id: "mhairi", name: "MHAIRI", role: "Hard Rock Queen", bio: "Hamilton born and bred. Instantly obsessed with distortion pedals...", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tut's", venue: "Grand Hall", fact: "Tattoo artist.", img: "dj_mhairi.jpg", clicks: 0 },
+        { id: "jude", name: "JUDE", role: "Indie Icon", bio: "North Ayrshire stomp. Jude climbed the ranks from local open mics...", band: "Travis", gig: "Idlewild @ Barrowlands", venue: "Harbour Arts", fact: "Hitchhiked to Franz Ferdinand.", img: "dj_jude.jpg", clicks: 0 },
+        { id: "chris", name: "CHRIS", role: "Guitar Guru", bio: "Greenock bred on Primal Scream. Chris joined Rock.Scot for pure energy.", band: "Primal Scream", gig: "Simple Minds @ OVO Hydro", venue: "Cathouse", fact: "Owns all Big Country albums.", img: "dj_chris.jpg", clicks: 0 },
+        { id: "cal", name: "CAL", role: "Classic Rocker", bio: "Kilmarnock heartlands specialist. Delivers timeless rock to fans.", band: "Biffy Clyro", gig: "The Fratellis @ Grand Hall", venue: "Palace Theatre", fact: "Air guitar champion.", img: "dj_cal.jpg", clicks: 0 },
+        { id: "blue", name: "BLUE", role: "Bluesy Maverick", bio: "Gourock seaside charm. Blue blends bluesy riffs with rock energy.", band: "Nazareth", gig: "Texas @ Paisley Arts", venue: "Coats Paisley", fact: "Mistaken for a roadie.", img: "dj_blue.jpg", clicks: 0 }
     ];
 
     const powerStatements = ["SCOTLAND'S ROCK AUTHORITY", "CENTRAL SCOTLAND'S LOUDEST SIGNAL", "24/7 INDUSTRIAL ROCK INTELLIGENCE", "UNFILTERED SCOTTISH ROCK"];
@@ -155,26 +144,43 @@
         const activeView = document.getElementById('v-' + name);
         activeView.style.display = 'flex';
         activeView.classList.add('active');
-        activeView.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('news${Math.floor(Math.random()*7)+1}.jpg')`;
+        activeView.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('news${Math.floor(Math.random()*7)+1}.jpg')`;
         event.currentTarget.classList.add('active');
-        if(name === 'wire') fetchRSS();
+        if(name === 'wire') fetchMultiRSS();
         if(name === 'crew') renderCrew();
     }
 
-    async function fetchRSS() {
+    // MULTI-SOURCE RSS ENGINE WITH FALLBACKS
+    async function fetchMultiRSS() {
         const container = document.getElementById('rss-feed');
-        container.innerHTML = "<p style='grid-column:1/-1; text-align:center; font-family:Oswald;'>SYNCING WIRE SIGNAL...</p>";
-        try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.theskinny.co.uk/rss/music&t=${Date.now()}`);
-            const data = await res.json();
-            container.innerHTML = data.items.map(item => {
-                const img = item.enclosure.link || (item.description.match(/src="([^"]+)"/) ? item.description.match(/src="([^"]+)"/)[1] : null);
-                return `<div style="background:rgba(0,0,0,0.9); border:1px solid #333; cursor:pointer;" onclick="window.open('${item.link}')">
-                    ${img ? `<img src="${img}" style="width:100%; height:200px; object-fit:cover;">` : `<div style="height:200px; background:#111; display:flex; align-items:center; justify-content:center;">SIGNAL RECOVERED</div>`}
-                    <div style="padding:20px;"><h3 style="font-family:'Oswald'; font-size:1.1rem;">${item.title}</h3><span style="color:var(--authority-orange); font-family:'Bebas Neue';">SOURCE: THE SKINNY</span></div>
-                </div>`;
-            }).join('');
-        } catch(e) { container.innerHTML = "<p style='grid-column:1/-1; text-align:center;'>RETRYING CONNECTION...</p>"; }
+        container.innerHTML = "<p style='grid-column:1/-1; text-align:center;'>SCANNING SCOTTISH FREQUENCIES...</p>";
+        
+        let allItems = [];
+        for (const url of feeds) {
+            try {
+                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&t=${Date.now()}`);
+                const data = await res.json();
+                if(data.items) allItems = [...allItems, ...data.items];
+            } catch(e) { console.warn("Source Fail:", url); }
+        }
+
+        if(allItems.length === 0) {
+            container.innerHTML = Array.from({length:6}, (_, i) => `
+                <div style="background:rgba(0,0,0,0.9); border:1px solid #333; height:300px; padding:20px; display:flex; align-items:center; justify-content:center;">
+                    <h3 style="font-family:Oswald;">OFFLINE: RESCUING ROCK DATA...</h3>
+                </div>`).join('');
+            return;
+        }
+
+        // Shuffle and Render
+        allItems.sort(() => Math.random() - 0.5);
+        container.innerHTML = allItems.slice(0,15).map(item => {
+            const img = item.enclosure.link || (item.description.match(/src="([^"]+)"/) ? item.description.match(/src="([^"]+)"/)[1] : null);
+            return `<div style="background:rgba(0,0,0,0.9); border:1px solid #333; cursor:pointer;" onclick="window.open('${item.link}')">
+                ${img ? `<img src="${img}" style="width:100%; height:200px; object-fit:cover;">` : `<div style="height:200px; background:#111; display:flex; align-items:center; justify-content:center;">SIGNAL RECOVERED</div>`}
+                <div style="padding:20px;"><h3 style="font-family:'Oswald'; font-size:1.1rem; line-height:1.2;">${item.title}</h3><span style="color:var(--authority-orange); font-family:'Bebas Neue';">SCOT WIRE</span></div>
+            </div>`;
+        }).join('');
     }
 
     function renderCrew() {
@@ -195,13 +201,39 @@
             card.classList.add('active-color');
             setTimeout(() => { if(dj.clicks === 1) dj.clicks = 0; }, 3000);
         } else if(dj.clicks === 2) {
+            document.getElementById('mag-tag').innerText = "OFFICIAL AUTHORITY DOSSIER";
             document.getElementById('mag-name').innerText = dj.name;
-            document.getElementById('mag-text').innerText = dj.bio;
-            document.getElementById('mag-stats').innerHTML = `<div>BAND: ${dj.band}</div><div>GIG: ${dj.gig}</div><div>VENUE: ${dj.venue}</div><div>FACT: ${dj.fact}</div>`;
+            document.getElementById('mag-content').innerHTML = `<p style="font-size:1.3rem; line-height:1.7; color:#eee;">${dj.bio}</p>
+                <div style="margin-top:30px; display:grid; grid-template-columns:1fr 1fr; gap:15px; font-family:Oswald; color:var(--authority-orange); text-transform:uppercase;">
+                <div>BAND: ${dj.band}</div><div>GIG: ${dj.gig}</div><div>VENUE: ${dj.venue}</div><div>FACT: ${dj.fact}</div></div>`;
             document.getElementById('mag-modal').classList.add('open');
             dj.clicks = 0;
             card.classList.remove('active-color');
         }
+    }
+
+    function openRates() {
+        document.getElementById('mag-tag').innerText = "COMMERCIAL RATES";
+        document.getElementById('mag-name').innerText = "ADVERTISING";
+        document.getElementById('mag-content').innerHTML = `
+            <div style="font-family:Oswald; font-size:1.5rem; line-height:2;">
+                <p>REGIONAL TRANSMISSION: <span style="color:var(--authority-orange);">£299 / 28D</span></p>
+                <p>MULTI-REGIONAL: <span style="color:var(--authority-orange);">£449 / 28D</span></p>
+                <p>CREATIVE PRODUCTION: <span style="color:var(--authority-orange);">£195</span></p>
+            </div>
+            <button class="btn-authority" style="margin-top:30px;">BOOK NOW</button>`;
+        document.getElementById('mag-modal').classList.add('open');
+    }
+
+    function openSubmit() {
+        document.getElementById('mag-tag').innerText = "TALENT PORTAL";
+        document.getElementById('mag-name').innerText = "TRANSMIT";
+        document.getElementById('mag-content').innerHTML = `
+            <input type="text" placeholder="BAND NAME" class="std-input">
+            <input type="text" placeholder="TRACK LINK" class="std-input">
+            <textarea placeholder="THE PITCH..." class="std-input" style="height:120px;"></textarea>
+            <button class="btn-authority">SEND SIGNAL</button>`;
+        document.getElementById('mag-modal').classList.add('open');
     }
 
     function updateLiveUI() {
@@ -225,9 +257,8 @@
     setInterval(updateLiveUI, 5000);
     window.onload = () => {
         updateLiveUI();
-        const launches = ["BIFFY CLYRO - NEW SINGLE OUT MON", "THE SNUTS - GLASGOW TICKETS LIVE", "MOGWAI - TOUR STARTING", "FRANZ FERDINAND - NEW ALBUM FEB 12", "GUN - BARROWLANDS FEB 20", "TRAVIS - HIGHLAND DATES"];
+        const launches = ["BIFFY CLYRO - NEW SINGLE", "THE SNUTS - GLASGOW LIVE", "MOGWAI - TOUR STARTING", "FRANZ FERDINAND - NEW ALBUM", "GUN - BARROWLANDS", "TRAVIS - HIGHLAND DATES"];
         document.getElementById('album-ticker').innerText = launches.join(" • ") + " • " + launches.join(" • ");
-        document.getElementById('v-live').style.backgroundImage = "linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('news1.jpg')";
     };
 </script>
 </body>
