@@ -8,22 +8,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
+        /* --- VISUAL CORE (DO NOT EDIT UNLESS DESIGNING) --- */
         :root { 
             --authority-orange: #ff5500; 
-            --phantom-glass: rgba(0, 0, 0, 0.6); 
-            --glass-border: rgba(255, 255, 255, 0.3);
+            --phantom-glass: rgba(0, 0, 0, 0.7); 
+            --glass-border: rgba(255, 255, 255, 0.2);
             --strong-shadow: 4px 4px 20px rgba(0,0,0,1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh; width: 100vw; transition: background-image 0.5s ease; background-size: cover; background-position: center; }
 
-        /* HEADER */
+        /* LAYOUT */
         header { position: sticky; top: 0; z-index: 9999; background: #000; width: 100%; display: flex; flex-direction: column; align-items: center; }
         .hdr-logo { width: 100%; max-width: 600px; height: auto; padding: 10px 0; display: block; }
         .nav-strip { width: 100%; background: #000; border-bottom: 4px solid var(--authority-orange); display: flex; height: 55px; }
-        .nav-btn { flex: 1; background: #000; border: none; color: #777; font-family: 'Bebas Neue'; font-size: 1.1rem; cursor: pointer; }
+        .nav-btn { flex: 1; background: #000; border: none; color: #777; font-family: 'Bebas Neue'; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
         .nav-btn.active { color: var(--authority-orange); background: #111; }
+        .nav-btn:hover { color: #fff; }
 
         /* TICKER */
         .ticker-wrap { width: 100%; overflow: hidden; background: #111; height: 30px; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; }
@@ -41,7 +43,7 @@
             padding: 25px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.9); text-shadow: 2px 2px 5px #000; margin-bottom: 20px;
         }
 
-        /* CREW 3D SCROLL (DESKTOP) & SNAP (MOBILE) */
+        /* CREW ENGINE */
         .crew-track { display: flex; width: 100%; height: 400px; align-items: center; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 50%; }
         .crew-card { 
             min-width: 280px; height: 380px; margin: 0 20px; background: #000; border: 1px solid #444; 
@@ -51,8 +53,9 @@
         .crew-card:hover img, .crew-card.active img { filter: grayscale(0); }
         .crew-info { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.8); padding: 10px; text-align: center; pointer-events: none; }
 
-        /* FORMS */
-        .btn-auth { width: 100%; padding: 15px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.4rem; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        /* UI ELEMENTS */
+        .btn-auth { width: 100%; padding: 15px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.4rem; cursor: pointer; text-transform: uppercase; margin-top: 10px; transition: 0.2s; }
+        .btn-auth:hover { background: #fff; color: #000; }
         .btn-pdf { background: #333; margin-top: 10px; font-size: 1rem; padding: 10px; border: 1px solid #555; }
         .std-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
         
@@ -75,11 +78,11 @@
     <header>
         <img src="top_banner.png" class="hdr-logo">
         <nav class="nav-strip">
-            <button class="nav-btn active" onclick="switchTab('live')">LIVE</button>
-            <button class="nav-btn" onclick="switchTab('wire')">WIRE</button>
-            <button class="nav-btn" onclick="switchTab('crew')">CREW</button>
-            <button class="nav-btn" onclick="switchTab('rates')">RATES</button>
-            <button class="nav-btn" onclick="switchTab('submit')">SUBMIT</button>
+            <button class="nav-btn active" onclick="app.switchTab('live')">LIVE</button>
+            <button class="nav-btn" onclick="app.switchTab('wire')">WIRE</button>
+            <button class="nav-btn" onclick="app.switchTab('crew')">CREW</button>
+            <button class="nav-btn" onclick="app.switchTab('rates')">RATES</button>
+            <button class="nav-btn" onclick="app.switchTab('submit')">SUBMIT</button>
         </nav>
         <div class="ticker-wrap"><div class="ticker-move" id="ticker-out"></div></div>
     </header>
@@ -89,7 +92,7 @@
             <div class="desktop-split">
                 <div class="uniform-card" style="max-width:100%;">
                     <div id="clock" style="font-family:'Bebas Neue'; font-size:6rem; line-height:1;">00:00:00</div>
-                    <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:200px; border:none; margin-top:20px;"></iframe>
+                    <div id="player-container" style="margin-top:20px;"></div>
                 </div>
                 <div class="uniform-card" style="max-width:100%; text-align:left;">
                     <h3 style="font-family:'Bebas Neue'; color:var(--authority-orange);">SIGNAL STATUS</h3>
@@ -114,7 +117,7 @@
                 </div>
                 <div class="uniform-card" style="max-width:100%;">
                     <h3 style="font-family:'Bebas Neue'; font-size:2rem;">ADVERTISING PORTAL</h3>
-                    <button class="btn-auth" onclick="openAdModal()">Launch Calculator</button>
+                    <button class="btn-auth" onclick="app.openAdModal()">Launch Calculator</button>
                 </div>
             </div>
         </section>
@@ -123,12 +126,12 @@
             <div class="uniform-card">
                 <h2 style="font-family:'Bebas Neue'; font-size:3rem;">GET PLAYED</h2>
                 <p style="font-family:'Oswald'; margin-bottom:20px;">24/7 OFCOM Compliance Required. Max 25MB.</p>
-                <button class="btn-auth" onclick="openSubmitModal()">Start Upload</button>
+                <button class="btn-auth" onclick="app.openSubmitModal()">Start Upload</button>
             </div>
         </section>
     </main>
 
-    <div id="ad-modal" class="modal-overlay" onclick="closeModals()">
+    <div id="ad-modal" class="modal-overlay" onclick="app.closeModals()">
         <div class="mag-layout" onclick="event.stopPropagation()">
             <h2 style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);">ADVERTISING CALCULATOR</h2>
             
@@ -136,37 +139,34 @@
             <input type="text" id="biz-name" class="std-input">
             
             <label style="font-family:'Oswald'; color:#aaa;">START DATE</label>
-            <input type="date" id="d-start" class="std-input" onchange="calcTotal()">
+            <input type="date" id="d-start" class="std-input" onchange="app.calcTotal()">
             
             <label style="font-family:'Oswald'; color:#aaa;">END DATE</label>
-            <input type="date" id="d-end" class="std-input" onchange="calcTotal()">
+            <input type="date" id="d-end" class="std-input" onchange="app.calcTotal()">
             
             <label style="font-family:'Oswald'; color:#aaa;">PACKAGE</label>
-            <select id="pkg-opt" class="std-input" onchange="calcTotal()">
-                <option value="299">Single Region (£299)</option>
-                <option value="449">Multi-Region (£449)</option>
-                <option value="2500">Top-of-Hour Exclusive (£2,500/mo)</option>
-            </select>
+            <select id="pkg-opt" class="std-input" onchange="app.calcTotal()">
+                </select>
 
             <div style="margin:10px 0; background:#111; padding:10px; border:1px solid #333;">
-                <input type="checkbox" id="prod-add" onchange="calcTotal()"> 
-                <span style="font-family:'Oswald'; margin-left:10px;">ADD PRODUCTION (+£195)</span>
+                <input type="checkbox" id="prod-add" onchange="app.calcTotal()"> 
+                <span style="font-family:'Oswald'; margin-left:10px;">ADD PRODUCTION (+<span id="prod-price-display"></span>)</span>
             </div>
 
             <div style="background:#222; padding:20px; border-left:4px solid var(--authority-orange); margin:20px 0;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <span style="font-family:'Bebas Neue'; font-size:1.5rem;">TOTAL ESTIMATE:</span>
-                    <span id="final-price" style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);">£299</span>
+                    <span id="final-price" style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);">£0</span>
                 </div>
                 <p id="sur-alert" style="color:var(--authority-orange); font-size:0.8rem; display:none;">* 30% SHORT RUN SURCHARGE APPLIED (< 28 DAYS)</p>
             </div>
 
-            <button class="btn-auth" onclick="sendEmail()">INITIATE VIA EMAIL</button>
-            <button class="btn-auth btn-pdf" onclick="genPDF()">DOWNLOAD CONTRACT (PDF)</button>
+            <button class="btn-auth" onclick="app.sendEmail()">INITIATE VIA EMAIL</button>
+            <button class="btn-auth btn-pdf" onclick="app.genPDF()">DOWNLOAD CONTRACT (PDF)</button>
         </div>
     </div>
 
-    <div id="gen-modal" class="modal-overlay" onclick="closeModals()">
+    <div id="gen-modal" class="modal-overlay" onclick="app.closeModals()">
         <div class="mag-layout" onclick="event.stopPropagation()">
             <h2 id="gen-title" style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);"></h2>
             <div id="gen-body" style="font-family:'Oswald'; line-height:1.6; font-size:1.1rem; color:#ddd;"></div>
@@ -195,132 +195,114 @@
     </div>
 
 <script>
-    // FULL INJECTED BIOS
-    const djs = [
-        {
-            id:'alex', 
-            name:'ALEX', 
-            bio:'Known as "Johnstone\'s Vinyl Viking," Alex has spent decades digging through crates in dusty basements from Glasgow to London. He doesn\'t just play rock; he curates an auditory museum of deep cuts. His show is a journey through the forgotten B-sides of the 70s and the prog-rock anthems that time almost forgot. If you want to know the matrix number on the run-out groove of a first-pressing Zeppelin LP, Alex is your man.', 
-            img:'dj_alex.jpg'
+    /** * ==========================================
+     * SECTION 1: ADMIN CONTROL PANEL (EDIT THIS)
+     * ==========================================
+     */
+    const STATION_CONFIG = {
+        meta: {
+            email: "sales@rock.scot",
+            streamUrl: "https://player.broadcast.radio/caledonia-tx-ltd"
         },
-        {
-            id:'andy', 
-            name:'ANDY', 
-            bio:'The East Kilbride Rebel, Andy brings a chaotic, high-voltage energy to the station that is impossible to ignore. Raised on a diet of punk, new wave, and high-tempo indie, his shows are less of a broadcast and more of a riot. He champions the underdogs and the loudmouths, ensuring that the spirit of rebellion stays alive and well across the Lanarkshire airwaves.', 
-            img:'dj_andy.jpg'
+        prices: {
+            packages: [
+                { id: 299, name: "Single Region (£299)" },
+                { id: 449, name: "Multi-Region (£449)" },
+                { id: 2500, name: "Top-of-Hour Exclusive (£2,500/mo)" }
+            ],
+            productionFee: 195,
+            surchargeThreshold: 28, // days
+            surchargeRate: 1.3 // 30% add-on
         },
-        {
-            id:'stevie', 
-            name:'STEVIE', 
-            bio:'Stevie is the Port Glasgow Headbanger with a heart of galvanized steel. A true disciple of the riff, his soul belongs to AC/DC, Iron Maiden, and the heavy hitters of the 80s. When Stevie is on air, the volume knob is strictly ornamental—it stays at maximum. He brings the shipyard grit of the Clyde directly to your speakers, playing the tracks that make you want to drive faster.', 
-            img:'dj_stevie.jpg'
+        djs: [
+            { id:'alex', name:'ALEX', title: "Johnstone's Vinyl Viking", img:'dj_alex.jpg', bio:'Known as "Johnstone\'s Vinyl Viking," Alex has spent decades digging through crates in dusty basements from Glasgow to London. He doesn\'t just play rock; he curates an auditory museum of deep cuts. His show is a journey through the forgotten B-sides of the 70s and the prog-rock anthems that time almost forgot.' },
+            { id:'andy', name:'ANDY', title: "East Kilbride Rebel", img:'dj_andy.jpg', bio:'The East Kilbride Rebel, Andy brings a chaotic, high-voltage energy to the station that is impossible to ignore. Raised on a diet of punk, new wave, and high-tempo indie, his shows are less of a broadcast and more of a riot. He champions the underdogs and the loudmouths.' },
+            { id:'stevie', name:'STEVIE', title: "Port Glasgow Headbanger", img:'dj_stevie.jpg', bio:'Stevie is the Port Glasgow Headbanger with a heart of galvanized steel. A true disciple of the riff, his soul belongs to AC/DC, Iron Maiden, and the heavy hitters of the 80s. When Stevie is on air, the volume knob is strictly ornamental—it stays at maximum.' },
+            { id:'mhairi', name:'MHAIRI', title: "Hamilton's Hard Rock Queen", img:'dj_mhairi.jpg', bio:'Hamilton\'s Hard Rock Queen, Mhairi combines sharp wit with an even sharper playlist. She dominates the airwaves with a mix of glam rock stompers and classic rock anthems. Her knowledge of the local scene is unmatched, and her banter is as legendary as the tracks she spins.' },
+            { id:'jude', name:'JUDE', title: "Irvine's Indie Rock Icon", img:'dj_jude.jpg', bio:'As Irvine\'s Indie Rock Icon, Jude represents the cool, melodic side of the Rock.Scot spectrum. Influenced by the Britpop explosion and the post-punk revival, Jude\'s sets are perfect for coastal drives and late-night introspection.' },
+            { id:'chris', name:'CHRIS', title: "Greenock's Guitar Guru", img:'dj_chris.jpg', bio:'Greenock\'s Guitar Guru, Chris was bred on the raw energy of Primal Scream and the industrial grit of his hometown. He is obsessed with tone, technique, and the power of a well-executed solo. His show is a masterclass in guitar-driven music.' },
+            { id:'cal', name:'CAL', title: "Kilmarnock's Classic Rocker", img:'dj_cal.jpg', bio:'Kilmarnock\'s Classic Rocker, Cal is a hometown hero who worships at the altar of stadium rock. With Biffy Clyro putting the town on the map, Cal keeps the momentum going by spinning massive anthems that fill the room.' },
+            { id:'blue', name:'BLUE', title: "Gourock's Bluesy Maverick", img:'dj_blue.jpg', bio:'The Gourock Bluesy Maverick, Blue brings a soulful, rootsy vibe to the station. Living on the coast has infused his taste with a laid-back but powerful rhythm. He specializes in blues-rock, southern rock, and anything with a bit of soul.' }
+        ],
+        news: {
+            feed: "https://api.rss2json.com/v1/api.json?rss_url=https://snackmag.co.uk/category/music/feed",
+            images: ["news1.jpg", "news2.jpg", "news3.jpg", "news4.jpg", "news5.jpg", "news6.jpg", "news7.jpg"]
         },
-        {
-            id:'mhairi', 
-            name:'MHAIRI', 
-            bio:'Hamilton\'s Hard Rock Queen, Mhairi combines sharp wit with an even sharper playlist. She dominates the airwaves with a mix of glam rock stompers and classic rock anthems. Her knowledge of the local scene is unmatched, and her banter is as legendary as the tracks she spins. Mhairi is the voice of authority for anyone who likes their rock with a bit of swagger and style.', 
-            img:'dj_mhairi.jpg'
-        },
-        {
-            id:'jude', 
-            name:'JUDE', 
-            bio:'As Irvine\'s Indie Rock Icon, Jude represents the cool, melodic side of the Rock.Scot spectrum. Influenced by the Britpop explosion and the post-punk revival, Jude\'s sets are perfect for coastal drives and late-night introspection. He brings a sophisticated edge to North Ayrshire, seamlessly blending the classics with the best new tracks emerging from the Scottish underground.', 
-            img:'dj_jude.jpg'
-        },
-        {
-            id:'chris', 
-            name:'CHRIS', 
-            bio:'Greenock\'s Guitar Guru, Chris was bred on the raw energy of Primal Scream and the industrial grit of his hometown. He is obsessed with tone, technique, and the power of a well-executed solo. His show is a masterclass in guitar-driven music, spanning from the blues explosion to modern alternative rock. If it has six strings and an attitude, Chris is playing it.', 
-            img:'dj_chris.jpg'
-        },
-        {
-            id:'cal', 
-            name:'CAL', 
-            bio:'Kilmarnock\'s Classic Rocker, Cal is a hometown hero who worships at the altar of stadium rock. With Biffy Clyro putting the town on the map, Cal keeps the momentum going by spinning massive anthems that fill the room. He is the guy you want at a party, playing the songs that everyone knows the words to, delivered with genuine passion for the Ayrshire music heritage.', 
-            img:'dj_cal.jpg'
-        },
-        {
-            id:'blue', 
-            name:'BLUE', 
-            bio:'The Gourock Bluesy Maverick, Blue brings a soulful, rootsy vibe to the station. Living on the coast has infused his taste with a laid-back but powerful rhythm. He specializes in blues-rock, southern rock, and anything with a bit of soul. Blue offers a respite from the heavy metal thunder, proving that rock music can be deep, emotional, and groovy all at the same time.', 
-            img:'dj_blue.jpg'
-        }
-    ];
+        signals: ["LANARKSHIRE", "INVERCLYDE", "AYRSHIRE"]
+    };
 
-    let bgIdx = 1;
-
-    function switchTab(id) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        const v = document.getElementById('v-'+id);
-        v.classList.add('active');
-        event.currentTarget.classList.add('active');
+    /** * ==========================================
+     * SECTION 2: THE ENGINE (DO NOT EDIT)
+     * ==========================================
+     */
+    const app = {
+        bgIdx: 0,
         
-        // BACKGROUND ROTATION
-        document.body.style.backgroundImage = `url('news${bgIdx}.jpg')`;
-        bgIdx = bgIdx >= 7 ? 1 : bgIdx + 1;
+        init: function() {
+            // Init Clock
+            setInterval(() => {
+                const d = new Date();
+                document.getElementById('clock').innerText = d.toTimeString().split(' ')[0];
+            }, 1000);
 
-        if(id==='wire') loadWire();
-        if(id==='crew') loadCrew();
-        loadSig();
-    }
+            // Init Ticker
+            const msg = '<span class="ticker-item">Rock.Scot</span><span class="ticker-item ticker-brand">Across Scotland</span>';
+            document.getElementById('ticker-out').innerHTML = msg.repeat(10);
 
-    function loadCrew() {
-        const trk = document.getElementById('crew-roller');
-        trk.innerHTML = djs.map(d => `
-            <div class="crew-card" onclick="openBio('${d.id}')">
-                <img src="${d.img}">
-                <div class="crew-info"><h3 style="font-family:'Bebas Neue'; font-size:2rem;">${d.name}</h3></div>
-            </div>
-        `).join('');
-    }
+            // Init Player
+            document.getElementById('player-container').innerHTML = `<iframe src="${STATION_CONFIG.meta.streamUrl}" style="width:100%; height:200px; border:none;"></iframe>`;
 
-    function openBio(id) {
-        const p = djs.find(x => x.id === id);
-        if(p) {
-            document.getElementById('gen-title').innerText = p.name;
-            document.getElementById('gen-body').innerText = p.bio;
-            document.getElementById('gen-modal').classList.add('open');
-        }
-    }
+            // Init Packages in Select Box
+            const pkgSel = document.getElementById('pkg-opt');
+            pkgSel.innerHTML = STATION_CONFIG.prices.packages.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+            document.getElementById('prod-price-display').innerText = `£${STATION_CONFIG.prices.productionFee}`;
 
-    async function loadWire() {
-        const g = document.getElementById('wire-grid');
-        g.innerHTML = '<h3>TUNING...</h3>';
-        try {
-            const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://snackmag.co.uk/category/music/feed');
-            const data = await res.json();
-            g.innerHTML = data.items.map(i => `
-                <div class="uniform-card" onclick="openNews('${i.title.replace(/'/g, "")}', '${escape(i.description)}')">
-                    <h4 style="color:var(--authority-orange); font-family:'Oswald';">${i.title}</h4>
-                    <p style="font-size:0.8rem; margin-top:10px;">Tap to read</p>
+            // Init Signals
+            document.getElementById('sig-list').innerHTML = STATION_CONFIG.signals.map(l=>`<div style="padding:10px; border-bottom:1px solid #333;"><span style="color:#0f0">●</span> ${l}: PEAK</div>`).join('');
+
+            // Initial BG
+            document.body.style.backgroundImage = `url('${STATION_CONFIG.news.images[0]}')`;
+        },
+
+        switchTab: function(id) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('v-'+id).classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            // Background Rotation Engine
+            this.bgIdx = (this.bgIdx + 1) % STATION_CONFIG.news.images.length;
+            document.body.style.backgroundImage = `url('${STATION_CONFIG.news.images[this.bgIdx]}')`;
+
+            if(id === 'wire') this.loadWire();
+            if(id === 'crew') this.loadCrew();
+        },
+
+        loadCrew: function() {
+            const trk = document.getElementById('crew-roller');
+            trk.innerHTML = STATION_CONFIG.djs.map(d => `
+                <div class="crew-card" onclick="app.openBio('${d.id}')">
+                    <img src="${d.img}">
+                    <div class="crew-info">
+                        <h3 style="font-family:'Bebas Neue'; font-size:2rem;">${d.name}</h3>
+                        <p style="font-size:0.8rem; color:#aaa;">${d.title}</p>
+                    </div>
                 </div>
             `).join('');
-        } catch(e) { g.innerHTML = '<h3>WIRE OFFLINE</h3>'; }
-    }
+        },
 
-    function openNews(t, d) {
-        document.getElementById('gen-title').innerText = t;
-        document.getElementById('gen-body').innerText = unescape(d);
-        document.getElementById('gen-modal').classList.add('open');
-    }
+        openBio: function(id) {
+            const p = STATION_CONFIG.djs.find(x => x.id === id);
+            if(p) {
+                document.getElementById('gen-title').innerText = p.name;
+                document.getElementById('gen-body').innerText = p.bio;
+                document.getElementById('gen-modal').classList.add('open');
+            }
+        },
 
-    function loadSig() {
-        document.getElementById('sig-list').innerHTML = ['LANARKSHIRE','INVERCLYDE','AYRSHIRE'].map(l=>`<div style="padding:10px; border-bottom:1px solid #333;"><span style="color:#0f0">●</span> ${l}: PEAK</div>`).join('');
-    }
-
-    // AD CALCULATOR LOGIC
-    function openAdModal() { document.getElementById('ad-modal').classList.add('open'); }
-    
-    function calcTotal() {
-        let base = parseInt(document.getElementById('pkg-opt').value);
-        let prod = document.getElementById('prod-add').checked ? 195 : 0;
-        let start = new Date(document.getElementById('d-start').value);
-        let end = new Date(document.getElementById('d-end').value);
-        let sur = 1.0;
-
-        if(start && end && !isNaN(start) && !isNaN(end)) {
-            const days = (end - start) / (1000 * 3600 * 24);
-            if(days > 0 && days < 28) {
-                sur = 1.3;
-                document.getElementById('sur-alert
+        loadWire: async function() {
+            const g = document.getElementById('wire-grid');
+            g.innerHTML = '<h3>TUNING...</h3>';
+            try {
+                const res = await fetch(STATION_CONFIG.news.feed);
+        
