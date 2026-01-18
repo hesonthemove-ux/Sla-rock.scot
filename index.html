@@ -5,245 +5,198 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Rock.Scot | Central Scotland's Rock Authority</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Bebas+Neue&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
         :root { 
             --authority-orange: #ff5500; 
             --phantom-glass: rgba(0, 0, 0, 0.4); 
             --glass-border: rgba(255, 255, 255, 0.3);
-            --strong-shadow: 3px 3px 15px rgba(0,0,0,1);
+            --strong-shadow: 2px 2px 15px rgba(0,0,0,1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; height: 100vh; width: 100vw; }
 
-        /* HEADER & TOP BANNER */
         header { position: sticky; top: 0; z-index: 9999; background: #000; width: 100%; display: flex; flex-direction: column; align-items: center; }
-        .hdr-logo { width: 100%; max-width: 600px; height: auto; padding: 12px 0; display: block; }
-        .nav-strip { width: 100%; background: #000; border-bottom: 4px solid var(--authority-orange); display: flex; height: 60px; overflow-x: auto; }
-        .nav-btn { flex: 1; min-width: 90px; background: #000; border: none; color: #777; font-family: 'Bebas Neue'; font-size: 1.1rem; cursor: pointer; }
+        .hdr-logo { width: 100%; max-width: 550px; height: auto; padding: 10px 0; display: block; }
+        .nav-strip { width: 100%; background: #000; border-bottom: 4px solid var(--authority-orange); display: flex; height: 55px; }
+        .nav-btn { flex: 1; background: #000; border: none; color: #777; font-family: 'Bebas Neue'; font-size: 1rem; cursor: pointer; }
         .nav-btn.active { color: var(--authority-orange); background: #111; }
 
-        /* TICKER */
-        .ticker-wrap { width: 100%; overflow: hidden; background: #000; height: 35px; border-bottom: 1px solid var(--glass-border); }
-        .ticker-move { display: flex; white-space: nowrap; animation: tickerScroll 40s linear infinite; }
-        .ticker-item { padding: 0 50px; font-family: 'Oswald'; font-size: 0.9rem; line-height: 35px; text-transform: uppercase; color: #888; }
-        .ticker-brand { color: var(--authority-orange); font-weight: 900; }
-        @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .ticker-wrap { width: 100%; overflow: hidden; background: #111; height: 30px; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; }
+        .ticker-move { display: flex; white-space: nowrap; animation: ticker 45s linear infinite; }
+        .ticker-item { padding: 0 40px; font-family: 'Oswald'; font-size: 0.8rem; text-transform: uppercase; color: #aaa; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* VIEWS */
-        .view { display: none; height: calc(100vh - 195px); width: 100%; padding: 20px; background-size: cover; background-position: center; overflow-y: auto; flex-direction: column; align-items: center; }
-        .view.active { display: flex; }
+        .view { display: none; height: calc(100vh - 190px); width: 100%; padding: 15px; background-size: cover; background-position: center; overflow-y: auto; flex-direction: column; align-items: center; }
+        .view.active { display: flex !important; }
 
-        /* GLASS COMPONENTS */
         .uniform-card { 
-            width: 100%; max-width: 400px; background: var(--phantom-glass); border: 1px solid var(--glass-border); 
-            padding: 30px; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.8); 
-            text-shadow: var(--strong-shadow); margin-bottom: 20px;
+            width: 100%; max-width: 420px; background: var(--phantom-glass); border: 1px solid var(--glass-border); 
+            padding: 25px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8); text-shadow: var(--strong-shadow); margin-bottom: 15px;
         }
 
-        /* WIRE: MOBILE SNAP VS DESKTOP GRID */
-        .wire-container { width: 100%; max-width: 1400px; }
-        .wire-snap { scroll-snap-type: y mandatory; height: 100%; overflow-y: scroll; scrollbar-width: none; }
-        .wire-item { scroll-snap-align: start; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .btn-auth { width: 100%; padding: 18px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.5rem; cursor: pointer; text-transform: uppercase; }
+        .btn-pdf { background: #333; margin-top: 10px; font-size: 1rem; padding: 10px; }
+        .std-input { width: 100%; padding: 12px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 10px; }
 
-        /* SIDE DRAWER (MOBILE BIOS) */
-        .drawer { position: fixed; right: -100%; top: 0; width: 85%; height: 100%; background: #000; z-index: 10001; transition: 0.4s; border-left: 4px solid var(--authority-orange); padding: 40px 20px; }
-        .drawer.open { right: 0; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10000; display: none; padding: 20px; align-items: center; justify-content: center; }
+        .modal-overlay.open { display: flex; }
+        .mag-layout { max-width: 700px; border: 4px solid var(--authority-orange); padding: 30px; background: #000; width: 100%; max-height: 90vh; overflow-y: auto; }
 
-        /* DESKTOP LIVE HYBRID */
-        @media (min-width: 1024px) {
-            .live-desktop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; max-width: 1400px; }
-            .mobile-only { display: none !important; }
-            #v-map { display: none !important; }
-            #rss-output { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        }
-
-        /* FORM STYLING */
-        .btn-auth { width: 100%; padding: 18px; background: var(--authority-orange); border: none; color: #fff; font-family: 'Bebas Neue'; font-size: 1.5rem; cursor: pointer; margin-top: 15px; }
-        .std-input { width: 100%; padding: 14px; background: #111; border: 1px solid #333; color: #fff; font-family: 'Oswald'; margin-bottom: 12px; }
+        @media (min-width: 1024px) { .desktop-split { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; max-width: 1200px; } }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="top_banner.png" class="hdr-logo">
+        <img src="logo.png" class="hdr-logo">
         <nav class="nav-strip">
             <button class="nav-btn active" onclick="showTab('live')">LIVE</button>
             <button class="nav-btn" onclick="showTab('wire')">WIRE</button>
             <button class="nav-btn" onclick="showTab('crew')">CREW</button>
-            <button class="nav-btn" onclick="showTab('map')" id="m-nav-map">SIGNAL</button>
             <button class="nav-btn" onclick="showTab('rates')">RATES</button>
             <button class="nav-btn" onclick="showTab('submit')">SUBMIT</button>
         </nav>
-        <div class="ticker-wrap"><div class="ticker-move" id="ticker-box"></div></div>
+        <div class="ticker-wrap"><div class="ticker-move" id="tick-cont"></div></div>
     </header>
-
-    <div id="side-drawer" class="drawer">
-        <button onclick="closeDrawer()" style="background:none; border:none; color:var(--authority-orange); font-family:'Bebas Neue'; font-size:1.5rem; margin-bottom:30px;">[ CLOSE ]</button>
-        <h2 id="drw-name" style="font-family:'Bebas Neue'; font-size:3rem; color:var(--authority-orange);"></h2>
-        <div id="drw-content" style="font-family:'Oswald'; line-height:1.6; color:#ccc;"></div>
-    </div>
 
     <main>
         <section id="v-live" class="view active">
-            <div class="live-desktop-grid">
-                <div class="uniform-card" style="max-width:100%;">
-                    <div id="clock-txt" style="font-family:'Bebas Neue'; font-size:6rem; line-height:1;">00:00:00</div>
-                    <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:260px; border:none; margin-top:20px;"></iframe>
-                </div>
-                <div class="uniform-card" style="max-width:100%; text-align:left;">
-                    <h2 style="font-family:'Bebas Neue'; font-size:2rem; color:var(--authority-orange);">SIGNAL STATUS</h2>
-                    <div id="signal-list" style="margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:15px;"></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="v-wire" class="view">
-            <div id="rss-output" class="wire-container"></div>
-        </section>
-
-        <section id="v-crew" class="view">
-            <div id="crew-mobile" style="display:flex; overflow-x:auto; gap:20px; width:100%; scroll-snap-type:x mandatory; scrollbar-width:none;"></div>
-            <div id="crew-desktop" onscroll="animate3DCrew()" style="display:none; perspective:1200px; width:100%; height:550px; overflow-x:auto; scrollbar-width:none; align-items:center;">
-                <div id="crew-track" style="display:flex; align-items:center; padding:0 300px;"></div>
-            </div>
-        </section>
-
-        <section id="v-map" class="view">
             <div class="uniform-card">
-                <h2 style="font-family:'Bebas Neue'; font-size:3rem; color:var(--authority-orange);">SIGNAL</h2>
-                <div id="mob-signal-list" style="margin-top:20px; display:grid; gap:15px; width:100%;"></div>
+                <div id="clock" style="font-family:'Bebas Neue'; font-size:6rem;">00:00:00</div>
+                <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:200px; border:none; margin-top:15px;"></iframe>
             </div>
         </section>
 
         <section id="v-rates" class="view">
-            <div class="uniform-card">
-                <h2 style="font-family:'Bebas Neue'; font-size:3rem;">AD PORTAL</h2>
-                <button class="btn-auth" onclick="openAdPortal()">OPEN CALCULATOR</button>
+            <div class="desktop-split">
+                <div class="uniform-card" style="max-width:100%; text-align:left;">
+                    <h2 style="font-family:'Bebas Neue'; font-size:3rem; color:var(--authority-orange);">547,000 LISTENERS</h2>
+                    <p style="font-family:'Oswald'; line-height:1.6;">Covering South Lanarkshire, North Ayrshire, and Inverclyde. 87% of adults tune in weekly.</p>
+                </div>
+                <div class="uniform-card" style="max-width:100%;">
+                    <button class="btn-auth" onclick="openAdPortal()">AD CALCULATOR</button>
+                </div>
             </div>
         </section>
 
+        <section id="v-wire" class="view"><div id="wire-render" style="width:100%; display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:15px;"></div></section>
+        <section id="v-crew" class="view"><div id="crew-render" style="width:100%; display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:15px;"></div></section>
         <section id="v-submit" class="view">
             <div class="uniform-card">
                 <h2 style="font-family:'Bebas Neue'; font-size:3rem;">SUBMIT</h2>
-                <button class="btn-auth" onclick="openSubmitPortal()">START UPLOAD</button>
+                <button class="btn-auth" onclick="openSubmitGate()">Transmit Track</button>
             </div>
         </section>
     </main>
 
+    <div id="modal" class="modal-overlay" onclick="closeModal()">
+        <div class="mag-layout" onclick="event.stopPropagation()">
+            <h2 id="m-title" style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);"></h2>
+            <div id="m-body"></div>
+        </div>
+    </div>
+
+    <div id="pdf-template" style="display:none; color:#000; padding:40px; font-family:'Arial';">
+        <h1 style="border-bottom:4px solid #ff5500;">ROCK.SCOT ADVERTISING CONTRACT</h1>
+        <p><strong>Entity:</strong> Caledonia Tx Ltd, 19 Hogg Avenue, Johnstone</p>
+        <p><strong>Advertiser:</strong> <span id="pdf-biz"></span></p>
+        <p><strong>Campaign Total:</strong> <span id="pdf-total"></span></p>
+        <hr>
+        <h3>TERMS OF SERVICE</h3>
+        <p>1. Payments due in full 7 days prior to broadcast. 2. All content must comply with Ofcom Broadcasting Code Section 2. 3. Short campaigns (<28 days) incur a 30% surcharge. 4. Production fees are non-refundable.</p>
+        <p><em>Generated on Rock.Scot Authority Portal - 2026</em></p>
+    </div>
+
 <script>
     const presenters = [
-        { id: "alex", name: "ALEX", title: "Johnstone's Vinyl Viking", bio: "Born and bred in Johnstone, Alex discovered rock digging through his uncle's records—Nazareth's 'Hair of the Dog' changed everything.", img: "dj_alex.jpg" },
-        { id: "andy", name: "ANDY", title: "East Kilbride Rebel", bio: "Hailing from East Kilbride, Andy grew up blasting Biffy Clyro. He brings high-energy playlists to listeners across Inverclyde.", img: "dj_andy.jpg" },
-        { id: "stevie", name: "STEVIE", title: "Port Glasgow Headbanger", bio: "Raised on Clyde rockers and AC/DC at family barbecues.", img: "dj_stevie.jpg" }
+        { name: "ALEX", title: "Johnstone's Vinyl Viking", bio: "Vinyl and deep cuts expert." },
+        { name: "ANDY", title: "East Kilbride Rebel", bio: "EK energy across Lanarkshire." },
+        { name: "STEVIE", title: "Port Glasgow Headbanger", bio: "Clyde rockers and AC/DC soul." },
+        { name: "MHAIRI", title: "Hamilton's Hard Rock Queen", bio: "Hamilton's witty rocker." },
+        { name: "JUDE", title: "Irvine's Indie Rock Icon", bio: "North Ayrshire's stomping ground." },
+        { name: "CHRIS", title: "Greenock's Guitar Guru", bio: "Bred on Primal Scream grit." },
+        { name: "CAL", title: "Kilmarnock's Classic Rocker", bio: "Biffy Clyro hometown hero." },
+        { name: "BLUE", title: "Gourock's Bluesy Maverick", bio: "Blues-rock coastal authority." }
     ];
-
-    let bgIdx = 1;
 
     function showTab(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        const active = document.getElementById('v-' + id);
-        if(active) {
-            active.classList.add('active');
-            active.style.backgroundImage = `url('news${bgIdx}.jpg')`;
-            bgIdx = bgIdx >= 7 ? 1 : bgIdx + 1;
-        }
+        document.getElementById('v-'+id).classList.add('active');
         event.currentTarget.classList.add('active');
-        
-        if(id === 'wire') fetchRSS();
-        if(id === 'crew') renderCrew();
-        if(id === 'live' || id === 'map') renderSignals();
+        if(id==='wire') renderWire();
+        if(id==='crew') renderCrew();
     }
 
-    async function fetchRSS() {
-        const out = document.getElementById('rss-output');
-        out.innerHTML = "<h3 style='font-family:Oswald;'>Tuning Wire...</h3>";
-        try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://snackmag.co.uk/category/music/feed`);
-            const data = await res.json();
-            
-            if(window.innerWidth < 1024) {
-                out.className = "wire-snap";
-                out.innerHTML = data.items.map(i => `
-                    <div class="wire-item"><div class="uniform-card">
-                        <h3 style="color:var(--authority-orange); font-family:Oswald;">${i.title.toUpperCase()}</h3>
-                        <p style="margin:20px 0; font-size:0.85rem;">${i.description.substring(0,120)}...</p>
-                        <button class="btn-auth" onclick="window.open('${i.link}')">READ WIRE</button>
-                    </div></div>
-                `).join('');
-            } else {
-                out.className = "wire-container";
-                out.style.display = "grid";
-                out.innerHTML = data.items.slice(0,12).map(i => `
-                    <div class="uniform-card" style="max-width:100%; height:380px;">
-                        <h3 style="color:var(--authority-orange); font-family:Oswald;">${i.title.toUpperCase()}</h3>
-                        <p style="margin:20px 0; font-size:0.8rem;">${i.description.substring(0,100)}...</p>
-                        <button class="btn-auth" onclick="window.open('${i.link}')">READ WIRE</button>
-                    </div>
-                `).join('');
-            }
-        } catch(e) { out.innerHTML = "<h3>WIRE OFFLINE</h3>"; }
+    function openAdPortal() {
+        document.getElementById('m-title').innerText = "AD PORTAL";
+        document.getElementById('m-body').innerHTML = `
+            <label>BIZ NAME</label><input type="text" id="biz" class="std-input">
+            <label>START DATE</label><input type="date" id="start-d" class="std-input" onchange="calcAd()">
+            <label>END DATE</label><input type="date" id="end-d" class="std-input" onchange="calcAd()">
+            <label>PACKAGE</label>
+            <select id="pkg" class="std-input" onchange="calcAd()">
+                <option value="299">Regional (£299)</option>
+                <option value="449">Multi-Region (£449)</option>
+                <option value="2500">Top-of-Hour (£2,500)</option>
+            </select>
+            <label>PRODUCTION</label>
+            <select id="prod" class="std-input" onchange="calcAd()">
+                <option value="0">Audio Supplied (£0)</option>
+                <option value="195">Rock.Scot Produced (£195)</option>
+            </select>
+            <div style="background:#111; padding:20px; border:1px solid #333; margin:15px 0;">
+                <h3 id="ad-total" style="font-family:'Bebas Neue'; font-size:2.5rem; color:var(--authority-orange);">£0</h3>
+                <p id="sur-warn" style="color:var(--authority-orange); font-size:0.7rem; display:none;">+ 30% SHORT CAMPAIGN SURCHARGE</p>
+            </div>
+            <button class="btn-auth" onclick="sendInq()">Initiate</button>
+            <button class="btn-auth btn-pdf" onclick="downloadContract()">Download PDF Contract</button>
+        `;
+        document.getElementById('modal').classList.add('open');
     }
 
-    function renderSignals() {
-        const html = ["RENFREWSHIRE", "LANARKSHIRE", "INVERCLYDE", "AYRSHIRE"].map(l => `<div style="border:1px solid var(--glass-border); padding:10px; background:rgba(0,0,0,0.3); font-family:Oswald; font-size:0.7rem;"><span style="color:#0f0">●</span> ${l} : PEAK</div>`).join('');
-        const d = document.getElementById('signal-list');
-        const m = document.getElementById('mob-signal-list');
-        if(d) d.innerHTML = html;
-        if(m) m.innerHTML = html;
+    function calcAd() {
+        const s = new Date(document.getElementById('start-d').value);
+        const e = new Date(document.getElementById('end-d').value);
+        let base = parseInt(document.getElementById('pkg').value);
+        let prod = parseInt(document.getElementById('prod').value);
+        let sur = 1.0;
+        if(s && e) {
+            const diff = (e - s) / (1000 * 3600 * 24);
+            if(diff > 0 && diff < 28) { sur = 1.3; document.getElementById('sur-warn').style.display='block'; }
+            else document.getElementById('sur-warn').style.display='none';
+        }
+        let total = Math.round((base * sur) + prod);
+        document.getElementById('ad-total').innerText = "£" + total;
+    }
+
+    function downloadContract() {
+        document.getElementById('pdf-biz').innerText = document.getElementById('biz').value || "VALUED ADVERTISER";
+        document.getElementById('pdf-total').innerText = document.getElementById('ad-total').innerText;
+        const element = document.getElementById('pdf-template');
+        element.style.display = 'block';
+        html2pdf().from(element).save('RockScot_Contract.pdf').then(() => { element.style.display = 'none'; });
     }
 
     function renderCrew() {
-        const isD = window.innerWidth >= 1024;
-        document.getElementById('crew-desktop').style.display = isD ? 'flex' : 'none';
-        document.getElementById('crew-mobile').style.display = isD ? 'none' : 'flex';
-        
-        const m = document.getElementById('crew-mobile');
-        const d = document.getElementById('crew-track');
-        
-        m.innerHTML = presenters.map(p => `<div class="uniform-card" style="min-width:85%; scroll-snap-align:center;" onclick="openBio('${p.id}')"><img src="${p.img}" style="width:100%; height:200px; object-fit:cover;"><h2 style="font-family:'Bebas Neue';">${p.name}</h2></div>`).join('');
-        d.innerHTML = presenters.map(p => `<div class="d-card" onclick="openBio('${p.id}')" style="min-width:300px; height:450px; margin:0 -40px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.6); transition:0.5s; position:relative; overflow:hidden;"><img src="${p.img}" style="width:100%; height:100%; object-fit:cover; filter:grayscale(1);"><div style="position:absolute; bottom:0; width:100%; padding:20px; background:linear-gradient(transparent, #000); text-align:center;"><h2 style="font-family:'Bebas Neue';">${p.name}</h2></div></div>`).join('');
+        document.getElementById('crew-render').innerHTML = presenters.map(p => `<div class="uniform-card" style="text-align:left; max-width:100%;"><h4>${p.name}</h4><p style="font-size:0.7rem;">${p.title}</p></div>`).join('');
     }
 
-    function openBio(id) {
-        const p = presenters.find(x => x.id === id);
-        if(window.innerWidth < 1024) {
-            document.getElementById('drw-name').innerText = p.name;
-            document.getElementById('drw-content').innerText = p.bio;
-            document.getElementById('side-drawer').classList.add('open');
-        } else {
-            alert(p.name + ": " + p.bio); // Modal logic preserved
-        }
+    async function renderWire() {
+        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://snackmag.co.uk/category/music/feed`);
+        const data = await res.json();
+        document.getElementById('wire-render').innerHTML = data.items.map(i => `<div class="uniform-card" style="text-align:left; max-width:100%;" onclick="openStory('${i.title}','${encodeURIComponent(i.description)}')"><h4>${i.title}</h4></div>`).join('');
     }
 
-    function closeDrawer() { document.getElementById('side-drawer').classList.remove('open'); }
-
-    function updateClock() {
-        const n = new Date();
-        const t = n.getHours().toString().padStart(2,'0')+":"+n.getMinutes().toString().padStart(2,'0')+":"+n.getSeconds().toString().padStart(2,'0');
-        document.getElementById('clock-txt').innerText = t;
-    }
-
-    async function initTicker() {
-        const box = document.getElementById('ticker-box');
-        let html = `<span class="ticker-item">Rock.Scot Scotland Rock Radio Station</span>`;
-        try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://snackmag.co.uk/category/music/feed`);
-            const data = await res.json();
-            data.items.slice(0,5).forEach(i => {
-                html += `<span class="ticker-item">${i.title}</span>`;
-                html += `<span class="ticker-item ticker-brand">Rock.Scot Across Scotland</span>`;
-            });
-            box.innerHTML = html + html;
-        } catch(e) { box.innerHTML = html.repeat(10); }
-    }
-
+    function openStory(t,d) { document.getElementById('m-title').innerText=t; document.getElementById('m-body').innerHTML=decodeURIComponent(d); document.getElementById('modal').classList.add('open'); }
+    function closeModal() { document.getElementById('modal').classList.remove('open'); }
+    function updateClock() { const n = new Date(); document.getElementById('clock').innerText = n.getHours().toString().padStart(2,'0')+":"+n.getMinutes().toString().padStart(2,'0')+":"+n.getSeconds().toString().padStart(2,'0'); }
     setInterval(updateClock, 1000);
-    initTicker();
+    document.getElementById('tick-cont').innerHTML = `<span class="ticker-item">Rock.Scot Across Scotland</span>`.repeat(10);
     updateClock();
-    window.addEventListener('resize', () => { document.getElementById('m-nav-map').style.display = window.innerWidth >= 1024 ? 'none' : 'block'; });
 </script>
 </body>
 </html>
