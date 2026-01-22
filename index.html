@@ -4,49 +4,46 @@
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock.Scot | Central Scotland Authority</title>
     <link rel="stylesheet" href="style.css?v=1769105996">
-    <style>
-        body { background: #000 url('assets/backgrounds/bg1.jpg') no-repeat center fixed; background-size: cover; color: #fff; font-family: sans-serif; margin: 0; }
-        .overlay { background: rgba(0,0,0,0.8); min-height: 100vh; }
-        nav { display: flex; background: #111; border-bottom: 2px solid #ff4500; }
-        nav button { flex: 1; padding: 15px; background: none; border: none; color: #fff; font-weight: bold; cursor: pointer; }
-        .content-section { padding: 20px; display: none; }
-        .active { display: block; }
-        .news-card { background: rgba(255,69,0,0.1); border-left: 4px solid #ff4500; padding: 15px; margin-bottom: 15px; }
-    </style>
 </head>
 <body>
+    <div id="bg-layer" style="background-image: url('assets/backgrounds/bg1.jpg');"></div>
     <div class="overlay">
-        <header style="text-align:center; padding: 20px;">
-            <img src="assets/branding/logo.png" style="width:80%; max-width:350px;">
-        </header>
-
+        <header><img src="assets/branding/logo.png" alt="Rock.Scot"></header>
         <nav>
-            <button onclick="tab('onair')">ON AIR</button>
-            <button onclick="tab('news')">NEWS</button>
+            <button onclick="showTab('live')">Live</button>
+            <button onclick="showTab('wire')">The Wire</button>
+            <button onclick="showTab('rates')">Rates</button>
         </nav>
-
-        <main id="main">
-            <section id="onair" class="content-section active">
-                <div style="text-align:center; margin-top:50px;">
-                    <div style="background:#ff4500; display:inline-block; padding:10px 20px; border-radius:5px; font-weight:bold;">LIVE FROM JOHNSTONE</div>
-                    <h2 style="font-size:2em; text-transform:uppercase;">Central Scotland Rock</h2>
+        <main>
+            <section id="live" class="section active">
+                <div class="glass-card" style="text-align:center;">
+                    <div id="clock">00:00:00</div>
+                    <p style="text-transform:uppercase; letter-spacing:3px;">Broadcasting Live</p>
+                    <div style="background:var(--accent); padding:15px; border-radius:8px; font-weight:bold; margin-top:20px;">LISTEN LIVE</div>
                 </div>
             </section>
-
-            <section id="news" class="content-section">
-                <h2 style="color:#ff4500;">Local Wire</h2>
-                <div class="news-card"><h4>Stirling Scene</h4><p>New venues opening for local rock showcases this Friday.</p></div>
-                <div class="news-card"><h4>Glasgow Gigs</h4><p>Major headliner announced for the Barrowlands.</p></div>
-                <div class="news-card"><h4>Rock.Scot Alpha</h4><p>Build v10.23 successfully deployed via Termux.</p></div>
+            <section id="wire" class="section">
+                <h2 style="color:var(--accent);">The Wire</h2>
+                <div class="glass-card"><h3>Glasgow Scene</h3><p>New headliners at the Barrowlands.</p></div>
+                <div class="glass-card"><h3>Stirling Rock</h3><p>Local showcase starting at 8pm.</p></div>
+            </section>
+            <section id="rates" class="section">
+                <h2 style="color:var(--accent);">Advertising</h2>
+                <div class="glass-card"><p>Premium reach across Central Scotland.</p><button style="width:100%; padding:15px; background:var(--accent); border:none; color:#fff; border-radius:8px; font-weight:bold;">GET RATES</button></div>
             </section>
         </main>
     </div>
-
     <script>
-        function tab(id) {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        function showTab(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
+            requestAnimationFrame(updateClock);
+        }
+        requestAnimationFrame(updateClock);
     </script>
 </body>
 </html>
