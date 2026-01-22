@@ -3,36 +3,50 @@
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock.Scot | Central Scotland Authority</title>
-    <link rel="stylesheet" href="style.css?v=1769105202">
+    <link rel="stylesheet" href="style.css?v=1769105996">
     <style>
-        body { 
-            background: #000 url('assets/backgrounds/bg1.jpg') no-repeat center center fixed; 
-            background-size: cover;
-            color: #fff; 
-            font-family: sans-serif; 
-            margin: 0; 
-        }
-        .container { background: rgba(0,0,0,0.7); min-height: 100vh; padding: 20px; }
+        body { background: #000 url('assets/backgrounds/bg1.jpg') no-repeat center fixed; background-size: cover; color: #fff; font-family: sans-serif; margin: 0; }
+        .overlay { background: rgba(0,0,0,0.8); min-height: 100vh; }
+        nav { display: flex; background: #111; border-bottom: 2px solid #ff4500; }
+        nav button { flex: 1; padding: 15px; background: none; border: none; color: #fff; font-weight: bold; cursor: pointer; }
+        .content-section { padding: 20px; display: none; }
+        .active { display: block; }
+        .news-card { background: rgba(255,69,0,0.1); border-left: 4px solid #ff4500; padding: 15px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header style="text-align:center;">
-            <img src="assets/branding/logo.png" style="width:90%; max-width:400px;" alt="Rock.Scot">
+    <div class="overlay">
+        <header style="text-align:center; padding: 20px;">
+            <img src="assets/branding/logo.png" style="width:80%; max-width:350px;">
         </header>
-        
-        <nav style="display:flex; background:#111; border-bottom:2px solid #ff4500; margin-top:20px;">
-            <button onclick="alert('Live Feed Active')" style="flex:1; background:none; border:none; color:#fff; padding:15px; font-weight:bold;">ON AIR</button>
-            <button onclick="alert('Loading News')" style="flex:1; background:none; border:none; color:#fff; padding:15px; font-weight:bold;">NEWS</button>
+
+        <nav>
+            <button onclick="tab('onair')">ON AIR</button>
+            <button onclick="tab('news')">NEWS</button>
         </nav>
 
-        <main style="padding:40px 0; text-align:center;">
-            <div style="background:#ff4500; color:#fff; padding:12px; display:inline-block; font-weight:bold; border-radius:8px;">NEXT GIG: BROADCASTING LIVE</div>
-            <h1 style="text-transform:uppercase; letter-spacing:2px;">Central Scotland's Rock Authority</h1>
+        <main id="main">
+            <section id="onair" class="content-section active">
+                <div style="text-align:center; margin-top:50px;">
+                    <div style="background:#ff4500; display:inline-block; padding:10px 20px; border-radius:5px; font-weight:bold;">LIVE FROM JOHNSTONE</div>
+                    <h2 style="font-size:2em; text-transform:uppercase;">Central Scotland Rock</h2>
+                </div>
+            </section>
+
+            <section id="news" class="content-section">
+                <h2 style="color:#ff4500;">Local Wire</h2>
+                <div class="news-card"><h4>Stirling Scene</h4><p>New venues opening for local rock showcases this Friday.</p></div>
+                <div class="news-card"><h4>Glasgow Gigs</h4><p>Major headliner announced for the Barrowlands.</p></div>
+                <div class="news-card"><h4>Rock.Scot Alpha</h4><p>Build v10.23 successfully deployed via Termux.</p></div>
+            </section>
         </main>
     </div>
-    <footer style="position:fixed; bottom:0; width:100%; background:#111; padding:10px; font-size:10px; color:#555; text-align:center;">
-        v10.21_1769105202
-    </footer>
+
+    <script>
+        function tab(id) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+    </script>
 </body>
 </html>
