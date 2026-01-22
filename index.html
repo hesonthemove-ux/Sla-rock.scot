@@ -2,7 +2,7 @@
 <html lang="en-GB">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rock.Scot | Authority</title>
+    <title>Rock.Scot | The Authority</title>
     <link rel="stylesheet" href="style.css?v=1769106644">
 </head>
 <body>
@@ -11,174 +11,144 @@
         <header><img src="assets/branding/logo.png" alt="Rock.Scot"></header>
         <nav>
             <button onclick="nav('live')" id="btn-live" class="active-tab">Live</button>
-            <button onclick="nav('wire')" id="btn-wire">The Wire</button>
-            <button onclick="nav('crew')" id="btn-crew">Crew</button>
+            <button onclick="nav('crew')" id="btn-crew">The Team</button>
+            <button onclick="nav('wire')" id="btn-wire">Wire</button>
             <button onclick="nav('rates')" id="btn-rates">Advertise</button>
         </nav>
 
         <main>
             <section id="live" class="section active">
-                <div class="rate-card" style="border:none; background:rgba(0,0,0,0.6);">
-                    <div id="clock" style="font-size:3rem; font-weight:900; color:var(--accent);">00:00:00</div>
-                    <h2 style="text-transform:uppercase; letter-spacing:4px;">Broadcasting Live</h2>
-                    <p>Johnstone, Scotland</p>
-                </div>
-            </section>
-
-            <section id="wire" class="section">
-                <h2 style="margin-bottom:20px; color:var(--accent);">Central Scotland Wire</h2>
-                <div class="wire-grid" id="rss-feed">
+                <div class="card" style="text-align:center;">
+                    <div id="clock" style="font-size:3rem; font-weight:900; color:var(--accent); font-family:monospace;">00:00:00</div>
+                    <h2 style="text-transform:uppercase; letter-spacing:2px; margin-bottom:20px;">Broadcasting Live</h2>
+                    
+                    <div class="stream-container">
+                        <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" allow="autoplay"></iframe>
                     </div>
+                    <p style="margin-top:10px; font-size:0.8rem; color:#aaa;">Can't hear audio? <a href="https://player.broadcast.radio/caledonia-tx-ltd" target="_blank" style="color:var(--accent);">Launch Pop-out Player</a></p>
+                </div>
             </section>
 
             <section id="crew" class="section">
-                <h2>The Team</h2>
-                <div class="crew-grid">
-                    <div class="crew-member" onclick="openModal('DJ Gary', 'Head of Production. 20 years in the mix.')">
-                        <img src="assets/crew/dj1.jpg" class="crew-img" onerror="this.src='assets/branding/logo.png'">
-                        <p>Gary</p>
+                <h2 style="color:var(--accent); margin-bottom:15px;">On The Air</h2>
+                <div class="crew-grid" id="crew-container">
                     </div>
-                    <div class="crew-member" onclick="openModal('DJ Steve', 'The voice of Friday nights.')">
-                        <img src="assets/crew/dj2.jpg" class="crew-img" onerror="this.src='assets/branding/logo.png'">
-                        <p>Steve</p>
-                    </div>
-                     <div class="crew-member" onclick="openModal('Guest Slot', 'Rotating special guests from Glasgow.')">
-                        <img src="assets/branding/logo.png" class="crew-img">
-                        <p>Guest</p>
-                    </div>
-                </div>
+            </section>
+
+            <section id="wire" class="section">
+                <h2 style="margin-bottom:15px;">Central Scotland Wire</h2>
+                <div id="rss-feed"></div>
             </section>
 
             <section id="rates" class="section">
                 <h2>Advertising Packages</h2>
-                <div class="rate-card">
-                    <h3>The Blast</h3>
-                    <p>30-Second Rotation</p>
-                    <div class="price" id="display-price-blast">£150</div>
-                    <button style="width:100%; padding:15px; background:var(--accent); border:none; color:#fff; font-weight:bold;">BOOK NOW</button>
+                <div class="card">
+                    <h3>The Blast</h3><p>30-Second Rotation</p>
+                    <div class="price" style="font-size:2rem; font-weight:900;" id="display-price-blast">£150</div>
                 </div>
-                <div class="rate-card" style="border-color:#fff;">
-                    <h3>The Authority</h3>
-                    <p>Full Show Sponsorship</p>
-                    <div class="price" id="display-price-auth">£500</div>
-                    <button style="width:100%; padding:15px; background:#fff; color:#000; font-weight:bold;">SECURE LEAD</button>
+                <div class="card" style="border-color:#fff;">
+                    <h3>The Authority</h3><p>Full Show Sponsorship</p>
+                    <div class="price" style="font-size:2rem; font-weight:900;" id="display-price-auth">£500</div>
+                    <button onclick="nav('live')" style="width:100%; padding:15px; background:#fff; color:#000; font-weight:bold; border:none; border-radius:6px; margin-top:10px;">SECURE THIS SLOT</button>
                 </div>
-                <p style="font-size:10px; text-align:center; color:#888; margin-top:20px;">
-                    <span onclick="toggleAdmin()">Admin Access</span> | GDPR Compliant
-                </p>
-            </section>
-
-            <section id="admin" class="section">
-                <div class="rate-card" style="background:#222;">
-                    <h2 style="color:red;">CONTROL PANEL</h2>
-                    <div class="input-group">
-                        <label>Base Rate: The Blast (£)</label>
-                        <input type="number" id="admin-base-blast" value="150">
-                    </div>
-                    <div class="input-group">
-                        <label>Base Rate: Authority (£)</label>
-                        <input type="number" id="admin-base-auth" value="500">
-                    </div>
-                    <div class="input-group">
-                        <label>Surcharge (%)</label>
-                        <input type="number" id="admin-surcharge" value="0">
-                    </div>
-                    <button onclick="saveSettings()" style="width:100%; padding:15px; background:green; color:#fff; border:none;">SAVE & UPDATE SITE</button>
-                </div>
+                <div style="text-align:center; font-size:10px; color:#666; margin-top:30px;" onclick="toggleAdmin()">Admin Access</div>
             </section>
         </main>
-        
-        <div style="height:100px;"></div> <div id="player-bar">
-            <button onclick="togglePlay()" style="background:var(--accent); width:50px; height:50px; border-radius:50%; border:none; color:#fff;">▶</button>
-            <div style="flex:1;">
-                <div style="font-size:12px; color:#aaa;">NOW PLAYING</div>
-                <div style="font-weight:bold;">Rock.Scot Authority Stream</div>
-            </div>
-        </div>
     </div>
 
-    <div id="modal" class="modal" onclick="this.style.display='none'">
+    <div id="modal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 id="modal-title" style="color:var(--accent);"></h2>
-            <p id="modal-desc" style="margin-top:10px; line-height:1.5;"></p>
-            <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:20px; padding:10px 20px; background:#333; border:none; color:#fff;">CLOSE</button>
+            <h2 id="m-name" class="modal-title">Name</h2>
+            <div id="m-role" class="modal-role">Role</div>
+            <p id="m-bio" style="line-height:1.5; font-size:0.95rem;">Bio text...</p>
+            
+            <div class="stat-box"><div class="stat-label">Favourite Band</div><span id="m-band"></span></div>
+            <div class="stat-box"><div class="stat-label">Best Gig</div><span id="m-gig"></span></div>
+            <div class="stat-box"><div class="stat-label">Dream Venue</div><span id="m-venue"></span></div>
+            <div class="stat-box"><div class="stat-label">Fun Fact</div><span id="m-fact"></span></div>
+            
+            <button onclick="closeModal()" style="width:100%; margin-top:20px; padding:15px; background:var(--accent); border:none; color:#fff; font-weight:bold; border-radius:6px;">CLOSE BIO</button>
         </div>
     </div>
 
     <script>
-        // --- ROUTING ---
+        // --- DATA LAYER ---
+        const crew = [
+            { id: "andy", name: "Andy", role: "East Kilbride's Rock Rebel", bio: "Hailing from East Kilbride, Andy grew up blasting Biffy Clyro. Started pirate radio in his garage before landing at Rock.Scot.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowland", venue: "King Tut's", fact: "Lost a shoe crowd-surfing at a Big Country tribute." },
+            { id: "alex", name: "Alex", role: "Johnstone's Vinyl Viking", bio: "Born in Johnstone, Alex discovered rock via his uncle's Nazareth records. Rocks the airwaves with deep cuts and local shouts.", band: "Nazareth", gig: "Texas @ SEC Armadillo", venue: "Barrowland Ballroom", fact: "Has a signed Deacon Blue vinyl from a secret Paisley gig." },
+            { id: "stevie", name: "Stevie", role: "Port Glasgow's Headbanger", bio: "From the shipbuilding heart of Port Glasgow, Stevie was raised on AC/DC. Formed a garage band in his teens before switching to DJing.", band: "Big Country", gig: "Mogwai @ Òran Mór", venue: "Beacon Arts Centre", fact: "Claims he high-fived Angus Young at a pub." },
+            { id: "mhairi", name: "Mhairi", role: "Hamilton's Hard Rock Queen", bio: "Hamilton gave Mhairi her first taste of live rock. Instantly obsessed, trading pop for distortion pedals.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tut's", venue: "Grand Hall Kilmarnock", fact: "Is a tattoo artist specialising in rock logos." },
+            { id: "jude", name: "Jude", role: "Irvine's Indie Rock Icon", bio: "North Ayrshire's Irvine is Jude's stomping ground. Beach walks with Travis sparked a lifelong love for melodic rock.", band: "Travis", gig: "Idlewild @ Barrowland", venue: "Harbour Arts Centre", fact: "Hitchhiked to a Franz Ferdinand gig and ended up backstage." },
+            { id: "chris", name: "Chris", role: "Greenock's Guitar Guru", bio: "Greenock bred Chris on tales of Primal Scream. Started as a pub DJ before joining Rock.Scot to blast rock across the Clyde.", band: "Primal Scream", gig: "Simple Minds @ OVO Hydro", venue: "Cathouse Rock Club", fact: "Owns every Big Country album and plays flawless air guitar." },
+            { id: "cal", name: "Cal", role: "Kilmarnock's Classic Rocker", bio: "Straight out of Kilmarnock, Cal grew up on Biffy and Alex Harvey. Delivered rock to Rock.Scot fans in Ayrshire.", band: "Biffy Clyro", gig: "The Fratellis @ Grand Hall", venue: "Palace Theatre", fact: "Won an air guitar contest at an Ayrshire festival." },
+            { id: "blue", name: "Blue", role: "Gourock's Bluesy Maverick", bio: "From the seaside charm of Gourock, Blue got into rock via Nazareth. Blends bluesy riffs with rock energy.", band: "Nazareth", gig: "Texas @ Paisley Arts Centre", venue: "Coats Paisley", fact: "Blue hair once got him mistaken for a Mogwai roadie." }
+        ];
+
+        // --- RENDER CREW ---
+        const cContainer = document.getElementById('crew-container');
+        crew.forEach(c => {
+            // Using generic DJ images based on index, or logo if missing
+            let imgIndex = crew.indexOf(c) + 1; 
+            cContainer.innerHTML += `
+            <div class="crew-card" onclick="openBio('${c.id}')">
+                <img src="assets/crew/dj${imgIndex}.jpg" class="crew-img" onerror="this.src='assets/branding/logo.png'">
+                <div class="crew-name">${c.name}</div>
+                <div class="crew-role">${c.role.split(' ')[0]}...</div>
+            </div>`;
+        });
+
+        // --- MODAL LOGIC ---
+        function openBio(id) {
+            const c = crew.find(x => x.id === id);
+            document.getElementById('m-name').innerText = c.name;
+            document.getElementById('m-role').innerText = c.role;
+            document.getElementById('m-bio').innerText = c.bio;
+            document.getElementById('m-band').innerText = c.band;
+            document.getElementById('m-gig').innerText = c.gig;
+            document.getElementById('m-venue').innerText = c.venue;
+            document.getElementById('m-fact').innerText = c.fact;
+            document.getElementById('modal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+        // --- NAV & CLOCK ---
         function nav(id) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-tab'));
             document.getElementById('btn-'+id).classList.add('active-tab');
-            window.scrollTo(0,0);
         }
-
-        // --- CLOCK ---
         function updateClock() {
             document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0];
             requestAnimationFrame(updateClock);
         }
         updateClock();
 
-        // --- RSS WIRE (8 Slots Mockup) ---
-        const newsData = [
-            "Glasgow King Tut's: Sold Out Show", "Stirling Music Festival Announced", 
-            "Local Band 'The Reverbs' Hit #1", "Barrowlands Renovation Update",
-            "Paisley Arts Centre Re-opens", "Central Belt Tour Dates Released",
-            "Rock.Scot Launches New App", "Weekend Gig Guide: Edinburgh"
-        ];
-        const feedContainer = document.getElementById('rss-feed');
-        newsData.forEach(item => {
-            feedContainer.innerHTML += `<div class="news-card"><h4>${item}</h4><p style="font-size:0.8rem; color:#ccc;">Read the full story on the wire...</p></div>`;
-        });
-
-        // --- CREW MODAL ---
-        function openModal(title, desc) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-desc').innerText = desc;
-            document.getElementById('modal').style.display = 'flex';
-        }
-
-        // --- ADMIN & RATES LOGIC ---
+        // --- ADMIN ---
         function toggleAdmin() {
-            const pass = prompt("Enter Admin PIN:");
-            if(pass === "1234") nav('admin'); // Simple PIN for demo
+            if(prompt("Admin PIN") === "1234") {
+                const surcharge = prompt("Enter Surcharge % (e.g. 10)");
+                if(surcharge) {
+                    const b = 150 * (1 + surcharge/100);
+                    const a = 500 * (1 + surcharge/100);
+                    localStorage.setItem('rate_blast', b.toFixed(0));
+                    localStorage.setItem('rate_auth', a.toFixed(0));
+                    applyRates();
+                }
+            }
         }
-
-        function saveSettings() {
-            const blast = parseFloat(document.getElementById('admin-base-blast').value);
-            const auth = parseFloat(document.getElementById('admin-base-auth').value);
-            const surcharge = parseFloat(document.getElementById('admin-surcharge').value);
-            
-            // Calc
-            const finalBlast = blast + (blast * (surcharge/100));
-            const finalAuth = auth + (auth * (surcharge/100));
-
-            localStorage.setItem('rate_blast', finalBlast.toFixed(0));
-            localStorage.setItem('rate_auth', finalAuth.toFixed(0));
-            
-            applyRates();
-            alert("Rates Updated! Check the Advertise tab.");
-            nav('rates');
-        }
-
         function applyRates() {
-            const b = localStorage.getItem('rate_blast') || "150";
-            const a = localStorage.getItem('rate_auth') || "500";
-            document.getElementById('display-price-blast').innerText = "£" + b;
-            document.getElementById('display-price-auth').innerText = "£" + a;
+            document.getElementById('display-price-blast').innerText = "£" + (localStorage.getItem('rate_blast') || "150");
+            document.getElementById('display-price-auth').innerText = "£" + (localStorage.getItem('rate_auth') || "500");
         }
-        applyRates(); // Run on load
-
-        // --- AUDIO ---
-        let playing = false;
-        function togglePlay() {
-            playing = !playing;
-            document.querySelector('#player-bar button').innerText = playing ? "❚❚" : "▶";
-            // Audio integration goes here
-        }
+        applyRates();
+        
+        // --- NEWS WIRE MOCKUP ---
+        const news = ["New Studio in Johnstone", "Stirling Rock Fest", "Live: Glasgow Garage", "Review: Biffy at Hydro"];
+        const nCon = document.getElementById('rss-feed');
+        news.forEach(n => {
+            nCon.innerHTML += `<div class="card" style="padding:15px;"><h4>${n}</h4><p style="font-size:0.8rem; color:#aaa;">Read more on the wire...</p></div>`;
+        });
     </script>
 </body>
 </html>
