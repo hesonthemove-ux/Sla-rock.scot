@@ -43,6 +43,7 @@
                     <form id="bookingForm" onsubmit="handleLead(event)">
                         <input type="text" id="name" placeholder="YOUR NAME" required>
                         <input type="text" id="biz" placeholder="BUSINESS NAME" required>
+<input type="text" id="h-num" class="house-num" placeholder="HOUSE / UNIT NUMBER" required>
                         <input type="email" id="email" placeholder="EMAIL" required>
                         <div style="display:flex; gap:5px;">
                             <input type="text" id="postcode" placeholder="POSTCODE" style="flex:2;">
@@ -55,7 +56,7 @@
                         </select>
                         <div class="price-tag" id="total-price">£295</div>
                         <button type="submit" class="btn-submit">SUBMIT SECURE LEAD</button>
-                        <p style="font-size:9px; margin-top:10px;">Subject to COMPLIANCE.md & Scots Law.</p>
+                        <p style="font-size:9px; margin-top:10px;">Subject to <span onclick="openTC()" style="text-decoration:underline; cursor:pointer; color:var(--acid);">Terms & Conditions</span>.</p>
                     </form>
                 </div>
             </section>
@@ -112,5 +113,15 @@
         }
         updateClock();
     </script>
+    <div id="tc-popup"> 
+        <div class="tc-box"> 
+            <h3>STATION TERMS & CONDITIONS</h3> 
+            <p><strong>1. COMPLIANCE:</strong> All content must comply with BCAP and Ofcom codes.</p> 
+            <p><strong>2. INDEMNITY:</strong> Advertiser indemnifies Caledonia Tx Ltd against all legal fees and Ofcom fines.</p> 
+            <p><strong>3. JURISDICTION:</strong> Scots Law. Sheriffdom of Renfrewshire at Paisley.</p> 
+            <p><strong>4. REJECTION:</strong> We reserve the right to refuse content per Ofcom Section 2.</p> 
+            <button onclick="closeTC()" style="width:100%; padding:15px; background:var(--orange); color:#fff; border:none; font-weight:900;">CLOSE</button> 
+        </div> 
+    </div>
 </body>
 </html>
