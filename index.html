@@ -1,49 +1,36 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock.Scot | Central Scotland Authority</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rock.Scot | Universal Authority</title>
     <link rel="stylesheet" href="style.css?v=1769105996">
 </head>
 <body>
-    <div id="bg-layer" style="background-image: url('assets/backgrounds/bg1.jpg');"></div>
-    <div class="overlay">
+    <div id="bg-layer"></div>
+    <div class="master-container">
         <header><img src="assets/branding/logo.png" alt="Rock.Scot"></header>
         <nav>
-            <button onclick="showTab('live')">Live</button>
-            <button onclick="showTab('wire')">The Wire</button>
-            <button onclick="showTab('rates')">Rates</button>
+            <button onclick="tab('live')">Live</button>
+            <button onclick="tab('wire')">The Wire</button>
+            <button onclick="tab('rates')">Rates</button>
         </nav>
         <main>
-            <section id="live" class="section active">
-                <div class="glass-card" style="text-align:center;">
+            <section id="live" style="display:block;">
+                <div class="glass-card">
                     <div id="clock">00:00:00</div>
-                    <p style="text-transform:uppercase; letter-spacing:3px;">Broadcasting Live</p>
-                    <div style="background:var(--accent); padding:15px; border-radius:8px; font-weight:bold; margin-top:20px;">LISTEN LIVE</div>
+                    <p>CENTRAL SCOTLAND AUTHORITY</p>
+                    <a href="#" class="btn-live">LISTEN LIVE</a>
                 </div>
-            </section>
-            <section id="wire" class="section">
-                <h2 style="color:var(--accent);">The Wire</h2>
-                <div class="glass-card"><h3>Glasgow Scene</h3><p>New headliners at the Barrowlands.</p></div>
-                <div class="glass-card"><h3>Stirling Rock</h3><p>Local showcase starting at 8pm.</p></div>
-            </section>
-            <section id="rates" class="section">
-                <h2 style="color:var(--accent);">Advertising</h2>
-                <div class="glass-card"><p>Premium reach across Central Scotland.</p><button style="width:100%; padding:15px; background:var(--accent); border:none; color:#fff; border-radius:8px; font-weight:bold;">GET RATES</button></div>
             </section>
         </main>
     </div>
     <script>
-        function showTab(id) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
         function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
+            document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0];
             requestAnimationFrame(updateClock);
         }
-        requestAnimationFrame(updateClock);
+        updateClock();
     </script>
 </body>
 </html>
