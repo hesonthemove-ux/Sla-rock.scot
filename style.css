@@ -10,3 +10,11 @@ nav button { flex: 1; padding: 20px; background: none; border: none; color: #fff
 .admin-panel { background: #111; border: 2px dashed red; padding: 20px; display: none; margin-top: 20px; }
 input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #222; border: 1px solid var(--orange); color: #fff; border-radius: 4px; }
 .btn-submit { background: var(--orange); color: #fff; padding: 20px; border: none; width: 100%; font-weight: 900; cursor: pointer; }
+#cookie-guard {
+    position: fixed; bottom: 0; left: 0; width: 100%; 
+    background: #000; border-top: 2px solid var(--acid);
+    padding: 20px; z-index: 9999; display: none;
+}
+.legal-box { font-size: 11px; color: #aaa; line-height: 1.4; max-width: 800px; margin: 0 auto; }
+.legal-btns { margin-top: 15px; display: flex; gap: 10px; justify-content: center; }
+.btn-legal { padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; }
