@@ -1,0 +1,27 @@
+:root { --accent: #ff4500; --glass: rgba(255, 255, 255, 0.1); }
+body { margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; }
+#app-container { width: 90%; margin: 0 auto; height: 100vh; display: flex; flex-direction: column; }
+section { display: none; flex: 1; overflow-y: auto; padding: 20px; }
+section.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.glass-card { background: var(--glass); backdrop-filter: blur(10px); border-radius: 16px; padding: 20px; }
+#digital-clock { font-family: 'Oswald', sans-serif; font-variant-numeric: tabular-nums; font-size: 2rem; }
+#crew-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 20px 0;
+    scrollbar-width: none; /* Hide for clean look */
+}
+.crew-member {
+    flex: 0 0 85%; /* Shows most of one, hint of next */
+    scroll-snap-align: center;
+}
+.crew-member img {
+    width: 100%;
+    border-radius: 12px;
+    filter: grayscale(1);
+    transition: filter 0.3s ease;
+}
+.crew-member:hover img { filter: grayscale(0); }
