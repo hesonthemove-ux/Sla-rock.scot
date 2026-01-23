@@ -1,23 +1,23 @@
 # ROCK.SCOT | THE COMPLIANCE BIBLE (LOCKED)
-# Version: 1.0 (2026-01-22)
-# Station Licensee: Caledonia Tx Ltd
+# Version: 1.2 (Revised: 2026-01-23)
+# Station Licensee: Caledonia TX Limited
 
-## I. OFCOM BROADCASTING CODE
-- **Section 2 (Harm & Offence):** All content, including advertising, must meet the standards of the Ofcom Broadcasting Code.
-- **Independence:** Editorial and commercial content must remain clearly distinguished.
+## I. CORPORATE IDENTITY (COMPANIES ACT COMPLIANCE)
+- **Registered Name:** Caledonia TX Limited
+- **Trading Name:** Rock.Scot
+- **Company Number:** SC646223 (Scotland)
+- **Registered Office:** 19 Hogg Avenue, Johnstone, Scotland, PA5 0EZ
 
-## II. UK ADVERTISING LAW (ASA/CAP/BCAP)
-- **BCAP Code:** All radio advertisements must comply with the UK Code of Broadcast Advertising.
-- **Indemnity:** Every advertiser (Caledonia Tx Ltd) must indemnify the station against legal losses, fines (Ofcom), or litigation fees arising from their content.
+## II. OFCOM BROADCASTING & LOCALNESS
+- **Licensing:** Licensed by Ofcom for Digital Sound Programme (DSP) services.
+- **News Policy:** Rock.Scot is a music-led service. It does NOT carry a regular scheduled news service. Local information is provided via digital platforms (The Wire).
+- **Public File:** A copy of this compliance record and the Ofcom Broadcasting Code link must be accessible to the public via the 'Public Info' tab.
 
-## III. DATA PROTECTION & PRIVACY (UK GDPR)
-- **Jurisdiction:** Governed by the UK Data Protection Act 2018 and PECR.
-- **Lead Capture:** Every enquiry submitted via Supabase must log explicit consent and authority to contract.
+## III. ADVERTISING & INDEMNITY (ASA/CAP/BCAP)
+- **Legal Engine:** All advertisers MUST agree to the Terms & Conditions.
+- **Indemnity:** Caledonia TX Limited is indemnified against all Ofcom fines and legal costs arising from third-party content.
+- **Jurisdiction:** Exclusive jurisdiction of the Sheriffdom of Renfrewshire at Paisley.
 
-## IV. LEGAL JURISDICTION
-- **Legal Engine:** All disputes are governed by Scots Law.
-- **Exclusive Venue:** The Sheriffdom of Renfrewshire at Paisley.
-
-## V. STATION RULES (COMMERCIAL)
-- **Inventory Cap:** Maximum 40 active advertisers per 28-day cycle.
-- **Surcharge Engine:** 1.3x multiplier for campaigns < 27 days.
+## IV. DATA GOVERNANCE (UK GDPR)
+- **Lead Capture:** Postcode verification via Postcodes.io (Free/Open Source).
+- **Consent:** Prior-consent cookie guard must be active for all non-essential tracking.
