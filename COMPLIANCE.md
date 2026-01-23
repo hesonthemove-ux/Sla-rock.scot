@@ -1,15 +1,10 @@
 # ROCK.SCOT | THE COMPLIANCE BIBLE (LOCKED)
 # Operator: Caledonia TX Limited (SC646223)
+# Registered Office: 19 Hogg Avenue, Johnstone, PA5 0EZ
 
-## COMMERCIAL PRICING & INVENTORY
-- Single Region (Inverclyde/S.Lanark/N.Ayrshire): £295
-- Multi-Region (All Areas): £449
-- Station Sponsor: £2500
-- Production Add-on: £195
-- Inventory Cap: Hard limit of 40 active advertisers per cycle.
-
-## THE CAST IRON CLAUSE (INDEMNITY)
-The Advertiser shall indemnify and keep indemnified Caledonia Tx Ltd against all actions, proceedings, costs, damages, expenses, penalties, claims, and liabilities (including legal fees on a solicitor-client basis) arising from any breach of warranty or regulatory requirement.
-
-## JURISDICTION
-Exclusive jurisdiction of the Sheriffdom of Renfrewshire at Paisley.
+## MANDATORY COMMERCIAL TERMS 
+- Single Region (Inverclyde OR S.Lanark OR N.Ayrshire): £295 per 28-day cycle.
+- Multi-Region (All 3 Areas): £449 per 28-day cycle.
+- Station Sponsor (Primary Rotation): £2500.
+- Production Fee (Station Created): £195 one-off fee.
+- The Cast Iron Clause: The Advertiser INDEMNIFIES Caledonia Tx Ltd against all legal/Ofcom costs.
