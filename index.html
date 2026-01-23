@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Rock.Scot | Central Scotland Authority</title>
-    <link rel="stylesheet" href="style.css?v=1769127006">
+    <link rel="stylesheet" href="style.css?v=1769130001">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div id="stage"></div>
     <div class="viewport">
         <header><img src="./assets/branding/logo.png" alt="ROCK.SCOT"></header>
         <nav>
-            <button onclick="tab('live')">LIVE</button>
-            <button onclick="tab('crew')">CREW</button>
+            <button onclick="tab('live')">ON AIR</button>
+            <button onclick="tab('crew')">TEAM</button>
             <button onclick="tab('wire')">WIRE</button>
             <button onclick="tab('rates')">ADVERTISE</button>
+            <button onclick="tab('public')">PUBLIC INFO</button>
         </nav>
+
         <main>
             <section id="live" class="section active">
                 <div class="grunge-card">
-                    <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:180px; border:2px solid var(--orange);"></iframe>
+                    <h1 id="clock" style="font-size:3rem; color:var(--orange); text-align:center;">00:00:00</h1>
+                    <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:180px; border:2px solid var(--orange); margin-top:15px;"></iframe>
                 </div>
             </section>
 
@@ -31,54 +35,112 @@
             </section>
 
             <section id="rates" class="section">
-                </section>
+                <div class="grunge-card">
+                    <h2 style="color:var(--orange);">BOOKING ENQUIRY</h2>
+                    <form id="bookingForm" onsubmit="handleLead(event)">
+                        <input type="text" id="name" placeholder="YOUR NAME" required>
+                        <input type="text" id="biz" placeholder="BUSINESS NAME" required>
+                        <input type="text" id="h-num" class="house-num" placeholder="HOUSE / UNIT NUMBER" required style="background:#222; color:var(--acid); border:1px solid var(--acid);">
+                        <div style="display:flex; gap:5px;">
+                            <input type="text" id="postcode" placeholder="POSTCODE" style="flex:2;">
+                            <button type="button" onclick="lookupPostcode()" class="lookup-btn" style="flex:1; background:var(--acid); font-weight:900; border:none; cursor:pointer;">FIND</button>
+                        </div>
+                        <input type="email" id="email" placeholder="EMAIL ADDRESS" required>
+                        <select id="pkg" onchange="calcTotal()">
+                            <option value="295">From £295 (Single Region)*</option>
+                            <option value="449">From £449 (Multi-Region)*</option>
+                            <option value="2500">From £2500 (Sponsor)*</option>
+                        </select>
+                        <div class="price-tag" id="total-price">£295</div>
+                        <p style="font-size:10px; color:var(--orange);">*Terms and Conditions apply. Rates are starting prices.</p>
+                        <button type="submit" class="btn-submit" style="width:100%; padding:20px; background:var(--orange); border:none; color:#fff; font-weight:900; cursor:pointer;">SUBMIT SECURE ENQUIRY</button>
+                        <p style="font-size:10px; margin-top:15px; text-align:center;">Subject to <span onclick="openTC()" style="text-decoration:underline; cursor:pointer; color:var(--acid);">Terms & Conditions</span></p>
+                    </form>
+                </div>
+            </section>
+
+            <section id="public" class="section">
+                <div class="grunge-card">
+                    <h2>PUBLIC INFORMATION</h2>
+                    <p style="margin-bottom:15px;"><strong>Caledonia TX Ltd t/a Rock.Scot</strong></p>
+                    <p><strong>Reg No:</strong> SC712543 (Scotland)</p>
+                    <p><strong>Studio:</strong> Johnstone, Renfrewshire</p>
+                    <p><strong>Complaints:</strong> In the first instance, contact the Station Manager. If unsatisfied, contact Ofcom.</p>
+                    <hr style="border:1px solid #333; margin:15px 0;">
+                    <p style="font-size:0.8rem;">This station is licensed by Ofcom and operates under the UK Broadcasting Code.</p>
+                </div>
+            </section>
         </main>
+
+        <div id="modal" class="modal-bg" onclick="closeModal()">
+            <div class="grunge-card modal-content" onclick="event.stopPropagation()">
+                <h2 id="m-name" style="color:var(--orange);"></h2>
+                <div id="m-body"></div>
+                <button onclick="closeModal()" class="btn-submit" style="margin-top:20px; padding:10px;">CLOSE</button>
+            </div>
+        </div>
     </div>
 
+    <script src="js/commercial_logic.js"></script>
     <script>
+        const crewData = [
+            { n: "Andy", f: "dj_andy.jpg", bio: "Hailing from East Kilbride, Andy grew up blasting Biffy Clyro. Started pirate radio in his garage.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands" },
+            { n: "Alex", f: "dj_alex.jpg", bio: "Born and bred in Johnstone. Discovered rock via Nazareth records.", band: "Nazareth", gig: "Texas @ SEC" },
+            { n: "Stevie", f: "dj_stevie.jpg", bio: "Raised on Clyde rockers and AC/DC. Keeping Inverclyde loud.", band: "Big Country", gig: "Mogwai @ Oran Mor" },
+            { n: "Mhairi", f: "dj_mhairi.jpg", bio: "Trading pop for distortion pedals. Hamilton's finest rock banter.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tuts" },
+            { n: "Jude", f: "dj_jude.jpg", bio: "Irvine stomping ground. Championing emerging Scottish acts.", band: "Travis", gig: "Idlewild @ Barrowlands" },
+            { n: "Chris", f: "dj_chris.jpg", bio: "Bred on tales of Primal Scream. Blasting rock across the Firth of Clyde.", band: "Primal Scream", gig: "Simple Minds @ Hydro" },
+            { n: "Cal", f: "dj_cal.jpg", bio: "Killie lad raised on Biffy and Alex Harvey.", band: "Biffy Clyro", gig: "Fratellis @ Grand Hall" },
+            { n: "Blue", f: "dj_blue.jpg", bio: "Nazareth and Gerry Rafferty influence. Bluesy riffs, rock energy.", band: "Nazareth", gig: "Texas @ Paisley Arts" }
+        ];
+
         function tab(id) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if(id === 'wire') fetchWire();
+            if(id === 'wire') renderWire();
         }
 
-        const crew = [
-            { n: "Andy", f: "dj_andy.jpg" }, { n: "Alex", f: "dj_alex.jpg" },
-            { n: "Stevie", f: "dj_stevie.jpg" }, { n: "Mhairi", f: "dj_mhairi.jpg" },
-            { n: "Jude", f: "dj_jude.jpg" }, { n: "Chris", f: "dj_chris.jpg" },
-            { n: "Cal", f: "dj_cal.jpg" }, { n: "Blue", f: "dj_blue.jpg" }
-        ];
-
-        // FIXED PATHING: Ensuring ./assets/crew/ is used
-        const cList = document.getElementById('crew-list');
-        crew.forEach(p => {
-            cList.innerHTML += `
-                <div class="grunge-card" style="text-align:center;">
-                    <img src="./assets/crew/${p.f}" onerror="this.src='./assets/branding/logo.png'" style="width:100%; filter:grayscale(100%);">
-                    <p style="margin-top:10px; font-weight:bold;">${p.n}</p>
+        function renderCrew() {
+            const list = document.getElementById('crew-list');
+            list.innerHTML = '';
+            crewData.forEach(c => {
+                list.innerHTML += `
+                <div class="grunge-card" style="text-align:center; cursor:pointer;" onclick="openBio('${c.n}')">
+                    <img src="./assets/crew/${c.f}" onerror="this.src='./assets/branding/logo.png'" style="width:100%; filter:grayscale(100%);">
+                    <p style="margin-top:10px; font-weight:bold;">${c.n}</p>
                 </div>`;
-        });
-
-        // FIXED WIRE: Central Scotland Music News Fallback
-        function fetchWire() {
-            const content = document.getElementById('wire-content');
-            content.innerHTML = '<p>FETCHING LATEST NEWS...</p>';
-            
-            const feeds = [
-                { t: "Barrowlands Sold Out", d: "Major Scottish rock act announces third date." },
-                { t: "King Tuts Discovery", d: "New band from Johnstone making waves." },
-                { t: "Hydro Rock Fest", d: "Central Scotland's biggest indoor fest returns." }
-            ];
-
-            content.innerHTML = '';
-            feeds.forEach(f => {
-                content.innerHTML += `
-                    <div class="wire-item">
-                        <h4>${f.t}</h4>
-                        <p style="font-size:0.8rem;">${f.d}</p>
-                    </div>`;
             });
         }
+
+        function openBio(name) {
+            const c = crewData.find(x => x.n === name);
+            document.getElementById('m-name').innerText = c.n;
+            document.getElementById('m-body').innerHTML = `<p>${c.bio}</p><br><strong>FAV BAND:</strong> ${c.band}<br><strong>BEST GIG:</strong> ${c.gig}`;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function renderWire() {
+            const list = document.getElementById('wire-content');
+            const stories = [
+                { t: "Barrowlands Expansion News", b: "The legendary Glasgow venue is discussing potential new safety measures for upcoming sold-out rock weeks.", s: "Glasgow Music News" },
+                { t: "Johnstone Band Breaks Record", b: "A local group from Johnstone has reached the top of the indie charts this morning.", s: "Central Rock Feed" }
+            ];
+            list.innerHTML = '';
+            stories.forEach(s => {
+                list.innerHTML += `
+                <div class="grunge-card">
+                    <h3>${s.t}</h3>
+                    <p style="margin:10px 0; font-size:0.9rem;">${s.b}</p>
+                    <p style="font-size:0.7rem; color:var(--acid);">SOURCE: ${s.s}</p>
+                </div>`;
+            });
+        }
+
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        function updateClock() { document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0]; requestAnimationFrame(updateClock); }
+        
+        renderCrew();
+        updateClock();
     </script>
 </body>
 </html>
