@@ -1,23 +1,13 @@
 # ROCK.SCOT | THE COMPLIANCE BIBLE (LOCKED)
-# Version: 1.2 (Revised: 2026-01-23)
-# Station Licensee: Caledonia TX Limited
+# Operator: Caledonia TX Limited (SC646223)
 
-## I. CORPORATE IDENTITY (COMPANIES ACT COMPLIANCE)
-- **Registered Name:** Caledonia TX Limited
-- **Trading Name:** Rock.Scot
-- **Company Number:** SC646223 (Scotland)
-- **Registered Office:** 19 Hogg Avenue, Johnstone, Scotland, PA5 0EZ
+## ADVERTISING INVENTORY RULES
+- **Frequency:** Minimum 6 plays per 24-hour cycle (Ad breaks at :20 and :40).
+- **Advertiser Cap:** Hard limit of 40 active advertisers per 28-day period.
+- **Duration:** Standard 30-second creative length.
+- **Pro-Rata Surcharge:** 30% multiplier for campaigns shorter than 27 days.
 
-## II. OFCOM BROADCASTING & LOCALNESS
-- **Licensing:** Licensed by Ofcom for Digital Sound Programme (DSP) services.
-- **News Policy:** Rock.Scot is a music-led service. It does NOT carry a regular scheduled news service. Local information is provided via digital platforms (The Wire).
-- **Public File:** A copy of this compliance record and the Ofcom Broadcasting Code link must be accessible to the public via the 'Public Info' tab.
-
-## III. ADVERTISING & INDEMNITY (ASA/CAP/BCAP)
-- **Legal Engine:** All advertisers MUST agree to the Terms & Conditions.
-- **Indemnity:** Caledonia TX Limited is indemnified against all Ofcom fines and legal costs arising from third-party content.
-- **Jurisdiction:** Exclusive jurisdiction of the Sheriffdom of Renfrewshire at Paisley.
-
-## IV. DATA GOVERNANCE (UK GDPR)
-- **Lead Capture:** Postcode verification via Postcodes.io (Free/Open Source).
-- **Consent:** Prior-consent cookie guard must be active for all non-essential tracking.
+## LEGAL (THE CAST IRON CLAUSE)
+- [span_1](start_span)The Advertiser shall indemnify Caledonia Tx Ltd (trading as Rock.Scot) against all actions, costs, and penalties (including Ofcom fines)[span_1](end_span).
+- [span_2](start_span)Governing Law: Scots Law[span_2](end_span).
+- [span_3](start_span)Jurisdiction: Exclusive jurisdiction of the Sheriffdom of Renfrewshire at Paisley[span_3](end_span).
