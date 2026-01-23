@@ -1,0 +1,25 @@
+<section id="rates" class="section">
+    <div class="grunge-card">
+        <h2 style="color:#ff5500;">BOOKING ENQUIRY</h2>
+        <form id="bookingForm" onsubmit="handleLead(event)">
+            <input type="text" id="name" placeholder="YOUR NAME" required>
+            <input type="text" id="biz" placeholder="BUSINESS NAME" required>
+            <input type="text" id="h-num" placeholder="HOUSE / UNIT NUMBER" required>
+            <div style="display:flex; gap:5px;"><input type="text" id="postcode" placeholder="POSTCODE" style="flex:2;"><button type="button" class="lookup-btn" style="flex:1;">FIND</button></div>
+            <label style="font-size:0.7rem; color:#aaa; display:block; margin-top:10px;">PACKAGE</label>
+            <select id="pkg" onchange="calcTotal()">
+                <option value="295">Single Region - £295</option>
+                <option value="449">Multi-Region - £449</option>
+                <option value="2500">Station Sponsor - £2500</option>
+            </select>
+            <label style="font-size:0.7rem; color:#aaa; display:block; margin-top:10px;">PRODUCTION</label>
+            <select id="prod" onchange="calcTotal()">
+                <option value="0">Supplying own Audio</option>
+                <option value="195">Station Production (+£195)</option>
+            </select>
+            <div id="total-price" style="font-size:2rem; color:#a2ff00; margin:15px 0; font-weight:900;">TOTAL: £295</div>
+            <button type="submit" class="btn-submit">SUBMIT SECURE ENQUIRY</button>
+            <p style="font-size:10px; margin-top:10px; text-align:center;">Subject to <span onclick="openTC()" style="text-decoration:underline; cursor:pointer; color:#a2ff00;">Terms & Conditions</span></p>
+        </form>
+    </div>
+</section>
