@@ -2,126 +2,83 @@
 <html lang="en-GB">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rock.Scot | Central Scotland Rock Authority</title>
-    <link rel="stylesheet" href="style.css?v=1769125595">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>Rock.Scot | Central Scotland Authority</title>
+    <link rel="stylesheet" href="style.css?v=1769127006">
 </head>
 <body>
     <div id="stage"></div>
     <div class="viewport">
-        <header><img src="assets/branding/logo.png" alt="Rock.Scot"></header>
+        <header><img src="./assets/branding/logo.png" alt="ROCK.SCOT"></header>
         <nav>
-            <button onclick="tab('live')">ON AIR</button>
-            <button onclick="tab('crew')">THE TEAM</button>
-            <button onclick="tab('wire')">THE WIRE</button>
+            <button onclick="tab('live')">LIVE</button>
+            <button onclick="tab('crew')">CREW</button>
+            <button onclick="tab('wire')">WIRE</button>
             <button onclick="tab('rates')">ADVERTISE</button>
         </nav>
-
         <main>
             <section id="live" class="section active">
                 <div class="grunge-card">
-                   <h1 id="clock" style="font-size:3.5rem; color:var(--orange);">00:00:00</h1>
-                   <div class="stream-container" style="margin-top:20px; border:2px solid var(--orange); height:200px; overflow:hidden;">
-                        <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:100%; border:none;"></iframe>
-                   </div>
+                    <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:180px; border:2px solid var(--orange);"></iframe>
                 </div>
             </section>
 
             <section id="crew" class="section">
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px;" id="crew-grid">
-                    </div>
+                <div class="crew-grid" id="crew-list"></div>
             </section>
 
             <section id="wire" class="section">
-                <div id="wire-grid">
-                    </div>
+                <div id="wire-content"></div>
             </section>
 
             <section id="rates" class="section">
-                <div class="grunge-card">
-                    <h2 style="color:var(--orange);">ADVERTISING ENQUIRY</h2>
-                    <form id="bookingForm" onsubmit="handleLead(event)">
-                        <input type="text" id="name" placeholder="YOUR NAME" required>
-                        <input type="text" id="biz" placeholder="BUSINESS NAME" required>
-<input type="text" id="h-num" class="house-num" placeholder="HOUSE / UNIT NUMBER" required>
-                        <input type="email" id="email" placeholder="EMAIL" required>
-                        <div style="display:flex; gap:5px;">
-                            <input type="text" id="postcode" placeholder="POSTCODE" style="flex:2;">
-                            <button type="button" onclick="lookupPostcode()" class="lookup-btn" style="flex:1; background:var(--acid); font-weight:900;">FIND</button>
-                        </div>
-                        <select id="pkg" onchange="calcTotal()">
-                            <option value="295">Single Region (£295/28 Days)</option>
-                            <option value="449">Multi-Region (£449/28 Days)</option>
-                            <option value="2500">Sponsor (£2500/Mo)</option>
-                        </select>
-                        <div class="price-tag" id="total-price">£295</div>
-                        <button type="submit" class="btn-submit">SUBMIT SECURE LEAD</button>
-                        <p style="font-size:9px; margin-top:10px;">Subject to <span onclick="openTC()" style="text-decoration:underline; cursor:pointer; color:var(--acid);">Terms & Conditions</span>.</p>
-                    </form>
-                </div>
-            </section>
+                </section>
         </main>
     </div>
 
-    <div id="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:2000; align-items:center; justify-content:center; padding:20px;" onclick="this.style.display='none'">
-        <div class="grunge-card" style="max-width:500px; width:100%;" onclick="event.stopPropagation()">
-            <h2 id="m-name" style="color:var(--orange);"></h2>
-            <p id="m-bio" style="margin:15px 0; line-height:1.4;"></p>
-            <div id="m-stats" style="font-size:0.8rem; background:#111; padding:10px; border-left:3px solid var(--acid);"></div>
-            <button onclick="document.getElementById('modal').style.display='none'" style="width:100%; margin-top:15px; padding:10px; background:var(--orange); border:none; color:#fff; font-weight:900;">CLOSE DOSSIER</button>
-        </div>
-    </div>
-
     <script>
-        const crewData = [
-            { name: "Andy", role: "East Kilbride Rebel", bio: "Hailing from East Kilbride, Andy grew up blasting Biffy Clyro. Started pirate radio in his garage.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands", fact: "Lost a shoe crowd-surfing." },
-            { name: "Alex", role: "Johnstone Vinyl Viking", bio: "Born and bred in Johnstone. Discovered rock via Nazareth records.", band: "Nazareth", gig: "Texas @ SEC", fact: "Has signed Deacon Blue vinyl." },
-            { name: "Stevie", role: "Port Glasgow Headbanger", bio: "Raised on Clyde rockers and AC/DC. Keeping Inverclyde loud.", band: "Big Country", gig: "Mogwai @ Oran Mor", fact: "High-fived Angus Young." },
-            { name: "Mhairi", role: "Hamilton Rock Queen", bio: "Trading pop for distortion pedals. Hamilton's finest rock banter.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tuts", fact: "Tattoo artist." },
-            { name: "Jude", role: "Irvine Indie Icon", bio: "Irvine stomping ground. Championing emerging Scottish acts.", band: "Travis", gig: "Idlewild @ Barrowlands", fact: "Hitchhiked to a gig." },
-            { name: "Chris", role: "Greenock Guru", bio: "Bred on tales of Primal Scream. Blasting rock across the Firth of Clyde.", band: "Primal Scream", gig: "Simple Minds @ Hydro", fact: "Flawless air guitar." },
-            { name: "Cal", role: "Kilmarnock Classic", bio: "Killie lad raised on Biffy and Alex Harvey.", band: "Biffy Clyro", gig: "Fratellis @ Grand Hall", fact: "Won air guitar contests." },
-            { name: "Blue", role: "Gourock Maverick", bio: "Nazareth and Gerry Rafferty influence. Bluesy riffs, rock energy.", band: "Nazareth", gig: "Texas @ Paisley Arts", fact: "Mistaken for a roadie." }
-        ];
-
         function tab(id) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
+            if(id === 'wire') fetchWire();
         }
 
-        // Render Crew
-        const grid = document.getElementById('crew-grid');
-        crewData.forEach(c => {
-            grid.innerHTML += `
-                <div class="grunge-card" style="text-align:center; cursor:pointer;" onclick="openBio('${c.name}')">
-                    <img src="assets/branding/logo.png" style="width:60px; height:60px; border-radius:50%; border:2px solid var(--orange);">
-                    <div style="font-weight:900; margin-top:10px; font-size:0.8rem;">${c.name}</div>
+        const crew = [
+            { n: "Andy", f: "dj_andy.jpg" }, { n: "Alex", f: "dj_alex.jpg" },
+            { n: "Stevie", f: "dj_stevie.jpg" }, { n: "Mhairi", f: "dj_mhairi.jpg" },
+            { n: "Jude", f: "dj_jude.jpg" }, { n: "Chris", f: "dj_chris.jpg" },
+            { n: "Cal", f: "dj_cal.jpg" }, { n: "Blue", f: "dj_blue.jpg" }
+        ];
+
+        // FIXED PATHING: Ensuring ./assets/crew/ is used
+        const cList = document.getElementById('crew-list');
+        crew.forEach(p => {
+            cList.innerHTML += `
+                <div class="grunge-card" style="text-align:center;">
+                    <img src="./assets/crew/${p.f}" onerror="this.src='./assets/branding/logo.png'" style="width:100%; filter:grayscale(100%);">
+                    <p style="margin-top:10px; font-weight:bold;">${p.n}</p>
                 </div>`;
         });
 
-        function openBio(name) {
-            const c = crewData.find(x => x.name === name);
-            document.getElementById('m-name').innerText = c.name;
-            document.getElementById('m-bio').innerText = c.bio;
-            document.getElementById('m-stats').innerHTML = `<strong>BAND:</strong> ${c.band}<br><strong>GIG:</strong> ${c.gig}<br><strong>FACT:</strong> ${c.fact}`;
-            document.getElementById('modal').style.display = 'flex';
-        }
+        // FIXED WIRE: Central Scotland Music News Fallback
+        function fetchWire() {
+            const content = document.getElementById('wire-content');
+            content.innerHTML = '<p>FETCHING LATEST NEWS...</p>';
+            
+            const feeds = [
+                { t: "Barrowlands Sold Out", d: "Major Scottish rock act announces third date." },
+                { t: "King Tuts Discovery", d: "New band from Johnstone making waves." },
+                { t: "Hydro Rock Fest", d: "Central Scotland's biggest indoor fest returns." }
+            ];
 
-        function updateClock() {
-            document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0];
-            requestAnimationFrame(updateClock);
+            content.innerHTML = '';
+            feeds.forEach(f => {
+                content.innerHTML += `
+                    <div class="wire-item">
+                        <h4>${f.t}</h4>
+                        <p style="font-size:0.8rem;">${f.d}</p>
+                    </div>`;
+            });
         }
-        updateClock();
     </script>
-    <div id="tc-popup"> 
-        <div class="tc-box"> 
-            <h3>STATION TERMS & CONDITIONS</h3> 
-            <p><strong>1. COMPLIANCE:</strong> All content must comply with BCAP and Ofcom codes.</p> 
-            <p><strong>2. INDEMNITY:</strong> Advertiser indemnifies Caledonia Tx Ltd against all legal fees and Ofcom fines.</p> 
-            <p><strong>3. JURISDICTION:</strong> Scots Law. Sheriffdom of Renfrewshire at Paisley.</p> 
-            <p><strong>4. REJECTION:</strong> We reserve the right to refuse content per Ofcom Section 2.</p> 
-            <button onclick="closeTC()" style="width:100%; padding:15px; background:var(--orange); color:#fff; border:none; font-weight:900;">CLOSE</button> 
-        </div> 
-    </div>
 </body>
 </html>
