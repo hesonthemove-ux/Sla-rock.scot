@@ -11,4 +11,4 @@ We collect data under 'Contractual Necessity' for advertising leads and 'Legitim
 - **Marketing:** Lead generation tracking (Requires explicit opt-in).
 
 ## 3. YOUR RIGHTS
-Under UK GDPR, users in Johnstone, the wider UK, and the EU have the right to access, erase, or port their data. Contact dpo@rock.scot.
+Under UK GDPR, users in Scotland, the wider UK, and the EU have the right to access, erase, or port their data. Contact dpo@rock.scot.
