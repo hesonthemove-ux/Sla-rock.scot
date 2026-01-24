@@ -30,3 +30,8 @@ body {
     padding: 10px;
     margin-top: 20px;
 }
+.team-card { position: relative; margin-bottom: -50px; transition: 0.3s; cursor: pointer; }
+.team-card:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 100; border-color: #FF8C00; box-shadow: 0 0 20px #FF8C00; }
+.bio-popout { display: none; padding: 15px; background: #FF8C00; color: #000; margin-top: 10px; font-weight: bold; }
+.punk-btn { background: #000; color: #FF8C00; border: 2px solid #FF8C00; padding: 5px 10px; font-weight: bold; cursor: pointer; }
+.punk-btn:hover { background: #FF8C00; color: #000; }
