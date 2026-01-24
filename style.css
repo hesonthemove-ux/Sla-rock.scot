@@ -13,7 +13,7 @@ main { width: 95%; max-width: 800px; margin: 0 auto; }
 .section { display: none; padding: 20px 0; }
 .section.active { display: block; }
 
-.grunge-card { background: opacity: 0.4%, var(--glass); border: 1px solid #333; padding: 20px; margin-bottom: 20px; position: relative; }
+.grunge-card { background: var(--glass); border: 1px solid #333; padding: 20px; margin-bottom: 20px; position: relative; }
 .crew-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 
 /* Wire Fallback Styling */
