@@ -143,6 +143,11 @@
     </script>
 </body>
 </html>
+<div class="gig-wire"> 
+    <h2 style="font-size: 4rem; margin:0;">GIG WIRE</h2> 
+    <p style="font-weight:900;">CENTRAL SCOTLAND LIVE NOISE</p> 
+    <div id="gig-list"></div> 
+</div>
 <div class="intel-form">
     <h2>SUBMIT INTEL</h2>
     <p style="font-size: 1.5rem; font-weight: 900;">JOIN THE FOUNDATION 40. LEAVE YOUR MARK.</p>
@@ -192,5 +197,24 @@
             btn.innerText = 'RETRY LATER';
             console.error(err);
         }
+    });
+</script>
+<script>
+    const gigs = [
+        {date: '28 JAN', venue: 'KING TUTS', act: 'LOCAL PUNK REVOLT'},
+        {date: '02 FEB', venue: 'SNEAKY PETES', act: 'DISTORTION HUB'},
+        {date: '05 FEB', venue: 'GEAR', act: 'CENTRAL NOISE'}
+    ];
+    const gigList = document.getElementById('gig-list');
+    gigs.forEach(g => {
+        gigList.innerHTML += `
+            <div class="gig-entry">
+                <div class="gig-date">${g.date}</div>
+                <div class="gig-details">
+                    <span class="venue-tag">${g.venue}</span><br>
+                    <span style="font-size:1.5rem; font-weight:900;">${g.act}</span>
+                </div>
+            </div>
+        `;
     });
 </script>
