@@ -1,118 +1,51 @@
-/* GLOBAL ANARCHY */
+/* THE NUCLEAR RESET */
+* { box-sizing: border-box; }
 body {
     background: #000 !important;
-    color: #FF6B00 !important;
-    font-family: 'Impact', 'Arial Black', sans-serif !important;
-    margin: 0; overflow-x: hidden;
-    background-image: radial-gradient(circle at 2px 2px, #222 1px, transparent 0);
-    background-size: 8px 8px; /* Fairey Halftone feel */
+    margin: 0; padding: 0;
+    overflow-x: hidden;
+    color: #fff;
 }
 
-/* CARSON: BROKEN HEADER */
+/* CARSON: TITLES MUST COLLIDE */
 h1 {
-    font-size: 15vw !important;
-    line-height: 0.7 !important;
-    letter-spacing: -5px !important;
-    transform: rotate(-3deg) skewX(-5deg) !important;
-    color: #fff !important;
-    text-shadow: 8px 8px 0px #FF6B00 !important;
-    margin: 40px 0 !important;
-    text-transform: uppercase;
+    font-size: 22vw !important;
+    line-height: 0.6 !important;
+    margin: -10px !important;
+    transform: rotate(-5deg) translateX(-5%);
+    color: #FF6B00 !important;
+    opacity: 0.8;
+    z-index: 1;
 }
 
-/* VICTORE: RIPPED GIG WIRE */
+/* THE OVERLAY EFFECT (Ripped Paper) */
 .gig-wire {
     background: #fff !important;
     color: #000 !important;
-    padding: 20px !important;
-    margin: -20px 10px 40px 10px !important; /* Overlap the header! */
-    border: 5px solid #000 !important;
-    box-shadow: 15px 15px 0px #FF6B00 !important;
-    transform: rotate(1deg) !important;
+    width: 110vw !important; /* Wider than screen */
+    margin-left: -5vw !important;
+    padding: 60px 40px !important;
+    transform: rotate(2deg);
+    box-shadow: 0 0 50px rgba(255,107,0,0.5);
+    z-index: 100 !important;
     position: relative;
-    z-index: 10;
+    clip-path: polygon(0% 5%, 100% 0%, 95% 95%, 5% 100%);
 }
 
-.gig-wire h2 {
-    font-size: 5rem !important;
-    margin: 0 !important;
-    -webkit-text-stroke: 2px #000;
-    color: transparent !important;
-}
-
-/* FAIREY: ADVERTISER BLOCKS */
-.ad-spot {
-    background: #000 !important;
-    border: 8px solid #FF6B00 !important;
-    color: #fff !important;
-    font-weight: 900 !important;
-    text-transform: uppercase !important;
-    transform: scale(1.05) !important;
-    margin: 10px !important;
-    box-shadow: 8px 8px 0px #fff !important;
-}
-
-/* HIDING THE 'CLEAN' CLOSE BUTTONS */
-.close-btn, button[class*="close"] {
-    background: #FF6B00 !important;
-    color: #000 !important;
-    border: 4px solid #000 !important;
-    font-weight: 900 !important;
-    transform: rotate(5deg) !important;
-}
-
-/* XEROX-STYLE TEAM CARDS */
-.team-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    padding: 20px;
-    justify-content: center;
-}
-
+/* XEROX TEAM CARDS */
 .team-card {
-    background: #fff !important;
-    border: 4px solid #000 !important;
-    padding: 10px !important;
-    transform: rotate(calc(-2deg + Math.random() * 4deg)); /* Random-ish tilt */
-    width: 250px;
-    box-shadow: 10px 10px 0px #FF6B00 !important;
-    transition: 0.3s ease;
+    background: #111 !important;
+    border: 10px solid #fff !important;
+    filter: contrast(150%) grayscale(1);
+    transform: rotate(-3deg);
+    margin: 20px !important;
 }
 
-.team-card img {
-    width: 100%;
-    filter: grayscale(1) contrast(200%) brightness(120%) !important; /* The Xerox Look */
-    border: 2px solid #000;
-    mix-blend-mode: multiply;
-}
-
-.team-card:hover {
-    transform: scale(1.05) rotate(0deg) !important;
-    filter: none;
-    z-index: 50;
-}
-
-.team-card h3 {
-    background: #000;
-    color: #fff;
-    font-size: 2rem !important;
-    margin: 10px -15px !important; /* Carson overlap */
-    padding: 5px 10px;
-    text-transform: uppercase;
-    display: inline-block;
-}
-
-/* VICTOR REBELLION: HAND-DRAWN MARKS */
-.team-card::before {
-    content: "LIVE";
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background: #FF6B00;
-    color: #000;
-    padding: 5px;
+/* FORCE POPUPS TO BE DIRTY */
+[class*="modal"], [class*="popup"], .public-info-box {
+    background: #FF6B00 !important;
+    border: 15px solid #000 !important;
+    color: #000 !important;
+    transform: rotate(1deg) scale(0.95);
     font-weight: 900;
-    transform: rotate(15deg);
-    border: 2px solid #000;
 }
