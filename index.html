@@ -4,209 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Rock.Scot | Central Scotland Authority</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root { --orange: #FF6B00; --acid: #bfff00; }
         * { box-sizing: border-box; border-radius: 0 !important; }
+        body { background: #000; color: #fff; font-family: 'Impact', sans-serif; margin: 0; overflow-x: hidden; }
         
-        body { 
-            background: #000; color: #fff; font-family: 'Impact', sans-serif; 
-            margin: 0; padding: 0; overflow-x: hidden;
-        }
+        header { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; opacity: 0.2; display: flex; align-items: center; justify-content: center; }
+        header img { width: 150%; transform: rotate(-8deg); filter: grayscale(1); }
 
-        /* CARSON HEADER: The Watermark */
-        header {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 0; pointer-events: none; opacity: 0.3;
-            display: flex; align-items: center; justify-content: center;
-        }
-        header img { width: 150%; transform: rotate(-10deg); filter: grayscale(1); }
-
-        /* VICTOR NAVIGATION: Bold, Large, Usable */
-        nav {
-            position: sticky; top: 0; z-index: 1000;
-            background: #000; border-bottom: 8px solid var(--orange);
-            display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
-        }
-        nav button {
-            background: #000; color: #fff; border: 1px solid #222;
-            padding: 20px 5px; font-size: 1.2rem; cursor: pointer;
-            text-transform: uppercase;
-        }
+        nav { position: sticky; top: 0; z-index: 1000; background: #000; border-bottom: 5px solid var(--orange); display: grid; grid-template-columns: repeat(4, 1fr); }
+        nav button { background: #000; color: #fff; border: 1px solid #222; padding: 15px 2px; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; }
         nav button.active { background: var(--orange); color: #000; }
 
-        /* MAIN CONTENT AREA */
-        main { position: relative; z-index: 10; padding: 10px; margin-top: 10px; }
+        main { position: relative; z-index: 10; padding: 10px; }
         .section { display: none; }
         .section.active { display: block; }
 
-        /* GIG WIRE: High Contrast Overlay */
-        .gig-wire {
-            background: #fff; color: #000; padding: 30px;
-            margin: 20px -10px; transform: rotate(2deg);
-            border: 10px solid #000; box-shadow: 15px 15px 0px var(--orange);
-        }
-        .gig-entry { border-bottom: 2px dashed #000; padding: 10px 0; }
+        .gig-wire { background: #fff; color: #000; padding: 25px; margin: 20px -10px; transform: rotate(1deg); border: 8px solid #000; box-shadow: 12px 12px 0px var(--orange); }
+        .gig-entry { border-bottom: 2px dashed #000; padding: 8px 0; font-family: monospace; }
 
-        /* CREW GRID */
-        .crew-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .crew-card { 
-            background: #fff; border: 5px solid #000; padding: 5px; 
-            color: #000; text-align: center; transform: rotate(-2deg);
-        }
+        .crew-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .crew-card { background: #fff; border: 4px solid #000; padding: 5px; color: #000; text-align: center; }
         .crew-card img { width: 100%; filter: grayscale(1) contrast(150%); }
 
-        /* THE HOSTILE POPUP */
-        .modal-bg {
-            display: none; position: fixed; top: 0; left: 0;
-            width: 100vw; height: 100vh; background: rgba(0,0,0,0.9);
-            z-index: 2000; align-items: center; justify-content: center;
-        }
-        .modal-content {
-            background: var(--orange); color: #000; width: 90vw;
-            padding: 30px; border: 15px solid #000; position: relative;
-        }
-        .close-btn { 
-            background: #000; color: #fff; width: 100%; 
-            padding: 15px; margin-top: 20px; border: none; font-size: 1.5rem;
-        }
+        .modal-bg { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; }
+        .modal-content { background: var(--orange); color: #000; width: 90vw; padding: 25px; border: 12px solid #000; }
+        
+        input, textarea, select { width: 100%; background: #222; color: #fff; border: 2px solid var(--orange); padding: 10px; margin-bottom: 10px; font-family: sans-serif; }
     </style>
 </head>
 <body>
-
-    <header><img src="./assets/branding/logo.png" alt=""></header>
-
+    <header><img src="./assets/branding/logo.png"></header>
     <nav>
         <button onclick="tab('live')" id="btn-live" class="active">ON AIR</button>
+        <button onclick="tab('wire')" id="btn-wire">WIRE</button>
         <button onclick="tab('crew')" id="btn-crew">TEAM</button>
-        <button onclick="tab('rates')" id="btn-wire">WIRE</button><button onclick="tab('rates')" id="btn-rates">ADS</button>
+        <button onclick="tab('rates')" id="btn-rates">ADS</button>
     </nav>
-
     <main>
         <section id="live" class="section active">
-            <h1 id="clock" style="font-size: 4rem; text-align: center; margin: 10px 0;">00:00:00</h1>
+            <h1 id="clock" style="font-size: 3.5rem; text-align: center;">00:00:00</h1>
             <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:180px; border:5px solid #fff;"></iframe>
-            <div class="gig-wire">
-                <h2 style="margin:0;">GIG WIRE</h2>
-                <div id="gig-list"></div>
-            </div>
+            <div class="gig-wire"><h3>LIVE GIGS</h3><div id="gig-list">FETCHING...</div></div>
         </section>
-
-<section id="wire" class="section"><div class="gig-wire" style="background:var(--orange); border-color:#000;"><h2 style="color:#000;">THE WIRE</h2><div id="wire-content" style="color:#000; font-family:monospace; font-weight:bold;">LOADING SECURE FEED...</div></div></section>
-        <section id="crew" class="section">
-            <div class="crew-grid" id="crew-list"></div>
-        </section>
-
+        <section id="wire" class="section"><div class="gig-wire" style="background:var(--orange);"><h3>THE WIRE</h3><div id="wire-content">CONNECTING...</div></div></section>
+        <section id="crew" class="section"><div class="crew-grid" id="crew-list"></div></section>
         <section id="rates" class="section">
-            <div style="background:var(--orange); color:#000; padding:20px; border:10px solid #000;">
-                <h2>INTEL</h2>
-                <input type="text" placeholder="NAME" style="width:100%; margin-bottom:10px; padding:10px; border:3px solid #000;">
-                <button style="width:100%; padding:20px; background:#000; color:#fff; border:none;">SEND</button>
+            <div style="background:#fff; color:#000; padding:20px; border:8px solid #000;">
+                <h2 style="margin-top:0;">ADS & INTEL</h2>
+                <input type="text" placeholder="BRAND NAME" id="ins-name">
+                <input type="email" placeholder="EMAIL" id="ins-email">
+                <textarea placeholder="MESSAGE" id="ins-msg"></textarea>
+                <button onclick="submitIntel()" style="width:100%; padding:15px; background:var(--orange); border:none; font-weight:900;">SEND INTEL</button>
             </div>
         </section>
     </main>
-
-    <div id="modal" class="modal-bg" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 id="m-name" style="font-size:3rem; margin:0;"></h2>
-            <div id="m-body" style="font-size:1.2rem; margin-top:10px;"></div>
-            <button class="close-btn" onclick="closeModal()">CLOSE</button>
-        </div>
-    </div>
+    <div id="modal" class="modal-bg" onclick="closeModal()"><div class="modal-content" onclick="event.stopPropagation()"><h2 id="m-name"></h2><p id="m-body"></p><button onclick="closeModal()" style="width:100%; padding:10px; background:#000; color:#fff; border:none;">CLOSE</button></div></div>
 
     <script>
-// 1. RE-ESTABLISH SUPABASE CONNECTION
-const _supabase = supabase.createClient('https://figcmwjdbeurhjopxknp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY');
+        const _sb = supabase.createClient('https://figcmwjdbeurhjopxknp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY');
 
-// 2. FETCH REAL GIGS (Python Output)
-async function fetchGigs() {
-    const { data, error } = await _supabase.from('gigs').select('*').order('date', { ascending: true });
-    if (error) { console.error('Gig Fetch Error:', error); return; }
-    const list = document.getElementById('gig-list');
-    if(!list) return;
-    list.innerHTML = '';
-    data.forEach(g => {
-        list.innerHTML += `<div class="gig-entry"><strong>${g.date}</strong> ${g.venue} - <span style="font-weight:900;">${g.act}</span></div>`;
-    });
-}
+        async function fetchGigs() {
+            const { data } = await _sb.from('gigs').select('*').order('date', { ascending: true });
+            const list = document.getElementById('gig-list');
+            if(data) { list.innerHTML = ''; data.forEach(g => { list.innerHTML += `<div class="gig-entry"><strong>${g.date}</strong>: ${g.venue} - ${g.act}</div>`; }); }
+        }
 
-// 3. FETCH REAL WIRE NEWS
-async function fetchWire() {
-    const { data, error } = await _supabase.from('news_wire').select('*').limit(10);
-    const list = document.getElementById('wire-content');
-    if(!list) return;
-    if (error) { list.innerHTML = 'FEED OFFLINE'; return; }
-    list.innerHTML = '';
-    data.forEach(s => {
-        list.innerHTML += `
-            <div style="border-bottom:2px solid #000; padding:10px 0;">
-                <span style="background:#000; color:var(--orange); padding:2px 5px;">[${s.source || 'WIRE'}]</span>
-                <span style="text-transform:uppercase;">${s.title}:</span> ${s.content}
-            </div>`;
-    });
-}
-
-// 4. FIX NAVIGATION BREAKAGE
-function tab(id) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    const target = document.getElementById(id);
-    if(target) target.classList.add('active');
-    const btn = document.getElementById('btn-' + id);
-    if(btn) btn.classList.add('active');
-    
-    // Trigger data loads
-    if(id === 'live') fetchGigs();
-    if(id === 'wire') fetchWire();
-}
-        const crewData = [
-            { n: "Andy", f: "dj1.jpg", bio: "EK legend. Hates silence, loves Biffy." },
-            { n: "Alex", f: "dj2.jpg", bio: "Johnstone local. Raising the Firth noise." },
-            { n: "Stevie", f: "dj3.jpg", bio: "Inverclyde's rock authority." },
-            { n: "Mhairi", f: "dj4.jpg", bio: "Hamilton's distortion specialist." }
-        ];
+        async function fetchWire() {
+            const { data } = await _sb.from('news_wire').select('*').order('created_at', { ascending: false });
+            const list = document.getElementById('wire-content');
+            if(data) { list.innerHTML = ''; data.forEach(n => { list.innerHTML += `<div style="border-bottom:1px solid #000; padding:5px 0;">[${n.source || 'WIRE'}] ${n.title}: ${n.content}</div>`; }); }
+        }
 
         function tab(id) {
-if(id === "wire") renderWire();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            document.getElementById('btn-' + id).classList.add('active');
+            document.getElementById('btn-'+id).classList.add('active');
+            if(id === 'live') fetchGigs();
+            if(id === 'wire') fetchWire();
             if(id === 'crew') renderCrew();
         }
 
-        function renderCrew() {
-            const list = document.getElementById('crew-list');
-            list.innerHTML = '';
-            crewData.forEach(c => {
-                list.innerHTML += `
-                    <div class="crew-card" onclick="openBio('${c.n}')">
-                        <img src="./assets/crew/${c.f}" onerror="this.src='./assets/branding/logo.png'">
-                        <p>${c.n}</p>
-                    </div>`;
-            });
+        // Crew and Clock Logic
+        const crew = [{n:"Andy", b:"EK Legend"}, {n:"Alex", b:"Johnstone Noise"}, {n:"Stevie", b:"Inverclyde Auth"}, {n:"Mhairi", b:"Distortion Spc"}];
+        function renderCrew() { 
+            const list = document.getElementById('crew-list'); list.innerHTML = '';
+            crew.forEach(c => { list.innerHTML += `<div class="crew-card" onclick="openBio('${c.n}','${c.b}')"><img src="./assets/branding/logo.png"><p>${c.n}</p></div>`; });
         }
-
-        function openBio(name) {
-            const c = crewData.find(x => x.n === name);
-            document.getElementById('m-name').innerText = c.n;
-            document.getElementById('m-body').innerText = c.bio;
-            document.getElementById('modal').style.display = 'flex';
-        }
-
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        function openBio(n,b) { document.getElementById('m-name').innerText=n; document.getElementById('m-body').innerText=b; document.getElementById('modal').style.display='flex'; }
+        function closeModal() { document.getElementById('modal').style.display='none'; }
+        function updateClock() { document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0]; requestAnimationFrame(updateClock); }
         
-        function updateClock() {
-            const clock = document.getElementById('clock');
-            if(clock) clock.innerText = new Date().toTimeString().split(' ')[0];
-            requestAnimationFrame(updateClock);
-        }
+        tab('live');
         updateClock();
-
-        const gigs = [{d: '28 JAN', v: 'KING TUTS', a: 'PUNK REVOLT'}, {d: '02 FEB', v: 'GEAR', a: 'CENTRAL NOISE'}];
-        gigs.forEach(g => {
-            document.getElementById('gig-list').innerHTML += `<div class="gig-entry"><strong>${g.d}</strong> ${g.v} - ${g.a}</div>`;
-        });
-$(cat news_logic.js)
     </script>
 </body>
 </html>
