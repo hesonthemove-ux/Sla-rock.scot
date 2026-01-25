@@ -1,37 +1,57 @@
 body {
-    background: #000 url('https://www.transparenttextures.com/patterns/dark-matter.png');
-    color: #FF8C00; /* Deep Orange */
-    font-family: 'Impact', sans-serif;
-}
-
-.glass-panel {
-    background: rgba(255, 255, 255, 0.03); /* Absolute minimum opacity */
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 140, 0, 0.2);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-}
-
-.foundation-40-wow {
-    background: linear-gradient(45deg, #FF8C00, #FF4500);
-    color: #000;
-    padding: 40px;
-    text-transform: uppercase;
-    font-weight: 900;
-    transform: rotate(-1deg);
-    box-shadow: 10px 10px 0px #000;
-}
-
-#rock-player {
-    border: 5px solid #FF8C00;
     background: #000;
-    padding: 10px;
-    margin-top: 20px;
+    color: #FF6B00;
+    font-family: 'Impact', sans-serif;
+    margin: 0; padding: 0;
+    overflow-x: hidden;
 }
-.team-card { position: relative; margin-bottom: -50px; transition: 0.3s; cursor: pointer; }
-.team-card:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 100; border-color: #FF8C00; box-shadow: 0 0 20px #FF8C00; }
-.bio-popout { display: none; padding: 15px; background: #FF8C00; color: #000; margin-top: 10px; font-weight: bold; }
-.punk-btn { background: #000; color: #FF8C00; border: 2px solid #FF8C00; padding: 5px 10px; font-weight: bold; cursor: pointer; }
-.punk-btn:hover { background: #FF8C00; color: #000; }
+
+/* CARSON: OVERLAPPING, CHAOTIC HEADERS */
+h1 {
+    font-size: 6rem;
+    line-height: 0.75;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: -4px;
+    transform: rotate(-4deg) translateX(-10px);
+    mix-blend-mode: overlay;
+    margin-top: 40px;
+}
+
+/* FAIREY: STARK PROPAGANDA BOXES */
+.propaganda-box {
+    border: 12px solid #FF6B00;
+    background: #000;
+    padding: 25px;
+    margin: 30px 15px;
+    box-shadow: 12px 12px 0px #fff; /* The Fairey 'Pop' */
+    position: relative;
+}
+
+/* VICTORE: DISTRESSED ELEMENTS */
+.raw-underline {
+    border-bottom: 8px solid #FF6B00;
+    width: 60%;
+    margin-bottom: 20px;
+}
+
+#ticker-bar {
+    background: #FF6B00;
+    color: #000;
+    font-weight: 900;
+    padding: 15px 0;
+    transform: rotate(2deg) scale(1.1);
+    border: 4px solid #fff;
+    z-index: 100;
+}
+
+.ticker-text {
+    animation: scroll 12s linear infinite;
+    font-size: 2.2rem;
+    letter-spacing: -1px;
+}
+
+@keyframes scroll {
+    from { transform: translateX(100%); }
+    to { transform: translateX(-100%); }
+}
