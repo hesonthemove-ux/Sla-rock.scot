@@ -1,222 +1,62 @@
+/* GLOBAL ANARCHY */
 body {
-    background: #000;
-    color: #FF6B00;
-    font-family: 'Impact', sans-serif;
-    margin: 0; padding: 0;
-    overflow-x: hidden;
+    background: #000 !important;
+    color: #FF6B00 !important;
+    font-family: 'Impact', 'Arial Black', sans-serif !important;
+    margin: 0; overflow-x: hidden;
+    background-image: radial-gradient(circle at 2px 2px, #222 1px, transparent 0);
+    background-size: 8px 8px; /* Fairey Halftone feel */
 }
 
-/* CARSON: OVERLAPPING, CHAOTIC HEADERS */
+/* CARSON: BROKEN HEADER */
 h1 {
-    font-size: 6rem;
-    line-height: 0.75;
-    color: #fff;
+    font-size: 15vw !important;
+    line-height: 0.7 !important;
+    letter-spacing: -5px !important;
+    transform: rotate(-3deg) skewX(-5deg) !important;
+    color: #fff !important;
+    text-shadow: 8px 8px 0px #FF6B00 !important;
+    margin: 40px 0 !important;
     text-transform: uppercase;
-    letter-spacing: -4px;
-    transform: rotate(-4deg) translateX(-10px);
-    mix-blend-mode: overlay;
-    margin-top: 40px;
 }
 
-/* FAIREY: STARK PROPAGANDA BOXES */
-.propaganda-box {
-    border: 12px solid #FF6B00;
-    background: #000;
-    padding: 25px;
-    margin: 30px 15px;
-    box-shadow: 12px 12px 0px #fff; /* The Fairey 'Pop' */
-    position: relative;
-}
-
-/* VICTORE: DISTRESSED ELEMENTS */
-.raw-underline {
-    border-bottom: 8px solid #FF6B00;
-    width: 60%;
-    margin-bottom: 20px;
-}
-
-#ticker-bar {
-    background: #FF6B00;
-    color: #000;
-    font-weight: 900;
-    padding: 15px 0;
-    transform: rotate(2deg) scale(1.1);
-    border: 4px solid #fff;
-    z-index: 100;
-}
-
-.ticker-text {
-    animation: scroll 12s linear infinite;
-    font-size: 2.2rem;
-    letter-spacing: -1px;
-}
-
-@keyframes scroll {
-    from { transform: translateX(100%); }
-    to { transform: translateX(-100%); }
-}
-
-/* FAIREY STENCIL GRID */
-.foundation-40-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 15px;
-    padding: 20px;
-    background: #fff; /* Stark white background for the grid */
-}
-
-.ad-spot {
-    background: #000;
-    color: #fff;
-    border: 6px solid #000;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: 900;
-    position: relative;
-    transition: 0.1s;
-    cursor: pointer;
-}
-
-.ad-spot:hover {
-    background: #FF6B00;
-    color: #000;
-    transform: scale(0.95);
-}
-
-/* THE HALFTONE OVERLAY EFFECT */
-.ad-spot::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: radial-gradient(#FF6B00 1px, transparent 1px);
-    background-size: 4px 4px;
-    opacity: 0.2;
-    pointer-events: none;
-}
-
-.spot-occupied {
-    background: #FF6B00;
-    color: #000;
-    border-color: #000;
-}
-
-.spot-number {
-
-
-cd ~/rock_build && \
-echo "INJECTING_VICTORE_INTEL_FORM_v11.45..." && \
-
-# 1. Finish the CSS (including the Victore-style form)
-cat << 'EOF' >> styles.css
-
-.spot-number {
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    font-size: 1rem;
-    background: #000;
-    color: #fff;
-    padding: 4px 8px;
-    border: 2px solid #FF6B00;
-    transform: rotate(-5deg); /* Carson tilt */
-}
-
-/* VICTORE-STYLE INTEL FORM */
-.intel-form {
-    background: #FF6B00;
-    color: #000;
-    padding: 30px;
-    margin: 40px 15px;
-    border: 10px solid #000;
-    transform: rotate(1deg);
-    box-shadow: 20px 20px 0px #fff;
-}
-
-.intel-form h2 {
-    font-size: 4rem;
-    margin: 0;
-    line-height: 0.8;
-    text-transform: uppercase;
-    border-bottom: 8px solid #000;
-    display: inline-block;
-}
-
-.intel-input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 5px solid #000;
-    font-family: 'Impact', sans-serif;
-    font-size: 2rem;
-    margin: 20px 0;
-    padding: 10px 0;
-    outline: none;
-    color: #000;
-}
-
-.intel-input::placeholder {
-    color: rgba(0,0,0,0.5);
-}
-
-.intel-submit {
-    background: #000;
-    color: #FF6B00;
-    font-family: 'Impact', sans-serif;
-    font-size: 2.5rem;
-    border: none;
-    padding: 15px 40px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: 0.2s;
-}
-
-.intel-submit:hover {
-    background: #fff;
-    color: #000;
-    transform: scale(1.05) rotate(-2deg);
-}
-
-/* THE RIPPED POSTER LOOK */
+/* VICTORE: RIPPED GIG WIRE */
 .gig-wire {
-    background: #fff;
-    color: #000;
-    padding: 30px;
-    margin: 40px 10px;
-    transform: rotate(-1deg);
-    /* Jagged edge effect */
-    clip-path: polygon(0% 2%, 100% 0%, 98% 98%, 2% 100%, 0% 50%);
-    border-left: 15px solid #FF6B00;
+    background: #fff !important;
+    color: #000 !important;
+    padding: 20px !important;
+    margin: -20px 10px 40px 10px !important; /* Overlap the header! */
+    border: 5px solid #000 !important;
+    box-shadow: 15px 15px 0px #FF6B00 !important;
+    transform: rotate(1deg) !important;
+    position: relative;
+    z-index: 10;
 }
 
-.gig-entry {
-    border-bottom: 3px dashed #000;
-    padding: 15px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.gig-wire h2 {
+    font-size: 5rem !important;
+    margin: 0 !important;
+    -webkit-text-stroke: 2px #000;
+    color: transparent !important;
 }
 
-.gig-date {
-    font-family: 'Impact';
-    font-size: 2.5rem;
-    line-height: 1;
-    background: #000;
-    color: #fff;
-    padding: 5px;
-    margin-right: 15px;
+/* FAIREY: ADVERTISER BLOCKS */
+.ad-spot {
+    background: #000 !important;
+    border: 8px solid #FF6B00 !important;
+    color: #fff !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    transform: scale(1.05) !important;
+    margin: 10px !important;
+    box-shadow: 8px 8px 0px #fff !important;
 }
 
-.gig-details {
-    flex-grow: 1;
-}
-
-.venue-tag {
-    background: #FF6B00;
-    font-size: 0.9rem;
-    padding: 2px 5px;
-    font-weight: 900;
+/* HIDING THE 'CLEAN' CLOSE BUTTONS */
+.close-btn, button[class*="close"] {
+    background: #FF6B00 !important;
+    color: #000 !important;
+    border: 4px solid #000 !important;
+    font-weight: 900 !important;
+    transform: rotate(5deg) !important;
 }
