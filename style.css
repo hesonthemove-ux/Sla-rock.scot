@@ -1,23 +1,88 @@
-:root { --orange: #ff5500; --acid: #a2ff00; --glass: rgba(0,0,0,0.9); }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+/* THE CARSON/VICTORE MASTER ENGINE */
+:root { 
+    --orange: #FF6B00; 
+    --acid: #bfff00; 
+}
 
-/* RECREATION MANIFEST RULE: 120% ultra-wide logo */
-header { width: 100%; display: flex; justify-content: center; padding: 40px 0; overflow: hidden; }
-header img { width: 120%; max-width: 800px; filter: drop-shadow(0 0 15px var(--orange)); transform: rotate(-1deg); }
+* { box-sizing: border-box; border-radius: 0 !important; }
 
-nav { width: 100%; display: flex; background: #000; border-bottom: 2px solid var(--orange); position: sticky; top: 0; z-index: 100; }
-nav button { flex: 1; padding: 15px; background: none; border: none; color: #fff; font-weight: 900; font-size: 0.7rem; }
+body { 
+    background: #000 !important; 
+    color: #fff; 
+    font-family: 'Impact', sans-serif; 
+    margin: 0; 
+    overflow-x: hidden;
+}
 
-main { width: 95%; max-width: 800px; margin: 0 auto; }
-.section { display: none; padding: 20px 0; }
-.section.active { display: block; }
+/* THE BACKGROUND DISTORTION */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(#333 1px, transparent 1px);
+    background-size: 5px 5px;
+    z-index: -1;
+    opacity: 0.3;
+}
 
-.grunge-card { background: var(--glass); border: 1px solid #333; padding: 20px; margin-bottom: 20px; position: relative; }
-.crew-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+/* CARSON HEADER: ABSOLUTE COLLISION */
+header {
+    position: relative;
+    height: 200px;
+    overflow: visible;
+    z-index: 1;
+}
 
-/* Wire Fallback Styling */
-.wire-item { border-left: 4px solid var(--acid); padding-left: 15px; margin-bottom: 20px; }
-.wire-item h4 { color: var(--acid); text-transform: uppercase; margin-bottom: 5px; }
+header img {
+    position: absolute;
+    width: 140%;
+    max-width: none;
+    left: -20%;
+    top: -20px;
+    transform: rotate(-8deg);
+    filter: contrast(150%) grayscale(100%);
+    opacity: 0.6;
+}
 
-#stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('./assets/backgrounds/bg1.jpg') center/95% no-repeat; z-index: -1; }
+/* NAV: THE FAIREY BAR */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #000;
+    border-top: 10px solid var(--orange);
+    border-bottom: 10px solid var(--orange);
+    display: flex;
+}
+
+nav button {
+    flex: 1;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 15px 5px;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+nav button:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* THE GIG WIRE: RIPPED POSTER EFFECT */
+.gig-wire {
+    background: #fff !important;
+    color: #000 !important;
+    width: 115vw !important;
+    margin-left: -7vw !important;
+    margin-top: -50px !important; /* PULLS IT OVER THE LOGO */
+    padding: 60px 40px !important;
+    transform: rotate(3deg) !important;
+    border: 15px solid #000 !important;
+    box-shadow: 20px 20px 0px var(--orange);
+    position: relative;
+    z-index: 100;
+}
