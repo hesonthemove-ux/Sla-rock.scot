@@ -2,223 +2,101 @@
 <html lang="en-GB">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock.Scot | Authority</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root { --orange: #FF6B00; }
-        * { box-sizing: border-box; border-radius: 0 !important; }
-        body { background: #000; color: #fff; font-family: 'Impact', sans-serif; margin: 0; overflow-x: hidden; }
-        
-        /* GHOST HEADER */
-        header { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; opacity: 0.15; display: flex; align-items: center; justify-content: center; }
-        header img { width: 140%; transform: rotate(-5deg); filter: grayscale(1); }
-
-        /* NAVIGATION */
-        nav { position: sticky; top: 0; z-index: 1000; background: #000; border-bottom: 5px solid var(--orange); display: grid; grid-template-columns: repeat(4, 1fr); }
-        nav button { background: #000; color: #fff; border: 1px solid #222; padding: 15px 2px; font-size: 0.8rem; cursor: pointer; text-transform: uppercase; font-family: 'Impact', sans-serif; }
+        body { background: #000; color: #fff; font-family: 'Impact', sans-serif; margin: 0; }
+        nav { position: sticky; top: 0; z-index: 100; background: #000; display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 5px solid var(--orange); }
+        nav button { background: #000; color: #fff; border: 1px solid #222; padding: 15px 5px; text-transform: uppercase; font-family: 'Impact'; }
         nav button.active { background: var(--orange); color: #000; }
-
-        /* LAYOUT */
-        main { position: relative; z-index: 10; padding: 10px; }
-        .section { display: none; }
+        .section { display: none; padding: 15px; position: relative; z-index: 10; }
         .section.active { display: block; }
-        
-        /* CARDS */
-        .gig-wire { background: #fff; color: #000; padding: 20px; margin: 15px -5px; border: 8px solid #000; box-shadow: 10px 10px 0px var(--orange); }
-        .gig-entry { border-bottom: 2px dashed #000; padding: 10px 0; font-family: monospace; }
-        
-        /* NEWS WIRE ITEM */
-        .wire-item { cursor: pointer; border-bottom: 2px solid #000; padding: 15px 0; }
-        .wire-item:hover { background: #f0f0f0; }
-        .wire-source { background:#000; color:var(--orange); padding:2px 5px; font-size:0.8rem; margin-right:5px; }
-        
-        /* ADS PACKAGE CARD */
-        .ad-card { border: 4px solid #000; padding: 15px; margin-bottom: 15px; background: #eee; }
-        .ad-price { font-size: 1.5rem; color: var(--orange); font-weight: bold; background: #000; display: inline-block; padding: 0 5px; }
-
-        /* CREW */
-        .crew-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .crew-card { background: #fff; border: 4px solid #000; padding: 5px; color: #000; text-align: center; }
-        .crew-card img { width: 100%; filter: grayscale(1); aspect-ratio: 1/1; object-fit: cover; }
-
-        /* MODAL */
-        .modal-bg { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; padding: 10px; }
-        .modal-content { background: var(--orange); color: #000; width: 100%; max-width: 500px; padding: 20px; border: 10px solid #000; overflow-y: auto; max-height: 90vh; }
-
-        /* DIAGNOSTICS */
-        #diag { font-family: monospace; font-size: 0.7rem; color: #0f0; background: #111; padding: 10px; margin-top: 50px; border: 1px solid #333; }
+        .card { background: #fff; color: #000; padding: 20px; border: 8px solid #000; box-shadow: 8px 8px 0 var(--orange); margin-bottom: 20px; }
+        .wire-item { border-bottom: 2px solid #000; padding: 10px 0; cursor: pointer; }
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-box { background: var(--orange); color: #000; padding: 30px; border: 10px solid #000; width: 90%; max-width: 500px; }
     </style>
 </head>
 <body>
-    <header><img src="./assets/branding/logo.png"></header>
     <nav>
         <button onclick="tab('live')" id="btn-live" class="active">ON AIR</button>
         <button onclick="tab('wire')" id="btn-wire">WIRE</button>
         <button onclick="tab('crew')" id="btn-crew">TEAM</button>
-        <button onclick="tab('rates')" id="btn-rates">ADS</button>
+        <button onclick="tab('ads')" id="btn-ads">ADS</button>
     </nav>
 
     <main>
         <section id="live" class="section active">
-            <h1 id="clock" style="font-size: 4rem; text-align: center; margin: 20px 0; color: var(--orange);">00:00:00</h1>
-            <div class="gig-wire">
-                <h3>LIVE GIGS</h3>
-                <div id="gig-list">Loading...</div>
-            </div>
+            <h1 id="clock" style="font-size:3rem; color:var(--orange); text-align:center;">00:00:00</h1>
+            <div class="card"><h3>GIGS</h3><div id="gig-list"></div></div>
         </section>
-
         <section id="wire" class="section">
-            <div class="gig-wire" style="background:var(--orange);">
-                <h2 style="margin:0;">THE WIRE</h2>
-                <div id="wire-content">Loading Feed...</div>
+            <div class="card" style="background:var(--orange);">
+                <h2>THE WIRE</h2>
+                <div id="wire-content"></div>
             </div>
         </section>
-
-        <section id="crew" class="section"><div class="crew-grid" id="crew-list"></div></section>
-
-        <section id="rates" class="section">
-            <div class="gig-wire">
-                <h3>PACKAGES & TERMS</h3>
-                <div id="packages-list">Loading Database...</div>
-            </div>
-            <div style="background:#fff; color:#000; padding:20px; border:8px solid #000; margin-top:20px;">
-                <h3>SUBMIT INTEL / BOOKING</h3>
-                <input type="text" id="i-brand" placeholder="BRAND / BAND NAME" style="width:100%; padding:10px; border:2px solid #000; margin-bottom:5px;">
-                <input type="email" id="i-email" placeholder="EMAIL" style="width:100%; padding:10px; border:2px solid #000; margin-bottom:5px;">
-                <textarea id="i-msg" placeholder="YOUR TERMS / MESSAGE" style="width:100%; padding:10px; border:2px solid #000; height:80px;"></textarea>
-                <button onclick="sendIntel()" style="width:100%; padding:15px; background:var(--orange); border:none; font-weight:bold; margin-top:10px;">UPLOAD TO SERVER</button>
-            </div>
-        </section>
-        
-        <div id="diag">SYSTEM DIAGNOSTICS: WAITING...</div>
+        <section id="crew" class="section"><div id="crew-list" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div></section>
+        <section id="ads" class="section"><div class="card" id="ads-list"></div></section>
     </main>
 
-    <div id="modal" class="modal-bg" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 id="m-head" style="line-height:1; margin-bottom:10px;"></h2>
-            <div id="m-body" style="font-weight:bold; font-family:sans-serif; margin-bottom:20px;"></div>
-            <button onclick="closeModal()" style="width:100%; padding:15px; background:#000; color:#fff; border:none;">CLOSE</button>
-        </div>
-    </div>
+    <div id="modal" onclick="this.style.display='none'"><div class="modal-box" onclick="event.stopPropagation()">
+        <h2 id="m-title"></h2>
+        <p id="m-summary" style="font-family:sans-serif; font-weight:bold; line-height:1.4;"></p>
+        <a id="m-link" href="#" target="_blank" style="display:block; background:#000; color:#fff; padding:10px; text-align:center; text-decoration:none; margin-top:20px;">READ SOURCE</a>
+    </div></div>
 
     <script>
         const _sb = supabase.createClient('https://figcmwjdbeurhjopxknp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY');
         
-        function log(msg) { document.getElementById('diag').innerHTML += "<br>> " + msg; }
-
-        async function fetchGigs() {
-            // Attempting to fetch from 'gigs' table
-            const { data, error } = await _sb.from('gigs').select('*');
-            const list = document.getElementById('gig-list');
-            if (error) { 
-                list.innerHTML = "DB ERROR"; 
-                log("GIG FETCH ERROR: " + error.message); 
-            } else if (!data || data.length === 0) {
-                list.innerHTML = "NO DATA FOUND";
-                log("GIGS TABLE IS EMPTY");
-            } else {
-                list.innerHTML = '';
-                log("GIGS FOUND: " + data.length);
-                data.forEach(g => {
-                    // Fallback column checking
-                    let act = g.act || g.band || g.headline || "Unknown Act";
-                    let venue = g.venue || g.location || "Unknown Venue";
-                    let date = g.date || "TBA";
-                    list.innerHTML += `<div class="gig-entry"><strong>${date}</strong><br>${venue} - <span style="color:var(--orange)">${act}</span></div>`;
-                });
-            }
-        }
-
-        async function fetchWire() {
-            // Fetching news wire
-            const { data, error } = await _sb.from('news_wire').select('*').order('created_at', { ascending: false }).limit(20);
-            const list = document.getElementById('wire-content');
-            if (error) { log("WIRE ERROR: " + error.message); return; }
-            
-            list.innerHTML = '';
-            data.forEach(n => {
-                // If there is no summary, we use the headline as body
-                let safeHeadline = n.headline.replace(/'/g, "\\'");
-                let safeSummary = n.summary ? n.summary.replace(/'/g, "\\'") : "Full details available at source.";
-                
-                list.innerHTML += `
-                <div class="wire-item" onclick="openModal('${n.source_name}', '${safeHeadline}', '${safeSummary} <br><br><a href=${n.source_url} style=color:#000>READ SOURCE</a>')">
-                    <span class="wire-source">[${n.source_name}]</span>
-                    <strong>${n.headline}</strong>
-                </div>`;
-            });
-        }
-
-        async function fetchPackages() {
-            // Attempting to fetch from 'packages' OR 'ads'
-            let { data, error } = await _sb.from('packages').select('*');
-            if(error) { 
-                log("'packages' table not found, trying 'ads'...");
-                let res = await _sb.from('ads').select('*');
-                data = res.data; error = res.error;
-            }
-
-            const list = document.getElementById('packages-list');
-            if (data && data.length > 0) {
-                list.innerHTML = '';
-                data.forEach(p => {
-                    list.innerHTML += `
-                    <div class="ad-card">
-                        <h4 style="margin:0;">${p.name || p.title}</h4>
-                        <p>${p.description || p.terms || "Contact for details"}</p>
-                        <div class="ad-price">${p.price || "POA"}</div>
-                    </div>`;
-                });
-            } else {
-                list.innerHTML = "NO PACKAGES LOADED. CONTACT ADMIN.";
-                log("ADS/PACKAGES FETCH FAILED");
-            }
-        }
-
-        async function sendIntel() {
-            const brand = document.getElementById('i-brand').value;
-            const email = document.getElementById('i-email').value;
-            const msg = document.getElementById('i-msg').value;
-            
-            // Inserting into 'intel' table
-            const { error } = await _sb.from('intel').insert([{ brand: brand, email: email, message: msg }]);
-            if(error) { alert("Upload Failed: " + error.message); }
-            else { alert("Intel Securely Uploaded."); document.getElementById('i-msg').value = ''; }
-        }
-
         function tab(t) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
             document.getElementById(t).classList.add('active');
             document.getElementById('btn-'+t).classList.add('active');
-            
-            if(t==='live') fetchGigs();
-            if(t==='wire') fetchWire();
-            if(t==='rates') fetchPackages();
+            if(t === 'wire') loadWire();
+            if(t === 'live') loadGigs();
+            if(t === 'ads') loadAds();
         }
 
-        function openModal(title, head, body) {
-            document.getElementById('modal').style.display='flex';
-            document.getElementById('m-head').innerText = title + ": " + head;
-            document.getElementById('m-body').innerHTML = body;
+        async function loadWire() {
+            const { data } = await _sb.from('news_wire').select('*').order('created_at', {ascending: false});
+            const cont = document.getElementById('wire-content');
+            cont.innerHTML = '';
+            data.forEach(n => {
+                const item = document.createElement('div');
+                item.className = 'wire-item';
+                item.innerHTML = `<strong>[${n.source_name}]</strong> ${n.headline}`;
+                item.onclick = () => {
+                    document.getElementById('m-title').innerText = n.headline;
+                    document.getElementById('m-summary').innerText = n.summary || "No summary available.";
+                    document.getElementById('m-link').href = n.source_url;
+                    document.getElementById('modal').style.display = 'flex';
+                };
+                cont.appendChild(item);
+            });
         }
-        function closeModal() { document.getElementById('modal').style.display='none'; }
-        
-        // Render Crew (Hardcoded for stability)
-        const crewData = [
-            {n:"Andy", f:"dj1.jpg"}, {n:"Alex", f:"dj2.jpg"}, {n:"Stevie", f:"dj3.jpg"}, {n:"Mhairi", f:"dj4.jpg"},
-            {n:"Jude", f:"dj5.jpg"}, {n:"Chris", f:"dj6.jpg"}, {n:"Cal", f:"dj7.jpg"}, {n:"Blue", f:"dj8.jpg"}
-        ];
-        const cList = document.getElementById('crew-list');
-        crewData.forEach(c => {
-             cList.innerHTML += `<div class="crew-card" onclick="openModal('TEAM', '${c.n}', 'Full bio secure.')"><img src="./assets/crew/${c.f}" onerror="this.src='./assets/branding/logo.png'"><p>${c.n}</p></div>`;
+
+        async function loadGigs() {
+            const { data } = await _sb.from('gigs').select('*');
+            document.getElementById('gig-list').innerHTML = data.map(g => `<p><strong>${g.date}</strong>: ${g.venue} - ${g.act}</p>`).join('');
+        }
+
+        async function loadAds() {
+            const { data } = await _sb.from('ads').select('*');
+            document.getElementById('ads-list').innerHTML = data.map(a => `<h3>${a.title}</h3><p>${a.description}</p><p><strong>${a.price}</strong></p>`).join('');
+        }
+
+        const crew = ["Andy","Alex","Stevie","Mhairi","Jude","Chris","Cal","Blue"];
+        const crewList = document.getElementById('crew-list');
+        crew.forEach(c => {
+            crewList.innerHTML += `<div style="background:#fff; color:#000; padding:5px; text-align:center;"><img src="./assets/branding/logo.png" style="width:100%; filter:grayscale(1);"><p>${c}</p></div>`;
         });
 
-        function updateClock() { document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0]; requestAnimationFrame(updateClock); }
-        
-        updateClock();
-        fetchGigs(); // Initial Fetch
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0]; }, 1000);
+        loadGigs();
     </script>
 </body>
 </html>
