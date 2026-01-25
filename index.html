@@ -25,7 +25,7 @@
         nav {
             position: sticky; top: 0; z-index: 1000;
             background: #000; border-bottom: 8px solid var(--orange);
-            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
         }
         nav button {
             background: #000; color: #fff; border: 1px solid #222;
@@ -78,7 +78,7 @@
     <nav>
         <button onclick="tab('live')" id="btn-live" class="active">ON AIR</button>
         <button onclick="tab('crew')" id="btn-crew">TEAM</button>
-        <button onclick="tab('rates')" id="btn-rates">ADS</button>
+        <button onclick="tab('rates')" id="btn-wire">WIRE</button><button onclick="tab('rates')" id="btn-rates">ADS</button>
     </nav>
 
     <main>
@@ -91,6 +91,7 @@
             </div>
         </section>
 
+<section id="wire" class="section"><div class="gig-wire" style="background:var(--orange); border-color:#000;"><h2 style="color:#000;">THE WIRE</h2><div id="wire-content" style="color:#000; font-family:monospace; font-weight:bold;">LOADING SECURE FEED...</div></div></section>
         <section id="crew" class="section">
             <div class="crew-grid" id="crew-list"></div>
         </section>
@@ -121,6 +122,7 @@
         ];
 
         function tab(id) {
+if(id === "wire") renderWire();
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
@@ -160,6 +162,7 @@
         gigs.forEach(g => {
             document.getElementById('gig-list').innerHTML += `<div class="gig-entry"><strong>${g.d}</strong> ${g.v} - ${g.a}</div>`;
         });
+$(cat news_logic.js)
     </script>
 </body>
 </html>
