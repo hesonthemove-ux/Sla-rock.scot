@@ -86,3 +86,54 @@ nav button:hover {
     position: relative;
     z-index: 100;
 }
+
+/* THE HOSTILE POPUP (Fairey Style) */
+.modal-bg {
+    display: none; 
+    position: fixed !important;
+    top: 0; left: 0; 
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999 !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: var(--orange) !important;
+    color: #000 !important;
+    width: 90vw !important;
+    max-height: 80vh;
+    border: 15px solid #000 !important;
+    padding: 30px !important;
+    transform: rotate(-1deg) !important;
+    box-shadow: 20px 20px 0px #fff !important;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal-content h2 {
+    font-size: 4rem !important;
+    line-height: 0.8;
+    margin: 0 0 20px 0 !important;
+    text-transform: uppercase;
+    -webkit-text-stroke: 2px #000;
+    color: transparent !important;
+}
+
+.modal-content p {
+    font-size: 1.2rem;
+    font-weight: 900;
+    line-height: 1.2;
+}
+
+.close-bio {
+    background: #000 !important;
+    color: var(--orange) !important;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5rem;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+}
