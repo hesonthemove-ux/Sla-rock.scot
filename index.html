@@ -153,3 +153,44 @@
         <button type="submit" class="intel-submit">SEND IT</button>
     </form>
 </div>
+<script>
+    document.getElementById('submission-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const originalText = btn.innerText;
+        
+        // Visual Feedback (Victore Style)
+        btn.innerText = 'TRANSMITTING...';
+        btn.style.background = '#fff';
+        btn.style.color = '#000';
+
+        const payload = {
+            brand_name: e.target.querySelectorAll('input')[0].value,
+            email: e.target.querySelectorAll('input')[1].value,
+            message: e.target.querySelector('textarea').value
+        };
+
+        try {
+            const response = await fetch('https://figcmwjdbeurhjopxknp.supabase.co/rest/v1/intel_submissions', {
+                method: 'POST',
+                headers: {
+                    'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                btn.innerText = 'INTEL RECEIVED';
+                e.target.reset();
+                setTimeout(() => { btn.innerText = originalText; btn.style.background = '#000'; btn.style.color = '#FF6B00'; }, 3000);
+            } else {
+                throw new Error('Push Failed');
+            }
+        } catch (err) {
+            btn.innerText = 'RETRY LATER';
+            console.error(err);
+        }
+    });
+</script>
