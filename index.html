@@ -65,14 +65,34 @@
     <script>
         const _sb = supabase.createClient('https://figcmwjdbeurhjopxknp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY');
 
+
+async function fetchWire() {
+    const { data, error } = await _sb.from('news_wire')
+        .select('headline, source_name, created_at')
+        .order('created_at', { ascending: false })
+        .limit(15);
+    
+    const list = document.getElementById('wire-content');
+    if(!list) return;
+    if(error) { list.innerHTML = 'FEED ERROR: ' + error.message; return; }
+    
+    list.innerHTML = '';
+    data.forEach(n => {
+        list.innerHTML += `
+            <div style="border-bottom:2px solid #000; padding:12px 0; font-family:monospace;">
+                <span style="background:#000; color:var(--orange); padding:2px 6px; margin-right:5px;">
+                    ${n.source_name || 'INTEL'}
+                </span>
+                <span style="text-transform:uppercase; font-weight:900;">${n.headline}</span>
+            </div>`;
+    });
+}
         async function fetchGigs() {
             const { data } = await _sb.from('gigs').select('*').order('date', { ascending: true });
             const list = document.getElementById('gig-list');
             if(data) { list.innerHTML = ''; data.forEach(g => { list.innerHTML += `<div class="gig-entry"><strong>${g.date}</strong>: ${g.venue} - ${g.act}</div>`; }); }
         }
 
-        async function fetchWire() {
-            const { data } = await _sb.from('news_wire').select('*').order('created_at', { ascending: false });
             const list = document.getElementById('wire-content');
             if(data) { list.innerHTML = ''; data.forEach(n => { list.innerHTML += `<div style="border-bottom:1px solid #000; padding:5px 0;">[${n.source || 'WIRE'}] ${n.title}: ${n.content}</div>`; }); }
         }
