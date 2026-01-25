@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="style.css?v=1769130001">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 $(cat anarchy_styles.html)
-$(cat final_chaos.html)
 </head>
     <div id="stage"></div>
     <div class="viewport">
