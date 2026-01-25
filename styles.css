@@ -1,51 +1,47 @@
-/* THE NUCLEAR RESET */
-* { box-sizing: border-box; }
-body {
-    background: #000 !important;
-    margin: 0; padding: 0;
-    overflow-x: hidden;
-    color: #fff;
-}
+/* 1. BRUTALIST RESET */
+* { border-radius: 0 !important; font-family: 'Impact', sans-serif !important; }
+body { background: #000 !important; overflow-x: hidden; }
 
-/* CARSON: TITLES MUST COLLIDE */
-h1 {
-    font-size: 22vw !important;
-    line-height: 0.6 !important;
-    margin: -10px !important;
-    transform: rotate(-5deg) translateX(-5%);
+/* 2. HEADER ANARCHY (Carson) */
+h1 { 
+    font-size: 25vw !important; 
+    line-height: 0.7 !important; 
+    transform: rotate(-4deg) skewX(-10deg) !important;
     color: #FF6B00 !important;
-    opacity: 0.8;
-    z-index: 1;
+    text-shadow: 10px 10px 0px #fff !important;
+    margin-bottom: -50px !important;
 }
 
-/* THE OVERLAY EFFECT (Ripped Paper) */
+/* 3. POPUP DECONSTRUCTION (Fairey) */
+/* This hits your Public Info and Booking forms */
+div[class*="modal"], div[class*="popup"], .public-info-box, .booking-form {
+    background: #FF6B00 !important;
+    border: 20px solid #000 !important;
+    color: #000 !important;
+    transform: rotate(1deg) scale(1.05) !important;
+    box-shadow: 30px 30px 0px #fff !important;
+    padding: 40px !important;
+}
+
+/* 4. THE GIG WIRE BLEED (Victore) */
 .gig-wire {
     background: #fff !important;
     color: #000 !important;
-    width: 110vw !important; /* Wider than screen */
-    margin-left: -5vw !important;
-    padding: 60px 40px !important;
-    transform: rotate(2deg);
-    box-shadow: 0 0 50px rgba(255,107,0,0.5);
-    z-index: 100 !important;
-    position: relative;
-    clip-path: polygon(0% 5%, 100% 0%, 95% 95%, 5% 100%);
+    width: 120vw !important;
+    margin-left: -10vw !important;
+    padding: 80px 40px !important;
+    transform: rotate(-2deg) !important;
+    border-top: 15px solid #000 !important;
+    border-bottom: 15px solid #000 !important;
 }
 
-/* XEROX TEAM CARDS */
-.team-card {
-    background: #111 !important;
-    border: 10px solid #fff !important;
-    filter: contrast(150%) grayscale(1);
-    transform: rotate(-3deg);
-    margin: 20px !important;
-}
-
-/* FORCE POPUPS TO BE DIRTY */
-[class*="modal"], [class*="popup"], .public-info-box {
-    background: #FF6B00 !important;
-    border: 15px solid #000 !important;
-    color: #000 !important;
-    transform: rotate(1deg) scale(0.95);
-    font-weight: 900;
+/* 5. FIXING THE 'CLOSE' BUTTONS */
+.close-btn, button[class*="close"] {
+    background: #000 !important;
+    color: #FF6B00 !important;
+    font-size: 2rem !important;
+    border: none !important;
+    padding: 10px 30px !important;
+    transform: rotate(5deg) !important;
+    cursor: pointer;
 }
