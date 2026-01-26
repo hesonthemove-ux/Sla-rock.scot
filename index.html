@@ -6,179 +6,164 @@
     <title>Rock.Scot | Scottish Rock Authority</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
+
         :root { 
-            --neon-blue: #00f2ff;
-            --neon-red: #ff003c;
-            --glass: rgba(0, 0, 0, 0.75);
-            --border: rgba(255, 255, 255, 0.1);
+            --rock-blue: #00f2ff; /* Your Logo Glow */
+            --rock-red: #ff003c;  /* Your Logo Core */
+            --glass: rgba(10, 10, 15, 0.85);
+            --border: rgba(0, 242, 255, 0.2);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
         
         body, html { 
             margin: 0; padding: 0; height: 100%; 
             background: #000; color: #fff; 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
         }
 
-        /* FIXED BACKGROUND */
-        .bg-layer {
+        /* FULL PAGE BG1.JPG */
+        .master-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('assets/backgrounds/bg1.jpg') no-repeat center center;
             background-size: cover;
             z-index: -2;
-            filter: brightness(0.6);
         }
 
-        /* OVERLAY TEXTURE */
-        .texture {
+        /* SCANLINE EFFECT FROM WP17 */
+        .scanlines {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            opacity: 0.3; z-index: -1; pointer-events: none;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 4px, 3px 100%;
+            z-index: -1; pointer-events: none;
         }
 
-        header {
-            padding: 40px 20px; text-align: center;
-        }
-
-        header img {
-            width: 100%; max-width: 500px;
-            filter: drop-shadow(0 0 15px var(--neon-blue));
-            animation: flicker 3s infinite;
-        }
-
+        /* HEADER & NAVIGATION */
         nav {
-            display: flex; justify-content: center; gap: 10px;
-            padding: 20px; sticky; top: 0; z-index: 100;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--rock-red);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; height: 80px;
         }
 
-        nav button {
-            background: transparent; border: 1px solid var(--border);
-            color: #fff; padding: 12px 20px; cursor: pointer;
-            font-family: 'Impact', sans-serif; text-transform: uppercase;
-            letter-spacing: 2px; transition: 0.3s;
+        .nav-logo img { height: 50px; filter: drop-shadow(0 0 10px var(--rock-blue)); }
+
+        .nav-links { display: flex; gap: 5px; }
+        .nav-links button {
+            background: transparent; border: none; color: #fff;
+            font-family: 'Orbitron', sans-serif; font-weight: 900;
+            text-transform: uppercase; padding: 10px 15px; cursor: pointer;
+            letter-spacing: 1px; font-size: 0.9rem;
+        }
+
+        .nav-links button.active {
+            color: var(--rock-blue);
+            text-shadow: 0 0 10px var(--rock-blue);
+            border-bottom: 3px solid var(--rock-blue);
+        }
+
+        /* MAIN CONTENT AREA */
+        main { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif; font-weight: 900;
+            font-size: clamp(2rem, 8vw, 4rem); text-transform: uppercase;
+            margin: 0 0 20px 0; line-height: 0.9;
+            color: #fff; text-shadow: 3px 3px 0 var(--rock-red);
+        }
+
+        .glass-panel {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 40px; border-radius: 4px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
             position: relative; overflow: hidden;
         }
 
-        nav button.active {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 15px var(--neon-blue);
-            background: rgba(0, 242, 255, 0.1);
+        .glass-panel::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 4px; height: 100%; background: var(--rock-blue);
         }
 
-        main {
-            padding: 20px; max-width: 1000px; margin: 0 auto;
-            perspective: 1000px;
-        }
-
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
+        /* BUTTONS STYLED LIKE WP17 */
+        .action-btn {
+            display: inline-block; width: 100%;
+            padding: 20px; margin-bottom: 15px;
+            background: linear-gradient(45deg, #111, #222);
             border: 1px solid var(--border);
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            animation: slideUp 0.6s ease-out;
+            color: #fff; text-decoration: none;
+            font-family: 'Orbitron', sans-serif; font-weight: 900;
+            text-align: center; cursor: pointer;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
         }
 
-        .section { display: none; }
+        .action-btn:hover {
+            background: var(--rock-red);
+            color: #fff; transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.5);
+        }
+
+        .section { display: none; animation: fadeIn 0.5s ease; }
         .section.active { display: block; }
 
-        h2 { 
-            font-family: 'Impact', sans-serif; text-transform: uppercase; 
-            font-size: 2.5rem; letter-spacing: 3px; margin-top: 0;
-            background: linear-gradient(to right, #fff, var(--neon-blue));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .source-btn {
-            display: block; width: 100%; padding: 20px; margin-bottom: 15px;
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            color: #fff; text-decoration: none; text-align: left;
-            font-family: 'Impact', sans-serif; font-size: 1.2rem;
-            transition: 0.3s;
-        }
+        /* GRID FOR CARDS */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
 
-        .source-btn:hover {
-            background: var(--neon-red);
-            transform: scale(1.02);
-            box-shadow: 0 0 20px var(--neon-red);
-        }
-
-        #clock {
-            font-family: 'monospace'; font-size: 3rem; text-align: center;
-            color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue);
-            margin: 20px 0;
-        }
-
-        /* ANIMATIONS */
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.9; }
-            98% { opacity: 1; }
-            99% { opacity: 0.8; }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* MOBILE OPTIMIZATION */
-        @media (max-width: 600px) {
-            nav { flex-wrap: wrap; }
-            nav button { flex: 1 1 40%; font-size: 0.8rem; }
-            h2 { font-size: 1.8rem; }
+        @media (max-width: 768px) {
+            nav { flex-direction: column; height: auto; padding: 10px; }
+            .nav-links { width: 100%; justify-content: space-around; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-layer"></div>
-    <div class="texture"></div>
-
-    <header>
-        <img src="assets/branding/logo.png" alt="Rock.Scot">
-    </header>
+    <div class="master-bg"></div>
+    <div class="scanlines"></div>
 
     <nav>
-        <button onclick="tab('live')" id="btn-live" class="active">Gigs</button>
-        <button onclick="tab('wire')" id="btn-wire">Wire</button>
-        <button onclick="tab('team')" id="btn-crew">Team</button>
-        <button onclick="tab('ads')" id="btn-ads">Ads</button>
+        <div class="nav-logo"><img src="assets/branding/logo.png"></div>
+        <div class="nav-links">
+            <button onclick="tab('live')" id="btn-live" class="active">Gigs</button>
+            <button onclick="tab('wire')" id="btn-wire">Wire</button>
+            <button onclick="tab('team')" id="btn-team">Team</button>
+            <button onclick="tab('ads')" id="btn-ads">Ads</button>
+        </div>
     </nav>
 
     <main>
         <section id="live" class="section active">
-            <div class="glass-card">
-                <h2>Verified Gigs</h2>
-                <div id="clock">00:00:00</div>
-                <a href="https://www.skiddle.com/whats-on/scotland/gigs/" target="_blank" class="source-btn">SKIDDLE SCOTLAND</a>
-                <a href="https://www.ticketmaster.co.uk/browse/rock-and-pop-catid-73/music-atid-10001/scotland-rid-10005" target="_blank" class="source-btn">TICKETMASTER ROCK</a>
-                <a href="https://www.bandsintown.com" target="_blank" class="source-btn">BANDSINTOWN VERIFIED</a>
+            <h1 class="hero-title">Live <br><span style="color:var(--rock-blue)">Authority</span></h1>
+            <div class="grid">
+                <div class="glass-panel">
+                    <h2 style="color:var(--rock-blue); margin-top:0;">Verified Sources</h2>
+                    <p>Direct intel from Scotland's primary ticket portals.</p>
+                    <a href="https://www.skiddle.com/whats-on/scotland/gigs/" target="_blank" class="action-btn">SKIDDLE SCOTLAND</a>
+                    <a href="https://www.ticketmaster.co.uk/browse/rock-and-pop-catid-73/music-atid-10001/scotland-rid-10005" target="_blank" class="action-btn">TICKETMASTER ROCK</a>
+                </div>
+                <div class="glass-panel" style="display:flex; align-items:center; justify-content:center;">
+                    <div id="clock" style="font-size:4rem; font-family:'Orbitron'; color:var(--rock-red); text-shadow: 0 0 15px var(--rock-red);">00:00:00</div>
+                </div>
             </div>
         </section>
 
         <section id="wire" class="section">
-            <div class="glass-card">
-                <h2>Rock Wire</h2>
+            <div class="glass-panel">
+                <h2 style="color:var(--rock-blue);">Rock Wire Feed</h2>
                 <div id="wire-content"></div>
             </div>
         </section>
 
-        <section id="crew" class="section">
-            <div class="glass-card">
-                <h2>The Crew</h2>
-                <div id="crew-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:20px;"></div>
-            </div>
+        <section id="team" class="section">
+            <div class="grid" id="crew-list"></div>
         </section>
 
         <section id="ads" class="section">
-            <div class="glass-card">
-                <h2>Advertise</h2>
-                <div id="ads-list"></div>
-            </div>
+            <div class="glass-panel" id="ads-list"></div>
         </section>
     </main>
 
@@ -187,18 +172,18 @@
 
         function tab(t) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
             document.getElementById(t).classList.add('active');
             document.getElementById('btn-'+t).classList.add('active');
-            if(t==='wire') loadWire(); if(t==='crew') loadCrew(); if(t==='ads') loadAds();
+            if(t==='wire') loadWire(); if(t==='team') loadCrew(); if(t==='ads') loadAds();
         }
 
         async function loadWire() {
             const { data } = await _sb.from('news_wire').select('*').order('created_at', {ascending:false}).limit(10);
             document.getElementById('wire-content').innerHTML = data ? data.map(n => `
-                <div style="padding:20px 0; border-bottom:1px solid var(--border); cursor:pointer;" onclick="window.open('${n.source_url}', '_blank')">
-                    <div style="color:var(--neon-blue); font-weight:bold; font-size:0.8rem; text-transform:uppercase;">${n.source_name}</div>
-                    <div style="font-size:1.2rem; margin-top:5px;">${n.headline}</div>
+                <div style="padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.1); cursor:pointer;" onclick="window.open('${n.source_url}', '_blank')">
+                    <span style="color:var(--rock-red); font-weight:bold; text-transform:uppercase; font-size:0.8rem;">${n.source_name}</span>
+                    <h3 style="margin:5px 0 0 0; color:#fff;">${n.headline}</h3>
                 </div>
             `).join('') : "";
         }
@@ -206,9 +191,9 @@
         function loadCrew() {
             const crew = ["Andy","Alex","Stevie","Mhairi","Jude","Chris","Cal","Blue"];
             document.getElementById('crew-list').innerHTML = crew.map(c => `
-                <div style="text-align:center; padding:15px; background:rgba(255,255,255,0.03); border:1px solid var(--border);">
-                    <div style="width:80px; height:80px; background:var(--neon-red); margin:0 auto 10px; border-radius:50%; box-shadow:0 0 10px var(--neon-red);"></div>
-                    <div style="font-family:'Impact'; letter-spacing:1px;">${c}</div>
+                <div class="glass-panel" style="text-align:center;">
+                    <div style="width:100px; height:100px; background:var(--rock-red); margin:0 auto 15px; border-radius:4px; box-shadow: 0 0 20px var(--rock-red);"></div>
+                    <h3 style="font-family:'Orbitron'; margin:0;">${c}</h3>
                 </div>
             `).join('');
         }
@@ -216,10 +201,10 @@
         async function loadAds() {
             const { data } = await _sb.from('ads').select('*');
             document.getElementById('ads-list').innerHTML = data ? data.map(a => `
-                <div style="padding:20px; background:rgba(0,0,0,0.3); border-left:4px solid var(--neon-blue); margin-bottom:15px;">
-                    <h3 style="margin:0; color:var(--neon-blue);">${a.title}</h3>
-                    <p>${a.description}</p>
-                    <div style="font-weight:bold; color:var(--neon-red);">${a.price}</div>
+                <div style="margin-bottom:30px;">
+                    <h2 style="color:var(--rock-blue); margin-bottom:5px;">${a.title}</h2>
+                    <p style="font-size:1.2rem;">${a.description}</p>
+                    <span style="color:var(--rock-red); font-weight:bold; font-family:'Orbitron';">${a.price}</span>
                 </div>
             `).join('') : "";
         }
