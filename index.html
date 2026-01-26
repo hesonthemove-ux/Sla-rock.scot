@@ -2,94 +2,185 @@
 <html lang="en-GB">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock.Scot | Scottish Rock Authority</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root { --orange: #FF6B00; }
-        * { box-sizing: border-box; border-radius: 0 !important; }
-        body { background: #000; color: #fff; font-family: 'Impact', sans-serif; margin: 0; overflow-x: hidden; }
-
-        /* Desktop Optimization */
-        @media (min-width: 1024px) {
-            header img { width: 60% !important; opacity: 0.2 !important; }
-            main { max-width: 900px; margin: 0 auto; }
-            nav button { font-size: 1.5rem !important; }
+        :root { 
+            --neon-blue: #00f2ff;
+            --neon-red: #ff003c;
+            --glass: rgba(0, 0, 0, 0.75);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
-        header { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; opacity: 0.1; display: flex; align-items: center; justify-content: center; }
-        header img { width: 120%; filter: grayscale(1); }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body, html { 
+            margin: 0; padding: 0; height: 100%; 
+            background: #000; color: #fff; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
 
-        nav { position: sticky; top: 0; z-index: 1000; background: #000; border-bottom: 6px solid var(--orange); display: grid; grid-template-columns: repeat(4, 1fr); }
-        nav button { background: #000; color: #fff; border: 1px solid #111; padding: 20px 2px; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; font-family: 'Impact'; }
-        nav button.active { background: var(--orange); color: #000; }
+        /* FIXED BACKGROUND */
+        .bg-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('assets/backgrounds/bg1.jpg') no-repeat center center;
+            background-size: cover;
+            z-index: -2;
+            filter: brightness(0.6);
+        }
 
-        main { position: relative; z-index: 10; padding: 15px; }
+        /* OVERLAY TEXTURE */
+        .texture {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.3; z-index: -1; pointer-events: none;
+        }
+
+        header {
+            padding: 40px 20px; text-align: center;
+        }
+
+        header img {
+            width: 100%; max-width: 500px;
+            filter: drop-shadow(0 0 15px var(--neon-blue));
+            animation: flicker 3s infinite;
+        }
+
+        nav {
+            display: flex; justify-content: center; gap: 10px;
+            padding: 20px; sticky; top: 0; z-index: 100;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+        }
+
+        nav button {
+            background: transparent; border: 1px solid var(--border);
+            color: #fff; padding: 12px 20px; cursor: pointer;
+            font-family: 'Impact', sans-serif; text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.3s;
+            position: relative; overflow: hidden;
+        }
+
+        nav button.active {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue);
+            background: rgba(0, 242, 255, 0.1);
+        }
+
+        main {
+            padding: 20px; max-width: 1000px; margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: slideUp 0.6s ease-out;
+        }
+
         .section { display: none; }
         .section.active { display: block; }
-        
-        .card { background: #fff; color: #000; padding: 20px; border: 8px solid #000; box-shadow: 12px 12px 0px var(--orange); margin-bottom: 30px; }
-        
-        .wire-item { cursor: pointer; border-bottom: 3px solid #000; padding: 15px 0; transition: 0.2s; }
-        .wire-item:hover { transform: translateX(5px); color: var(--orange); }
 
-        /* The Newspaper Modal */
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--orange); color: #000; width: 100%; max-width: 500px; border: 10px solid #000; display: flex; flex-direction: column; max-height: 80vh; }
-        .modal-body-scroll { padding: 20px; overflow-y: auto; font-family: sans-serif; font-weight: bold; line-height: 1.4; font-size: 1.1rem; }
-        
-        .crew-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .crew-card { background: #fff; border: 4px solid #000; padding: 5px; color: #000; text-align: center; font-size: 1.2rem; }
-        .crew-card img { width: 100%; filter: grayscale(1); aspect-ratio: 1/1; object-fit: cover; }
+        h2 { 
+            font-family: 'Impact', sans-serif; text-transform: uppercase; 
+            font-size: 2.5rem; letter-spacing: 3px; margin-top: 0;
+            background: linear-gradient(to right, #fff, var(--neon-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .source-btn {
+            display: block; width: 100%; padding: 20px; margin-bottom: 15px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            color: #fff; text-decoration: none; text-align: left;
+            font-family: 'Impact', sans-serif; font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .source-btn:hover {
+            background: var(--neon-red);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px var(--neon-red);
+        }
+
+        #clock {
+            font-family: 'monospace'; font-size: 3rem; text-align: center;
+            color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue);
+            margin: 20px 0;
+        }
+
+        /* ANIMATIONS */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+            98% { opacity: 1; }
+            99% { opacity: 0.8; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 600px) {
+            nav { flex-wrap: wrap; }
+            nav button { flex: 1 1 40%; font-size: 0.8rem; }
+            h2 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
-    <header><img src="./assets/branding/logo.png"></header>
+    <div class="bg-layer"></div>
+    <div class="texture"></div>
+
+    <header>
+        <img src="assets/branding/logo.png" alt="Rock.Scot">
+    </header>
+
     <nav>
-        <button onclick="tab('live')" id="btn-live" class="active">ON AIR</button>
-        <button onclick="tab('wire')" id="btn-wire">WIRE</button>
-        <button onclick="tab('crew')" id="btn-crew">TEAM</button>
-        <button onclick="tab('ads')" id="btn-ads">ADS</button>
+        <button onclick="tab('live')" id="btn-live" class="active">Gigs</button>
+        <button onclick="tab('wire')" id="btn-wire">Wire</button>
+        <button onclick="tab('team')" id="btn-crew">Team</button>
+        <button onclick="tab('ads')" id="btn-ads">Ads</button>
     </nav>
 
     <main>
         <section id="live" class="section active">
-            <h1 id="clock" style="font-size: 4.5rem; text-align: center; margin: 10px 0; color: var(--orange);">00:00:00</h1>
-            <div class="card">
-                <h2 style="margin-top:0; border-bottom:4px solid #000;">SCOTTISH GIGS</h2>
-                <div id="gig-list">SYNCING...</div>
+            <div class="glass-card">
+                <h2>Verified Gigs</h2>
+                <div id="clock">00:00:00</div>
+                <a href="https://www.skiddle.com/whats-on/scotland/gigs/" target="_blank" class="source-btn">SKIDDLE SCOTLAND</a>
+                <a href="https://www.ticketmaster.co.uk/browse/rock-and-pop-catid-73/music-atid-10001/scotland-rid-10005" target="_blank" class="source-btn">TICKETMASTER ROCK</a>
+                <a href="https://www.bandsintown.com" target="_blank" class="source-btn">BANDSINTOWN VERIFIED</a>
             </div>
         </section>
 
         <section id="wire" class="section">
-            <div class="card" style="background:var(--orange);">
-                <h2 style="margin-top:0; border-bottom:4px solid #000;">ROCK WIRE</h2>
-                <div id="wire-content">LISTENING...</div>
+            <div class="glass-card">
+                <h2>Rock Wire</h2>
+                <div id="wire-content"></div>
             </div>
         </section>
 
-        <section id="crew" class="section"><div class="crew-grid" id="crew-list"></div></section>
+        <section id="crew" class="section">
+            <div class="glass-card">
+                <h2>The Crew</h2>
+                <div id="crew-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:20px;"></div>
+            </div>
+        </section>
 
         <section id="ads" class="section">
-            <div id="ads-list"></div>
-            <div class="card" style="background:#000; color:#fff;">
-                <h3 style="color:var(--orange);">GET LISTED</h3>
-                <p>Submit your rock intel or advertising requests to the authority.</p>
-                <button onclick="tab('crew')" style="width:100%; padding:15px; background:var(--orange); border:none; font-family:'Impact';">CONTACT CREW</button>
+            <div class="glass-card">
+                <h2>Advertise</h2>
+                <div id="ads-list"></div>
             </div>
         </section>
     </main>
-
-    <div id="modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div style="padding:20px; background:#000; color:var(--orange);">
-                <h2 id="m-head" style="margin:0; font-size:1.5rem; line-height:1.1;"></h2>
-            </div>
-            <div class="modal-body-scroll" id="m-body"></div>
-            <div id="m-footer" style="padding:20px; border-top:4px solid #000;"></div>
-            <button onclick="closeModal()" style="padding:20px; background:#000; color:#fff; border:none; font-family:'Impact'; cursor:pointer;">CLOSE</button>
-        </div>
-    </div>
 
     <script>
         const _sb = supabase.createClient('https://figcmwjdbeurhjopxknp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY');
@@ -99,31 +190,15 @@
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
             document.getElementById(t).classList.add('active');
             document.getElementById('btn-'+t).classList.add('active');
-            if(t==='live') loadGigs(); if(t==='wire') loadWire(); if(t==='crew') loadCrew(); if(t==='ads') loadAds();
-        }
-
-        async function loadGigs() {
-            const { data } = await _sb.from('gigs').select('*').order('date', {ascending:true});
-            document.getElementById('gig-list').innerHTML = data ? data.map(g => `<div style="margin-bottom:15px;"><strong>${g.date}</strong><br><span style="color:var(--orange); font-size:1.5rem;">${g.act}</span><br>@ ${g.venue}</div>`).join('') : "SEARCHING...";
+            if(t==='wire') loadWire(); if(t==='crew') loadCrew(); if(t==='ads') loadAds();
         }
 
         async function loadWire() {
-            const { data } = await _sb.from('news_wire').select('*').order('created_at', {ascending:false}).limit(20);
+            const { data } = await _sb.from('news_wire').select('*').order('created_at', {ascending:false}).limit(10);
             document.getElementById('wire-content').innerHTML = data ? data.map(n => `
-                <div class="wire-item" onclick="openModal('${n.source_name}', '${n.headline.replace(/'/g, "\\'")}', '${n.summary ? n.summary.replace(/'/g, "\\'") : "Full details at source."}', '${n.source_url}')">
-                    <small style="background:#000; color:#fff; padding:2px 5px;">${n.source_name}</small><br>
-                    ${n.headline}
-                </div>
-            `).join('') : "WIRE OFFLINE";
-        }
-
-        async function loadAds() {
-            const { data } = await _sb.from('ads').select('*');
-            document.getElementById('ads-list').innerHTML = data ? data.map(a => `
-                <div class="card">
-                    <h2 style="margin:0; color:var(--orange);">${a.title}</h2>
-                    <p style="font-family:sans-serif; font-weight:bold;">${a.description}</p>
-                    <div style="background:#000; color:var(--orange); display:inline-block; padding:5px 15px; font-size:1.5rem;">${a.price}</div>
+                <div style="padding:20px 0; border-bottom:1px solid var(--border); cursor:pointer;" onclick="window.open('${n.source_url}', '_blank')">
+                    <div style="color:var(--neon-blue); font-weight:bold; font-size:0.8rem; text-transform:uppercase;">${n.source_name}</div>
+                    <div style="font-size:1.2rem; margin-top:5px;">${n.headline}</div>
                 </div>
             `).join('') : "";
         }
@@ -131,23 +206,26 @@
         function loadCrew() {
             const crew = ["Andy","Alex","Stevie","Mhairi","Jude","Chris","Cal","Blue"];
             document.getElementById('crew-list').innerHTML = crew.map(c => `
-                <div class="crew-card">
-                    <img src="./assets/crew/${c.toLowerCase()}.jpg" onerror="this.src='./assets/branding/logo.png'">
-                    <p style="margin:5px 0;">${c}</p>
+                <div style="text-align:center; padding:15px; background:rgba(255,255,255,0.03); border:1px solid var(--border);">
+                    <div style="width:80px; height:80px; background:var(--neon-red); margin:0 auto 10px; border-radius:50%; box-shadow:0 0 10px var(--neon-red);"></div>
+                    <div style="font-family:'Impact'; letter-spacing:1px;">${c}</div>
                 </div>
             `).join('');
         }
 
-        function openModal(title, head, body, link) {
-            document.getElementById('m-head').innerText = title + ": " + head;
-            document.getElementById('m-body').innerText = body;
-            document.getElementById('m-footer').innerHTML = `<a href="${link}" target="_blank" style="color:#000; text-decoration:underline; font-weight:bold;">OPEN ORIGINAL STORY</a>`;
-            document.getElementById('modal').style.display = 'flex';
+        async function loadAds() {
+            const { data } = await _sb.from('ads').select('*');
+            document.getElementById('ads-list').innerHTML = data ? data.map(a => `
+                <div style="padding:20px; background:rgba(0,0,0,0.3); border-left:4px solid var(--neon-blue); margin-bottom:15px;">
+                    <h3 style="margin:0; color:var(--neon-blue);">${a.title}</h3>
+                    <p>${a.description}</p>
+                    <div style="font-weight:bold; color:var(--neon-red);">${a.price}</div>
+                </div>
+            `).join('') : "";
         }
 
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
         setInterval(() => { document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0]; }, 1000);
-        loadGigs();
+        tab('live');
     </script>
 </body>
 </html>
