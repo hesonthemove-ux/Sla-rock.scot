@@ -10,111 +10,125 @@
         :root { 
             --cyan: #00f2ff;
             --red: #ff003c;
+            --glass: rgba(0, 0, 0, 0.6);
         }
 
-        /* FORCE BACKGROUND IMAGE VISIBILITY */
         body { 
             margin: 0; padding: 0; min-height: 100vh;
             background: url('assets/backgrounds/bg1.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #fff; 
             font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
         }
 
-        /* OVERLAY TO PREVENT TEXT WASH-OUT */
-        .master-overlay {
-            background: rgba(0,0,0,0.4);
-            min-height: 100vh;
-            width: 100%;
+        /* LOGO VECTOR-STYLE FIX */
+        header { 
+            padding: 50px 20px; 
+            text-align: center;
+            background: transparent;
         }
 
-        header { padding: 40px 20px; text-align: center; }
-        header img { width: 100%; max-width: 500px; filter: drop-shadow(0 0 15px var(--cyan)); }
+        header img { 
+            width: 100%; 
+            max-width: 700px; 
+            /* This 'screen' mix-blend-mode deletes the black background of your PNG */
+            mix-blend-mode: screen; 
+            filter: drop-shadow(0 0 25px var(--cyan));
+            transition: transform 0.5s ease;
+        }
+        
+        header img:hover { transform: scale(1.02); }
 
         nav {
             position: sticky; top: 0; z-index: 1000;
-            background: rgba(0,0,0,0.8);
-            border-bottom: 3px solid var(--red);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 4px solid var(--red);
             display: flex; justify-content: center;
         }
 
         nav button {
             background: transparent; border: none; color: #fff;
-            padding: 20px; cursor: pointer;
+            padding: 22px 25px; cursor: pointer;
             font-family: 'Syncopate', sans-serif;
-            font-size: 0.8rem; text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 0.85rem; text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: 0.3s;
         }
 
-        nav button.active { color: var(--cyan); box-shadow: inset 0 -4px 0 var(--cyan); }
+        nav button.active { color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
 
-        main { padding: 20px; max-width: 1000px; margin: 0 auto; }
+        main { padding: 30px 20px; max-width: 1100px; margin: 0 auto; }
 
         .section { display: none; }
-        .section.active { display: block; }
+        .section.active { display: block; animation: fadeIn 0.8s ease; }
 
-        /* THE GLOW BUTTONS - SAHB STYLE */
+        /* DATA CARDS (ADS & WIRE) */
+        .card {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-left: 6px solid var(--red);
+            padding: 30px; margin-bottom: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
         .glow-btn {
             display: block; width: 100%; padding: 25px; margin-bottom: 20px;
-            background: rgba(0,0,0,0.6); border: 2px solid var(--cyan);
+            background: rgba(0,0,0,0.5); border: 2px solid var(--cyan);
             color: var(--cyan); text-decoration: none; text-align: center;
-            font-family: 'Syncopate', sans-serif;
-            font-size: 1.1rem; letter-spacing: 3px;
-            box-shadow: 0 0 15px var(--cyan), inset 0 0 10px rgba(0,242,255,0.2);
-            text-transform: uppercase;
+            font-family: 'Syncopate', sans-serif; font-size: 1.1rem;
+            letter-spacing: 4px; text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(0,242,255,0.3);
         }
 
-        /* ADVERTISING / NEWS CARDS */
-        .data-card {
-            background: rgba(0,0,0,0.7);
-            border-left: 5px solid var(--red);
-            padding: 25px; margin-bottom: 20px;
-            border-radius: 2px;
+        .glow-btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 40px var(--cyan); }
+
+        .crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .crew-member { background: var(--glass); border: 1px solid #333; padding: 10px; text-align: center; }
+        .crew-member img { width: 100%; filter: contrast(1.1); border-bottom: 4px solid var(--red); }
+        .crew-name { font-family: 'Syncopate', sans-serif; display: block; margin-top: 15px; color: var(--cyan); }
+
+        #clock { font-family: 'Syncopate', sans-serif; font-size: 4rem; text-align: center; margin-bottom: 40px; text-shadow: 0 0 30px var(--red); }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 768px) {
+            nav button { font-size: 0.65rem; padding: 15px 10px; }
+            header img { max-width: 90%; }
         }
-
-        h2 { font-family: 'Syncopate', sans-serif; color: var(--cyan); text-transform: uppercase; margin-top: 0; }
-
-        .crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
-        .crew-member { background: rgba(0,0,0,0.8); padding: 10px; text-align: center; border: 1px solid #333; }
-        .crew-member img { width: 100%; border-bottom: 3px solid var(--red); }
-        .crew-name { font-family: 'Syncopate', sans-serif; display: block; margin-top: 10px; font-size: 0.8rem; }
-
-        #clock { font-family: 'Syncopate', sans-serif; font-size: 3.5rem; text-align: center; margin-bottom: 30px; text-shadow: 0 0 20px var(--red); }
     </style>
 </head>
 <body>
-    <div class="master-overlay">
-        <header><img src="assets/branding/logo.png" alt="ROCK.SCOT"></header>
+    <header><img src="assets/branding/logo.png" alt="ROCK.SCOT"></header>
 
-        <nav>
-            <button onclick="tab('live')" id="btn-live" class="active">Gigs</button>
-            <button onclick="tab('wire')" id="btn-wire">Wire</button>
-            <button onclick="tab('team')" id="btn-team">Crew</button>
-            <button onclick="tab('ads')" id="btn-ads">Ads</button>
-        </nav>
+    <nav>
+        <button onclick="tab('live')" id="btn-live" class="active">Gigs</button>
+        <button onclick="tab('wire')" id="btn-wire">Wire</button>
+        <button onclick="tab('team')" id="btn-team">Crew</button>
+        <button onclick="tab('ads')" id="btn-ads">Ads</button>
+    </nav>
 
-        <main>
-            <section id="live" class="section active">
-                <div id="clock">00:00:00</div>
-                <a href="https://www.skiddle.com/whats-on/scotland/gigs/" target="_blank" class="glow-btn">SKIDDLE VERIFIED</a>
-                <a href="https://www.ticketmaster.co.uk/browse/rock-and-pop-catid-73/music-atid-10001/scotland-rid-10005" target="_blank" class="glow-btn">TICKETMASTER VERIFIED</a>
-            </section>
+    <main>
+        <section id="live" class="section active">
+            <div id="clock">00:00:00</div>
+            <a href="https://www.skiddle.com/whats-on/scotland/gigs/" target="_blank" class="glow-btn">SKIDDLE SCOTLAND</a>
+            <a href="https://www.ticketmaster.co.uk/browse/rock-and-pop-catid-73/music-atid-10001/scotland-rid-10005" target="_blank" class="glow-btn">TICKETMASTER ROCK</a>
+        </section>
 
-            <section id="wire" class="section">
-                <h2>The Rock Wire</h2>
-                <div id="wire-content"></div>
-            </section>
+        <section id="wire" class="section">
+            <div id="wire-content"></div>
+        </section>
 
-            <section id="team" class="section">
-                <div class="crew-grid" id="crew-list"></div>
-            </section>
+        <section id="team" class="section">
+            <div class="crew-grid" id="crew-list"></div>
+        </section>
 
-            <section id="ads" class="section">
-                <h2>ADVERTISING INTEL</h2>
-                <div id="ads-list">LOADING SALES DATA...</div>
-            </section>
-        </main>
-    </div>
+        <section id="ads" class="section">
+            <h2 style="font-family:'Syncopate'; color:var(--red);">ADVERTISING PACKAGES</h2>
+            <div id="ads-list"></div>
+        </section>
+    </main>
 
     <script>
         const _sb = supabase.createClient('https://figcmwjdbeurhjopxknp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY');
@@ -128,24 +142,21 @@
         }
 
         async function loadAds() {
-            const { data, error } = await _sb.from('ads').select('*');
-            const list = document.getElementById('ads-list');
-            if(error) { list.innerHTML = "ERR: NO INTEL FOUND"; return; }
-            list.innerHTML = data.map(a => `
-                <div class="data-card">
-                    <h3 style="color:var(--cyan); margin:0;">${a.title || 'Untitled'}</h3>
-                    <p>${a.description || ''}</p>
-                    <div style="color:var(--red); font-weight:bold; font-family:'Syncopate';">${a.price || ''}</div>
-                </div>
-            `).join('');
+            const { data } = await _sb.from('ads').select('*');
+            document.getElementById('ads-list').innerHTML = data ? data.map(a => `
+                <div class="card">
+                    <h3 style="color:var(--cyan); font-family:'Syncopate'; margin:0;">${a.title}</h3>
+                    <p style="font-size:1.2rem; margin:15px 0;">${a.description}</p>
+                    <div style="color:var(--red); font-weight:bold; font-size:1.4rem; font-family:'Syncopate';">${a.price}</div>
+                </div>`).join('') : "";
         }
 
         async function loadWire() {
             const { data } = await _sb.from('news_wire').select('*').order('created_at', {ascending:false}).limit(10);
             document.getElementById('wire-content').innerHTML = data ? data.map(n => `
-                <div class="data-card" onclick="window.open('${n.source_url}', '_blank')">
-                    <small style="color:var(--red); font-weight:bold;">${n.source_name}</small>
-                    <h3 style="margin:5px 0 0 0;">${n.headline}</h3>
+                <div class="card" onclick="window.open('${n.source_url}', '_blank')" style="cursor:pointer;">
+                    <small style="color:var(--red); font-weight:bold; letter-spacing:1px;">${n.source_name}</small>
+                    <h3 style="margin:5px 0 0 0; font-family:'Syncopate'; font-size:1rem;">${n.headline}</h3>
                 </div>`).join('') : "";
         }
 
