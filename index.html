@@ -5,165 +5,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock.Scot | Scottish Rock Authority</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Permanent+Marker&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
-
         :root { 
-            --rock-blue: #00f2ff; /* Your Logo Glow */
-            --rock-red: #ff003c;  /* Your Logo Core */
-            --glass: rgba(10, 10, 15, 0.85);
-            --border: rgba(0, 242, 255, 0.2);
+            --sahb-red: #ff0000;
+            --sahb-glow: rgba(255, 0, 0, 0.8);
+            --paper: rgba(20, 20, 20, 0.9);
+            --yellow: #fdfd96;
         }
 
-        * { box-sizing: border-box; transition: all 0.3s ease; }
-        
         body, html { 
-            margin: 0; padding: 0; height: 100%; 
-            background: #000; color: #fff; 
-            font-family: 'Rajdhani', sans-serif;
+            margin: 0; padding: 0; min-height: 100vh;
+            background: #000; color: var(--yellow);
+            font-family: 'Permanent Marker', cursive;
             overflow-x: hidden;
         }
 
-        /* FULL PAGE BG1.JPG */
+        /* THE MAIN IMAGE BG */
         .master-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('assets/backgrounds/bg1.jpg') no-repeat center center;
-            background-size: cover;
-            z-index: -2;
+            background-size: cover; z-index: -2; filter: grayscale(0.4) contrast(1.2);
         }
 
-        /* SCANLINE EFFECT FROM WP17 */
-        .scanlines {
+        /* VINTAGE FILM GRAIN */
+        .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 4px, 3px 100%;
-            z-index: -1; pointer-events: none;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.4; z-index: -1; pointer-events: none;
         }
 
-        /* HEADER & NAVIGATION */
+        header { padding: 30px; text-align: center; }
+        header img { 
+            width: 100%; max-width: 450px; 
+            filter: drop-shadow(0 0 20px var(--sahb-red));
+            transform: rotate(-2deg);
+        }
+
         nav {
-            position: sticky; top: 0; z-index: 1000;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-bottom: 2px solid var(--rock-red);
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 20px; height: 80px;
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; padding: 10px; position: sticky; top: 0; z-index: 100;
+            background: rgba(0,0,0,0.8); border-bottom: 5px solid var(--sahb-red);
         }
 
-        .nav-logo img { height: 50px; filter: drop-shadow(0 0 10px var(--rock-blue)); }
-
-        .nav-links { display: flex; gap: 5px; }
-        .nav-links button {
-            background: transparent; border: none; color: #fff;
-            font-family: 'Orbitron', sans-serif; font-weight: 900;
-            text-transform: uppercase; padding: 10px 15px; cursor: pointer;
-            letter-spacing: 1px; font-size: 0.9rem;
+        nav button {
+            background: #222; border: 3px solid #444; color: #fff;
+            padding: 15px 5px; cursor: pointer; font-family: 'Creepster', cursive;
+            font-size: 1.2rem; letter-spacing: 2px; transition: 0.2s;
+            text-shadow: 2px 2px #000;
         }
 
-        .nav-links button.active {
-            color: var(--rock-blue);
-            text-shadow: 0 0 10px var(--rock-blue);
-            border-bottom: 3px solid var(--rock-blue);
+        nav button:hover, nav button.active {
+            color: var(--sahb-red);
+            border-color: var(--sahb-red);
+            box-shadow: 0 0 20px var(--sahb-glow);
+            transform: scale(1.05) rotate(1deg);
         }
 
-        /* MAIN CONTENT AREA */
-        main { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        main { padding: 20px; max-width: 900px; margin: 0 auto; }
 
-        .hero-title {
-            font-family: 'Orbitron', sans-serif; font-weight: 900;
-            font-size: clamp(2rem, 8vw, 4rem); text-transform: uppercase;
-            margin: 0 0 20px 0; line-height: 0.9;
-            color: #fff; text-shadow: 3px 3px 0 var(--rock-red);
+        .zine-card {
+            background: var(--paper);
+            border: 4px solid #333;
+            padding: 30px; margin-bottom: 40px;
+            box-shadow: 15px 15px 0px var(--sahb-red);
+            transform: rotate(0.5deg);
         }
 
-        .glass-panel {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 40px; border-radius: 4px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
-            position: relative; overflow: hidden;
+        h2 { 
+            font-family: 'Creepster', cursive; font-size: 3rem; 
+            color: var(--sahb-red); margin: 0 0 20px 0;
+            text-transform: uppercase; letter-spacing: 5px;
+            text-shadow: 3px 3px #000;
         }
 
-        .glass-panel::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 4px; height: 100%; background: var(--rock-blue);
+        .glow-link {
+            display: block; width: 100%; padding: 25px; margin-bottom: 20px;
+            background: #000; border: 3px solid var(--sahb-red);
+            color: var(--yellow); text-decoration: none; text-align: center;
+            font-size: 1.5rem; text-transform: uppercase;
+            box-shadow: inset 0 0 10px var(--sahb-glow);
+            animation: pulse-red 2s infinite;
         }
 
-        /* BUTTONS STYLED LIKE WP17 */
-        .action-btn {
-            display: inline-block; width: 100%;
-            padding: 20px; margin-bottom: 15px;
-            background: linear-gradient(45deg, #111, #222);
-            border: 1px solid var(--border);
-            color: #fff; text-decoration: none;
-            font-family: 'Orbitron', sans-serif; font-weight: 900;
-            text-align: center; cursor: pointer;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 5px var(--sahb-glow), inset 0 0 5px var(--sahb-glow); }
+            50% { box-shadow: 0 0 25px var(--sahb-glow), inset 0 0 15px var(--sahb-glow); }
+            100% { box-shadow: 0 0 5px var(--sahb-glow), inset 0 0 5px var(--sahb-glow); }
         }
 
-        .action-btn:hover {
-            background: var(--rock-red);
-            color: #fff; transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(255, 0, 60, 0.5);
+        .wire-item {
+            border-bottom: 2px dashed #444; padding: 20px 0;
+            font-family: 'Permanent Marker', cursive;
         }
 
-        .section { display: none; animation: fadeIn 0.5s ease; }
+        .section { display: none; }
         .section.active { display: block; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* GRID FOR CARDS */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-
-        @media (max-width: 768px) {
-            nav { flex-direction: column; height: auto; padding: 10px; }
-            .nav-links { width: 100%; justify-content: space-around; }
+        #clock {
+            font-size: 4rem; color: var(--sahb-red); text-align: center;
+            text-shadow: 0 0 15px var(--sahb-red); margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="master-bg"></div>
-    <div class="scanlines"></div>
+    <div class="overlay"></div>
+
+    <header><img src="assets/branding/logo.png" alt="ROCK.SCOT"></header>
 
     <nav>
-        <div class="nav-logo"><img src="assets/branding/logo.png"></div>
-        <div class="nav-links">
-            <button onclick="tab('live')" id="btn-live" class="active">Gigs</button>
-            <button onclick="tab('wire')" id="btn-wire">Wire</button>
-            <button onclick="tab('team')" id="btn-team">Team</button>
-            <button onclick="tab('ads')" id="btn-ads">Ads</button>
-        </div>
+        <button onclick="tab('live')" id="btn-live" class="active">GIGS</button>
+        <button onclick="tab('wire')" id="btn-wire">WIRE</button>
+        <button onclick="tab('team')" id="btn-team">CREW</button>
+        <button onclick="tab('ads')" id="btn-ads">ADS</button>
     </nav>
 
     <main>
         <section id="live" class="section active">
-            <h1 class="hero-title">Live <br><span style="color:var(--rock-blue)">Authority</span></h1>
-            <div class="grid">
-                <div class="glass-panel">
-                    <h2 style="color:var(--rock-blue); margin-top:0;">Verified Sources</h2>
-                    <p>Direct intel from Scotland's primary ticket portals.</p>
-                    <a href="https://www.skiddle.com/whats-on/scotland/gigs/" target="_blank" class="action-btn">SKIDDLE SCOTLAND</a>
-                    <a href="https://www.ticketmaster.co.uk/browse/rock-and-pop-catid-73/music-atid-10001/scotland-rid-10005" target="_blank" class="action-btn">TICKETMASTER ROCK</a>
-                </div>
-                <div class="glass-panel" style="display:flex; align-items:center; justify-content:center;">
-                    <div id="clock" style="font-size:4rem; font-family:'Orbitron'; color:var(--rock-red); text-shadow: 0 0 15px var(--rock-red);">00:00:00</div>
-                </div>
+            <div id="clock">00:00:00</div>
+            <div class="zine-card">
+                <h2>Verified Gigs</h2>
+                <a href="https://www.skiddle.com/whats-on/scotland/gigs/" target="_blank" class="glow-link">SKIDDLE INTEL</a>
+                <a href="https://www.ticketmaster.co.uk/browse/rock-and-pop-catid-73/music-atid-10001/scotland-rid-10005" target="_blank" class="glow-link">TICKETMASTER GIGS</a>
             </div>
         </section>
 
         <section id="wire" class="section">
-            <div class="glass-panel">
-                <h2 style="color:var(--rock-blue);">Rock Wire Feed</h2>
+            <div class="zine-card">
+                <h2>The Rock Wire</h2>
                 <div id="wire-content"></div>
             </div>
         </section>
 
         <section id="team" class="section">
-            <div class="grid" id="crew-list"></div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;" id="crew-list"></div>
         </section>
 
         <section id="ads" class="section">
-            <div class="glass-panel" id="ads-list"></div>
+            <div class="zine-card" id="ads-list"></div>
         </section>
     </main>
 
@@ -172,18 +152,18 @@
 
         function tab(t) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
             document.getElementById(t).classList.add('active');
             document.getElementById('btn-'+t).classList.add('active');
             if(t==='wire') loadWire(); if(t==='team') loadCrew(); if(t==='ads') loadAds();
         }
 
         async function loadWire() {
-            const { data } = await _sb.from('news_wire').select('*').order('created_at', {ascending:false}).limit(10);
+            const { data } = await _sb.from('news_wire').select('*').order('created_at', {ascending:false}).limit(12);
             document.getElementById('wire-content').innerHTML = data ? data.map(n => `
-                <div style="padding:20px 0; border-bottom:1px solid rgba(255,255,255,0.1); cursor:pointer;" onclick="window.open('${n.source_url}', '_blank')">
-                    <span style="color:var(--rock-red); font-weight:bold; text-transform:uppercase; font-size:0.8rem;">${n.source_name}</span>
-                    <h3 style="margin:5px 0 0 0; color:#fff;">${n.headline}</h3>
+                <div class="wire-item" onclick="window.open('${n.source_url}', '_blank')">
+                    <span style="color:var(--sahb-red); text-decoration:underline; font-size:0.8rem;">${n.source_name}</span><br>
+                    <span style="font-size:1.4rem;">${n.headline}</span>
                 </div>
             `).join('') : "";
         }
@@ -191,9 +171,9 @@
         function loadCrew() {
             const crew = ["Andy","Alex","Stevie","Mhairi","Jude","Chris","Cal","Blue"];
             document.getElementById('crew-list').innerHTML = crew.map(c => `
-                <div class="glass-panel" style="text-align:center;">
-                    <div style="width:100px; height:100px; background:var(--rock-red); margin:0 auto 15px; border-radius:4px; box-shadow: 0 0 20px var(--rock-red);"></div>
-                    <h3 style="font-family:'Orbitron'; margin:0;">${c}</h3>
+                <div class="zine-card" style="margin:0; text-align:center; padding:15px;">
+                    <div style="width:100%; height:120px; background:var(--sahb-red); margin-bottom:10px; filter: contrast(2);"></div>
+                    <span style="font-size:1.5rem;">${c}</span>
                 </div>
             `).join('');
         }
@@ -201,10 +181,10 @@
         async function loadAds() {
             const { data } = await _sb.from('ads').select('*');
             document.getElementById('ads-list').innerHTML = data ? data.map(a => `
-                <div style="margin-bottom:30px;">
-                    <h2 style="color:var(--rock-blue); margin-bottom:5px;">${a.title}</h2>
-                    <p style="font-size:1.2rem;">${a.description}</p>
-                    <span style="color:var(--rock-red); font-weight:bold; font-family:'Orbitron';">${a.price}</span>
+                <div style="margin-bottom:25px; border-bottom:3px solid var(--sahb-red); padding-bottom:10px;">
+                    <h3 style="color:var(--sahb-red); margin:0;">${a.title}</h3>
+                    <p>${a.description}</p>
+                    <div style="color:var(--yellow); font-size:1.5rem;">${a.price}</div>
                 </div>
             `).join('') : "";
         }
