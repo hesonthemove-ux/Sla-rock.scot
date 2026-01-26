@@ -22,16 +22,9 @@
             overflow-x: hidden;
         }
 
-        /* VECTOR-STYLE LOGO TRANSFORM */
-        header { 
-            padding: 40px 20px; 
-            text-align: center;
-        }
-
+        header { padding: 40px 20px; text-align: center; }
         header img { 
-            width: 100%; 
-            max-width: 650px; 
-            /* This removes the black background from your logo.png */
+            width: 100%; max-width: 650px; 
             mix-blend-mode: screen; 
             filter: drop-shadow(0 0 20px var(--cyan));
         }
@@ -49,7 +42,6 @@
             padding: 20px; cursor: pointer;
             font-family: 'Syncopate', sans-serif; font-size: 0.8rem;
             text-transform: uppercase; letter-spacing: 2px;
-            text-shadow: 2px 2px 4px #000;
         }
 
         nav button.active { color: var(--cyan); border-bottom: 3px solid var(--cyan); }
@@ -57,13 +49,13 @@
         main { padding: 25px; max-width: 1100px; margin: 0 auto; }
 
         .section { display: none; }
-        .section.active { display: block; animation: fadeIn 0.5s ease; }
+        .section.active { display: block; }
 
         .card {
             background: var(--glass);
             border: 1px solid rgba(0, 242, 255, 0.2);
             border-left: 5px solid var(--red);
-            padding: 25px; margin-bottom: 20px;
+            padding: 20px; margin-bottom: 15px;
             backdrop-filter: blur(4px);
         }
 
@@ -76,16 +68,11 @@
             text-transform: uppercase;
         }
 
-        .glow-btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 35px var(--cyan); }
-
         .crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
         .crew-member { background: var(--glass); padding: 10px; text-align: center; border: 1px solid #444; }
         .crew-member img { width: 100%; border-bottom: 3px solid var(--red); }
-        .crew-name { font-family: 'Syncopate', sans-serif; display: block; margin-top: 10px; font-size: 0.8rem; }
 
         #clock { font-family: 'Syncopate', sans-serif; font-size: 3.5rem; text-align: center; margin-bottom: 30px; text-shadow: 0 0 25px var(--red); }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -106,7 +93,8 @@
         </section>
 
         <section id="wire" class="section">
-            <div id="wire-content"></div>
+            <h2 style="font-family:'Syncopate'; color:var(--cyan); font-size: 1.2rem;">CENTRAL SCOTLAND NEWS WIRE</h2>
+            <div id="wire-content">LOADING LOCAL INTEL...</div>
         </section>
 
         <section id="team" class="section">
@@ -114,7 +102,8 @@
         </section>
 
         <section id="ads" class="section">
-            <div id="ads-list">LOADING ADVERTISING DATA...</div>
+            <h2 style="font-family:'Syncopate'; color:var(--red); font-size: 1.2rem;">ADVERTISING PACKAGES</h2>
+            <div id="ads-list"></div>
         </section>
     </main>
 
@@ -129,28 +118,28 @@
             if(t==='wire') loadWire(); if(t==='team') loadCrew(); if(t==='ads') loadAds();
         }
 
-        async function loadAds() {
-            const { data, error } = await _sb.from('ads').select('*');
-            const target = document.getElementById('ads-list');
-            if (error) { 
-                console.error(error);
-                target.innerHTML = `<div class="card">DATABASE ERROR: CHECK TABLE NAME</div>`;
-                return;
-            }
-            target.innerHTML = data.map(a => `
-                <div class="card">
-                    <h3 style="color:var(--cyan); font-family:'Syncopate'; margin:0;">${a.title || 'Promotion'}</h3>
-                    <p>${a.description || ''}</p>
-                    <div style="color:var(--red); font-weight:bold; font-size:1.2rem; font-family:'Syncopate';">${a.price || ''}</div>
+        async function loadWire() {
+            const { data, error } = await _sb.from('news_wire').select('*').order('created_at', {ascending:false});
+            const target = document.getElementById('wire-content');
+            if (error || !data) { target.innerHTML = "NO LOCAL FEED DETECTED"; return; }
+            
+            // Filter out outdated non-Scottish sources in the view
+            target.innerHTML = data
+                .filter(n => !n.source_name.toLowerCase().includes('prog') && !n.source_name.toLowerCase().includes('gigwise'))
+                .map(n => `
+                <div class="card" onclick="window.open('${n.source_url}', '_blank')" style="cursor:pointer;">
+                    <div style="color:var(--red); font-weight:bold; font-size:0.7rem; text-transform:uppercase; letter-spacing:1px;">${n.source_name} • ${new Date(n.created_at).toLocaleDateString('en-GB')}</div>
+                    <h3 style="margin:5px 0 0 0; font-family:'Syncopate'; font-size:0.95rem;">${n.headline}</h3>
                 </div>`).join('');
         }
 
-        async function loadWire() {
-            const { data } = await _sb.from('news_wire').select('*').order('created_at', {ascending:false}).limit(10);
-            document.getElementById('wire-content').innerHTML = data ? data.map(n => `
-                <div class="card" onclick="window.open('${n.source_url}', '_blank')" style="cursor:pointer;">
-                    <small style="color:var(--red); font-weight:bold;">${n.source_name}</small>
-                    <h3 style="margin:5px 0 0 0; font-family:'Syncopate'; font-size:0.9rem;">${n.headline}</h3>
+        async function loadAds() {
+            const { data } = await _sb.from('ads').select('*');
+            document.getElementById('ads-list').innerHTML = data ? data.map(a => `
+                <div class="card">
+                    <h3 style="color:var(--cyan); font-family:'Syncopate'; margin:0; font-size:1.1rem;">${a.title}</h3>
+                    <p style="margin:10px 0;">${a.description}</p>
+                    <div style="color:var(--red); font-weight:bold; font-family:'Syncopate';">${a.price}</div>
                 </div>`).join('') : "";
         }
 
@@ -159,7 +148,7 @@
             document.getElementById('crew-list').innerHTML = crew.map((c, i) => `
                 <div class="crew-member">
                     <img src="assets/crew/dj${i+1}.jpg" onerror="this.src='assets/branding/logo.png'">
-                    <span class="crew-name">${c}</span>
+                    <span style="font-family:'Syncopate'; display:block; margin-top:10px; font-size:0.8rem; color:var(--cyan);">${c}</span>
                 </div>`).join('');
         }
 
