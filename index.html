@@ -10,119 +10,108 @@
         :root { 
             --cyan: #00f2ff;
             --red: #ff003c;
-            --vambo-yellow: #fdfd96;
-            --bg-dark: #0a0a0a;
+            --vambo: #fdfd96;
+            --bg: #050505;
+            --card-bg: #111;
+            --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body { 
             margin: 0; padding: 0; min-height: 100vh;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
-            color: #fff; 
-            font-family: 'Rajdhani', sans-serif;
+            background: radial-gradient(circle at center, #151515 0%, var(--bg) 100%);
+            color: #fff; font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
         }
 
-        header { padding: 60px 20px; text-align: center; }
+        /* HEADER & BRANDING */
+        header { padding: clamp(40px, 8vh, 80px) 20px; text-align: center; }
         header img { 
-            width: 100%; max-width: 650px; 
-            filter: drop-shadow(0 0 30px rgba(0, 242, 255, 0.4));
+            width: 100%; max-width: 600px; 
+            filter: drop-shadow(0 0 25px rgba(0, 242, 255, 0.3));
+            transition: var(--transition);
         }
 
+        /* MODULAR NAVIGATION */
         nav {
             position: sticky; top: 0; z-index: 1000;
-            background: rgba(0,0,0,0.95);
-            border-bottom: 4px solid var(--red);
-            display: flex; justify-content: center;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--red);
+            display: flex; justify-content: center; overflow-x: auto;
         }
 
         nav button {
-            background: transparent; border: none; color: #888;
-            padding: 25px; cursor: pointer;
-            font-family: 'Syncopate', sans-serif; font-size: 0.85rem;
-            text-transform: uppercase; letter-spacing: 3px;
-            transition: 0.4s;
+            background: transparent; border: none; color: #777;
+            padding: 20px 25px; cursor: pointer;
+            font-family: 'Syncopate', sans-serif; font-size: 0.8rem;
+            text-transform: uppercase; letter-spacing: 2px;
+            transition: var(--transition); white-space: nowrap;
         }
 
-        nav button:hover { color: #fff; text-shadow: 0 0 10px #fff; }
-        nav button.active { color: var(--cyan); box-shadow: inset 0 -4px 0 var(--cyan); }
+        nav button:hover { color: #fff; }
+        nav button.active { color: var(--cyan); box-shadow: inset 0 -3px 0 var(--cyan); }
 
-        main { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        main { padding: 30px 20px; max-width: 1200px; margin: 0 auto; }
 
-        .section { display: none; opacity: 0; transition: 0.6s; }
-        .section.active { display: block; opacity: 1; }
+        /* REUSABLE CARD MODULES */
+        .section { display: none; opacity: 0; transform: translateY(10px); transition: var(--transition); }
+        .section.active { display: block; opacity: 1; transform: translateY(0); }
 
-        /* BROADCAST STYLE CARDS */
         .card {
-            background: #111;
-            border: 1px solid #222;
-            border-top: 4px solid var(--red);
-            padding: 35px; margin-bottom: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-            position: relative;
-            overflow: hidden;
+            background: var(--card-bg); border: 1px solid #222;
+            border-left: 4px solid var(--red); padding: 25px; margin-bottom: 20px;
+            transition: var(--transition); position: relative;
         }
+        .card:hover { transform: scale(1.01); border-color: var(--cyan); }
 
-        .card::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 100%);
-            pointer-events: none;
+        /* LOADING STATE */
+        .loading-pulse {
+            height: 4px; width: 100%; background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            background-size: 200% 100%; animation: pulse 1.5s infinite;
         }
+        @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
         .glow-btn {
-            display: block; width: 100%; padding: 25px; margin-bottom: 20px;
+            display: block; width: 100%; padding: 20px; margin-bottom: 15px;
             background: transparent; border: 2px solid var(--cyan);
             color: var(--cyan); text-decoration: none; text-align: center;
             font-family: 'Syncopate', sans-serif; font-weight: 700;
-            font-size: 1.1rem; letter-spacing: 5px;
-            transition: 0.3s;
+            letter-spacing: 4px; text-transform: uppercase; transition: 0.3s;
         }
+        .glow-btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 30px var(--cyan); }
 
-        .glow-btn:hover {
-            background: var(--cyan); color: #000;
-            box-shadow: 0 0 50px var(--cyan);
-        }
+        #clock { font-family: 'Syncopate', sans-serif; font-size: clamp(2rem, 8vw, 4rem); text-align: center; margin-bottom: 40px; color: #fff; text-shadow: 0 0 20px var(--red); }
 
-        .crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-        .crew-member { 
-            background: #111; padding: 15px; text-align: center; 
-            border: 1px solid #222; transition: 0.3s;
-        }
-        .crew-member:hover { border-color: var(--cyan); transform: translateY(-10px); }
+        /* CREW GRID */
+        .crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .crew-member { background: var(--card-bg); padding: 10px; text-align: center; border: 1px solid #222; transition: 0.3s; }
         .crew-member img { width: 100%; border-bottom: 3px solid var(--red); filter: grayscale(1); transition: 0.5s; }
         .crew-member:hover img { filter: grayscale(0); }
 
-        #clock { 
-            font-family: 'Syncopate', sans-serif; font-size: 4rem; 
-            text-align: center; margin-bottom: 50px; 
-            color: #fff; letter-spacing: 10px;
-            text-shadow: 0 0 30px var(--red);
-        }
-
-        h2 { font-family: 'Syncopate', sans-serif; color: var(--vambo-yellow); text-transform: uppercase; margin-bottom: 30px; }
+        @media (max-width: 600px) { nav button { padding: 15px 10px; font-size: 0.65rem; } }
     </style>
 </head>
 <body>
-    <header><img src="assets/branding/logo.png" alt="ROCK.SCOT"></header>
+    <header><img src="assets/branding/logo.png" alt="ROCK.SCOT AUTHORITY"></header>
 
-    <nav>
-        <button onclick="tab('live')" id="btn-live" class="active">Gigs</button>
-        <button onclick="tab('wire')" id="btn-wire">Wire</button>
-        <button onclick="tab('team')" id="btn-team">Crew</button>
-        <button onclick="tab('ads')" id="btn-ads">Ads</button>
+    <nav aria-label="Main Navigation">
+        <button onclick="ui.tab('live')" id="btn-live" class="active">Gigs</button>
+        <button onclick="ui.tab('wire')" id="btn-wire">Wire</button>
+        <button onclick="ui.tab('team')" id="btn-team">Crew</button>
+        <button onclick="ui.tab('ads')" id="btn-ads">Ads</button>
     </nav>
 
-    <main>
+    <main aria-live="polite">
         <section id="live" class="section active">
             <div id="clock">00:00:00</div>
             <div class="card">
-                <h2>Authority Access</h2>
+                <h2 style="font-family:'Syncopate'; font-size:1.1rem; color:var(--vambo);">SECURE ACCESS</h2>
                 <a href="https://www.skiddle.com/whats-on/scotland/gigs/" target="_blank" class="glow-btn">SKIDDLE SCOTLAND</a>
                 <a href="https://www.ticketmaster.co.uk/browse/rock-and-pop-catid-73/music-atid-10001/scotland-rid-10005" target="_blank" class="glow-btn">TICKETMASTER ROCK</a>
             </div>
         </section>
 
         <section id="wire" class="section">
-            <h2>The Rock Wire</h2>
+            <h2 style="font-family:'Syncopate'; color:var(--cyan);">CENTRAL SCOTLAND WIRE</h2>
             <div id="wire-content"></div>
         </section>
 
@@ -131,54 +120,76 @@
         </section>
 
         <section id="ads" class="section">
-            <h2>Rate Card</h2>
+            <h2 style="font-family:'Syncopate'; color:var(--red);">RATE CARD</h2>
             <div id="ads-list"></div>
         </section>
     </main>
 
     <script>
-        const _sb = supabase.createClient('https://figcmwjdbeurhjopxknp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY');
+        // MODULAR JS DESIGN PATTERN
+        const api = {
+            _sb: supabase.createClient('https://figcmwjdbeurhqopxknp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY'),
+            
+            async fetchWire() {
+                const { data, error } = await this._sb.from('news_wire').select('headline, source_url, source_name').order('created_at', {ascending:false}).limit(10);
+                return error ? [] : data;
+            },
+            async fetchAds() {
+                const { data, error } = await this._sb.from('ads').select('title, description, price');
+                return error ? [] : data;
+            }
+        };
 
-        function tab(t) {
-            document.querySelectorAll('.section').forEach(s => { s.classList.remove('active'); });
-            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-            const active = document.getElementById(t);
-            active.style.display = 'block';
-            setTimeout(() => { active.classList.add('active'); }, 50);
-            document.getElementById('btn-'+t).classList.add('active');
-            if(t==='wire') loadWire(); if(t==='team') loadCrew(); if(t==='ads') loadAds();
-        }
+        const ui = {
+            tab(targetId) {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+                const target = document.getElementById(targetId);
+                target.style.display = 'block';
+                setTimeout(() => target.classList.add('active'), 50);
+                document.getElementById('btn-'+targetId).classList.add('active');
 
-        async function loadWire() {
-            const { data } = await _sb.from('news_wire').select('*').order('created_at', {ascending:false}).limit(12);
-            document.getElementById('wire-content').innerHTML = data ? data.map(n => `
-                <div class="card" onclick="window.open('${n.source_url}', '_blank')" style="cursor:pointer;">
-                    <small style="color:var(--red); font-weight:bold;">${n.source_name}</small>
-                    <h3 style="margin:10px 0 0 0; font-family:'Syncopate'; font-size:1rem;">${n.headline}</h3>
-                </div>`).join('') : "";
-        }
+                if(targetId === 'wire') this.renderWire();
+                if(targetId === 'ads') this.renderAds();
+                if(targetId === 'team') this.renderCrew();
+            },
 
-        async function loadAds() {
-            const { data } = await _sb.from('ads').select('*');
-            document.getElementById('ads-list').innerHTML = data ? data.map(a => `
-                <div class="card">
-                    <h3 style="color:var(--cyan); font-family:'Syncopate'; margin:0;">${a.title}</h3>
-                    <p style="font-size:1.1rem; margin:15px 0;">${a.description}</p>
-                    <div style="color:var(--vambo-yellow); font-family:'Syncopate'; font-size:1.3rem;">${a.price}</div>
-                </div>`).join('') : "";
-        }
+            async renderWire() {
+                const container = document.getElementById('wire-content');
+                container.innerHTML = '<div class="loading-pulse"></div>';
+                const news = await api.fetchWire();
+                container.innerHTML = news.map(n => `
+                    <div class="card" onclick="window.open('${n.source_url}', '_blank')" style="cursor:pointer;">
+                        <small style="color:var(--red); font-weight:bold;">${n.source_name}</small>
+                        <h3 style="margin:8px 0 0 0; font-family:'Syncopate'; font-size:0.9rem;">${n.headline}</h3>
+                    </div>`).join('');
+            },
 
-        function loadCrew() {
-            const crew = ["Andy","Alex","Stevie","Mhairi","Jude","Chris","Cal","Blue"];
-            document.getElementById('crew-list').innerHTML = crew.map((c, i) => `
-                <div class="crew-member">
-                    <img src="assets/crew/dj${i+1}.jpg" onerror="this.src='assets/branding/logo.png'">
-                    <span style="font-family:'Syncopate'; display:block; margin-top:15px; color:var(--cyan);">${c}</span>
-                </div>`).join('');
-        }
+            async renderAds() {
+                const container = document.getElementById('ads-list');
+                container.innerHTML = '<div class="loading-pulse"></div>';
+                const ads = await api.fetchAds();
+                container.innerHTML = ads.map(a => `
+                    <div class="card">
+                        <h3 style="color:var(--cyan); font-family:'Syncopate'; margin:0;">${a.title}</h3>
+                        <p style="margin:10px 0;">${a.description}</p>
+                        <div style="color:var(--vambo); font-family:'Syncopate';">${a.price}</div>
+                    </div>`).join('');
+            },
 
+            renderCrew() {
+                const crew = ["Andy","Alex","Stevie","Mhairi","Jude","Chris","Cal","Blue"];
+                document.getElementById('crew-list').innerHTML = crew.map((c, i) => `
+                    <div class="crew-member">
+                        <img src="assets/crew/dj${i+1}.jpg" onerror="this.src='assets/branding/logo.png'">
+                        <span style="font-family:'Syncopate'; display:block; margin-top:10px; font-size:0.75rem; color:var(--cyan);">${c}</span>
+                    </div>`).join('');
+            }
+        };
+
+        // Initialize clock & default tab
         setInterval(() => { document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0]; }, 1000);
-        tab('live');
+        ui.tab('live');
     </script>
 </body>
 </html>
