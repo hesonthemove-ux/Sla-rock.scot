@@ -1,6 +1,7 @@
 import feedparser
 import requests
 import json
+from datetime import datetime
 
 # --- CONFIG ---
 URL = "https://figcmwjdbeurhjopxknp.supabase.co/rest/v1/news_wire"
@@ -13,43 +14,50 @@ HEADERS = {
     "Prefer": "return=minimal"
 }
 
-# ROCK ONLY - SCOTLAND FOCUSED
 FEEDS = [
     {"name": "SKINNY MUSIC", "url": "https://www.theskinny.co.uk/music/rss"},
-    {"name": "SNUTS/ROCK NEWS", "url": "https://www.nme.com/news/music/rss"},
+    {"name": "NME ROCK", "url": "https://www.nme.com/news/music/rss"},
     {"name": "GLASGOW ROCK", "url": "https://www.glasgowlive.co.uk/whats-on/music-nightlife/?service=rss"}
 ]
 
 def update_wire():
-    print("--- UPDATING SCOTTISH ROCK WIRE ---")
+    print("--- UPDATING WIRE (STRICT MODE) ---")
     for f in FEEDS:
-        print(f"Filtering {f['name']}...")
+        print(f"Checking {f['name']}...")
         feed = feedparser.parse(f['url'])
-        for entry in feed.entries[:8]:
-            # Keyword filter to ensure it's Rock/Alt/Scotland
+        for entry in feed.entries[:10]:
             content = (entry.title + entry.get('summary', '')).lower()
-            rock_keywords = ['rock', 'band', 'gig', 'album', 'tour', 'scotland', 'glasgow', 'edinburgh', 'festival', 'punk', 'metal', 'indie']
+            # Explicit Rock/Scotland filter
+            rock_keywords = ['rock', 'band', 'gig', 'album', 'tour', 'scotland', 'glasgow', 'edinburgh', 'festival', 'punk', 'metal', 'indie', 'live']
             
             if any(key in content for key in rock_keywords):
-                summary = entry.get('summary', entry.get('description', 'No details available.'))
-                clean_summary = summary.split('<')[0].strip()[:500] 
+                summary = entry.get('summary', entry.get('description', 'Tap for details.'))
+                # Remove HTML and slice to safe length
+                clean_summary = summary.split('<')[0].strip()[:400] 
 
                 payload = {
                     "source_name": f['name'],
-                    "headline": entry.title,
-                    "summary": clean_summary,
-                    "source_url": entry.link
+                    "headline": str(entry.title),
+                    "summary": str(clean_summary),
+                    "source_url": str(entry.link)
                 }
                 
                 res = requests.post(URL, headers=HEADERS, data=json.dumps(payload))
-                print(f"  [{res.status_code}] {entry.title[:40]}")
+                
+                if res.status_code >= 400:
+                    print(f"  [Error {res.status_code}] {entry.title[:30]}")
+                    # Log the reason if available
+                    print(f"  Reason: {res.text}")
+                else:
+                    print(f"  [OK] {entry.title[:30]}")
 
 def update_gigs():
     print("--- UPDATING GIGS ---")
+    # Using simple list to avoid ID conflicts
     gigs = [
-        {"date": "2026-01-30", "venue": "Barrowlands", "act": "Mogwai"},
-        {"date": "2026-02-05", "venue": "King Tuts", "act": "The Snuts"},
-        {"date": "2026-02-12", "venue": "O2 Academy", "act": "Primal Scream"}
+        {"date": "30 JAN", "venue": "Barrowlands", "act": "Mogwai"},
+        {"date": "05 FEB", "venue": "King Tuts", "act": "The Snuts"},
+        {"date": "12 FEB", "venue": "O2 Academy", "act": "Primal Scream"}
     ]
     for g in gigs:
         requests.post(GIG_URL, headers=HEADERS, data=json.dumps(g))
