@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock.Scot | Scottish Rock Authority</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --cyan: #00f2ff;
+            --red: #ff003c;
+            --vambo: #fdfd96;
+            --bg: #050505;
+            --card-bg: #111;
+            --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { 
+            margin: 0; padding: 0; min-height: 100vh;
+            background: radial-gradient(circle at center, #151515 0%, var(--bg) 100%);
+            color: #fff; font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        header { padding: clamp(40px, 8vh, 80px) 20px; text-align: center; }
+        header img { width: 100%; max-width: 600px; filter: drop-shadow(0 0 25px rgba(0, 242, 255, 0.3)); }
+
+        nav {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(0,0,0,0.95); border-bottom: 3px solid var(--red);
+            display: flex; justify-content: center;
+        }
+
+        nav button {
+            background: transparent; border: none; color: #777;
+            padding: 20px 25px; cursor: pointer;
+            font-family: 'Syncopate', sans-serif; font-size: 0.8rem;
+            text-transform: uppercase; letter-spacing: 2px;
+            transition: var(--transition);
+        }
+
+        nav button:hover { color: #fff; }
+        nav button.active { color: var(--cyan); box-shadow: inset 0 -3px 0 var(--cyan); }
+
+        main { padding: 30px 20px; max-width: 1200px; margin: 0 auto; }
+
+        .section { display: none; opacity: 0; transform: translateY(10px); transition: var(--transition); }
+        .section.active { display: block; opacity: 1; transform: translateY(0); }
+
+        .card {
+            background: var(--card-bg); border: 1px solid #222;
+            border-left: 4px solid var(--red); padding: 25px; margin-bottom: 20px;
+            transition: var(--transition); position: relative;
+        }
+        .card:hover { transform: scale(1.01); border-color: var(--cyan); }
+
+        .glow-btn {
+            display: block; width: 100%; padding: 20px; margin-bottom: 15px;
+            background: transparent; border: 2px solid var(--cyan);
+            color: var(--cyan); text-decoration: none; text-align: center;
+            font-family: 'Syncopate', sans-serif; font-weight: 700;
+            letter-spacing: 4px; text-transform: uppercase; transition: 0.3s;
+        }
+        .glow-btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 30px var(--cyan); }
+
+        #clock { font-family: 'Syncopate', sans-serif; font-size: clamp(2rem, 8vw, 4rem); text-align: center; margin-bottom: 40px; color: #fff; text-shadow: 0 0 20px var(--red); }
+
+        .crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .crew-member { background: var(--card-bg); padding: 10px; text-align: center; border: 1px solid #222; }
+        .crew-member img { width: 100%; border-bottom: 3px solid var(--red); filter: grayscale(1); }
+
+        /* FEEDBACK FORM */
+        .feedback-form input, .feedback-form textarea {
+            width: 100%; background: #000; border: 1px solid #444; color: #fff;
+            padding: 10px; margin-bottom: 10px; font-family: 'Rajdhani';
+        }
+        .feedback-form button {
+            background: var(--red); border: none; color: #fff; padding: 10px 20px;
+            font-family: 'Syncopate'; cursor: pointer; width: 100%;
+        }
+
+        .loading-pulse { height: 4px; width: 100%; background: linear-gradient(90deg, transparent, var(--cyan), transparent); background-size: 200% 100%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    </style>
+</head>
+<body>
+    <header><img src="assets/branding/logo.png" alt="ROCK.SCOT AUTHORITY"></header>
+
+    <nav>
+        <button onclick="ui.tab('live')" id="btn-live" class="active">Gigs</button>
+        <button onclick="ui.tab('wire')" id="btn-wire">Wire</button>
+        <button onclick="ui.tab('team')" id="btn-team">Crew</button>
+        <button onclick="ui.tab('ads')" id="btn-ads">Ads</button>
+    </nav>
+
+    <main>
+        <section id="live" class="section active">
+            <div id="clock">00:00:00</div>
+            <div class="card">
+                <h2 style="font-family:'Syncopate'; font-size:1.1rem; color:var(--vambo);">SHOUTBOX</h2>
+                <div class="feedback-form" id="f-form">
+                    <input type="text" id="fb-user" placeholder="Name/Handle">
+                    <textarea id="fb-msg" placeholder="Your shout..."></textarea>
+                    <button onclick="ui.sendFeedback()">TRANSMIT</button>
+                </div>
+            </div>
+            <a href="https://www.skiddle.com/whats-on/scotland/gigs/" target="_blank" class="glow-btn">SKIDDLE SCOTLAND</a>
+        </section>
+
+        <section id="wire" class="section">
+            <h2 style="font-family:'Syncopate'; color:var(--cyan);">SCOTTISH ROCK WIRE</h2>
+            <div id="wire-content"></div>
+        </section>
+
+        <section id="team" class="section">
+            <div class="crew-grid" id="crew-list"></div>
+        </section>
+
+        <section id="ads" class="section">
+            <h2 style="font-family:'Syncopate'; color:var(--red);">RATE CARD</h2>
+            <div id="ads-list"></div>
+        </section>
+    </main>
+
+    <script>
+        // REDIRECTS TO LOCAL PYTHON BACKEND
+        const api = {
+            base: 'http://localhost:5000/api',
+            
+            async get(endpoint) {
+                try {
+                    const r = await fetch(`${this.base}/${endpoint}`);
+                    return await r.json();
+                } catch (e) { return null; }
+            },
+            
+            async post(endpoint, data) {
+                const r = await fetch(`${this.base}/${endpoint}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                return await r.json();
+            }
+        };
+
+        const ui = {
+            tab(id) {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+                const target = document.getElementById(id);
+                target.style.display = 'block';
+                setTimeout(() => target.classList.add('active'), 50);
+                document.getElementById('btn-'+id).classList.add('active');
+
+                if(id === 'wire') this.renderWire();
+                if(id === 'ads') this.renderAds();
+                if(id === 'team') this.renderCrew();
+            },
+
+            async renderWire() {
+                const box = document.getElementById('wire-content');
+                box.innerHTML = '<div class="loading-pulse"></div>';
+                const news = await api.get('wire');
+                box.innerHTML = news ? news.map(n => `
+                    <div class="card" onclick="window.open('${n.url}', '_blank')" style="cursor:pointer;">
+                        <small style="color:var(--red);">${n.source}</small>
+                        <h3 style="margin:5px 0 0 0; font-family:'Syncopate'; font-size:0.9rem;">${n.headline}</h3>
+                    </div>`).join('') : '<p>SERVER OFFLINE - RUN APP.PY</p>';
+            },
+
+            async sendFeedback() {
+                const user = document.getElementById('fb-user').value;
+                const msg = document.getElementById('fb-msg').value;
+                const res = await api.post('feedback', {username: user, message: msg});
+                if(res) alert(res.message);
+            },
+
+            renderCrew() {
+                const crew = ["Andy","Alex","Stevie","Mhairi","Jude","Chris","Cal","Blue"];
+                document.getElementById('crew-list').innerHTML = crew.map((c, i) => `
+                    <div class="crew-member">
+                        <img src="assets/crew/dj${i+1}.jpg" onerror="this.src='assets/branding/logo.png'">
+                        <span style="font-family:'Syncopate'; display:block; margin-top:10px; font-size:0.75rem;">${c}</span>
+                    </div>`).join('');
+            }
+        };
+
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0]; }, 1000);
+        ui.tab('live');
+    </script>
+</body>
+</html>

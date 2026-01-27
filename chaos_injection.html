@@ -1,0 +1,57 @@
+<style>
+    /* 1. THE FOUNDATION: REMOVE THE GRID */
+    body {
+        margin: 0 !important;
+        background: #000 !important;
+        overflow-x: hidden !important;
+    }
+
+    /* 2. THE HEADER: MAKE IT A GHOST */
+    header, .site-header {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1 !important;
+        pointer-events: none; /* Allows you to click things underneath */
+    }
+
+    h1.site-title {
+        font-size: 38vw !important;
+        line-height: 0.6 !important;
+        margin: 0 !important;
+        color: #FF6B00 !important;
+        opacity: 0.9;
+        transform: rotate(-7deg) translate(-5%, 10%) !important;
+        word-break: break-all;
+    }
+
+    /* 3. THE CONTENT: PUSH IT UP AND OVER */
+    main, #main-content, .content-area {
+        position: relative !important;
+        z-index: 100 !important; /* Forces it ABOVE the title */
+        margin-top: 20vh !important; /* Starts 20% down the screen */
+        background: transparent !important;
+    }
+
+    /* 4. THE GIG WIRE: THE RIPPED STICKER */
+    .gig-wire {
+        background: #fff !important;
+        color: #000 !important;
+        width: 110vw !important;
+        transform: rotate(3deg) translateY(-50px) !important;
+        box-shadow: 0 0 100px rgba(0,0,0,1) !important;
+        padding: 50px !important;
+        border-bottom: 20px solid #000 !important;
+    }
+
+    /* 5. NEWS WIRE: THE 'DIRTY' OVERLAY */
+    .news-wire {
+        background: rgba(255,255,255,0.1) !important;
+        backdrop-filter: blur(5px);
+        border: 5px solid #fff !important;
+        margin: 10px !important;
+        color: #fff !important;
+    }
+</style>

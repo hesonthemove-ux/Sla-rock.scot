@@ -1,0 +1,41 @@
+<style>
+    /* THE FINAL OVERRIDE */
+    :root { --main-orange: #FF6B00; }
+    
+    body { 
+        background-color: #000 !important; 
+        padding: 0 !important; 
+        margin: 0 !important; 
+        display: block !important; 
+    }
+
+    /* ALL WRAPPERS MUST DIE */
+    div, section, main { 
+        max-width: none !important; 
+        width: auto !important; 
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    /* THE CARSON REBELLION */
+    h1 {
+        font-size: 30vw !important;
+        position: absolute !important;
+        top: 20px;
+        left: -5%;
+        z-index: 0 !important;
+        pointer-events: none;
+    }
+
+    /* THE FAIREY POPUPS */
+    .public-info-box, .booking-form, [role="dialog"] {
+        position: fixed !important;
+        top: 10% !important;
+        left: 5% !important;
+        width: 90% !important;
+        background: var(--main-orange) !important;
+        border: 25px solid #000 !important;
+        z-index: 9999 !important;
+        transform: rotate(-1deg) !important;
+    }
+</style>

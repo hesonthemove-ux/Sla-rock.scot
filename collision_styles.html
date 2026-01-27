@@ -1,0 +1,41 @@
+<style>
+    /* THE COLLISION RULES */
+    
+    header {
+        position: relative !important;
+        height: 150px !important; /* Force a small height so content climbs up */
+        z-index: 10 !important;
+    }
+
+    h1.site-title {
+        font-size: 35vw !important;
+        position: absolute !important;
+        top: -20px !important;
+        left: -5% !important;
+        margin: 0 !important;
+        line-height: 0.5 !important;
+        color: #FF6B00 !important;
+        /* This makes the text 'interact' with what's behind it */
+        mix-blend-mode: exclusion !important; 
+        pointer-events: none !important;
+    }
+
+    /* THE CONTENT CLIMB */
+    #main-content, .news-wire, .gig-wire {
+        margin-top: -80px !important; /* THIS PULLS CONTENT UP INTO THE HEADER */
+        position: relative !important;
+        z-index: 20 !important;
+        background: transparent !important;
+    }
+
+    /* FAIREY HALPTONE TEXTURE FOR THE WHOLE PAGE */
+    body::before {
+        content: "" !important;
+        position: fixed !important;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: radial-gradient(#222 1px, transparent 1px) !important;
+        background-size: 4px 4px !important;
+        z-index: -1 !important;
+        opacity: 0.5 !important;
+    }
+</style>

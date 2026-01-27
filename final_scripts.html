@@ -1,0 +1,38 @@
+<script>
+    const crewData = [
+        { n: "Andy", f: "dj1.jpg", bio: "Hailing from East Kilbride, Andy grew up blasting Biffy Clyro. Started pirate radio in his garage.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands" },
+        { n: "Alex", f: "dj2.jpg", bio: "Born and bred in Johnstone. Discovered rock via Nazareth records.", band: "Nazareth", gig: "Texas @ SEC" },
+        { n: "Stevie", f: "dj3.jpg", bio: "Raised on Clyde rockers and AC/DC. Keeping Inverclyde loud.", band: "Big Country", gig: "Mogwai @ Oran Mor" },
+        { n: "Mhairi", f: "dj4.jpg", bio: "Trading pop for distortion pedals. Hamilton's finest rock banter.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tuts" }
+    ];
+
+    function tab(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        const target = document.getElementById(id);
+        if(target) target.classList.add('active');
+    }
+
+    function renderCrew() {
+        const list = document.getElementById('crew-list');
+        if(!list) return;
+        list.innerHTML = '';
+        crewData.forEach(c => {
+            list.innerHTML += `
+            <div class="crew-card" onclick="openBio('${c.n}')">
+                <img src="./assets/crew/${c.f}" onerror="this.src='./assets/branding/logo.png'">
+                <p>${c.n}</p>
+            </div>`;
+        });
+    }
+
+    function openBio(name) {
+        const c = crewData.find(x => x.n === name);
+        document.getElementById('m-name').innerText = c.n;
+        document.getElementById('m-body').innerHTML = `<p>${c.bio}</p><br><strong>FAV BAND:</strong> ${c.band}<br><strong>BEST GIG:</strong> ${c.gig}`;
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+    
+    renderCrew();
+</script>

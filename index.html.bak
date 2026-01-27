@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rock.Scot | Central Scotland Authority</title>
+    <link rel="stylesheet" href="style.css?v=1769130001">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+$(cat anarchy_styles.html)
+</head>
+    <div id="stage"></div>
+    <div class="viewport">
+        <header><img src="./assets/branding/logo.png" alt="ROCK.SCOT"></header>
+        <nav>
+            <button onclick="tab('live')">ON AIR</button>
+            <button onclick="tab('crew')">TEAM</button>
+            <button onclick="tab('wire')">WIRE</button>
+            <button onclick="tab('rates')">ADVERTISE</button>
+            <button onclick="tab('public')">PUBLIC INFO</button>
+        </nav>
+
+        <main>
+            <section id="live" class="section active">
+                <div class="grunge-card">
+                    <h1 id="clock" style="font-size:3rem; color:var(--orange); text-align:center;">00:00:00</h1>
+                    <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:180px; border:2px solid var(--orange); margin-top:15px;"></iframe>
+                </div>
+            </section>
+
+            <section id="crew" class="section">
+                <div class="crew-grid" id="crew-list"></div>
+            </section>
+
+            <section id="wire" class="section">
+                <div id="wire-content"></div>
+            </section>
+
+            <section id="rates" class="section">
+                <div class="grunge-card">
+                    <h2 style="color:var(--orange);">BOOKING ENQUIRY</h2>
+                    <form id="bookingForm" onsubmit="handleLead(event)">
+                        <input type="text" id="name" placeholder="YOUR NAME" required>
+                        <input type="text" id="biz" placeholder="BUSINESS NAME" required>
+                        <input type="text" id="h-num" class="house-num" placeholder="HOUSE / UNIT NUMBER" required style="background:#222; color:var(--acid); border:1px solid var(--acid);">
+                        <div style="display:flex; gap:5px;">
+                            <input type="text" id="postcode" placeholder="POSTCODE" style="flex:2;">
+                            <button type="button" onclick="lookupPostcode()" class="lookup-btn" style="flex:1; background:var(--acid); font-weight:900; border:none; cursor:pointer;">FIND</button>
+                        </div>
+                        <input type="email" id="email" placeholder="EMAIL ADDRESS" required>
+                        <select id="pkg" onchange="calcTotal()">
+                            <option value="295">Single Region (Inverclyde OR S.Lanarkshire OR N.Ayrshire) - TOTAL: TOTAL: TOTAL: TOTAL: £295**</option>
+                            <option value="449">Multi-Region (All 3 Areas) - £449**</option>
+                            <option value="2500">Station Sponsor (Primary Rotation) - £2500**</option>
+                        </select>
+                        <div class="price-tag" id="total-price">TOTAL: TOTAL: TOTAL: TOTAL: £295</div>
+                        <p style="font-size:10px; color:var(--orange);">*Terms and Conditions apply. Rates are starting prices.</p>
+                        <button type="submit" class="btn-submit" style="width:100%; padding:20px; background:var(--orange); border:none; color:#fff; font-weight:900; cursor:pointer;">SUBMIT SECURE ENQUIRY</button>
+                        <p style="font-size:10px; margin-top:15px; text-align:center;">Subject to <span onclick="openTC()" style="text-decoration:underline; cursor:pointer; color:var(--acid);">The Cast Iron Clause (Indemnity)</span></p>
+                    </form>
+                </div>
+            </section>
+
+            <section id="public" class="section">
+                <div class="grunge-card">
+                    <h2>PUBLIC INFORMATION</h2>
+                    <p style="margin-bottom:15px;"><strong>Caledonia TX Ltd t/a Rock.Scot</strong></p>
+                    <p><strong>Reg No:</strong> SC646223 (Scotland)</p>
+                    <p><strong>Studio:</strong> Johnstone, Renfrewshire</p>
+                    <p><strong>Complaints:</strong> In the first instance, contact the Station Manager. If unsatisfied, contact Ofcom.</p>
+                    <hr style="border:1px solid #333; margin:15px 0;">
+                    <p style="font-size:0.8rem;">This station is licensed by Ofcom and operates under the UK Broadcasting Code.</p>
+                </div>
+            </section>
+        </main>
+
+        <div id="modal" class="modal-bg" onclick="closeModal()">
+            <div class="grunge-card modal-content" onclick="event.stopPropagation()">
+                <h2 id="m-name" style="color:var(--orange);"></h2>
+                <div id="m-body"></div>
+                <button onclick="closeModal()" class="btn-submit" style="margin-top:20px; padding:10px;">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/commercial_logic.js"></script>
+    <script>
+        const crewData = [
+            { n: "Andy", f: "dj1.jpg", bio: "Hailing from East Kilbride, Andy grew up blasting Biffy Clyro. Started pirate radio in his garage.", band: "Biffy Clyro", gig: "Franz Ferdinand @ Barrowlands" },
+            { n: "Alex", f: "dj2.jpg", bio: "Born and bred in Johnstone. Discovered rock via Nazareth records.", band: "Nazareth", gig: "Texas @ SEC" },
+            { n: "Stevie", f: "dj3.jpg", bio: "Raised on Clyde rockers and AC/DC. Keeping Inverclyde loud.", band: "Big Country", gig: "Mogwai @ Oran Mor" },
+            { n: "Mhairi", f: "dj4.jpg", bio: "Trading pop for distortion pedals. Hamilton's finest rock banter.", band: "Jesus and Mary Chain", gig: "Teenage Fanclub @ King Tuts" },
+            { n: "Jude", f: "dj5.jpg", bio: "Irvine stomping ground. Championing emerging Scottish acts.", band: "Travis", gig: "Idlewild @ Barrowlands" },
+            { n: "Chris", f: "dj6.jpg", bio: "Bred on tales of Primal Scream. Blasting rock across the Firth of Clyde.", band: "Primal Scream", gig: "Simple Minds @ Hydro" },
+            { n: "Cal", f: "dj7.jpg", bio: "Killie lad raised on Biffy and Alex Harvey.", band: "Biffy Clyro", gig: "Fratellis @ Grand Hall" },
+            { n: "Blue", f: "dj8.jpg", bio: "Nazareth and Gerry Rafferty influence. Bluesy riffs, rock energy.", band: "Nazareth", gig: "Texas @ Paisley Arts" }
+        ];
+
+        function tab(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(id === 'wire') renderWire();
+        }
+
+        function renderCrew() {
+            const list = document.getElementById('crew-list');
+            list.innerHTML = '';
+            crewData.forEach(c => {
+                list.innerHTML += `
+                <div class="grunge-card" style="text-align:center; cursor:pointer;" onclick="openBio('${c.n}')">
+                    <img src="./assets/crew/${c.f}" onerror="this.src='./assets/branding/logo.png'" style="width:100%; filter:grayscale(100%);">
+                    <p style="margin-top:10px; font-weight:bold;">${c.n}</p>
+                </div>`;
+            });
+        }
+
+        function openBio(name) {
+            const c = crewData.find(x => x.n === name);
+            document.getElementById('m-name').innerText = c.n;
+            document.getElementById('m-body').innerHTML = `<p>${c.bio}</p><br><strong>FAV BAND:</strong> ${c.band}<br><strong>BEST GIG:</strong> ${c.gig}`;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function renderWire() {
+            const list = document.getElementById('wire-content');
+            const stories = [
+                { t: "Barrowlands Expansion News", b: "The legendary Glasgow venue is discussing potential new safety measures for upcoming sold-out rock weeks.", s: "Glasgow Music News" },
+                { t: "Johnstone Band Breaks Record", b: "A local group from Johnstone has reached the top of the indie charts this morning.", s: "Central Rock Feed" }
+            ];
+            list.innerHTML = '';
+            stories.forEach(s => {
+                list.innerHTML += `
+                <div class="grunge-card">
+                    <h3>${s.t}</h3>
+                    <p style="margin:10px 0; font-size:0.9rem;">${s.b}</p>
+                    <p style="font-size:0.7rem; color:var(--acid);">SOURCE: ${s.s}</p>
+                </div>`;
+            });
+        }
+
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        function updateClock() { document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0]; requestAnimationFrame(updateClock); }
+        
+        renderCrew();
+        updateClock();
+    </script>
+</body>
+</html>
+<div class="gig-wire"> 
+    <h2 style="font-size: 4rem; margin:0;">GIG WIRE</h2> 
+    <p style="font-weight:900;">CENTRAL SCOTLAND LIVE NOISE</p> 
+    <div id="gig-list"></div> 
+</div>
+<div class="intel-form">
+    <h2>SUBMIT INTEL</h2>
+    <p style="font-size: 1.5rem; font-weight: 900;">JOIN THE FOUNDATION 40. LEAVE YOUR MARK.</p>
+    <form id="submission-form">
+        <input type="text" placeholder="NAME / BRAND" class="intel-input" required>
+        <input type="email" placeholder="ENCRYPTED EMAIL" class="intel-input" required>
+        <textarea placeholder="THE MESSAGE" class="intel-input" rows="3" style="font-family: sans-serif;"></textarea>
+        <button type="submit" class="intel-submit">SEND IT</button>
+    </form>
+</div>
+<script>
+    document.getElementById('submission-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const originalText = btn.innerText;
+        
+        // Visual Feedback (Victore Style)
+        btn.innerText = 'TRANSMITTING...';
+        btn.style.background = '#fff';
+        btn.style.color = '#000';
+
+        const payload = {
+            brand_name: e.target.querySelectorAll('input')[0].value,
+            email: e.target.querySelectorAll('input')[1].value,
+            message: e.target.querySelector('textarea').value
+        };
+
+        try {
+            const response = await fetch('https://figcmwjdbeurhjopxknp.supabase.co/rest/v1/intel_submissions', {
+                method: 'POST',
+                headers: {
+                    'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZ2Ntd2pkYmV1cmhqb3B4a25wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4ODI5MDYsImV4cCI6MjA4NDQ1ODkwNn0.iiE65zB0lAsEkJE6lotNU1lORpL94oxZ7-ebHhJ3FgY',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                btn.innerText = 'INTEL RECEIVED';
+                e.target.reset();
+                setTimeout(() => { btn.innerText = originalText; btn.style.background = '#000'; btn.style.color = '#FF6B00'; }, 3000);
+            } else {
+                throw new Error('Push Failed');
+            }
+        } catch (err) {
+            btn.innerText = 'RETRY LATER';
+            console.error(err);
+        }
+    });
+</script>
+<script>
+    const gigs = [
+        {date: '28 JAN', venue: 'KING TUTS', act: 'LOCAL PUNK REVOLT'},
+        {date: '02 FEB', venue: 'SNEAKY PETES', act: 'DISTORTION HUB'},
+        {date: '05 FEB', venue: 'GEAR', act: 'CENTRAL NOISE'}
+    ];
+    const gigList = document.getElementById('gig-list');
+    gigs.forEach(g => {
+        gigList.innerHTML += `
+            <div class="gig-entry">
+                <div class="gig-date">${g.date}</div>
+                <div class="gig-details">
+                    <span class="venue-tag">${g.venue}</span><br>
+                    <span style="font-size:1.5rem; font-weight:900;">${g.act}</span>
+                </div>
+            </div>
+        `;
+    });
+</script>

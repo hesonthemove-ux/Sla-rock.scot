@@ -1,0 +1,43 @@
+</head>
+<body>
+    <header id="site-header"><img src="./assets/branding/logo.png" alt="ROCK.SCOT"></header>
+    <nav>
+        <button onclick="tab('live')">ON AIR</button>
+        <button onclick="tab('crew')">TEAM</button>
+        <button onclick="tab('wire')">WIRE</button>
+        <button onclick="tab('rates')">ADVERTISE</button>
+        <button onclick="tab('public')">PUBLIC INFO</button>
+    </nav>
+    <main id="main-content">
+        <section id="live" class="section active">
+            <div class="gig-wire"> 
+                <h2>GIG WIRE</h2> 
+                <div id="gig-list"></div> 
+            </div>
+            <div class="grunge-card">
+                <h1 id="clock">00:00:00</h1>
+                <iframe src="https://player.broadcast.radio/caledonia-tx-ltd" style="width:100%; height:180px; border:10px solid #000;"></iframe>
+            </div>
+        </section>
+        <section id="crew" class="section"><div class="crew-grid" id="crew-list"></div></section>
+        <section id="wire" class="section"><div id="wire-content"></div></section>
+        <section id="rates" class="section">
+             <div class="intel-form">
+                <h2>SUBMIT INTEL</h2>
+                <form id="submission-form">
+                    <input type="text" placeholder="NAME / BRAND" class="intel-input" required>
+                    <input type="email" placeholder="EMAIL" class="intel-input" required>
+                    <textarea placeholder="MESSAGE" class="intel-input" rows="3"></textarea>
+                    <button type="submit" class="intel-submit">SEND IT</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <div id="modal" class="modal-bg" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2 id="m-name"></h2>
+            <div id="m-body"></div>
+            <button onclick="closeModal()" class="close-bio">CLOSE</button>
+        </div>
+    </div>
