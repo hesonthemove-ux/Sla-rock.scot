@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ROCK.SCOT | Rockin' Scotland</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { background: #002B5C; color: #fff; font-family: "Arial Black", sans-serif; overflow-x: hidden; }
+        .collage-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: url('assets/bg_collage.png') no-repeat center center; background-size: cover; z-index: 1; opacity: 0.25; filter: contrast(300%) grayscale(1) invert(1); mix-blend-mode: screen; }
+        .container { position: relative; z-index: 10; width: 100%; max-width: 800px; margin: 0 auto; }
+        .header { padding: 40px 0 0 0; text-align: center; }
+        .header img { width: 95%; max-width: 750px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8)); }
+        .ticker-wrap { background: #ff6600; color: #000; width: 110%; margin-left: -5%; padding: 10px 0; margin-top: -18px; transform: rotate(-1deg); border-top: 4px solid #000; border-bottom: 4px solid #000; overflow: hidden; white-space: nowrap; z-index: 50; position: relative; }
+        .ticker { display: inline-block; animation: marquee 142s linear infinite; font-size: 1.1rem; font-weight: 900; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .genre-tray { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 8px; padding-bottom: 25px; }
+        .btn-genre { background: #fff; color: #000; border: 2px solid #000; padding: 8px 16px; font-weight: 900; text-transform: uppercase; cursor: pointer; transform: rotate(var(--r, 0deg)); }
+        .btn-genre.active { background: #000; color: #ff6600; border-color: #ff6600; transform: scale(1.1) rotate(var(--r, 0deg)); }
+        #wire-content { padding: 30px 15px; }
+        .news-item { margin-bottom: 60px; display: flex; flex-wrap: wrap; justify-content: center; cursor: pointer; }
+        .word { display: inline-block; padding: 6px 12px; margin: 4px; background: #fff; color: #000; font-size: 1.6rem; transform: rotate(var(--wr)); box-shadow: 6px 6px 0 #000; text-transform: uppercase; pointer-events: none; }
+        .word:nth-child(even) { background: #000; color: #fff; }
+        .word:nth-child(3n) { background: #ff6600; color: #000; font-family: serif; font-style: italic; }
+        #story-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; overflow-y: auto; padding: 20px; }
+        .modal-body { background: #fff; color: #000; max-width: 600px; margin: 40px auto; padding: 30px; border: 10px solid #ff6600; transform: rotate(-1deg); box-shadow: 20px 20px 0 #000; position: relative; }
+        .modal-body h2 { font-size: 2rem; margin-bottom: 20px; text-transform: uppercase; border-bottom: 5px solid #000; }
+        .modal-body p { font-family: "Courier New", monospace; font-size: 1.1rem; line-height: 1.5; font-weight: bold; margin-bottom: 25px; }
+        .source-btn { display: inline-block; background: #ff6600; color: #000; padding: 12px 20px; text-decoration: none; font-weight: 900; border: 3px solid #000; box-shadow: 4px 4px 0 #000; text-transform: uppercase; }
+        .close-btn { position: absolute; top: -15px; right: -15px; background: #000; color: #fff; padding: 10px 15px; cursor: pointer; font-weight: 900; border: 2px solid #fff; }
+    </style>
+</head>
+<body>
+    <div class="collage-bg"></div>
+    <div id="story-modal">
+        <div class="modal-body">
+            <div class="close-btn" onclick="closeModal()">X CLOSE</div>
+            <h2 id="modal-title"></h2>
+            <div id="modal-content"></div>
+            <hr style="border: 2px solid #000; margin: 20px 0;">
+            <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="source-btn"></a>
+        </div>
+    </div>
+    <div class="container">
+        <header class="header"><img src="assets/logo_crest.png" alt="ROCK.SCOT"></header>
+        <div class="ticker-wrap"><div class="ticker" id="ticker-strip"></div></div>
+        <nav class="genre-tray" id="tray"></nav>
+        <main id="wire-content"></main>
+    </div>
+    <script>
+        const genres = ['rock', 'metal', 'punk', 'indie', 'classic'];
+        let activeGenres = ['rock'];
+        function initTray() {
+            const tray = document.getElementById('tray');
+            genres.forEach(g => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-genre ' + (activeGenres.includes(g) ? 'active' : '');
+                btn.innerText = g;
+                btn.style.setProperty('--r', (Math.random() * 8 - 4) + 'deg');
+                btn.onclick = () => {
+                    activeGenres = activeGenres.includes(g) ? activeGenres.filter(x=>x!==g) : [...activeGenres, g];
+                    if(activeGenres.length === 0) activeGenres = ['rock'];
+                    document.querySelectorAll('.btn-genre').forEach(b => {
+                        b.classList.toggle('active', activeGenres.includes(b.innerText.toLowerCase()));
+                    });
+                    loadWire();
+                };
+                tray.appendChild(btn);
+            });
+        }
+        async function loadWire() {
+            const container = document.getElementById('wire-content');
+            const ticker = document.getElementById('ticker-strip');
+            let allNews = [];
+            for (const g of activeGenres) {
+                try {
+                    const res = await fetch('data/' + g + '.json?v=' + Date.now());
+                    if (res.ok) {
+                        const data = await res.json();
+                        allNews.push(...data);
+                    }
+                } catch (e) {}
+            }
+            container.innerHTML = ''; ticker.innerHTML = '';
+            allNews.sort(() => Math.random() - 0.5).forEach(item => {
+                const section = document.createElement('section');
+                section.className = 'news-item';
+                section.onclick = () => openModal(item.title, item.content, item.link, item.source);
+                item.title.split(' ').forEach(w => {
+                    const span = document.createElement('span');
+                    span.className = 'word';
+                    span.innerText = w.replace(/&[^;]+;/g, ''); 
+                    span.style.setProperty('--wr', (Math.random() * 12 - 6) + 'deg');
+                    section.appendChild(span);
+                });
+                container.appendChild(section);
+                const tSpan = document.createElement('span');
+                tSpan.innerText = item.title.toUpperCase().replace(/&[^;]+;/g, '') + ' ::: ';
+                ticker.appendChild(tSpan);
+            });
+            ticker.innerHTML += ticker.innerHTML; 
+        }
+        function openModal(title, content, link, source) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-content').innerHTML = '<p>' + content + '</p>';
+            const linkBtn = document.getElementById('modal-link');
+            linkBtn.href = link;
+            linkBtn.innerText = 'READ FULL NOISE @ ' + source.toUpperCase();
+            linkBtn.onclick = function(e) { if(!this.href || this.href.includes('#')) e.preventDefault(); };
+            document.getElementById('story-modal').style.display = 'block';
+        }
+        function closeModal() { document.getElementById('story-modal').style.display = 'none'; }
+        window.onload = () => { initTray(); loadWire(); };
+    </script>
+</body>
+</html>
